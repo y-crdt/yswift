@@ -1,41 +1,13 @@
-# ykt
+# yswift
 
-> Kotlin bindings for yrs.
+This repo is a WIP.
 
-## Getting started
-
-```kotlin
-import uniffi.ykt.Doc
-
-fun main() {
-  val doc = Doc()
-  val text = doc.getText("my_text")
-
-  val tx = doc.transact()
-
-  text.append(tx, "Hello, World!")
-  println(text.getString(tx))
-
-  tx.free()
-}
-```
+> Swift bindings for yrs.
 
 ## Build instructions
 
-### Scaffold Rust Code from UDL file
+Just opening the `.xcodeproj` and build :)
 
-```bash
-uniffi-bindgen scaffolding src/ykt.udl
-```
+The project setup is heavily inspired by [Mozilla's example iOS app](https://github.com/mozilla/uniffi-rs/tree/main/examples/app/ios).
 
-### Build Rust Code
-
-```bash
-cargo build
-```
-
-### Generate Kotlin Code
-
-```bash
-uniffi-bindgen generate src/ykt.udl --language kotlin --no-format --out-dir src/main/kotlin
-```
+There are few limitations at the moment, related to the packaging of fat framework for iOS. (E.g. you can't build for the simulator)
