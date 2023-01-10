@@ -6,7 +6,7 @@ This repo is a WIP.
 
 ## Build instructions
 
-Just opening the `.xcodeproj` and build :)
+Open the `.xcodeproj` and Run.
 
 The project setup is heavily inspired by [Mozilla's example iOS app](https://github.com/mozilla/uniffi-rs/tree/main/examples/app/ios).
 
