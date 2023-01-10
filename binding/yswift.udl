@@ -6,6 +6,7 @@ interface Transaction {
 
 interface Text {
   void append([ByRef] Transaction tx, string text);
+  void insert([ByRef] Transaction tx, u32 index, string chunk);
   string get_string([ByRef] Transaction tx);
 };
 

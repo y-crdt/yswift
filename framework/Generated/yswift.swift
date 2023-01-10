@@ -19,13 +19,13 @@ fileprivate extension RustBuffer {
     }
 
     static func from(_ ptr: UnsafeBufferPointer<UInt8>) -> RustBuffer {
-        try! rustCall { ffi_yswift_a312_rustbuffer_from_bytes(ForeignBytes(bufferPointer: ptr), $0) }
+        try! rustCall { ffi_yswift_7b43_rustbuffer_from_bytes(ForeignBytes(bufferPointer: ptr), $0) }
     }
 
     // Frees the buffer in place.
     // The buffer must not be used after this is called.
     func deallocate() {
-        try! rustCall { ffi_yswift_a312_rustbuffer_free(self, $0) }
+        try! rustCall { ffi_yswift_7b43_rustbuffer_free(self, $0) }
     }
 }
 
@@ -280,6 +280,19 @@ private func makeRustCall<T>(_ callback: (UnsafeMutablePointer<RustCallStatus>) 
 // Public interface members begin here.
 
 
+fileprivate struct FfiConverterUInt32: FfiConverterPrimitive {
+    typealias FfiType = UInt32
+    typealias SwiftType = UInt32
+
+    public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> UInt32 {
+        return try lift(readInt(&buf))
+    }
+
+    public static func write(_ value: SwiftType, into buf: inout [UInt8]) {
+        writeInt(&buf, lower(value))
+    }
+}
+
 fileprivate struct FfiConverterString: FfiConverter {
     typealias SwiftType = String
     typealias FfiType = RustBuffer
@@ -339,12 +352,12 @@ public class Doc: DocProtocol {
     
     rustCall() {
     
-    yswift_a312_Doc_new($0)
+    yswift_7b43_Doc_new($0)
 })
     }
 
     deinit {
-        try! rustCall { ffi_yswift_a312_Doc_object_free(pointer, $0) }
+        try! rustCall { ffi_yswift_7b43_Doc_object_free(pointer, $0) }
     }
 
     
@@ -355,7 +368,7 @@ public class Doc: DocProtocol {
             try!
     rustCall() {
     
-    yswift_a312_Doc_get_text(self.pointer, 
+    yswift_7b43_Doc_get_text(self.pointer, 
         FfiConverterString.lower(`name`), $0
     )
 }
@@ -366,7 +379,7 @@ public class Doc: DocProtocol {
             try!
     rustCall() {
     
-    yswift_a312_Doc_transact(self.pointer, $0
+    yswift_7b43_Doc_transact(self.pointer, $0
     )
 }
         )
@@ -408,6 +421,7 @@ public struct FfiConverterTypeDoc: FfiConverter {
 
 public protocol TextProtocol {
     func `append`(`tx`: Transaction, `text`: String) 
+    func `insert`(`tx`: Transaction, `index`: UInt32, `chunk`: String) 
     func `getString`(`tx`: Transaction)  -> String
     
 }
@@ -423,7 +437,7 @@ public class Text: TextProtocol {
     }
 
     deinit {
-        try! rustCall { ffi_yswift_a312_Text_object_free(pointer, $0) }
+        try! rustCall { ffi_yswift_7b43_Text_object_free(pointer, $0) }
     }
 
     
@@ -433,9 +447,20 @@ public class Text: TextProtocol {
         try!
     rustCall() {
     
-    yswift_a312_Text_append(self.pointer, 
+    yswift_7b43_Text_append(self.pointer, 
         FfiConverterTypeTransaction.lower(`tx`), 
         FfiConverterString.lower(`text`), $0
+    )
+}
+    }
+    public func `insert`(`tx`: Transaction, `index`: UInt32, `chunk`: String)  {
+        try!
+    rustCall() {
+    
+    yswift_7b43_Text_insert(self.pointer, 
+        FfiConverterTypeTransaction.lower(`tx`), 
+        FfiConverterUInt32.lower(`index`), 
+        FfiConverterString.lower(`chunk`), $0
     )
 }
     }
@@ -444,7 +469,7 @@ public class Text: TextProtocol {
             try!
     rustCall() {
     
-    yswift_a312_Text_get_string(self.pointer, 
+    yswift_7b43_Text_get_string(self.pointer, 
         FfiConverterTypeTransaction.lower(`tx`), $0
     )
 }
@@ -501,7 +526,7 @@ public class Transaction: TransactionProtocol {
     }
 
     deinit {
-        try! rustCall { ffi_yswift_a312_Transaction_object_free(pointer, $0) }
+        try! rustCall { ffi_yswift_7b43_Transaction_object_free(pointer, $0) }
     }
 
     
@@ -511,7 +536,7 @@ public class Transaction: TransactionProtocol {
         try!
     rustCall() {
     
-    yswift_a312_Transaction_free(self.pointer, $0
+    yswift_7b43_Transaction_free(self.pointer, $0
     )
 }
     }

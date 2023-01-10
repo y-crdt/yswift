@@ -46,55 +46,59 @@ typedef struct RustCallStatus {
 // ⚠️ increment the version suffix in all instances of UNIFFI_SHARED_HEADER_V4 in this file.           ⚠️
 #endif // def UNIFFI_SHARED_H
 
-void ffi_yswift_a312_Transaction_object_free(
+void ffi_yswift_7b43_Transaction_object_free(
       void*_Nonnull ptr,
     RustCallStatus *_Nonnull out_status
     );
-void yswift_a312_Transaction_free(
+void yswift_7b43_Transaction_free(
       void*_Nonnull ptr,
     RustCallStatus *_Nonnull out_status
     );
-void ffi_yswift_a312_Text_object_free(
+void ffi_yswift_7b43_Text_object_free(
       void*_Nonnull ptr,
     RustCallStatus *_Nonnull out_status
     );
-void yswift_a312_Text_append(
+void yswift_7b43_Text_append(
       void*_Nonnull ptr,void*_Nonnull tx,RustBuffer text,
     RustCallStatus *_Nonnull out_status
     );
-RustBuffer yswift_a312_Text_get_string(
+void yswift_7b43_Text_insert(
+      void*_Nonnull ptr,void*_Nonnull tx,uint32_t index,RustBuffer chunk,
+    RustCallStatus *_Nonnull out_status
+    );
+RustBuffer yswift_7b43_Text_get_string(
       void*_Nonnull ptr,void*_Nonnull tx,
     RustCallStatus *_Nonnull out_status
     );
-void ffi_yswift_a312_Doc_object_free(
+void ffi_yswift_7b43_Doc_object_free(
       void*_Nonnull ptr,
     RustCallStatus *_Nonnull out_status
     );
-void*_Nonnull yswift_a312_Doc_new(
+void*_Nonnull yswift_7b43_Doc_new(
       
     RustCallStatus *_Nonnull out_status
     );
-void*_Nonnull yswift_a312_Doc_get_text(
+void*_Nonnull yswift_7b43_Doc_get_text(
       void*_Nonnull ptr,RustBuffer name,
     RustCallStatus *_Nonnull out_status
     );
-void*_Nonnull yswift_a312_Doc_transact(
+void*_Nonnull yswift_7b43_Doc_transact(
       void*_Nonnull ptr,
     RustCallStatus *_Nonnull out_status
     );
-RustBuffer ffi_yswift_a312_rustbuffer_alloc(
+RustBuffer ffi_yswift_7b43_rustbuffer_alloc(
       int32_t size,
     RustCallStatus *_Nonnull out_status
     );
-RustBuffer ffi_yswift_a312_rustbuffer_from_bytes(
+RustBuffer ffi_yswift_7b43_rustbuffer_from_bytes(
       ForeignBytes bytes,
     RustCallStatus *_Nonnull out_status
     );
-void ffi_yswift_a312_rustbuffer_free(
+void ffi_yswift_7b43_rustbuffer_free(
       RustBuffer buf,
     RustCallStatus *_Nonnull out_status
     );
-RustBuffer ffi_yswift_a312_rustbuffer_reserve(
+RustBuffer ffi_yswift_7b43_rustbuffer_reserve(
       RustBuffer buf,int32_t additional,
     RustCallStatus *_Nonnull out_status
     );
