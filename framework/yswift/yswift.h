@@ -7,6 +7,9 @@
 
 #import <Foundation/Foundation.h>
 
+#import "yswiftFFI.h"
+//#import <yswift/yswiftFFI.h>
+
 //! Project version number for yswift.
 FOUNDATION_EXPORT double yswiftVersionNumber;
 

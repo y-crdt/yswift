@@ -7,96 +7,205 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		257161AE296D9EF00057D0F9 /* yswift.h in Headers */ = {isa = PBXBuildFile; fileRef = 257161AD296D9EF00057D0F9 /* yswift.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		257161C3296DAF420057D0F9 /* yswift.docc in Sources */ = {isa = PBXBuildFile; fileRef = 257161C2296DAF420057D0F9 /* yswift.docc */; };
+		257161C9296DAF420057D0F9 /* yswift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 257161BE296DAF420057D0F9 /* yswift.framework */; };
+		257161CE296DAF420057D0F9 /* yswiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 257161CD296DAF420057D0F9 /* yswiftTests.swift */; };
+		257161CF296DAF420057D0F9 /* yswift.h in Headers */ = {isa = PBXBuildFile; fileRef = 257161C1296DAF420057D0F9 /* yswift.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		257161DE296DB2530057D0F9 /* yswift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 257161DC296DB2530057D0F9 /* yswift.swift */; };
+		257161DF296DB2530057D0F9 /* yswiftFFI.h in Headers */ = {isa = PBXBuildFile; fileRef = 257161DD296DB2530057D0F9 /* yswiftFFI.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		257161E2296DB4CA0057D0F9 /* yswift.udl in Resources */ = {isa = PBXBuildFile; fileRef = 257161E1296DB4CA0057D0F9 /* yswift.udl */; };
+		257161E5296DB5A30057D0F9 /* libuniffi_yswift.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 257161E4296DB5A30057D0F9 /* libuniffi_yswift.a */; };
+		257161E7296DB6B80057D0F9 /* Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 257161E6296DB6B80057D0F9 /* Main.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXBuildRule section */
+		257161DA296DB0A20057D0F9 /* PBXBuildRule */ = {
+			isa = PBXBuildRule;
+			compilerSpec = com.apple.compilers.proxy.script;
+			filePatterns = "*.udl";
+			fileType = pattern.proxy;
+			inputFiles = (
+			);
+			isEditable = 1;
+			outputFiles = (
+				"$(SRCROOT)/Generated/$(INPUT_FILE_BASE)FFI.h",
+				"$(SRCROOT)/Generated/$(INPUT_FILE_BASE).swift",
+			);
+			script = "# Generate swift bindings for the todolist rust library.\necho \"Generating files for $INPUT_FILE_PATH\"\n$HOME/.cargo/bin/uniffi-bindgen generate \"$INPUT_FILE_PATH\" --language swift --out-dir \"$SRCROOT/Generated\"\necho \"Generated files for $INPUT_FILE_BASE in $SRCROOT/Generated\"\n";
+		};
+/* End PBXBuildRule section */
+
+/* Begin PBXContainerItemProxy section */
+		257161CA296DAF420057D0F9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 257161B5296DAF420057D0F9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 257161BD296DAF420057D0F9;
+			remoteInfo = yswift;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
-		257161AA296D9EF00057D0F9 /* yswift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = yswift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		257161AD296D9EF00057D0F9 /* yswift.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = yswift.h; sourceTree = "<group>"; };
+		257161BE296DAF420057D0F9 /* yswift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = yswift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		257161C1296DAF420057D0F9 /* yswift.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = yswift.h; sourceTree = "<group>"; };
+		257161C2296DAF420057D0F9 /* yswift.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = yswift.docc; sourceTree = "<group>"; };
+		257161C8296DAF420057D0F9 /* yswiftTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = yswiftTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		257161CD296DAF420057D0F9 /* yswiftTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = yswiftTests.swift; sourceTree = "<group>"; };
+		257161DC296DB2530057D0F9 /* yswift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = yswift.swift; sourceTree = "<group>"; };
+		257161DD296DB2530057D0F9 /* yswiftFFI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = yswiftFFI.h; sourceTree = "<group>"; };
+		257161E1296DB4CA0057D0F9 /* yswift.udl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = yswift.udl; path = ../binding/yswift.udl; sourceTree = "<group>"; };
+		257161E4296DB5A30057D0F9 /* libuniffi_yswift.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libuniffi_yswift.a; path = ../target/universal/debug/libuniffi_yswift.a; sourceTree = "<group>"; };
+		257161E6296DB6B80057D0F9 /* Main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Main.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		257161A7296D9EF00057D0F9 /* Frameworks */ = {
+		257161BB296DAF420057D0F9 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				257161E5296DB5A30057D0F9 /* libuniffi_yswift.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		257161C5296DAF420057D0F9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				257161C9296DAF420057D0F9 /* yswift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		257161A0296D9EF00057D0F9 = {
+		257161B4296DAF420057D0F9 = {
 			isa = PBXGroup;
 			children = (
-				257161AC296D9EF00057D0F9 /* yswift */,
-				257161AB296D9EF00057D0F9 /* Products */,
+				257161E1296DB4CA0057D0F9 /* yswift.udl */,
+				257161DB296DB0D10057D0F9 /* Generated */,
+				257161C0296DAF420057D0F9 /* yswift */,
+				257161CC296DAF420057D0F9 /* yswiftTests */,
+				257161BF296DAF420057D0F9 /* Products */,
+				257161E3296DB5A30057D0F9 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
-		257161AB296D9EF00057D0F9 /* Products */ = {
+		257161BF296DAF420057D0F9 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				257161AA296D9EF00057D0F9 /* yswift.framework */,
+				257161BE296DAF420057D0F9 /* yswift.framework */,
+				257161C8296DAF420057D0F9 /* yswiftTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		257161AC296D9EF00057D0F9 /* yswift */ = {
+		257161C0296DAF420057D0F9 /* yswift */ = {
 			isa = PBXGroup;
 			children = (
-				257161AD296D9EF00057D0F9 /* yswift.h */,
+				257161C1296DAF420057D0F9 /* yswift.h */,
+				257161C2296DAF420057D0F9 /* yswift.docc */,
 			);
 			path = yswift;
+			sourceTree = "<group>";
+		};
+		257161CC296DAF420057D0F9 /* yswiftTests */ = {
+			isa = PBXGroup;
+			children = (
+				257161CD296DAF420057D0F9 /* yswiftTests.swift */,
+			);
+			path = yswiftTests;
+			sourceTree = "<group>";
+		};
+		257161DB296DB0D10057D0F9 /* Generated */ = {
+			isa = PBXGroup;
+			children = (
+				257161DC296DB2530057D0F9 /* yswift.swift */,
+				257161DD296DB2530057D0F9 /* yswiftFFI.h */,
+				257161E6296DB6B80057D0F9 /* Main.swift */,
+			);
+			path = Generated;
+			sourceTree = "<group>";
+		};
+		257161E3296DB5A30057D0F9 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				257161E4296DB5A30057D0F9 /* libuniffi_yswift.a */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		257161A5296D9EF00057D0F9 /* Headers */ = {
+		257161B9296DAF420057D0F9 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				257161AE296D9EF00057D0F9 /* yswift.h in Headers */,
+				257161DF296DB2530057D0F9 /* yswiftFFI.h in Headers */,
+				257161CF296DAF420057D0F9 /* yswift.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		257161A9296D9EF00057D0F9 /* yswift */ = {
+		257161BD296DAF420057D0F9 /* yswift */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 257161B1296D9EF00057D0F9 /* Build configuration list for PBXNativeTarget "yswift" */;
+			buildConfigurationList = 257161D2296DAF420057D0F9 /* Build configuration list for PBXNativeTarget "yswift" */;
 			buildPhases = (
-				257161A5296D9EF00057D0F9 /* Headers */,
-				257161A6296D9EF00057D0F9 /* Sources */,
-				257161A7296D9EF00057D0F9 /* Frameworks */,
-				257161A8296D9EF00057D0F9 /* Resources */,
+				257161E0296DB2FF0057D0F9 /* Build Universal Library */,
+				257161BB296DAF420057D0F9 /* Frameworks */,
+				257161BC296DAF420057D0F9 /* Resources */,
+				257161B9296DAF420057D0F9 /* Headers */,
+				257161BA296DAF420057D0F9 /* Sources */,
 			);
 			buildRules = (
+				257161DA296DB0A20057D0F9 /* PBXBuildRule */,
 			);
 			dependencies = (
 			);
 			name = yswift;
 			productName = yswift;
-			productReference = 257161AA296D9EF00057D0F9 /* yswift.framework */;
+			productReference = 257161BE296DAF420057D0F9 /* yswift.framework */;
 			productType = "com.apple.product-type.framework";
+		};
+		257161C7296DAF420057D0F9 /* yswiftTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 257161D5296DAF420057D0F9 /* Build configuration list for PBXNativeTarget "yswiftTests" */;
+			buildPhases = (
+				257161C4296DAF420057D0F9 /* Sources */,
+				257161C5296DAF420057D0F9 /* Frameworks */,
+				257161C6296DAF420057D0F9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				257161CB296DAF420057D0F9 /* PBXTargetDependency */,
+			);
+			name = yswiftTests;
+			productName = yswiftTests;
+			productReference = 257161C8296DAF420057D0F9 /* yswiftTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		257161A1296D9EF00057D0F9 /* Project object */ = {
+		257161B5296DAF420057D0F9 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1330;
 				LastUpgradeCheck = 1330;
 				TargetAttributes = {
-					257161A9296D9EF00057D0F9 = {
+					257161BD296DAF420057D0F9 = {
+						CreatedOnToolsVersion = 13.3.1;
+					};
+					257161C7296DAF420057D0F9 = {
 						CreatedOnToolsVersion = 13.3.1;
 					};
 				};
 			};
-			buildConfigurationList = 257161A4296D9EF00057D0F9 /* Build configuration list for PBXProject "yswift" */;
+			buildConfigurationList = 257161B8296DAF420057D0F9 /* Build configuration list for PBXProject "yswift" */;
 			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -104,18 +213,27 @@
 				en,
 				Base,
 			);
-			mainGroup = 257161A0296D9EF00057D0F9;
-			productRefGroup = 257161AB296D9EF00057D0F9 /* Products */;
+			mainGroup = 257161B4296DAF420057D0F9;
+			productRefGroup = 257161BF296DAF420057D0F9 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				257161A9296D9EF00057D0F9 /* yswift */,
+				257161BD296DAF420057D0F9 /* yswift */,
+				257161C7296DAF420057D0F9 /* yswiftTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		257161A8296D9EF00057D0F9 /* Resources */ = {
+		257161BC296DAF420057D0F9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				257161E2296DB4CA0057D0F9 /* yswift.udl in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		257161C6296DAF420057D0F9 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -124,18 +242,58 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		257161E0296DB2FF0057D0F9 /* Build Universal Library */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Build Universal Library";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "bash $SRCROOT/xc-universal-binary.sh libuniffi_yswift.a yswift $SRCROOT/.. $CONFIGURATION\necho \"WORKSPACE_PATH\"\necho \"$($SRCROOT/..)\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
-		257161A6296D9EF00057D0F9 /* Sources */ = {
+		257161BA296DAF420057D0F9 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				257161E7296DB6B80057D0F9 /* Main.swift in Sources */,
+				257161C3296DAF420057D0F9 /* yswift.docc in Sources */,
+				257161DE296DB2530057D0F9 /* yswift.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		257161C4296DAF420057D0F9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				257161CE296DAF420057D0F9 /* yswiftTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		257161CB296DAF420057D0F9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 257161BD296DAF420057D0F9 /* yswift */;
+			targetProxy = 257161CA296DAF420057D0F9 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
-		257161AF296D9EF00057D0F9 /* Debug */ = {
+		257161D0296DAF420057D0F9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -198,7 +356,7 @@
 			};
 			name = Debug;
 		};
-		257161B0296D9EF00057D0F9 /* Release */ = {
+		257161D1296DAF420057D0F9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -255,7 +413,7 @@
 			};
 			name = Release;
 		};
-		257161B2296D9EF00057D0F9 /* Debug */ = {
+		257161D3296DAF420057D0F9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
@@ -268,24 +426,26 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(SRCROOT)/../target/universal/debug",
+					"$(SRCROOT)/../target/universal/release",
+				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "y-crdt.yswift";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
-				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
-		257161B3296D9EF00057D0F9 /* Release */ = {
+		257161D4296DAF420057D0F9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
@@ -298,18 +458,54 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(SRCROOT)/../target/universal/debug",
+					"$(SRCROOT)/../target/universal/release",
+				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "y-crdt.yswift";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
-				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		257161D6296DAF420057D0F9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = DN43NAC65F;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "y-crdt.yswiftTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		257161D7296DAF420057D0F9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = DN43NAC65F;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "y-crdt.yswiftTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -318,25 +514,34 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		257161A4296D9EF00057D0F9 /* Build configuration list for PBXProject "yswift" */ = {
+		257161B8296DAF420057D0F9 /* Build configuration list for PBXProject "yswift" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				257161AF296D9EF00057D0F9 /* Debug */,
-				257161B0296D9EF00057D0F9 /* Release */,
+				257161D0296DAF420057D0F9 /* Debug */,
+				257161D1296DAF420057D0F9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		257161B1296D9EF00057D0F9 /* Build configuration list for PBXNativeTarget "yswift" */ = {
+		257161D2296DAF420057D0F9 /* Build configuration list for PBXNativeTarget "yswift" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				257161B2296D9EF00057D0F9 /* Debug */,
-				257161B3296D9EF00057D0F9 /* Release */,
+				257161D3296DAF420057D0F9 /* Debug */,
+				257161D4296DAF420057D0F9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		257161D5296DAF420057D0F9 /* Build configuration list for PBXNativeTarget "yswiftTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				257161D6296DAF420057D0F9 /* Debug */,
+				257161D7296DAF420057D0F9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = 257161A1296D9EF00057D0F9 /* Project object */;
+	rootObject = 257161B5296DAF420057D0F9 /* Project object */;
 }

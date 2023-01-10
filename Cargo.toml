@@ -17,5 +17,5 @@ uniffi_build = "0.22.0"
 
 [lib]
 name = "uniffi_yswift"
-path = "src/main/rust/lib.rs"
+path = "binding/main/rust/lib.rs"
 crate-type = ["cdylib", "staticlib"]
