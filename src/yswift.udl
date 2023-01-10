@@ -1,0 +1,17 @@
+namespace yswift {};
+
+interface Transaction {
+  void free();
+};
+
+interface Text {
+  void append([ByRef] Transaction tx, string text);
+  string get_string([ByRef] Transaction tx);
+};
+
+
+interface Doc {
+  constructor();
+  Text get_text(string name);
+  Transaction transact();
+};
