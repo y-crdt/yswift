@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import yswift
+@testable import YSwift
 
 class yswiftTests: XCTestCase {
 

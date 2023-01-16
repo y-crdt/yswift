@@ -1,21 +1,21 @@
 [package]
-name = "yswift"
+name = "ynative"
 version = "0.1.0"
 edition = "2021"
 
 [workspace]
 
 [dependencies]
-lib0 = "0.14.1" # must match yrs version
+lib0 = "0.15.0" # must match yrs version
 thiserror = "1.0.38"
 uniffi = "0.22.0"
 uniffi_macros = "0.22.0"
-yrs = "0.14.1"
+yrs = "0.15.0"
 
 [build-dependencies]
 uniffi_build = "0.22.0"
 
 [lib]
-name = "uniffi_yswift"
-path = "binding/main/rust/lib.rs"
+name = "uniffi_ynative""
+path = "src/lib.rs"
 crate-type = ["cdylib", "staticlib"]
