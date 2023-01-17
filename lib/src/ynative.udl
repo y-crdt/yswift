@@ -1,4 +1,4 @@
-namespace yswift {};
+namespace ynative {};
 
 interface Transaction {
   void free();

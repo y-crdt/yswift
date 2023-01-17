@@ -1,0 +1,6 @@
+framework module YNative {
+    umbrella header "YNative.h"
+
+    export *
+    module * { export * }
+}

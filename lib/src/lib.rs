@@ -6,4 +6,4 @@ use crate::doc::Doc;
 use crate::text::Text;
 use crate::transaction::Transaction;
 
-uniffi_macros::include_scaffolding!("yswift");
+uniffi_macros::include_scaffolding!("ynative");

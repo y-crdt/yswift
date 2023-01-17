@@ -1,0 +1,6 @@
+.swiftpm
+*.xcframework
+*.xcodeproj
+*.xcworkspace
+*.zip
+target

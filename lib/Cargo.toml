@@ -16,6 +16,6 @@ yrs = "0.15.0"
 uniffi_build = "0.22.0"
 
 [lib]
-name = "uniffi_ynative""
+name = "uniffi_ynative"
 path = "src/lib.rs"
 crate-type = ["cdylib", "staticlib"]
