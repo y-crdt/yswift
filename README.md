@@ -1,13 +1,3 @@
-# yswift
+# Important
 
-This repo is a WIP.
-
-> Swift bindings for yrs.
-
-## Build instructions
-
-Open the `.xcodeproj` and Run.
-
-The project setup is heavily inspired by [Mozilla's example iOS app](https://github.com/mozilla/uniffi-rs/tree/main/examples/app/ios).
-
-There are few limitations at the moment, related to the packaging of fat framework for iOS. (E.g. you can't build for the simulator)
+This repository is currently not active. Consult [y-uniffi](https://github.com/y-crdt/y-uniffi) for details.
