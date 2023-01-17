@@ -10,8 +10,8 @@ This project provides [yrs](https://github.com/y-crdt/y-crdt) bindings for Kotli
 
 ## Decision log
 
-We maintain a decision log. Please consult it in case there is some ambiguity in terms of why certain implementation details look as they are.
+We maintain a [decision log](https://github.com/y-crdt/y-uniffi/blob/main/docs/decisions.md). Please consult it in case there is some ambiguity in terms of why certain implementation details look as they are.
 
 ## License
 
-The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
+This project is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
