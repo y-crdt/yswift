@@ -1,13 +1,9 @@
-# yswift
+# y-uniffi
 
-This repo is a WIP.
+**This repository is WIP (Work In Progress)**
 
-> Swift bindings for yrs.
+This project provides [yrs](https://github.com/y-crdt/y-crdt) bindings for Kotlin and Swift using [UniFFI](https://github.com/mozilla/uniffi-rs/).
 
-## Build instructions
+`lib/` contains Rust library that wraps `yrs` crate and `udl` (UniFFI-specific interface definition file), which is required to generate Kotlin & Swift bindings. 
 
-Open the `.xcodeproj` and Run.
-
-The project setup is heavily inspired by [Mozilla's example iOS app](https://github.com/mozilla/uniffi-rs/tree/main/examples/app/ios).
-
-There are few limitations at the moment, related to the packaging of fat framework for iOS. (E.g. you can't build for the simulator)
+`ykt/` and `yswift/` contain language-specific wrappers to provide more idiomatic API.
