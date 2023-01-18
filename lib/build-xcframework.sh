@@ -28,12 +28,15 @@ $HOME/.cargo/bin/uniffi-bindgen generate "src/ynative.udl" --language swift --ou
 rm "${SWIFT_FOLDER}/scaffold/${PACKAGE_NAME}FFI.modulemap"
 
 echo "▸ Building for x86_64-apple-ios"
+CFLAGS_x86_64_apple_ios="-target x86_64-apple-ios" \
 cargo build --target x86_64-apple-ios --package "${PACKAGE_NAME}" --locked --release
 
 echo "▸ Building for aarch64-apple-ios-sim"
+CFLAGS_x86_64_apple_ios="-target aarch64-apple-ios-sim" \
 cargo build --target aarch64-apple-ios-sim --package "${PACKAGE_NAME}" --locked --release
 
 echo "▸ Building for aarch64-apple-ios"
+CFLAGS_x86_64_apple_ios="-target aarch64-apple-ios" \
 cargo build --target aarch64-apple-ios --package "${PACKAGE_NAME}" --locked --release
 
 echo "▸ Starting xcframework creation"

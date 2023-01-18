@@ -4,3 +4,5 @@
 *.xcworkspace
 *.zip
 target
+Derived
+swift/wrapper/include/*.modulemap

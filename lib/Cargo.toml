@@ -3,6 +3,13 @@ name = "ynative"
 version = "0.1.0"
 edition = "2021"
 
+[profile.release]
+strip = true
+opt-level = "z"
+lto = true
+codegen-units = 1
+panic = "abort"
+
 [workspace]
 
 [dependencies]
@@ -18,4 +25,4 @@ uniffi_build = "0.22.0"
 [lib]
 name = "uniffi_ynative"
 path = "src/lib.rs"
-crate-type = ["cdylib", "staticlib"]
+crate-type = ["staticlib"]
