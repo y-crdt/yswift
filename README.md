@@ -15,3 +15,7 @@ We maintain a [decision log](https://github.com/y-crdt/y-uniffi/blob/main/docs/d
 ## License
 
 This project is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
+
+## Thanks to
+
+Amazing guys at Mozilla for their outsanding work on [UniFFI](https://github.com/mozilla/uniffi-rs/) and all of the supporting work they've done on using, packaging and distributing Rust code for Swift and Kotlin codebases.
