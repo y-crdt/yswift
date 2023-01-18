@@ -22,7 +22,4 @@ This project depends on SPM package generated in [`uniffi/lib`](https://github.c
 
 ## Thanks
 
-Amazing guys at Mozilla for their outsanding work on [UniFFI](https://github.com/mozilla/uniffi-rs/) and all of the supporting work they've done on using, packaging and distributing Rust code for Swift codebases.
-
 Huge shout-out goes to Joe ([heckj](https://github.com/heckj)) for his [work on initial prototype of Yrs port for Swift](https://github.com/heckj/YrsC).
-
