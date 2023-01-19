@@ -19,4 +19,8 @@ final class YDocument {
     func getOrCreateText(named: String) -> Text {
         document.getText(name: named)
     }
+    
+    func diff(txn: Transaction, from state: [UInt8] = []) -> [UInt8] {
+        try! document.encodeDiffV1(tx: txn, stateVector: state)
+    }
 }
