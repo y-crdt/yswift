@@ -1,6 +1,16 @@
 namespace ynative {};
 
+[Error]
+enum CodingError {
+  "EncodingError",
+  "DecodingError",
+};
+
 interface Transaction {
+  [Throws=CodingError]
+  void transaction_apply_update(sequence<u8> update);
+  sequence<u8> transaction_state_vector();
+  Text? transaction_get_text(string name);
   void free();
 };
 
@@ -8,11 +18,14 @@ interface Text {
   void append([ByRef] Transaction tx, string text);
   void insert([ByRef] Transaction tx, u32 index, string chunk);
   string get_string([ByRef] Transaction tx);
+  void remove_range([ByRef] Transaction tx, u32 start, u32 length);
+  u32 length([ByRef] Transaction tx);
 };
-
 
 interface Doc {
   constructor();
+  [Throws=CodingError]
+  sequence<u8> encode_diff_v1([ByRef] Transaction tx, sequence<u8> state_vector);
   Text get_text(string name);
   Transaction transact();
 };

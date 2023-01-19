@@ -19,13 +19,13 @@ fileprivate extension RustBuffer {
     }
 
     static func from(_ ptr: UnsafeBufferPointer<UInt8>) -> RustBuffer {
-        try! rustCall { ffi_ynative_3948_rustbuffer_from_bytes(ForeignBytes(bufferPointer: ptr), $0) }
+        try! rustCall { ffi_ynative_277f_rustbuffer_from_bytes(ForeignBytes(bufferPointer: ptr), $0) }
     }
 
     // Frees the buffer in place.
     // The buffer must not be used after this is called.
     func deallocate() {
-        try! rustCall { ffi_ynative_3948_rustbuffer_free(self, $0) }
+        try! rustCall { ffi_ynative_277f_rustbuffer_free(self, $0) }
     }
 }
 
@@ -280,6 +280,19 @@ private func makeRustCall<T>(_ callback: (UnsafeMutablePointer<RustCallStatus>) 
 // Public interface members begin here.
 
 
+fileprivate struct FfiConverterUInt8: FfiConverterPrimitive {
+    typealias FfiType = UInt8
+    typealias SwiftType = UInt8
+
+    public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> UInt8 {
+        return try lift(readInt(&buf))
+    }
+
+    public static func write(_ value: UInt8, into buf: inout [UInt8]) {
+        writeInt(&buf, lower(value))
+    }
+}
+
 fileprivate struct FfiConverterUInt32: FfiConverterPrimitive {
     typealias FfiType = UInt32
     typealias SwiftType = UInt32
@@ -333,6 +346,7 @@ fileprivate struct FfiConverterString: FfiConverter {
 
 
 public protocol DocProtocol {
+    func `encodeDiffV1`(`tx`: Transaction, `stateVector`: [UInt8]) throws -> [UInt8]
     func `getText`(`name`: String)  -> Text
     func `transact`()  -> Transaction
     
@@ -352,23 +366,34 @@ public class Doc: DocProtocol {
     
     rustCall() {
     
-    ynative_3948_Doc_new($0)
+    ynative_277f_Doc_new($0)
 })
     }
 
     deinit {
-        try! rustCall { ffi_ynative_3948_Doc_object_free(pointer, $0) }
+        try! rustCall { ffi_ynative_277f_Doc_object_free(pointer, $0) }
     }
 
     
 
     
+    public func `encodeDiffV1`(`tx`: Transaction, `stateVector`: [UInt8]) throws -> [UInt8] {
+        return try FfiConverterSequenceUInt8.lift(
+            try
+    rustCallWithError(FfiConverterTypeCodingError.self) {
+    ynative_277f_Doc_encode_diff_v1(self.pointer, 
+        FfiConverterTypeTransaction.lower(`tx`), 
+        FfiConverterSequenceUInt8.lower(`stateVector`), $0
+    )
+}
+        )
+    }
     public func `getText`(`name`: String)  -> Text {
         return try! FfiConverterTypeText.lift(
             try!
     rustCall() {
     
-    ynative_3948_Doc_get_text(self.pointer, 
+    ynative_277f_Doc_get_text(self.pointer, 
         FfiConverterString.lower(`name`), $0
     )
 }
@@ -379,7 +404,7 @@ public class Doc: DocProtocol {
             try!
     rustCall() {
     
-    ynative_3948_Doc_transact(self.pointer, $0
+    ynative_277f_Doc_transact(self.pointer, $0
     )
 }
         )
@@ -423,6 +448,8 @@ public protocol TextProtocol {
     func `append`(`tx`: Transaction, `text`: String) 
     func `insert`(`tx`: Transaction, `index`: UInt32, `chunk`: String) 
     func `getString`(`tx`: Transaction)  -> String
+    func `removeRange`(`tx`: Transaction, `start`: UInt32, `length`: UInt32) 
+    func `length`(`tx`: Transaction)  -> UInt32
     
 }
 
@@ -437,7 +464,7 @@ public class Text: TextProtocol {
     }
 
     deinit {
-        try! rustCall { ffi_ynative_3948_Text_object_free(pointer, $0) }
+        try! rustCall { ffi_ynative_277f_Text_object_free(pointer, $0) }
     }
 
     
@@ -447,7 +474,7 @@ public class Text: TextProtocol {
         try!
     rustCall() {
     
-    ynative_3948_Text_append(self.pointer, 
+    ynative_277f_Text_append(self.pointer, 
         FfiConverterTypeTransaction.lower(`tx`), 
         FfiConverterString.lower(`text`), $0
     )
@@ -457,7 +484,7 @@ public class Text: TextProtocol {
         try!
     rustCall() {
     
-    ynative_3948_Text_insert(self.pointer, 
+    ynative_277f_Text_insert(self.pointer, 
         FfiConverterTypeTransaction.lower(`tx`), 
         FfiConverterUInt32.lower(`index`), 
         FfiConverterString.lower(`chunk`), $0
@@ -469,7 +496,29 @@ public class Text: TextProtocol {
             try!
     rustCall() {
     
-    ynative_3948_Text_get_string(self.pointer, 
+    ynative_277f_Text_get_string(self.pointer, 
+        FfiConverterTypeTransaction.lower(`tx`), $0
+    )
+}
+        )
+    }
+    public func `removeRange`(`tx`: Transaction, `start`: UInt32, `length`: UInt32)  {
+        try!
+    rustCall() {
+    
+    ynative_277f_Text_remove_range(self.pointer, 
+        FfiConverterTypeTransaction.lower(`tx`), 
+        FfiConverterUInt32.lower(`start`), 
+        FfiConverterUInt32.lower(`length`), $0
+    )
+}
+    }
+    public func `length`(`tx`: Transaction)  -> UInt32 {
+        return try! FfiConverterUInt32.lift(
+            try!
+    rustCall() {
+    
+    ynative_277f_Text_length(self.pointer, 
         FfiConverterTypeTransaction.lower(`tx`), $0
     )
 }
@@ -511,6 +560,9 @@ public struct FfiConverterTypeText: FfiConverter {
 
 
 public protocol TransactionProtocol {
+    func `transactionApplyUpdate`(`update`: [UInt8]) throws
+    func `transactionStateVector`()  -> [UInt8]
+    func `transactionGetText`(`name`: String)  -> Text?
     func `free`() 
     
 }
@@ -526,17 +578,46 @@ public class Transaction: TransactionProtocol {
     }
 
     deinit {
-        try! rustCall { ffi_ynative_3948_Transaction_object_free(pointer, $0) }
+        try! rustCall { ffi_ynative_277f_Transaction_object_free(pointer, $0) }
     }
 
     
 
     
+    public func `transactionApplyUpdate`(`update`: [UInt8]) throws {
+        try
+    rustCallWithError(FfiConverterTypeCodingError.self) {
+    ynative_277f_Transaction_transaction_apply_update(self.pointer, 
+        FfiConverterSequenceUInt8.lower(`update`), $0
+    )
+}
+    }
+    public func `transactionStateVector`()  -> [UInt8] {
+        return try! FfiConverterSequenceUInt8.lift(
+            try!
+    rustCall() {
+    
+    ynative_277f_Transaction_transaction_state_vector(self.pointer, $0
+    )
+}
+        )
+    }
+    public func `transactionGetText`(`name`: String)  -> Text? {
+        return try! FfiConverterOptionTypeText.lift(
+            try!
+    rustCall() {
+    
+    ynative_277f_Transaction_transaction_get_text(self.pointer, 
+        FfiConverterString.lower(`name`), $0
+    )
+}
+        )
+    }
     public func `free`()  {
         try!
     rustCall() {
     
-    ynative_3948_Transaction_free(self.pointer, $0
+    ynative_277f_Transaction_free(self.pointer, $0
     )
 }
     }
@@ -571,6 +652,108 @@ public struct FfiConverterTypeTransaction: FfiConverter {
 
     public static func lower(_ value: Transaction) -> UnsafeMutableRawPointer {
         return value.pointer
+    }
+}
+
+
+public enum CodingError {
+
+    
+    
+    // Simple error enums only carry a message
+    case EncodingError(message: String)
+    
+    // Simple error enums only carry a message
+    case DecodingError(message: String)
+    
+}
+
+public struct FfiConverterTypeCodingError: FfiConverterRustBuffer {
+    typealias SwiftType = CodingError
+
+    public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> CodingError {
+        let variant: Int32 = try readInt(&buf)
+        switch variant {
+
+        
+
+        
+        case 1: return .EncodingError(
+            message: try FfiConverterString.read(from: &buf)
+        )
+        
+        case 2: return .DecodingError(
+            message: try FfiConverterString.read(from: &buf)
+        )
+        
+
+        default: throw UniffiInternalError.unexpectedEnumCase
+        }
+    }
+
+    public static func write(_ value: CodingError, into buf: inout [UInt8]) {
+        switch value {
+
+        
+
+        
+        case let .EncodingError(message):
+            writeInt(&buf, Int32(1))
+            FfiConverterString.write(message, into: &buf)
+        case let .DecodingError(message):
+            writeInt(&buf, Int32(2))
+            FfiConverterString.write(message, into: &buf)
+
+        
+        }
+    }
+}
+
+
+extension CodingError: Equatable, Hashable {}
+
+extension CodingError: Error { }
+
+fileprivate struct FfiConverterOptionTypeText: FfiConverterRustBuffer {
+    typealias SwiftType = Text?
+
+    public static func write(_ value: SwiftType, into buf: inout [UInt8]) {
+        guard let value = value else {
+            writeInt(&buf, Int8(0))
+            return
+        }
+        writeInt(&buf, Int8(1))
+        FfiConverterTypeText.write(value, into: &buf)
+    }
+
+    public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> SwiftType {
+        switch try readInt(&buf) as Int8 {
+        case 0: return nil
+        case 1: return try FfiConverterTypeText.read(from: &buf)
+        default: throw UniffiInternalError.unexpectedOptionalTag
+        }
+    }
+}
+
+fileprivate struct FfiConverterSequenceUInt8: FfiConverterRustBuffer {
+    typealias SwiftType = [UInt8]
+
+    public static func write(_ value: [UInt8], into buf: inout [UInt8]) {
+        let len = Int32(value.count)
+        writeInt(&buf, len)
+        for item in value {
+            FfiConverterUInt8.write(item, into: &buf)
+        }
+    }
+
+    public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> [UInt8] {
+        let len: Int32 = try readInt(&buf)
+        var seq = [UInt8]()
+        seq.reserveCapacity(Int(len))
+        for _ in 0 ..< len {
+            seq.append(try FfiConverterUInt8.read(from: &buf))
+        }
+        return seq
     }
 }
 

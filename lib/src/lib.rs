@@ -1,8 +1,10 @@
 mod doc;
+mod error;
 mod text;
 mod transaction;
 
 use crate::doc::Doc;
+use crate::error::CodingError;
 use crate::text::Text;
 use crate::transaction::Transaction;
 
