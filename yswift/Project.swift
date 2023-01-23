@@ -12,6 +12,21 @@ let mainTarget = Target(
     dependencies: [.external(name: "YNativeFinal")]
 )
 
+let exampleTarget = Target(
+    name: "YSwiftExample",
+    platform: .iOS,
+    product: .app,
+    bundleId: "y-crdt.swift.example",
+    deploymentTarget: .iOS(targetVersion: "13.0", devices: .iphone),
+    infoPlist: .extendingDefault(with: [
+        "UILaunchStoryboardName": "LaunchScreen",
+        "NSLocalNetworkUsageDescription": "YSwiftExample needs to use your phone’s data to discover devices nearby"
+    ]),
+    sources: ["Example/**"],
+    resources: ["Example/LaunchScreen.storyboard"],
+    dependencies: [.target(name: "YSwift")]
+)
+
 let testTarget = Target(
     name: "YSwiftTests",
     platform: .iOS,
@@ -25,6 +40,6 @@ let testTarget = Target(
 let project = Project(
     name: "YSwift",
     organizationName: "y-crdt",
-    targets: [mainTarget, testTarget],
-    fileHeaderTemplate: .string("")
+    targets: [mainTarget, exampleTarget, testTarget],
+    fileHeaderTemplate: .none
 )

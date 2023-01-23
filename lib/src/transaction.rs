@@ -1,8 +1,12 @@
 use crate::error::CodingError;
 use crate::text::Text;
+use std::borrow::Borrow;
 use std::cell::{RefCell, RefMut};
 use std::sync::Arc;
-use yrs::{updates::decoder::Decode, updates::encoder::Encode, ReadTxn, TransactionMut, Update};
+use yrs::{
+    updates::decoder::Decode, updates::encoder::Encode, ReadTxn, StateVector, TransactionMut,
+    Update,
+};
 
 pub(crate) struct Transaction(pub(crate) RefCell<Option<TransactionMut<'static>>>);
 
@@ -21,6 +25,28 @@ impl<'doc> From<TransactionMut<'doc>> for Transaction {
 impl Transaction {
     pub(crate) fn transaction(&self) -> RefMut<'_, Option<TransactionMut<'static>>> {
         self.0.borrow_mut()
+    }
+
+    pub(crate) fn transaction_encode_update(&self) -> Vec<u8> {
+        self.transaction().as_ref().unwrap().encode_update_v1()
+    }
+
+    pub(crate) fn transaction_encode_state_as_update_from_sv(
+        &self,
+        state_vector: Vec<u8>,
+    ) -> Result<Vec<u8>, CodingError> {
+        let mut tx = self.transaction();
+        let tx = tx.as_mut().unwrap();
+
+        StateVector::decode_v1(state_vector.borrow())
+            .map_err(|_e| CodingError::DecodingError)
+            .map(|sv: StateVector| tx.encode_state_as_update_v1(&sv))
+    }
+
+    pub(crate) fn transaction_encode_state_as_update(&self) -> Vec<u8> {
+        let mut tx = self.transaction();
+        let tx = tx.as_mut().unwrap();
+        tx.encode_state_as_update_v1(&StateVector::default())
     }
 
     pub(crate) fn transaction_state_vector(&self) -> Vec<u8> {

@@ -1,14 +1,14 @@
 import Foundation
 import YNativeFinal
 
-final class YDocument {
+public final class YDocument {
     private let document: Doc
     
-    init() {
+    public init() {
         self.document = Doc()
     }
     
-    func transact<T>(_ changes: @escaping (Transaction) -> (T)) -> T {
+    public func transact<T>(_ changes: @escaping (Transaction) -> (T)) -> T {
         let transaction = document.transact()
         defer {
             transaction.free()
@@ -16,11 +16,11 @@ final class YDocument {
         return changes(transaction)
     }
     
-    func getOrCreateText(named: String) -> Text {
+    public func getOrCreateText(named: String) -> Text {
         document.getText(name: named)
     }
     
-    func diff(txn: Transaction, from state: [UInt8] = []) -> [UInt8] {
+    public func diff(txn: Transaction, from state: [UInt8] = []) -> [UInt8] {
         try! document.encodeDiffV1(tx: txn, stateVector: state)
     }
 }

@@ -19,13 +19,13 @@ fileprivate extension RustBuffer {
     }
 
     static func from(_ ptr: UnsafeBufferPointer<UInt8>) -> RustBuffer {
-        try! rustCall { ffi_ynative_277f_rustbuffer_from_bytes(ForeignBytes(bufferPointer: ptr), $0) }
+        try! rustCall { ffi_ynative_8c9a_rustbuffer_from_bytes(ForeignBytes(bufferPointer: ptr), $0) }
     }
 
     // Frees the buffer in place.
     // The buffer must not be used after this is called.
     func deallocate() {
-        try! rustCall { ffi_ynative_277f_rustbuffer_free(self, $0) }
+        try! rustCall { ffi_ynative_8c9a_rustbuffer_free(self, $0) }
     }
 }
 
@@ -366,12 +366,12 @@ public class Doc: DocProtocol {
     
     rustCall() {
     
-    ynative_277f_Doc_new($0)
+    ynative_8c9a_Doc_new($0)
 })
     }
 
     deinit {
-        try! rustCall { ffi_ynative_277f_Doc_object_free(pointer, $0) }
+        try! rustCall { ffi_ynative_8c9a_Doc_object_free(pointer, $0) }
     }
 
     
@@ -381,7 +381,7 @@ public class Doc: DocProtocol {
         return try FfiConverterSequenceUInt8.lift(
             try
     rustCallWithError(FfiConverterTypeCodingError.self) {
-    ynative_277f_Doc_encode_diff_v1(self.pointer, 
+    ynative_8c9a_Doc_encode_diff_v1(self.pointer, 
         FfiConverterTypeTransaction.lower(`tx`), 
         FfiConverterSequenceUInt8.lower(`stateVector`), $0
     )
@@ -393,7 +393,7 @@ public class Doc: DocProtocol {
             try!
     rustCall() {
     
-    ynative_277f_Doc_get_text(self.pointer, 
+    ynative_8c9a_Doc_get_text(self.pointer, 
         FfiConverterString.lower(`name`), $0
     )
 }
@@ -404,7 +404,7 @@ public class Doc: DocProtocol {
             try!
     rustCall() {
     
-    ynative_277f_Doc_transact(self.pointer, $0
+    ynative_8c9a_Doc_transact(self.pointer, $0
     )
 }
         )
@@ -464,7 +464,7 @@ public class Text: TextProtocol {
     }
 
     deinit {
-        try! rustCall { ffi_ynative_277f_Text_object_free(pointer, $0) }
+        try! rustCall { ffi_ynative_8c9a_Text_object_free(pointer, $0) }
     }
 
     
@@ -474,7 +474,7 @@ public class Text: TextProtocol {
         try!
     rustCall() {
     
-    ynative_277f_Text_append(self.pointer, 
+    ynative_8c9a_Text_append(self.pointer, 
         FfiConverterTypeTransaction.lower(`tx`), 
         FfiConverterString.lower(`text`), $0
     )
@@ -484,7 +484,7 @@ public class Text: TextProtocol {
         try!
     rustCall() {
     
-    ynative_277f_Text_insert(self.pointer, 
+    ynative_8c9a_Text_insert(self.pointer, 
         FfiConverterTypeTransaction.lower(`tx`), 
         FfiConverterUInt32.lower(`index`), 
         FfiConverterString.lower(`chunk`), $0
@@ -496,7 +496,7 @@ public class Text: TextProtocol {
             try!
     rustCall() {
     
-    ynative_277f_Text_get_string(self.pointer, 
+    ynative_8c9a_Text_get_string(self.pointer, 
         FfiConverterTypeTransaction.lower(`tx`), $0
     )
 }
@@ -506,7 +506,7 @@ public class Text: TextProtocol {
         try!
     rustCall() {
     
-    ynative_277f_Text_remove_range(self.pointer, 
+    ynative_8c9a_Text_remove_range(self.pointer, 
         FfiConverterTypeTransaction.lower(`tx`), 
         FfiConverterUInt32.lower(`start`), 
         FfiConverterUInt32.lower(`length`), $0
@@ -518,7 +518,7 @@ public class Text: TextProtocol {
             try!
     rustCall() {
     
-    ynative_277f_Text_length(self.pointer, 
+    ynative_8c9a_Text_length(self.pointer, 
         FfiConverterTypeTransaction.lower(`tx`), $0
     )
 }
@@ -561,6 +561,9 @@ public struct FfiConverterTypeText: FfiConverter {
 
 public protocol TransactionProtocol {
     func `transactionApplyUpdate`(`update`: [UInt8]) throws
+    func `transactionEncodeStateAsUpdateFromSv`(`stateVector`: [UInt8]) throws -> [UInt8]
+    func `transactionEncodeStateAsUpdate`()  -> [UInt8]
+    func `transactionEncodeUpdate`()  -> [UInt8]
     func `transactionStateVector`()  -> [UInt8]
     func `transactionGetText`(`name`: String)  -> Text?
     func `free`() 
@@ -578,7 +581,7 @@ public class Transaction: TransactionProtocol {
     }
 
     deinit {
-        try! rustCall { ffi_ynative_277f_Transaction_object_free(pointer, $0) }
+        try! rustCall { ffi_ynative_8c9a_Transaction_object_free(pointer, $0) }
     }
 
     
@@ -587,17 +590,47 @@ public class Transaction: TransactionProtocol {
     public func `transactionApplyUpdate`(`update`: [UInt8]) throws {
         try
     rustCallWithError(FfiConverterTypeCodingError.self) {
-    ynative_277f_Transaction_transaction_apply_update(self.pointer, 
+    ynative_8c9a_Transaction_transaction_apply_update(self.pointer, 
         FfiConverterSequenceUInt8.lower(`update`), $0
     )
 }
+    }
+    public func `transactionEncodeStateAsUpdateFromSv`(`stateVector`: [UInt8]) throws -> [UInt8] {
+        return try FfiConverterSequenceUInt8.lift(
+            try
+    rustCallWithError(FfiConverterTypeCodingError.self) {
+    ynative_8c9a_Transaction_transaction_encode_state_as_update_from_sv(self.pointer, 
+        FfiConverterSequenceUInt8.lower(`stateVector`), $0
+    )
+}
+        )
+    }
+    public func `transactionEncodeStateAsUpdate`()  -> [UInt8] {
+        return try! FfiConverterSequenceUInt8.lift(
+            try!
+    rustCall() {
+    
+    ynative_8c9a_Transaction_transaction_encode_state_as_update(self.pointer, $0
+    )
+}
+        )
+    }
+    public func `transactionEncodeUpdate`()  -> [UInt8] {
+        return try! FfiConverterSequenceUInt8.lift(
+            try!
+    rustCall() {
+    
+    ynative_8c9a_Transaction_transaction_encode_update(self.pointer, $0
+    )
+}
+        )
     }
     public func `transactionStateVector`()  -> [UInt8] {
         return try! FfiConverterSequenceUInt8.lift(
             try!
     rustCall() {
     
-    ynative_277f_Transaction_transaction_state_vector(self.pointer, $0
+    ynative_8c9a_Transaction_transaction_state_vector(self.pointer, $0
     )
 }
         )
@@ -607,7 +640,7 @@ public class Transaction: TransactionProtocol {
             try!
     rustCall() {
     
-    ynative_277f_Transaction_transaction_get_text(self.pointer, 
+    ynative_8c9a_Transaction_transaction_get_text(self.pointer, 
         FfiConverterString.lower(`name`), $0
     )
 }
@@ -617,7 +650,7 @@ public class Transaction: TransactionProtocol {
         try!
     rustCall() {
     
-    ynative_277f_Transaction_free(self.pointer, $0
+    ynative_8c9a_Transaction_free(self.pointer, $0
     )
 }
     }

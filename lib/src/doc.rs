@@ -29,7 +29,7 @@ impl Doc {
         let tx = tx.as_mut().unwrap();
 
         StateVector::decode_v1(state_vector.borrow())
-            .map_err(|_e| CodingError::EncodingError)
+            .map_err(|_e| CodingError::DecodingError)
             .map(|sv| tx.encode_diff_v1(&sv))
     }
 

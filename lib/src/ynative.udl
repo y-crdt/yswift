@@ -9,6 +9,10 @@ enum CodingError {
 interface Transaction {
   [Throws=CodingError]
   void transaction_apply_update(sequence<u8> update);
+  [Throws=CodingError]
+  sequence<u8> transaction_encode_state_as_update_from_sv(sequence<u8> state_vector);
+  sequence<u8> transaction_encode_state_as_update();
+  sequence<u8> transaction_encode_update();
   sequence<u8> transaction_state_vector();
   Text? transaction_get_text(string name);
   void free();
