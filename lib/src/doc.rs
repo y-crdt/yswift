@@ -1,10 +1,11 @@
+use crate::array::YArray;
 use crate::error::CodingError;
 use crate::text::Text;
 use crate::transaction::Transaction;
 use std::sync::Arc;
 use std::{borrow::Borrow, cell::RefCell};
 use yrs::ReadTxn;
-use yrs::{updates::decoder::Decode, OffsetKind, Options, StateVector, Transact};
+use yrs::{updates::decoder::Decode, ArrayRef, OffsetKind, Options, StateVector, Transact};
 
 pub(crate) struct Doc(RefCell<yrs::Doc>);
 
@@ -36,6 +37,11 @@ impl Doc {
     pub(crate) fn get_text(&self, name: String) -> Arc<Text> {
         let text_ref = self.0.borrow().get_or_insert_text(name.as_str());
         Arc::from(Text::from(text_ref))
+    }
+
+    pub(crate) fn get_array(&self, name: String) -> Arc<YArray> {
+        let array_ref: ArrayRef = self.0.borrow().get_or_insert_array(name.as_str()).into();
+        Arc::from(YArray::from(array_ref))
     }
 
     pub(crate) fn transact<'doc>(&self) -> Arc<Transaction> {

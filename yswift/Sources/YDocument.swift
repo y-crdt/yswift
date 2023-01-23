@@ -20,6 +20,10 @@ public final class YDocument {
         document.getText(name: named)
     }
     
+    public func getOrCreateArray(named: String) -> YArray {
+        document.getArray(name: named)
+    }
+    
     public func diff(txn: Transaction, from state: [UInt8] = []) -> [UInt8] {
         try! document.encodeDiffV1(tx: txn, stateVector: state)
     }

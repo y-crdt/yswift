@@ -26,10 +26,17 @@ interface Text {
   u32 length([ByRef] Transaction tx);
 };
 
+interface YArray {
+  [Throws=CodingError]
+  string get([ByRef] Transaction tx, u32 index);
+  void insert([ByRef] Transaction tx, u32 index, string json);
+};
+
 interface Doc {
   constructor();
   [Throws=CodingError]
   sequence<u8> encode_diff_v1([ByRef] Transaction tx, sequence<u8> state_vector);
   Text get_text(string name);
+  YArray get_array(string name);
   Transaction transact();
 };
