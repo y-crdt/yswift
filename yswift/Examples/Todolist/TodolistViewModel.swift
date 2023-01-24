@@ -49,6 +49,14 @@ final class TodolistViewModel: ObservableObject {
         }
     }
     
+    func disconnect() {
+        connectionManager.disconnect()
+    }
+    
+    func connect() {
+        connectionManager.connect()
+    }
+    
     func toggleItem(_ item: TodoItem) {
         guard let index = items.firstIndex(of: item) else { return }
         

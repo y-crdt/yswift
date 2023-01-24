@@ -36,6 +36,16 @@ class ConnectionManager: NSObject, ObservableObject {
         nearbyServiceBrowser.invitePeer(peerID, to: session, withContext: nil, timeout: TimeInterval(120))
     }
     
+    func disconnect() {
+        session.disconnect()
+    }
+    
+    func connect() {
+        if let peer = peers.first {
+            invitePeer(peer)
+        }
+    }
+    
     func sendEveryone(_ message: YSyncMessage) {
         do {
             let data = try JSONEncoder().encode(message)
@@ -48,6 +58,7 @@ class ConnectionManager: NSObject, ObservableObject {
 
 extension ConnectionManager: MCSessionDelegate {
     func session(_ session: MCSession, peer peerID: MCPeerID, didChange state: MCSessionState) {
+        
         onConnectionStateChanged?(state)
         switch state {
         case .connected:

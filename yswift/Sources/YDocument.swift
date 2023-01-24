@@ -8,12 +8,17 @@ public final class YDocument {
         self.document = Doc()
     }
     
+    private let someQueue = DispatchQueue(label: "ydoc-queue", qos: .userInitiated)
+    
     public func transact<T>(_ changes: @escaping (Transaction) -> (T)) -> T {
-        let transaction = document.transact()
-        defer {
-            transaction.free()
+        // most straightforward way for now
+        someQueue.sync {
+            let transaction = document.transact()
+            defer {
+                transaction.free()
+            }
+            return changes(transaction)
         }
-        return changes(transaction)
     }
     
     public func getOrCreateText(named: String) -> Text {

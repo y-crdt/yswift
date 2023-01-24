@@ -24,11 +24,23 @@ struct TodolistView: View {
                 }).padding()
             }
             if let connState = viewModel.connectionState {
-                HStack {
-                    Text(connState.rawValue)
-                        .padding()
+                HStack(spacing: 8) {
+                    Text(connState.rawValue.uppercased())
+                        .font(.system(size: 14, weight: .thin, design: .monospaced))
                     Spacer()
+                    if connState == .notConnected {
+                        Button("Connect") {
+                            viewModel.connect()
+                        }
+                        .tint(.green)
+                    } else {
+                        Button("Disconnect", role: .destructive) {
+                            viewModel.disconnect()
+                        }
+                    }
+                    
                 }
+                .padding()
             }
             List {
                 Section(header: Text("To Do")) {
