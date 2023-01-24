@@ -1,6 +1,5 @@
 import Foundation
 import XCTest
-import YNativeFinal
 @testable import YSwift
 
 class YDocumentTests: XCTestCase {

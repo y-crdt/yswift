@@ -1,5 +1,4 @@
 import XCTest
-import YNativeFinal
 @testable import YSwift
 
 class YTextTests: XCTestCase {

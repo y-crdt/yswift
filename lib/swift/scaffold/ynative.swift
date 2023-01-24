@@ -19,13 +19,13 @@ fileprivate extension RustBuffer {
     }
 
     static func from(_ ptr: UnsafeBufferPointer<UInt8>) -> RustBuffer {
-        try! rustCall { ffi_ynative_138c_rustbuffer_from_bytes(ForeignBytes(bufferPointer: ptr), $0) }
+        try! rustCall { ffi_ynative_aaf1_rustbuffer_from_bytes(ForeignBytes(bufferPointer: ptr), $0) }
     }
 
     // Frees the buffer in place.
     // The buffer must not be used after this is called.
     func deallocate() {
-        try! rustCall { ffi_ynative_138c_rustbuffer_free(self, $0) }
+        try! rustCall { ffi_ynative_aaf1_rustbuffer_free(self, $0) }
     }
 }
 
@@ -367,12 +367,12 @@ public class Doc: DocProtocol {
     
     rustCall() {
     
-    ynative_138c_Doc_new($0)
+    ynative_aaf1_Doc_new($0)
 })
     }
 
     deinit {
-        try! rustCall { ffi_ynative_138c_Doc_object_free(pointer, $0) }
+        try! rustCall { ffi_ynative_aaf1_Doc_object_free(pointer, $0) }
     }
 
     
@@ -382,7 +382,7 @@ public class Doc: DocProtocol {
         return try FfiConverterSequenceUInt8.lift(
             try
     rustCallWithError(FfiConverterTypeCodingError.self) {
-    ynative_138c_Doc_encode_diff_v1(self.pointer, 
+    ynative_aaf1_Doc_encode_diff_v1(self.pointer, 
         FfiConverterTypeTransaction.lower(`tx`), 
         FfiConverterSequenceUInt8.lower(`stateVector`), $0
     )
@@ -394,7 +394,7 @@ public class Doc: DocProtocol {
             try!
     rustCall() {
     
-    ynative_138c_Doc_get_text(self.pointer, 
+    ynative_aaf1_Doc_get_text(self.pointer, 
         FfiConverterString.lower(`name`), $0
     )
 }
@@ -405,7 +405,7 @@ public class Doc: DocProtocol {
             try!
     rustCall() {
     
-    ynative_138c_Doc_get_array(self.pointer, 
+    ynative_aaf1_Doc_get_array(self.pointer, 
         FfiConverterString.lower(`name`), $0
     )
 }
@@ -416,7 +416,7 @@ public class Doc: DocProtocol {
             try!
     rustCall() {
     
-    ynative_138c_Doc_transact(self.pointer, $0
+    ynative_aaf1_Doc_transact(self.pointer, $0
     )
 }
         )
@@ -476,7 +476,7 @@ public class Text: TextProtocol {
     }
 
     deinit {
-        try! rustCall { ffi_ynative_138c_Text_object_free(pointer, $0) }
+        try! rustCall { ffi_ynative_aaf1_Text_object_free(pointer, $0) }
     }
 
     
@@ -486,7 +486,7 @@ public class Text: TextProtocol {
         try!
     rustCall() {
     
-    ynative_138c_Text_append(self.pointer, 
+    ynative_aaf1_Text_append(self.pointer, 
         FfiConverterTypeTransaction.lower(`tx`), 
         FfiConverterString.lower(`text`), $0
     )
@@ -496,7 +496,7 @@ public class Text: TextProtocol {
         try!
     rustCall() {
     
-    ynative_138c_Text_insert(self.pointer, 
+    ynative_aaf1_Text_insert(self.pointer, 
         FfiConverterTypeTransaction.lower(`tx`), 
         FfiConverterUInt32.lower(`index`), 
         FfiConverterString.lower(`chunk`), $0
@@ -508,7 +508,7 @@ public class Text: TextProtocol {
             try!
     rustCall() {
     
-    ynative_138c_Text_get_string(self.pointer, 
+    ynative_aaf1_Text_get_string(self.pointer, 
         FfiConverterTypeTransaction.lower(`tx`), $0
     )
 }
@@ -518,7 +518,7 @@ public class Text: TextProtocol {
         try!
     rustCall() {
     
-    ynative_138c_Text_remove_range(self.pointer, 
+    ynative_aaf1_Text_remove_range(self.pointer, 
         FfiConverterTypeTransaction.lower(`tx`), 
         FfiConverterUInt32.lower(`start`), 
         FfiConverterUInt32.lower(`length`), $0
@@ -530,7 +530,7 @@ public class Text: TextProtocol {
             try!
     rustCall() {
     
-    ynative_138c_Text_length(self.pointer, 
+    ynative_aaf1_Text_length(self.pointer, 
         FfiConverterTypeTransaction.lower(`tx`), $0
     )
 }
@@ -593,7 +593,7 @@ public class Transaction: TransactionProtocol {
     }
 
     deinit {
-        try! rustCall { ffi_ynative_138c_Transaction_object_free(pointer, $0) }
+        try! rustCall { ffi_ynative_aaf1_Transaction_object_free(pointer, $0) }
     }
 
     
@@ -602,7 +602,7 @@ public class Transaction: TransactionProtocol {
     public func `transactionApplyUpdate`(`update`: [UInt8]) throws {
         try
     rustCallWithError(FfiConverterTypeCodingError.self) {
-    ynative_138c_Transaction_transaction_apply_update(self.pointer, 
+    ynative_aaf1_Transaction_transaction_apply_update(self.pointer, 
         FfiConverterSequenceUInt8.lower(`update`), $0
     )
 }
@@ -611,7 +611,7 @@ public class Transaction: TransactionProtocol {
         return try FfiConverterSequenceUInt8.lift(
             try
     rustCallWithError(FfiConverterTypeCodingError.self) {
-    ynative_138c_Transaction_transaction_encode_state_as_update_from_sv(self.pointer, 
+    ynative_aaf1_Transaction_transaction_encode_state_as_update_from_sv(self.pointer, 
         FfiConverterSequenceUInt8.lower(`stateVector`), $0
     )
 }
@@ -622,7 +622,7 @@ public class Transaction: TransactionProtocol {
             try!
     rustCall() {
     
-    ynative_138c_Transaction_transaction_encode_state_as_update(self.pointer, $0
+    ynative_aaf1_Transaction_transaction_encode_state_as_update(self.pointer, $0
     )
 }
         )
@@ -632,7 +632,7 @@ public class Transaction: TransactionProtocol {
             try!
     rustCall() {
     
-    ynative_138c_Transaction_transaction_encode_update(self.pointer, $0
+    ynative_aaf1_Transaction_transaction_encode_update(self.pointer, $0
     )
 }
         )
@@ -642,7 +642,7 @@ public class Transaction: TransactionProtocol {
             try!
     rustCall() {
     
-    ynative_138c_Transaction_transaction_state_vector(self.pointer, $0
+    ynative_aaf1_Transaction_transaction_state_vector(self.pointer, $0
     )
 }
         )
@@ -652,7 +652,7 @@ public class Transaction: TransactionProtocol {
             try!
     rustCall() {
     
-    ynative_138c_Transaction_transaction_get_text(self.pointer, 
+    ynative_aaf1_Transaction_transaction_get_text(self.pointer, 
         FfiConverterString.lower(`name`), $0
     )
 }
@@ -662,7 +662,7 @@ public class Transaction: TransactionProtocol {
         try!
     rustCall() {
     
-    ynative_138c_Transaction_free(self.pointer, $0
+    ynative_aaf1_Transaction_free(self.pointer, $0
     )
 }
     }
@@ -703,7 +703,14 @@ public struct FfiConverterTypeTransaction: FfiConverter {
 
 public protocol YArrayProtocol {
     func `get`(`tx`: Transaction, `index`: UInt32) throws -> String
-    func `insert`(`tx`: Transaction, `index`: UInt32, `json`: String) 
+    func `insert`(`tx`: Transaction, `index`: UInt32, `value`: String) 
+    func `insertRange`(`tx`: Transaction, `index`: UInt32, `values`: [String]) 
+    func `length`(`tx`: Transaction)  -> UInt32
+    func `pushBack`(`tx`: Transaction, `value`: String) 
+    func `pushFront`(`tx`: Transaction, `value`: String) 
+    func `remove`(`tx`: Transaction, `index`: UInt32) 
+    func `removeRange`(`tx`: Transaction, `index`: UInt32, `len`: UInt32) 
+    func `toA`(`tx`: Transaction)  -> [String]
     
 }
 
@@ -718,7 +725,7 @@ public class YArray: YArrayProtocol {
     }
 
     deinit {
-        try! rustCall { ffi_ynative_138c_YArray_object_free(pointer, $0) }
+        try! rustCall { ffi_ynative_aaf1_YArray_object_free(pointer, $0) }
     }
 
     
@@ -728,23 +735,97 @@ public class YArray: YArrayProtocol {
         return try FfiConverterString.lift(
             try
     rustCallWithError(FfiConverterTypeCodingError.self) {
-    ynative_138c_YArray_get(self.pointer, 
+    ynative_aaf1_YArray_get(self.pointer, 
         FfiConverterTypeTransaction.lower(`tx`), 
         FfiConverterUInt32.lower(`index`), $0
     )
 }
         )
     }
-    public func `insert`(`tx`: Transaction, `index`: UInt32, `json`: String)  {
+    public func `insert`(`tx`: Transaction, `index`: UInt32, `value`: String)  {
         try!
     rustCall() {
     
-    ynative_138c_YArray_insert(self.pointer, 
+    ynative_aaf1_YArray_insert(self.pointer, 
         FfiConverterTypeTransaction.lower(`tx`), 
         FfiConverterUInt32.lower(`index`), 
-        FfiConverterString.lower(`json`), $0
+        FfiConverterString.lower(`value`), $0
     )
 }
+    }
+    public func `insertRange`(`tx`: Transaction, `index`: UInt32, `values`: [String])  {
+        try!
+    rustCall() {
+    
+    ynative_aaf1_YArray_insert_range(self.pointer, 
+        FfiConverterTypeTransaction.lower(`tx`), 
+        FfiConverterUInt32.lower(`index`), 
+        FfiConverterSequenceString.lower(`values`), $0
+    )
+}
+    }
+    public func `length`(`tx`: Transaction)  -> UInt32 {
+        return try! FfiConverterUInt32.lift(
+            try!
+    rustCall() {
+    
+    ynative_aaf1_YArray_length(self.pointer, 
+        FfiConverterTypeTransaction.lower(`tx`), $0
+    )
+}
+        )
+    }
+    public func `pushBack`(`tx`: Transaction, `value`: String)  {
+        try!
+    rustCall() {
+    
+    ynative_aaf1_YArray_push_back(self.pointer, 
+        FfiConverterTypeTransaction.lower(`tx`), 
+        FfiConverterString.lower(`value`), $0
+    )
+}
+    }
+    public func `pushFront`(`tx`: Transaction, `value`: String)  {
+        try!
+    rustCall() {
+    
+    ynative_aaf1_YArray_push_front(self.pointer, 
+        FfiConverterTypeTransaction.lower(`tx`), 
+        FfiConverterString.lower(`value`), $0
+    )
+}
+    }
+    public func `remove`(`tx`: Transaction, `index`: UInt32)  {
+        try!
+    rustCall() {
+    
+    ynative_aaf1_YArray_remove(self.pointer, 
+        FfiConverterTypeTransaction.lower(`tx`), 
+        FfiConverterUInt32.lower(`index`), $0
+    )
+}
+    }
+    public func `removeRange`(`tx`: Transaction, `index`: UInt32, `len`: UInt32)  {
+        try!
+    rustCall() {
+    
+    ynative_aaf1_YArray_remove_range(self.pointer, 
+        FfiConverterTypeTransaction.lower(`tx`), 
+        FfiConverterUInt32.lower(`index`), 
+        FfiConverterUInt32.lower(`len`), $0
+    )
+}
+    }
+    public func `toA`(`tx`: Transaction)  -> [String] {
+        return try! FfiConverterSequenceString.lift(
+            try!
+    rustCall() {
+    
+    ynative_aaf1_YArray_to_a(self.pointer, 
+        FfiConverterTypeTransaction.lower(`tx`), $0
+    )
+}
+        )
     }
     
 }
@@ -877,6 +958,28 @@ fileprivate struct FfiConverterSequenceUInt8: FfiConverterRustBuffer {
         seq.reserveCapacity(Int(len))
         for _ in 0 ..< len {
             seq.append(try FfiConverterUInt8.read(from: &buf))
+        }
+        return seq
+    }
+}
+
+fileprivate struct FfiConverterSequenceString: FfiConverterRustBuffer {
+    typealias SwiftType = [String]
+
+    public static func write(_ value: [String], into buf: inout [UInt8]) {
+        let len = Int32(value.count)
+        writeInt(&buf, len)
+        for item in value {
+            FfiConverterString.write(item, into: &buf)
+        }
+    }
+
+    public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> [String] {
+        let len: Int32 = try readInt(&buf)
+        var seq = [String]()
+        seq.reserveCapacity(Int(len))
+        for _ in 0 ..< len {
+            seq.append(try FfiConverterString.read(from: &buf))
         }
         return seq
     }

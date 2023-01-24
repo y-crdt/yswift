@@ -1,5 +1,4 @@
 import Foundation
-import YSwift
 
 public struct YSyncMessage: Codable {
     let kind: Kind

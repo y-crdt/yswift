@@ -20,8 +20,8 @@ public final class YDocument {
         document.getText(name: named)
     }
     
-    public func getOrCreateArray(named: String) -> YArray {
-        document.getArray(name: named)
+    public func getOrCreateArray<T: Codable>(named: String) -> YYArray<T> {
+        YYArray(array: document.getArray(name: named))
     }
     
     public func diff(txn: Transaction, from state: [UInt8] = []) -> [UInt8] {
