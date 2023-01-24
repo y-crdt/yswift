@@ -1,8 +1,8 @@
 import Foundation
 
 public struct YSyncMessage: Codable {
-    let kind: Kind
-    let buffer: Buffer
+    public let kind: Kind
+    public let buffer: Buffer
     
     public init(kind: YSyncMessage.Kind, buffer: Buffer) {
         self.kind = kind
@@ -34,7 +34,6 @@ public final class YProtocol {
     public func handleStep1(_ stateVector: Buffer) -> YSyncMessage {
         let update = document.transact { txn in
             try! txn.transactionEncodeStateAsUpdateFromSv(stateVector: stateVector)
-//            try! txn.transactionEncodeStateAsUpdate(stateVector: stateVector)
         }
         return sendStep2(update)
     }

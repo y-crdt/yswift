@@ -6,8 +6,14 @@ public final class YYArray<T: Codable> {
     private let decoder = JSONDecoder()
     private let encoder = JSONEncoder()
     
-    init(array: YArray) {
+    public init(array: YArray) {
         self.array = array
+    }
+    
+    public func forEach(tx: Transaction, _ body: @escaping (T) -> Void) {
+        // @TODO: check for memory leaks
+        let delegate = YYArrayEachDelegate(callback: body, decoded: decoded)
+        array.each(tx: tx, delegate: delegate)
     }
     
     public func get(tx: Transaction, index: Int) -> T {
@@ -68,5 +74,22 @@ public final class YYArray<T: Codable> {
         value.map {
             encoded($0)
         }
+    }
+}
+
+class YYArrayEachDelegate<T: Codable>: YArrayEachDelegate {
+    private var callback: (T) -> Void
+    private var decoded: (String) -> T
+    
+    init(
+        callback: @escaping (T) -> Void,
+        decoded: @escaping (String) -> T
+    ) {
+        self.callback = callback
+        self.decoded = decoded
+    }
+    
+    func call(value: String) {
+        callback(decoded(value))
     }
 }

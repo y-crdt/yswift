@@ -1,3 +1,4 @@
+use crate::array::YArray;
 use crate::error::CodingError;
 use crate::text::Text;
 use std::borrow::Borrow;
@@ -69,6 +70,15 @@ impl Transaction {
             .unwrap()
             .get_text(name.as_str())
             .map(Text::from)
+            .map(Arc::from)
+    }
+
+    pub(crate) fn transaction_get_array(&self, name: String) -> Option<Arc<YArray>> {
+        self.transaction()
+            .as_ref()
+            .unwrap()
+            .get_array(name.as_str())
+            .map(YArray::from)
             .map(Arc::from)
     }
 

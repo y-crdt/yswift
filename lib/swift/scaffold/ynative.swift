@@ -19,13 +19,13 @@ fileprivate extension RustBuffer {
     }
 
     static func from(_ ptr: UnsafeBufferPointer<UInt8>) -> RustBuffer {
-        try! rustCall { ffi_ynative_aaf1_rustbuffer_from_bytes(ForeignBytes(bufferPointer: ptr), $0) }
+        try! rustCall { ffi_ynative_268e_rustbuffer_from_bytes(ForeignBytes(bufferPointer: ptr), $0) }
     }
 
     // Frees the buffer in place.
     // The buffer must not be used after this is called.
     func deallocate() {
-        try! rustCall { ffi_ynative_aaf1_rustbuffer_free(self, $0) }
+        try! rustCall { ffi_ynative_268e_rustbuffer_free(self, $0) }
     }
 }
 
@@ -367,12 +367,12 @@ public class Doc: DocProtocol {
     
     rustCall() {
     
-    ynative_aaf1_Doc_new($0)
+    ynative_268e_Doc_new($0)
 })
     }
 
     deinit {
-        try! rustCall { ffi_ynative_aaf1_Doc_object_free(pointer, $0) }
+        try! rustCall { ffi_ynative_268e_Doc_object_free(pointer, $0) }
     }
 
     
@@ -382,7 +382,7 @@ public class Doc: DocProtocol {
         return try FfiConverterSequenceUInt8.lift(
             try
     rustCallWithError(FfiConverterTypeCodingError.self) {
-    ynative_aaf1_Doc_encode_diff_v1(self.pointer, 
+    ynative_268e_Doc_encode_diff_v1(self.pointer, 
         FfiConverterTypeTransaction.lower(`tx`), 
         FfiConverterSequenceUInt8.lower(`stateVector`), $0
     )
@@ -394,7 +394,7 @@ public class Doc: DocProtocol {
             try!
     rustCall() {
     
-    ynative_aaf1_Doc_get_text(self.pointer, 
+    ynative_268e_Doc_get_text(self.pointer, 
         FfiConverterString.lower(`name`), $0
     )
 }
@@ -405,7 +405,7 @@ public class Doc: DocProtocol {
             try!
     rustCall() {
     
-    ynative_aaf1_Doc_get_array(self.pointer, 
+    ynative_268e_Doc_get_array(self.pointer, 
         FfiConverterString.lower(`name`), $0
     )
 }
@@ -416,7 +416,7 @@ public class Doc: DocProtocol {
             try!
     rustCall() {
     
-    ynative_aaf1_Doc_transact(self.pointer, $0
+    ynative_268e_Doc_transact(self.pointer, $0
     )
 }
         )
@@ -476,7 +476,7 @@ public class Text: TextProtocol {
     }
 
     deinit {
-        try! rustCall { ffi_ynative_aaf1_Text_object_free(pointer, $0) }
+        try! rustCall { ffi_ynative_268e_Text_object_free(pointer, $0) }
     }
 
     
@@ -486,7 +486,7 @@ public class Text: TextProtocol {
         try!
     rustCall() {
     
-    ynative_aaf1_Text_append(self.pointer, 
+    ynative_268e_Text_append(self.pointer, 
         FfiConverterTypeTransaction.lower(`tx`), 
         FfiConverterString.lower(`text`), $0
     )
@@ -496,7 +496,7 @@ public class Text: TextProtocol {
         try!
     rustCall() {
     
-    ynative_aaf1_Text_insert(self.pointer, 
+    ynative_268e_Text_insert(self.pointer, 
         FfiConverterTypeTransaction.lower(`tx`), 
         FfiConverterUInt32.lower(`index`), 
         FfiConverterString.lower(`chunk`), $0
@@ -508,7 +508,7 @@ public class Text: TextProtocol {
             try!
     rustCall() {
     
-    ynative_aaf1_Text_get_string(self.pointer, 
+    ynative_268e_Text_get_string(self.pointer, 
         FfiConverterTypeTransaction.lower(`tx`), $0
     )
 }
@@ -518,7 +518,7 @@ public class Text: TextProtocol {
         try!
     rustCall() {
     
-    ynative_aaf1_Text_remove_range(self.pointer, 
+    ynative_268e_Text_remove_range(self.pointer, 
         FfiConverterTypeTransaction.lower(`tx`), 
         FfiConverterUInt32.lower(`start`), 
         FfiConverterUInt32.lower(`length`), $0
@@ -530,7 +530,7 @@ public class Text: TextProtocol {
             try!
     rustCall() {
     
-    ynative_aaf1_Text_length(self.pointer, 
+    ynative_268e_Text_length(self.pointer, 
         FfiConverterTypeTransaction.lower(`tx`), $0
     )
 }
@@ -578,6 +578,7 @@ public protocol TransactionProtocol {
     func `transactionEncodeUpdate`()  -> [UInt8]
     func `transactionStateVector`()  -> [UInt8]
     func `transactionGetText`(`name`: String)  -> Text?
+    func `transactionGetArray`(`name`: String)  -> YArray?
     func `free`() 
     
 }
@@ -593,7 +594,7 @@ public class Transaction: TransactionProtocol {
     }
 
     deinit {
-        try! rustCall { ffi_ynative_aaf1_Transaction_object_free(pointer, $0) }
+        try! rustCall { ffi_ynative_268e_Transaction_object_free(pointer, $0) }
     }
 
     
@@ -602,7 +603,7 @@ public class Transaction: TransactionProtocol {
     public func `transactionApplyUpdate`(`update`: [UInt8]) throws {
         try
     rustCallWithError(FfiConverterTypeCodingError.self) {
-    ynative_aaf1_Transaction_transaction_apply_update(self.pointer, 
+    ynative_268e_Transaction_transaction_apply_update(self.pointer, 
         FfiConverterSequenceUInt8.lower(`update`), $0
     )
 }
@@ -611,7 +612,7 @@ public class Transaction: TransactionProtocol {
         return try FfiConverterSequenceUInt8.lift(
             try
     rustCallWithError(FfiConverterTypeCodingError.self) {
-    ynative_aaf1_Transaction_transaction_encode_state_as_update_from_sv(self.pointer, 
+    ynative_268e_Transaction_transaction_encode_state_as_update_from_sv(self.pointer, 
         FfiConverterSequenceUInt8.lower(`stateVector`), $0
     )
 }
@@ -622,7 +623,7 @@ public class Transaction: TransactionProtocol {
             try!
     rustCall() {
     
-    ynative_aaf1_Transaction_transaction_encode_state_as_update(self.pointer, $0
+    ynative_268e_Transaction_transaction_encode_state_as_update(self.pointer, $0
     )
 }
         )
@@ -632,7 +633,7 @@ public class Transaction: TransactionProtocol {
             try!
     rustCall() {
     
-    ynative_aaf1_Transaction_transaction_encode_update(self.pointer, $0
+    ynative_268e_Transaction_transaction_encode_update(self.pointer, $0
     )
 }
         )
@@ -642,7 +643,7 @@ public class Transaction: TransactionProtocol {
             try!
     rustCall() {
     
-    ynative_aaf1_Transaction_transaction_state_vector(self.pointer, $0
+    ynative_268e_Transaction_transaction_state_vector(self.pointer, $0
     )
 }
         )
@@ -652,7 +653,18 @@ public class Transaction: TransactionProtocol {
             try!
     rustCall() {
     
-    ynative_aaf1_Transaction_transaction_get_text(self.pointer, 
+    ynative_268e_Transaction_transaction_get_text(self.pointer, 
+        FfiConverterString.lower(`name`), $0
+    )
+}
+        )
+    }
+    public func `transactionGetArray`(`name`: String)  -> YArray? {
+        return try! FfiConverterOptionTypeYArray.lift(
+            try!
+    rustCall() {
+    
+    ynative_268e_Transaction_transaction_get_array(self.pointer, 
         FfiConverterString.lower(`name`), $0
     )
 }
@@ -662,7 +674,7 @@ public class Transaction: TransactionProtocol {
         try!
     rustCall() {
     
-    ynative_aaf1_Transaction_free(self.pointer, $0
+    ynative_268e_Transaction_free(self.pointer, $0
     )
 }
     }
@@ -702,6 +714,7 @@ public struct FfiConverterTypeTransaction: FfiConverter {
 
 
 public protocol YArrayProtocol {
+    func `each`(`tx`: Transaction, `delegate`: YArrayEachDelegate) 
     func `get`(`tx`: Transaction, `index`: UInt32) throws -> String
     func `insert`(`tx`: Transaction, `index`: UInt32, `value`: String) 
     func `insertRange`(`tx`: Transaction, `index`: UInt32, `values`: [String]) 
@@ -725,17 +738,27 @@ public class YArray: YArrayProtocol {
     }
 
     deinit {
-        try! rustCall { ffi_ynative_aaf1_YArray_object_free(pointer, $0) }
+        try! rustCall { ffi_ynative_268e_YArray_object_free(pointer, $0) }
     }
 
     
 
     
+    public func `each`(`tx`: Transaction, `delegate`: YArrayEachDelegate)  {
+        try!
+    rustCall() {
+    
+    ynative_268e_YArray_each(self.pointer, 
+        FfiConverterTypeTransaction.lower(`tx`), 
+        FfiConverterCallbackInterfaceYArrayEachDelegate.lower(`delegate`), $0
+    )
+}
+    }
     public func `get`(`tx`: Transaction, `index`: UInt32) throws -> String {
         return try FfiConverterString.lift(
             try
     rustCallWithError(FfiConverterTypeCodingError.self) {
-    ynative_aaf1_YArray_get(self.pointer, 
+    ynative_268e_YArray_get(self.pointer, 
         FfiConverterTypeTransaction.lower(`tx`), 
         FfiConverterUInt32.lower(`index`), $0
     )
@@ -746,7 +769,7 @@ public class YArray: YArrayProtocol {
         try!
     rustCall() {
     
-    ynative_aaf1_YArray_insert(self.pointer, 
+    ynative_268e_YArray_insert(self.pointer, 
         FfiConverterTypeTransaction.lower(`tx`), 
         FfiConverterUInt32.lower(`index`), 
         FfiConverterString.lower(`value`), $0
@@ -757,7 +780,7 @@ public class YArray: YArrayProtocol {
         try!
     rustCall() {
     
-    ynative_aaf1_YArray_insert_range(self.pointer, 
+    ynative_268e_YArray_insert_range(self.pointer, 
         FfiConverterTypeTransaction.lower(`tx`), 
         FfiConverterUInt32.lower(`index`), 
         FfiConverterSequenceString.lower(`values`), $0
@@ -769,7 +792,7 @@ public class YArray: YArrayProtocol {
             try!
     rustCall() {
     
-    ynative_aaf1_YArray_length(self.pointer, 
+    ynative_268e_YArray_length(self.pointer, 
         FfiConverterTypeTransaction.lower(`tx`), $0
     )
 }
@@ -779,7 +802,7 @@ public class YArray: YArrayProtocol {
         try!
     rustCall() {
     
-    ynative_aaf1_YArray_push_back(self.pointer, 
+    ynative_268e_YArray_push_back(self.pointer, 
         FfiConverterTypeTransaction.lower(`tx`), 
         FfiConverterString.lower(`value`), $0
     )
@@ -789,7 +812,7 @@ public class YArray: YArrayProtocol {
         try!
     rustCall() {
     
-    ynative_aaf1_YArray_push_front(self.pointer, 
+    ynative_268e_YArray_push_front(self.pointer, 
         FfiConverterTypeTransaction.lower(`tx`), 
         FfiConverterString.lower(`value`), $0
     )
@@ -799,7 +822,7 @@ public class YArray: YArrayProtocol {
         try!
     rustCall() {
     
-    ynative_aaf1_YArray_remove(self.pointer, 
+    ynative_268e_YArray_remove(self.pointer, 
         FfiConverterTypeTransaction.lower(`tx`), 
         FfiConverterUInt32.lower(`index`), $0
     )
@@ -809,7 +832,7 @@ public class YArray: YArrayProtocol {
         try!
     rustCall() {
     
-    ynative_aaf1_YArray_remove_range(self.pointer, 
+    ynative_268e_YArray_remove_range(self.pointer, 
         FfiConverterTypeTransaction.lower(`tx`), 
         FfiConverterUInt32.lower(`index`), 
         FfiConverterUInt32.lower(`len`), $0
@@ -821,7 +844,7 @@ public class YArray: YArrayProtocol {
             try!
     rustCall() {
     
-    ynative_aaf1_YArray_to_a(self.pointer, 
+    ynative_268e_YArray_to_a(self.pointer, 
         FfiConverterTypeTransaction.lower(`tx`), $0
     )
 }
@@ -920,6 +943,179 @@ extension CodingError: Equatable, Hashable {}
 
 extension CodingError: Error { }
 
+fileprivate extension NSLock {
+    func withLock<T>(f: () throws -> T) rethrows -> T {
+        self.lock()
+        defer { self.unlock() }
+        return try f()
+    }
+}
+
+fileprivate typealias UniFFICallbackHandle = UInt64
+fileprivate class UniFFICallbackHandleMap<T> {
+    private var leftMap: [UniFFICallbackHandle: T] = [:]
+    private var counter: [UniFFICallbackHandle: UInt64] = [:]
+    private var rightMap: [ObjectIdentifier: UniFFICallbackHandle] = [:]
+
+    private let lock = NSLock()
+    private var currentHandle: UniFFICallbackHandle = 0
+    private let stride: UniFFICallbackHandle = 1
+
+    func insert(obj: T) -> UniFFICallbackHandle {
+        lock.withLock {
+            let id = ObjectIdentifier(obj as AnyObject)
+            let handle = rightMap[id] ?? {
+                currentHandle += stride
+                let handle = currentHandle
+                leftMap[handle] = obj
+                rightMap[id] = handle
+                return handle
+            }()
+            counter[handle] = (counter[handle] ?? 0) + 1
+            return handle
+        }
+    }
+
+    func get(handle: UniFFICallbackHandle) -> T? {
+        lock.withLock {
+            leftMap[handle]
+        }
+    }
+
+    func delete(handle: UniFFICallbackHandle) {
+        remove(handle: handle)
+    }
+
+    @discardableResult
+    func remove(handle: UniFFICallbackHandle) -> T? {
+        lock.withLock {
+            defer { counter[handle] = (counter[handle] ?? 1) - 1 }
+            guard counter[handle] == 1 else { return leftMap[handle] }
+            let obj = leftMap.removeValue(forKey: handle)
+            if let obj = obj {
+                rightMap.removeValue(forKey: ObjectIdentifier(obj as AnyObject))
+            }
+            return obj
+        }
+    }
+}
+
+// Magic number for the Rust proxy to call using the same mechanism as every other method,
+// to free the callback once it's dropped by Rust.
+private let IDX_CALLBACK_FREE: Int32 = 0
+
+// Declaration and FfiConverters for YArrayEachDelegate Callback Interface
+
+public protocol YArrayEachDelegate : AnyObject {
+    func `call`(`value`: String) 
+    
+}
+
+// The ForeignCallback that is passed to Rust.
+fileprivate let foreignCallbackCallbackInterfaceYArrayEachDelegate : ForeignCallback =
+    { (handle: UniFFICallbackHandle, method: Int32, args: RustBuffer, out_buf: UnsafeMutablePointer<RustBuffer>) -> Int32 in
+        func `invokeCall`(_ swiftCallbackInterface: YArrayEachDelegate, _ args: RustBuffer) throws -> RustBuffer {
+        defer { args.deallocate() }
+
+            var reader = createReader(data: Data(rustBuffer: args))
+            swiftCallbackInterface.`call`(
+                    `value`:  try FfiConverterString.read(from: &reader)
+                    )
+            return RustBuffer()
+                // TODO catch errors and report them back to Rust.
+                // https://github.com/mozilla/uniffi-rs/issues/351
+
+        }
+        
+
+        let cb: YArrayEachDelegate
+        do {
+            cb = try FfiConverterCallbackInterfaceYArrayEachDelegate.lift(handle)
+        } catch {
+            out_buf.pointee = FfiConverterString.lower("YArrayEachDelegate: Invalid handle")
+            return -1
+        }
+
+        switch method {
+            case IDX_CALLBACK_FREE:
+                FfiConverterCallbackInterfaceYArrayEachDelegate.drop(handle: handle)
+                // No return value.
+                // See docs of ForeignCallback in `uniffi/src/ffi/foreigncallbacks.rs`
+                return 0
+            case 1:
+                do {
+                    out_buf.pointee = try `invokeCall`(cb, args)
+                    // Value written to out buffer.
+                    // See docs of ForeignCallback in `uniffi/src/ffi/foreigncallbacks.rs`
+                    return 1
+                } catch let error {
+                    out_buf.pointee = FfiConverterString.lower(String(describing: error))
+                    return -1
+                }
+            
+            // This should never happen, because an out of bounds method index won't
+            // ever be used. Once we can catch errors, we should return an InternalError.
+            // https://github.com/mozilla/uniffi-rs/issues/351
+            default:
+                // An unexpected error happened.
+                // See docs of ForeignCallback in `uniffi/src/ffi/foreigncallbacks.rs`
+                return -1
+        }
+    }
+
+// FfiConverter protocol for callback interfaces
+fileprivate struct FfiConverterCallbackInterfaceYArrayEachDelegate {
+    // Initialize our callback method with the scaffolding code
+    private static var callbackInitialized = false
+    private static func initCallback() {
+        try! rustCall { (err: UnsafeMutablePointer<RustCallStatus>) in
+                ffi_ynative_268e_YArrayEachDelegate_init_callback(foreignCallbackCallbackInterfaceYArrayEachDelegate, err)
+        }
+    }
+    private static func ensureCallbackinitialized() {
+        if !callbackInitialized {
+            initCallback()
+            callbackInitialized = true
+        }
+    }
+
+    static func drop(handle: UniFFICallbackHandle) {
+        handleMap.remove(handle: handle)
+    }
+
+    private static var handleMap = UniFFICallbackHandleMap<YArrayEachDelegate>()
+}
+
+extension FfiConverterCallbackInterfaceYArrayEachDelegate : FfiConverter {
+    typealias SwiftType = YArrayEachDelegate
+    // We can use Handle as the FfiType because it's a typealias to UInt64
+    typealias FfiType = UniFFICallbackHandle
+
+    public static func lift(_ handle: UniFFICallbackHandle) throws -> SwiftType {
+        ensureCallbackinitialized();
+        guard let callback = handleMap.get(handle: handle) else {
+            throw UniffiInternalError.unexpectedStaleHandle
+        }
+        return callback
+    }
+
+    public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> SwiftType {
+        ensureCallbackinitialized();
+        let handle: UniFFICallbackHandle = try readInt(&buf)
+        return try lift(handle)
+    }
+
+    public static func lower(_ v: SwiftType) -> UniFFICallbackHandle {
+        ensureCallbackinitialized();
+        return handleMap.insert(obj: v)
+    }
+
+    public static func write(_ v: SwiftType, into buf: inout [UInt8]) {
+        ensureCallbackinitialized();
+        writeInt(&buf, lower(v))
+    }
+}
+
 fileprivate struct FfiConverterOptionTypeText: FfiConverterRustBuffer {
     typealias SwiftType = Text?
 
@@ -936,6 +1132,27 @@ fileprivate struct FfiConverterOptionTypeText: FfiConverterRustBuffer {
         switch try readInt(&buf) as Int8 {
         case 0: return nil
         case 1: return try FfiConverterTypeText.read(from: &buf)
+        default: throw UniffiInternalError.unexpectedOptionalTag
+        }
+    }
+}
+
+fileprivate struct FfiConverterOptionTypeYArray: FfiConverterRustBuffer {
+    typealias SwiftType = YArray?
+
+    public static func write(_ value: SwiftType, into buf: inout [UInt8]) {
+        guard let value = value else {
+            writeInt(&buf, Int8(0))
+            return
+        }
+        writeInt(&buf, Int8(1))
+        FfiConverterTypeYArray.write(value, into: &buf)
+    }
+
+    public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> SwiftType {
+        switch try readInt(&buf) as Int8 {
+        case 0: return nil
+        case 1: return try FfiConverterTypeYArray.read(from: &buf)
         default: throw UniffiInternalError.unexpectedOptionalTag
         }
     }

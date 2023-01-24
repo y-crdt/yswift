@@ -3,9 +3,9 @@ import MultipeerConnectivity
 import YSwift
 
 class ConnectionManager: NSObject, ObservableObject {
-    private static let service = "yswift-docs"
+    private static let service = "yswift-todolist"
     
-    @Published var documents: [MCPeerID] = []
+    @Published var peers: [MCPeerID] = []
     
     private var session: MCSession
     private let myPeerId = MCPeerID(displayName: UIDevice.current.name)
@@ -13,7 +13,7 @@ class ConnectionManager: NSObject, ObservableObject {
     private var nearbyServiceAdvertiser: MCNearbyServiceAdvertiser
     private let `protocol`: YProtocol
     
-    var onPeerConnected: ((MCPeerID) -> Void)?
+    var onConnectionStateChanged: ((MCSessionState) -> Void)?
     var onUpdatesReceived: (() -> Void)?
     
     init(document: YDocument) {
@@ -48,11 +48,11 @@ class ConnectionManager: NSObject, ObservableObject {
 
 extension ConnectionManager: MCSessionDelegate {
     func session(_ session: MCSession, peer peerID: MCPeerID, didChange state: MCSessionState) {
+        onConnectionStateChanged?(state)
         switch state {
         case .connected:
             let message = self.protocol.handleConnectionStarted()
             sendEveryone(message)
-            onPeerConnected?(peerID)
             print("Connected to: \(peerID.displayName)")
         case .notConnected:
             print("Not connected: \(peerID.displayName)")
@@ -85,31 +85,21 @@ extension ConnectionManager: MCSessionDelegate {
 
 extension ConnectionManager: MCNearbyServiceAdvertiserDelegate {
     func advertiser(_ advertiser: MCNearbyServiceAdvertiser, didReceiveInvitationFromPeer peerID: MCPeerID, withContext context: Data?, invitationHandler: @escaping (Bool, MCSession?) -> Void) {
-        guard
-            let window = UIApplication.shared.windows.first
-        else { return }
-        
-        let title = "\(peerID.displayName) is inviting you to collaborate"
-        let message = "Would you like to accept?"
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alertController.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
-        alertController.addAction(UIAlertAction(title: "Yes", style: .default) { _ in
-            invitationHandler(true, self.session)
-        })
-        window.rootViewController?.present(alertController, animated: true)
+        invitationHandler(true, self.session)
     }
 }
 
 
 extension ConnectionManager: MCNearbyServiceBrowserDelegate {
     func browser(_ browser: MCNearbyServiceBrowser, foundPeer peerID: MCPeerID, withDiscoveryInfo info: [String: String]?) {
-        if !documents.contains(peerID) {
-            documents.append(peerID)
+        invitePeer(peerID)
+        if !peers.contains(peerID) {
+            peers.append(peerID)
         }
     }
     
     func browser(_ browser: MCNearbyServiceBrowser, lostPeer peerID: MCPeerID) {
-        guard let index = documents.firstIndex(of: peerID) else { return }
-        documents.remove(at: index)
+        guard let index = peers.firstIndex(of: peerID) else { return }
+        peers.remove(at: index)
     }
 }

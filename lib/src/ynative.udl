@@ -6,6 +6,15 @@ enum CodingError {
   "DecodingError",
 };
 
+interface Doc {
+  constructor();
+  [Throws=CodingError]
+  sequence<u8> encode_diff_v1([ByRef] Transaction tx, sequence<u8> state_vector);
+  Text get_text(string name);
+  YArray get_array(string name);
+  Transaction transact();
+};
+
 interface Transaction {
   [Throws=CodingError]
   void transaction_apply_update(sequence<u8> update);
@@ -15,6 +24,7 @@ interface Transaction {
   sequence<u8> transaction_encode_update();
   sequence<u8> transaction_state_vector();
   Text? transaction_get_text(string name);
+  YArray? transaction_get_array(string name);
   void free();
 };
 
@@ -27,6 +37,7 @@ interface Text {
 };
 
 interface YArray {
+  void each([ByRef] Transaction tx, YArrayEachDelegate delegate);
   [Throws=CodingError]
   string get([ByRef] Transaction tx, u32 index);
   void insert([ByRef] Transaction tx, u32 index, string value);
@@ -39,11 +50,6 @@ interface YArray {
   sequence<string> to_a([ByRef] Transaction tx);
 };
 
-interface Doc {
-  constructor();
-  [Throws=CodingError]
-  sequence<u8> encode_diff_v1([ByRef] Transaction tx, sequence<u8> state_vector);
-  Text get_text(string name);
-  YArray get_array(string name);
-  Transaction transact();
+callback interface YArrayEachDelegate {
+    void call(string value);
 };

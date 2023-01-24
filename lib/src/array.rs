@@ -2,10 +2,8 @@ use crate::error::CodingError;
 use crate::transaction::Transaction;
 use lib0::any::Any;
 use std::cell::RefCell;
-use yrs::{
-    types::{ToJson, Value},
-    Array as YrsArray, ArrayRef,
-};
+use std::fmt::Debug;
+use yrs::{types::Value, Array as YrsArray, ArrayRef};
 
 pub(crate) struct YArray(RefCell<ArrayRef>);
 
@@ -17,8 +15,28 @@ impl From<ArrayRef> for YArray {
         YArray(RefCell::from(value))
     }
 }
+pub(crate) trait YArrayEachDelegate: Send + Sync + Debug {
+    fn call(&self, value: String);
+}
 
 impl YArray {
+    pub(crate) fn each(&self, transaction: &Transaction, delegate: Box<dyn YArrayEachDelegate>) {
+        let tx = transaction.transaction();
+        let tx = tx.as_ref().unwrap();
+
+        let arr = self.0.borrow();
+        arr.iter(tx).for_each(|val| {
+            let mut buf = String::new();
+            if let Value::Any(any) = val {
+                any.to_json(&mut buf);
+                delegate.call(buf);
+            } else {
+                // @TODO: fix silly handling, it will just call with empty string if casting fails
+                delegate.call(buf);
+            }
+        });
+    }
+
     pub(crate) fn get(&self, transaction: &Transaction, index: u32) -> Result<String, CodingError> {
         let tx = transaction.transaction();
         let tx = tx.as_ref().unwrap();

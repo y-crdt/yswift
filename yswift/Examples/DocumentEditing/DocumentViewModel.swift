@@ -1,6 +1,5 @@
-import SwiftUI
+import Foundation
 import Combine
-import MultipeerConnectivity
 import YSwift
 
 final class DocumentViewModel: ObservableObject {
@@ -65,33 +64,3 @@ final class DocumentViewModel: ObservableObject {
         }
     }
 }
-
-struct DocumentsListView: View {
-    @ObservedObject var connectionManager: ConnectionManager
-    
-    var body: some View {
-        List {
-            Section("Documents") {
-                ForEach(connectionManager.documents, id: \.displayName) { document in
-                    Text(document.displayName)
-                        .onTapGesture {
-                            connectionManager.invitePeer(document)
-                        }
-                }
-            }
-        }
-        .listStyle(InsetGroupedListStyle())
-    }
-}
-
-struct DocumentView: View {
-    @ObservedObject var viewModel: DocumentViewModel
-    
-    var body: some View {
-        TextEditor(text: $viewModel.text)
-            .padding()
-            .onChange(of: viewModel.text) { newValue in
-            }
-    }
-}
-

@@ -12,18 +12,33 @@ let mainTarget = Target(
     dependencies: [.external(name: "YNativeFinal")]
 )
 
-let exampleTarget = Target(
-    name: "YSwiftExample",
+let exampleDocumentEditing = Target(
+    name: "DocumentEditing",
     platform: .iOS,
     product: .app,
-    bundleId: "y-crdt.swift.example",
-    deploymentTarget: .iOS(targetVersion: "13.0", devices: .iphone),
+    bundleId: "y-crdt.swift.example.document-editing",
+    deploymentTarget: .iOS(targetVersion: "15.0", devices: .iphone),
     infoPlist: .extendingDefault(with: [
         "UILaunchStoryboardName": "LaunchScreen",
         "NSLocalNetworkUsageDescription": "YSwiftExample needs to use your phone’s data to discover devices nearby"
     ]),
-    sources: ["Example/**"],
-    resources: ["Example/LaunchScreen.storyboard"],
+    sources: ["Examples/DocumentEditing/**"],
+    resources: ["Examples/DocumentEditing/LaunchScreen.storyboard"],
+    dependencies: [.target(name: "YSwift")]
+)
+
+let exampleTodolist = Target(
+    name: "Todolist",
+    platform: .iOS,
+    product: .app,
+    bundleId: "y-crdt.swift.example.todolist",
+    deploymentTarget: .iOS(targetVersion: "15.0", devices: .iphone),
+    infoPlist: .extendingDefault(with: [
+        "UILaunchStoryboardName": "LaunchScreen",
+        "NSLocalNetworkUsageDescription": "YSwiftExample needs to use your phone’s data to discover devices nearby"
+    ]),
+    sources: ["Examples/Todolist/**"],
+    resources: ["Examples/Todolist/LaunchScreen.storyboard"],
     dependencies: [.target(name: "YSwift")]
 )
 
@@ -40,6 +55,6 @@ let testTarget = Target(
 let project = Project(
     name: "YSwift",
     organizationName: "y-crdt",
-    targets: [mainTarget, exampleTarget, testTarget],
+    targets: [mainTarget, exampleDocumentEditing, exampleTodolist, testTarget],
     fileHeaderTemplate: .none
 )
