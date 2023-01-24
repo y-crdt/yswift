@@ -3,7 +3,7 @@ import MultipeerConnectivity
 import YSwift
 
 class ConnectionManager: NSObject, ObservableObject {
-    private static let service = "yswift-document-editing"
+    private static let service = "yswift-document"
     
     @Published var peers: [MCPeerID] = []
     
