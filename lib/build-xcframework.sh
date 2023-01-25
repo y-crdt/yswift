@@ -14,8 +14,11 @@ FRAMEWORK_FOLDER="${FRAMEWORK_NAME}.framework"
 
 echo "▸ Install toolchains"
 rustup target add x86_64-apple-ios # iOS Simulator (Intel)
-rustup target add aarch64-apple-ios-sim # iOS Simulator (M1) 
+rustup target add aarch64-apple-ios-sim # iOS Simulator (M1)
 rustup target add aarch64-apple-ios # iOS Device
+
+echo "▸ Install uniffi bindgen"
+cargo install uniffi_bindgen
 
 echo "▸ Clean state"
 rm -rf "${BUILD_FOLDER}"
