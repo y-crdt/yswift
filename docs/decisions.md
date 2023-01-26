@@ -34,6 +34,10 @@ wrapping Rust library that will eventually publish corresponding artifacts
 
 ## 2022-12-20
 
+### Uniffi as bindgen foundation
+
 [UniFFI](https://mozilla.github.io/uniffi-rs/) was chosen as binding generation solution
 for Kotlin & Swift language bindings due to good documentation, active maintenance state and overall
 use case suitability.
+
+Alternatives considered: [swift-bridge](https://github.com/chinedufn/swift-bridge) and [Yrs C FFI](https://github.com/y-crdt/y-crdt/tree/main/yffi)
