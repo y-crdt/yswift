@@ -24,7 +24,7 @@ rustup target add x86_64-apple-darwin # macOS platform (x86)
 echo "▸ Install uniffi bindgen"
 cargo install uniffi_bindgen
 
-# (heckj - 26jan2023): remove the following line IF we start to include/check in 
+# (heckj - 26jan2023): remove the following line IF we start to include/check in
 # the local Cargo.lock file. The `--locked` command line options on the
 # build steps below imply that it exists and is stable, but in a raw
 # repository check-out, it doesn't get included as I'm writing this.
@@ -62,10 +62,16 @@ cargo build --target x86_64-apple-darwin --package "${PACKAGE_NAME}" --locked --
 
 # (heckj-26jan2023): A lot of this is based on a script I created, and which I in turn used
 # code from https://github.com/automerge/automerge-swift-backend/blob/main/cargo_xcframeworks.sh
-# The process of creating the XCFramework _can_ be done with just copying bits in the right 
+# The process of creating the XCFramework _can_ be done with just copying bits in the right
 # places and names, but more generally uses `xcodebuild -create-xcframework` to have Xcode
 # do the "heavy lifting". I'm unclear if there was a reason we wanted (or needed) to avoid
 # a dependency on Xcode here...
+#
+# Upstream documentation on creating XCFramework bundles:
+# https://help.apple.com/xcode/mac/11.4/#/dev544efab96
+# https://developer.apple.com/documentation/xcode/creating-a-multi-platform-binary-framework-bundle
+# https://developer.apple.com/documentation/xcode/distributing-binary-frameworks-as-swift-packages
+# WWDC 2019 video on generating binaries: https://developer.apple.com/videos/play/wwdc2019/416/
 
 echo "▸ Starting xcframework creation"
 echo "▸ Copy necessary files"
