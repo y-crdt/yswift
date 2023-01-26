@@ -1,5 +1,5 @@
-framework module YNative {
-    umbrella header "YNative.h"
+framework module YniffiXC {
+    umbrella header "YniffiXC.h"
 
     export *
     module * { export * }

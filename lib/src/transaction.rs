@@ -1,6 +1,6 @@
-use crate::array::YArray;
+use crate::array::YrsArray;
 use crate::error::CodingError;
-use crate::text::Text;
+use crate::text::YrsText;
 use std::borrow::Borrow;
 use std::cell::{RefCell, RefMut};
 use std::sync::Arc;
@@ -9,21 +9,21 @@ use yrs::{
     Update,
 };
 
-pub(crate) struct Transaction(pub(crate) RefCell<Option<TransactionMut<'static>>>);
+pub(crate) struct YrsTransaction(pub(crate) RefCell<Option<TransactionMut<'static>>>);
 
-unsafe impl Send for Transaction {}
-unsafe impl Sync for Transaction {}
+unsafe impl Send for YrsTransaction {}
+unsafe impl Sync for YrsTransaction {}
 
-impl Transaction {}
+impl YrsTransaction {}
 
-impl<'doc> From<TransactionMut<'doc>> for Transaction {
+impl<'doc> From<TransactionMut<'doc>> for YrsTransaction {
     fn from(txn: TransactionMut<'doc>) -> Self {
         let txn: TransactionMut<'static> = unsafe { std::mem::transmute(txn) };
-        Transaction(RefCell::from(Some(txn)))
+        YrsTransaction(RefCell::from(Some(txn)))
     }
 }
 
-impl Transaction {
+impl YrsTransaction {
     pub(crate) fn transaction(&self) -> RefMut<'_, Option<TransactionMut<'static>>> {
         self.0.borrow_mut()
     }
@@ -64,21 +64,21 @@ impl Transaction {
             .map(|u| self.transaction().as_mut().unwrap().apply_update(u))
     }
 
-    pub(crate) fn transaction_get_text(&self, name: String) -> Option<Arc<Text>> {
+    pub(crate) fn transaction_get_text(&self, name: String) -> Option<Arc<YrsText>> {
         self.transaction()
             .as_ref()
             .unwrap()
             .get_text(name.as_str())
-            .map(Text::from)
+            .map(YrsText::from)
             .map(Arc::from)
     }
 
-    pub(crate) fn transaction_get_array(&self, name: String) -> Option<Arc<YArray>> {
+    pub(crate) fn transaction_get_array(&self, name: String) -> Option<Arc<YrsArray>> {
         self.transaction()
             .as_ref()
             .unwrap()
             .get_array(name.as_str())
-            .map(YArray::from)
+            .map(YrsArray::from)
             .map(Arc::from)
     }
 

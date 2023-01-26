@@ -9,7 +9,7 @@ let mainTarget = Target(
     infoPlist: .default,
     sources: ["Sources/**"],
     headers: .allHeaders(from: "Sources/**/*", umbrella: .relativeToRoot("Sources/yswift.h")),
-    dependencies: [.external(name: "YNativeFinal")]
+    dependencies: [.external(name: "Yniffi")]
 )
 
 let exampleDocumentEditing = Target(

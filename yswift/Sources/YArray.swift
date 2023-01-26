@@ -1,56 +1,56 @@
 import Foundation
-import YNativeFinal
+import Yniffi
 
-public final class YYArray<T: Codable> {
-    private let array: YArray
+public final class YArray<T: Codable> {
+    private let array: YrsArray
     private let decoder = JSONDecoder()
     private let encoder = JSONEncoder()
     
-    public init(array: YArray) {
+    public init(array: YrsArray) {
         self.array = array
     }
     
-    public func forEach(tx: Transaction, _ body: @escaping (T) -> Void) {
+    public func forEach(tx: YrsTransaction, _ body: @escaping (T) -> Void) {
         // @TODO: check for memory leaks
-        let delegate = YYArrayEachDelegate(callback: body, decoded: decoded)
+        let delegate = YArrayEachDelegate(callback: body, decoded: decoded)
         array.each(tx: tx, delegate: delegate)
     }
     
-    public func get(tx: Transaction, index: Int) -> T {
+    public func get(tx: YrsTransaction, index: Int) -> T {
         decoded(
             try! array.get(tx: tx, index: UInt32(index))
         )
     }
     
-    public func insert(tx: Transaction, index: Int, value: T) {
+    public func insert(tx: YrsTransaction, index: Int, value: T) {
         array.insert(tx: tx, index: UInt32(index), value: encoded(value))
     }
     
-    public func insertArray(tx: Transaction, index: Int, values: [T]) {
+    public func insertArray(tx: YrsTransaction, index: Int, values: [T]) {
         array.insertRange(tx: tx, index: UInt32(index), values: encodedArray(values))
     }
     
-    public func length(tx: Transaction) -> Int {
+    public func length(tx: YrsTransaction) -> Int {
         Int(array.length(tx: tx))
     }
     
-    public func pushBack(tx: Transaction, value: T) {
+    public func pushBack(tx: YrsTransaction, value: T) {
         array.pushBack(tx: tx, value: encoded(value))
     }
     
-    public func pushFront(tx: Transaction, value: T) {
+    public func pushFront(tx: YrsTransaction, value: T) {
         array.pushFront(tx: tx, value: encoded(value))
     }
     
-    public func remove(tx: Transaction, index: Int) {
+    public func remove(tx: YrsTransaction, index: Int) {
         array.remove(tx: tx, index: UInt32(index))
     }
     
-    public func removeRange(tx: Transaction, index: Int, length: Int) {
+    public func removeRange(tx: YrsTransaction, index: Int, length: Int) {
         array.removeRange(tx: tx, index: UInt32(index), len: UInt32(length))
     }
     
-    public func toArray(tx: Transaction) -> [T] {
+    public func toArray(tx: YrsTransaction) -> [T] {
         decodedArray(array.toA(tx: tx))
     }
     
@@ -77,7 +77,7 @@ public final class YYArray<T: Codable> {
     }
 }
 
-class YYArrayEachDelegate<T: Codable>: YArrayEachDelegate {
+class YArrayEachDelegate<T: Codable>: YrsArrayEachDelegate {
     private var callback: (T) -> Void
     private var decoded: (String) -> T
     

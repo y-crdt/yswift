@@ -1,5 +1,5 @@
 [package]
-name = "ynative"
+name = "yniffi"
 version = "0.1.0"
 edition = "2021"
 
@@ -23,6 +23,6 @@ yrs = "0.15.0"
 uniffi_build = "0.22.0"
 
 [lib]
-name = "uniffi_ynative"
+name = "uniffi_yniffi"
 path = "src/lib.rs"
 crate-type = ["staticlib"]

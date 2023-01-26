@@ -2,10 +2,10 @@
 import PackageDescription
 
 let package = Package(
-    name: "YNativeFinal",
+    name: "Yniffi",
     platforms: [.iOS(.v13)],
     products: [
-        .library(name: "YNativeFinal", targets: ["YNativeFinal"]),
+        .library(name: "Yniffi", targets: ["Yniffi"]),
     ],
     dependencies: [
     ],
@@ -16,19 +16,19 @@ let package = Package(
         * A bit hacky but necessary for now https://github.com/mozilla/application-services/issues/4422
         */
         .target(
-            name: "YNativeBinaryWrapper",
+            name: "YniffiWrapper",
             dependencies: [
-                .target(name: "YNativeBinary", condition: .when(platforms: [.iOS]))
+                .target(name: "YniffiXC", condition: .when(platforms: [.iOS]))
             ],
             path: "swift/wrapper"
         ),
         .binaryTarget(
-            name: "YNativeBinary",
-            path: "./YNativeBinary.xcframework"
+            name: "YniffiXC",
+            path: "./YniffiXC.xcframework"
         ),
         .target(
-            name: "YNativeFinal",
-            dependencies: ["YNativeBinaryWrapper"],
+            name: "Yniffi",
+            dependencies: ["YniffiWrapper"],
             path: "swift/scaffold"
         )
     ]

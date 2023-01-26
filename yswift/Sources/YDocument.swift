@@ -1,16 +1,16 @@
 import Foundation
-import YNativeFinal
+import Yniffi
 
 public final class YDocument {
-    private let document: Doc
+    private let document: YrsDoc
     
     public init() {
-        self.document = Doc()
+        self.document = YrsDoc()
     }
     
     private let someQueue = DispatchQueue(label: "ydoc-queue", qos: .userInitiated)
     
-    public func transact<T>(_ changes: @escaping (Transaction) -> (T)) -> T {
+    public func transact<T>(_ changes: @escaping (YrsTransaction) -> (T)) -> T {
         // Note: Most straightforward way for now.
         someQueue.sync {
             let transaction = document.transact()
@@ -21,15 +21,15 @@ public final class YDocument {
         }
     }
     
-    public func getOrCreateText(named: String) -> Text {
+    public func getOrCreateText(named: String) -> YrsText {
         document.getText(name: named)
     }
     
-    public func getOrCreateArray<T: Codable>(named: String) -> YYArray<T> {
-        YYArray(array: document.getArray(name: named))
+    public func getOrCreateArray<T: Codable>(named: String) -> YArray<T> {
+        YArray(array: document.getArray(name: named))
     }
     
-    public func diff(txn: Transaction, from state: [UInt8] = []) -> [UInt8] {
+    public func diff(txn: YrsTransaction, from state: [UInt8] = []) -> [UInt8] {
         try! document.encodeDiffV1(tx: txn, stateVector: state)
     }
 }

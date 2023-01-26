@@ -1,26 +1,30 @@
 use crate::error::CodingError;
-use crate::transaction::Transaction;
+use crate::transaction::YrsTransaction;
 use lib0::any::Any;
 use std::cell::RefCell;
 use std::fmt::Debug;
-use yrs::{types::Value, Array as YrsArray, ArrayRef};
+use yrs::{types::Value, Array as YArray, ArrayRef};
 
-pub(crate) struct YArray(RefCell<ArrayRef>);
+pub(crate) struct YrsArray(RefCell<ArrayRef>);
 
-unsafe impl Send for YArray {}
-unsafe impl Sync for YArray {}
+unsafe impl Send for YrsArray {}
+unsafe impl Sync for YrsArray {}
 
-impl From<ArrayRef> for YArray {
+impl From<ArrayRef> for YrsArray {
     fn from(value: ArrayRef) -> Self {
-        YArray(RefCell::from(value))
+        YrsArray(RefCell::from(value))
     }
 }
-pub(crate) trait YArrayEachDelegate: Send + Sync + Debug {
+pub(crate) trait YrsArrayEachDelegate: Send + Sync + Debug {
     fn call(&self, value: String);
 }
 
-impl YArray {
-    pub(crate) fn each(&self, transaction: &Transaction, delegate: Box<dyn YArrayEachDelegate>) {
+impl YrsArray {
+    pub(crate) fn each(
+        &self,
+        transaction: &YrsTransaction,
+        delegate: Box<dyn YrsArrayEachDelegate>,
+    ) {
         let tx = transaction.transaction();
         let tx = tx.as_ref().unwrap();
 
@@ -37,7 +41,11 @@ impl YArray {
         });
     }
 
-    pub(crate) fn get(&self, transaction: &Transaction, index: u32) -> Result<String, CodingError> {
+    pub(crate) fn get(
+        &self,
+        transaction: &YrsTransaction,
+        index: u32,
+    ) -> Result<String, CodingError> {
         let tx = transaction.transaction();
         let tx = tx.as_ref().unwrap();
         let arr = self.0.borrow();
@@ -51,7 +59,7 @@ impl YArray {
         }
     }
 
-    pub(crate) fn insert(&self, transaction: &Transaction, index: u32, value: String) {
+    pub(crate) fn insert(&self, transaction: &YrsTransaction, index: u32, value: String) {
         let avalue = Any::from_json(value.as_str()).unwrap();
 
         let mut tx = transaction.transaction();
@@ -61,7 +69,12 @@ impl YArray {
         arr.insert(tx, index, avalue);
     }
 
-    pub(crate) fn insert_range(&self, transaction: &Transaction, index: u32, values: Vec<String>) {
+    pub(crate) fn insert_range(
+        &self,
+        transaction: &YrsTransaction,
+        index: u32,
+        values: Vec<String>,
+    ) {
         let arr = self.0.borrow_mut();
         let mut tx = transaction.transaction();
         let tx = tx.as_mut().unwrap();
@@ -74,7 +87,7 @@ impl YArray {
         arr.insert_range(tx, index, add_values)
     }
 
-    pub(crate) fn length(&self, transaction: &Transaction) -> u32 {
+    pub(crate) fn length(&self, transaction: &YrsTransaction) -> u32 {
         let arr = self.0.borrow();
         let tx = transaction.transaction();
         let tx = tx.as_ref().unwrap();
@@ -82,7 +95,7 @@ impl YArray {
         arr.len(tx)
     }
 
-    pub(crate) fn push_back(&self, transaction: &Transaction, value: String) {
+    pub(crate) fn push_back(&self, transaction: &YrsTransaction, value: String) {
         let avalue = Any::from_json(value.as_str()).unwrap();
         let mut tx = transaction.transaction();
         let tx = tx.as_mut().unwrap();
@@ -90,7 +103,7 @@ impl YArray {
         self.0.borrow_mut().push_back(tx, avalue);
     }
 
-    pub(crate) fn push_front(&self, transaction: &Transaction, value: String) {
+    pub(crate) fn push_front(&self, transaction: &YrsTransaction, value: String) {
         let avalue = Any::from_json(value.as_str()).unwrap();
 
         let mut tx = transaction.transaction();
@@ -100,7 +113,7 @@ impl YArray {
         arr.push_front(tx, avalue);
     }
 
-    pub(crate) fn remove(&self, transaction: &Transaction, index: u32) {
+    pub(crate) fn remove(&self, transaction: &YrsTransaction, index: u32) {
         let mut tx = transaction.transaction();
         let tx = tx.as_mut().unwrap();
 
@@ -108,7 +121,7 @@ impl YArray {
         arr.remove(tx, index)
     }
 
-    pub(crate) fn remove_range(&self, transaction: &Transaction, index: u32, len: u32) {
+    pub(crate) fn remove_range(&self, transaction: &YrsTransaction, index: u32, len: u32) {
         let mut tx = transaction.transaction();
         let tx = tx.as_mut().unwrap();
 
@@ -116,7 +129,7 @@ impl YArray {
         arr.remove_range(tx, index, len)
     }
 
-    pub(crate) fn to_a(&self, transaction: &Transaction) -> Vec<String> {
+    pub(crate) fn to_a(&self, transaction: &YrsTransaction) -> Vec<String> {
         let arr = self.0.borrow();
         let tx = transaction.transaction();
         let tx = tx.as_ref().unwrap();

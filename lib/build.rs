@@ -1,3 +1,3 @@
 fn main() {
-    uniffi_build::generate_scaffolding("./src/ynative.udl").unwrap();
+    uniffi_build::generate_scaffolding("./src/yniffi.udl").unwrap();
 }

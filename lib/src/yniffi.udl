@@ -1,0 +1,55 @@
+namespace yniffi {};
+
+[Error]
+enum CodingError {
+  "EncodingError",
+  "DecodingError",
+};
+
+interface YrsDoc {
+  constructor();
+  [Throws=CodingError]
+  sequence<u8> encode_diff_v1([ByRef] YrsTransaction tx, sequence<u8> state_vector);
+  YrsText get_text(string name);
+  YrsArray get_array(string name);
+  YrsTransaction transact();
+};
+
+interface YrsTransaction {
+  [Throws=CodingError]
+  void transaction_apply_update(sequence<u8> update);
+  [Throws=CodingError]
+  sequence<u8> transaction_encode_state_as_update_from_sv(sequence<u8> state_vector);
+  sequence<u8> transaction_encode_state_as_update();
+  sequence<u8> transaction_encode_update();
+  sequence<u8> transaction_state_vector();
+  YrsText? transaction_get_text(string name);
+  YrsArray? transaction_get_array(string name);
+  void free();
+};
+
+interface YrsText {
+  void append([ByRef] YrsTransaction tx, string text);
+  void insert([ByRef] YrsTransaction tx, u32 index, string chunk);
+  string get_string([ByRef] YrsTransaction tx);
+  void remove_range([ByRef] YrsTransaction tx, u32 start, u32 length);
+  u32 length([ByRef] YrsTransaction tx);
+};
+
+interface YrsArray {
+  void each([ByRef] YrsTransaction tx, YrsArrayEachDelegate delegate);
+  [Throws=CodingError]
+  string get([ByRef] YrsTransaction tx, u32 index);
+  void insert([ByRef] YrsTransaction tx, u32 index, string value);
+  void insert_range([ByRef] YrsTransaction tx, u32 index, sequence<string> values);
+  u32 length([ByRef] YrsTransaction tx);
+  void push_back([ByRef] YrsTransaction tx, string value);
+  void push_front([ByRef] YrsTransaction tx, string value);
+  void remove([ByRef] YrsTransaction tx, u32 index);
+  void remove_range([ByRef] YrsTransaction tx, u32 index, u32 len);
+  sequence<string> to_a([ByRef] YrsTransaction tx);
+};
+
+callback interface YrsArrayEachDelegate {
+    void call(string value);
+};

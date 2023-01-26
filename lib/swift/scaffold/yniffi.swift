@@ -5,8 +5,8 @@ import Foundation
 // Depending on the consumer's build setup, the low-level FFI code
 // might be in a separate module, or it might be compiled inline into
 // this module. This is a bit of light hackery to work with both.
-#if canImport(ynativeFFI)
-import ynativeFFI
+#if canImport(yniffiFFI)
+import yniffiFFI
 #endif
 
 fileprivate extension RustBuffer {
@@ -19,13 +19,13 @@ fileprivate extension RustBuffer {
     }
 
     static func from(_ ptr: UnsafeBufferPointer<UInt8>) -> RustBuffer {
-        try! rustCall { ffi_ynative_268e_rustbuffer_from_bytes(ForeignBytes(bufferPointer: ptr), $0) }
+        try! rustCall { ffi_yniffi_a03a_rustbuffer_from_bytes(ForeignBytes(bufferPointer: ptr), $0) }
     }
 
     // Frees the buffer in place.
     // The buffer must not be used after this is called.
     func deallocate() {
-        try! rustCall { ffi_ynative_268e_rustbuffer_free(self, $0) }
+        try! rustCall { ffi_yniffi_a03a_rustbuffer_free(self, $0) }
     }
 }
 
@@ -345,15 +345,187 @@ fileprivate struct FfiConverterString: FfiConverter {
 }
 
 
-public protocol DocProtocol {
-    func `encodeDiffV1`(`tx`: Transaction, `stateVector`: [UInt8]) throws -> [UInt8]
-    func `getText`(`name`: String)  -> Text
-    func `getArray`(`name`: String)  -> YArray
-    func `transact`()  -> Transaction
+public protocol YrsArrayProtocol {
+    func `each`(`tx`: YrsTransaction, `delegate`: YrsArrayEachDelegate) 
+    func `get`(`tx`: YrsTransaction, `index`: UInt32) throws -> String
+    func `insert`(`tx`: YrsTransaction, `index`: UInt32, `value`: String) 
+    func `insertRange`(`tx`: YrsTransaction, `index`: UInt32, `values`: [String]) 
+    func `length`(`tx`: YrsTransaction)  -> UInt32
+    func `pushBack`(`tx`: YrsTransaction, `value`: String) 
+    func `pushFront`(`tx`: YrsTransaction, `value`: String) 
+    func `remove`(`tx`: YrsTransaction, `index`: UInt32) 
+    func `removeRange`(`tx`: YrsTransaction, `index`: UInt32, `len`: UInt32) 
+    func `toA`(`tx`: YrsTransaction)  -> [String]
     
 }
 
-public class Doc: DocProtocol {
+public class YrsArray: YrsArrayProtocol {
+    fileprivate let pointer: UnsafeMutableRawPointer
+
+    // TODO: We'd like this to be `private` but for Swifty reasons,
+    // we can't implement `FfiConverter` without making this `required` and we can't
+    // make it `required` without making it `public`.
+    required init(unsafeFromRawPointer pointer: UnsafeMutableRawPointer) {
+        self.pointer = pointer
+    }
+
+    deinit {
+        try! rustCall { ffi_yniffi_a03a_YrsArray_object_free(pointer, $0) }
+    }
+
+    
+
+    
+    public func `each`(`tx`: YrsTransaction, `delegate`: YrsArrayEachDelegate)  {
+        try!
+    rustCall() {
+    
+    yniffi_a03a_YrsArray_each(self.pointer, 
+        FfiConverterTypeYrsTransaction.lower(`tx`), 
+        FfiConverterCallbackInterfaceYrsArrayEachDelegate.lower(`delegate`), $0
+    )
+}
+    }
+    public func `get`(`tx`: YrsTransaction, `index`: UInt32) throws -> String {
+        return try FfiConverterString.lift(
+            try
+    rustCallWithError(FfiConverterTypeCodingError.self) {
+    yniffi_a03a_YrsArray_get(self.pointer, 
+        FfiConverterTypeYrsTransaction.lower(`tx`), 
+        FfiConverterUInt32.lower(`index`), $0
+    )
+}
+        )
+    }
+    public func `insert`(`tx`: YrsTransaction, `index`: UInt32, `value`: String)  {
+        try!
+    rustCall() {
+    
+    yniffi_a03a_YrsArray_insert(self.pointer, 
+        FfiConverterTypeYrsTransaction.lower(`tx`), 
+        FfiConverterUInt32.lower(`index`), 
+        FfiConverterString.lower(`value`), $0
+    )
+}
+    }
+    public func `insertRange`(`tx`: YrsTransaction, `index`: UInt32, `values`: [String])  {
+        try!
+    rustCall() {
+    
+    yniffi_a03a_YrsArray_insert_range(self.pointer, 
+        FfiConverterTypeYrsTransaction.lower(`tx`), 
+        FfiConverterUInt32.lower(`index`), 
+        FfiConverterSequenceString.lower(`values`), $0
+    )
+}
+    }
+    public func `length`(`tx`: YrsTransaction)  -> UInt32 {
+        return try! FfiConverterUInt32.lift(
+            try!
+    rustCall() {
+    
+    yniffi_a03a_YrsArray_length(self.pointer, 
+        FfiConverterTypeYrsTransaction.lower(`tx`), $0
+    )
+}
+        )
+    }
+    public func `pushBack`(`tx`: YrsTransaction, `value`: String)  {
+        try!
+    rustCall() {
+    
+    yniffi_a03a_YrsArray_push_back(self.pointer, 
+        FfiConverterTypeYrsTransaction.lower(`tx`), 
+        FfiConverterString.lower(`value`), $0
+    )
+}
+    }
+    public func `pushFront`(`tx`: YrsTransaction, `value`: String)  {
+        try!
+    rustCall() {
+    
+    yniffi_a03a_YrsArray_push_front(self.pointer, 
+        FfiConverterTypeYrsTransaction.lower(`tx`), 
+        FfiConverterString.lower(`value`), $0
+    )
+}
+    }
+    public func `remove`(`tx`: YrsTransaction, `index`: UInt32)  {
+        try!
+    rustCall() {
+    
+    yniffi_a03a_YrsArray_remove(self.pointer, 
+        FfiConverterTypeYrsTransaction.lower(`tx`), 
+        FfiConverterUInt32.lower(`index`), $0
+    )
+}
+    }
+    public func `removeRange`(`tx`: YrsTransaction, `index`: UInt32, `len`: UInt32)  {
+        try!
+    rustCall() {
+    
+    yniffi_a03a_YrsArray_remove_range(self.pointer, 
+        FfiConverterTypeYrsTransaction.lower(`tx`), 
+        FfiConverterUInt32.lower(`index`), 
+        FfiConverterUInt32.lower(`len`), $0
+    )
+}
+    }
+    public func `toA`(`tx`: YrsTransaction)  -> [String] {
+        return try! FfiConverterSequenceString.lift(
+            try!
+    rustCall() {
+    
+    yniffi_a03a_YrsArray_to_a(self.pointer, 
+        FfiConverterTypeYrsTransaction.lower(`tx`), $0
+    )
+}
+        )
+    }
+    
+}
+
+
+public struct FfiConverterTypeYrsArray: FfiConverter {
+    typealias FfiType = UnsafeMutableRawPointer
+    typealias SwiftType = YrsArray
+
+    public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> YrsArray {
+        let v: UInt64 = try readInt(&buf)
+        // The Rust code won't compile if a pointer won't fit in a UInt64.
+        // We have to go via `UInt` because that's the thing that's the size of a pointer.
+        let ptr = UnsafeMutableRawPointer(bitPattern: UInt(truncatingIfNeeded: v))
+        if (ptr == nil) {
+            throw UniffiInternalError.unexpectedNullPointer
+        }
+        return try lift(ptr!)
+    }
+
+    public static func write(_ value: YrsArray, into buf: inout [UInt8]) {
+        // This fiddling is because `Int` is the thing that's the same size as a pointer.
+        // The Rust code won't compile if a pointer won't fit in a `UInt64`.
+        writeInt(&buf, UInt64(bitPattern: Int64(Int(bitPattern: lower(value)))))
+    }
+
+    public static func lift(_ pointer: UnsafeMutableRawPointer) throws -> YrsArray {
+        return YrsArray(unsafeFromRawPointer: pointer)
+    }
+
+    public static func lower(_ value: YrsArray) -> UnsafeMutableRawPointer {
+        return value.pointer
+    }
+}
+
+
+public protocol YrsDocProtocol {
+    func `encodeDiffV1`(`tx`: YrsTransaction, `stateVector`: [UInt8]) throws -> [UInt8]
+    func `getText`(`name`: String)  -> YrsText
+    func `getArray`(`name`: String)  -> YrsArray
+    func `transact`()  -> YrsTransaction
+    
+}
+
+public class YrsDoc: YrsDocProtocol {
     fileprivate let pointer: UnsafeMutableRawPointer
 
     // TODO: We'd like this to be `private` but for Swifty reasons,
@@ -367,56 +539,56 @@ public class Doc: DocProtocol {
     
     rustCall() {
     
-    ynative_268e_Doc_new($0)
+    yniffi_a03a_YrsDoc_new($0)
 })
     }
 
     deinit {
-        try! rustCall { ffi_ynative_268e_Doc_object_free(pointer, $0) }
+        try! rustCall { ffi_yniffi_a03a_YrsDoc_object_free(pointer, $0) }
     }
 
     
 
     
-    public func `encodeDiffV1`(`tx`: Transaction, `stateVector`: [UInt8]) throws -> [UInt8] {
+    public func `encodeDiffV1`(`tx`: YrsTransaction, `stateVector`: [UInt8]) throws -> [UInt8] {
         return try FfiConverterSequenceUInt8.lift(
             try
     rustCallWithError(FfiConverterTypeCodingError.self) {
-    ynative_268e_Doc_encode_diff_v1(self.pointer, 
-        FfiConverterTypeTransaction.lower(`tx`), 
+    yniffi_a03a_YrsDoc_encode_diff_v1(self.pointer, 
+        FfiConverterTypeYrsTransaction.lower(`tx`), 
         FfiConverterSequenceUInt8.lower(`stateVector`), $0
     )
 }
         )
     }
-    public func `getText`(`name`: String)  -> Text {
-        return try! FfiConverterTypeText.lift(
+    public func `getText`(`name`: String)  -> YrsText {
+        return try! FfiConverterTypeYrsText.lift(
             try!
     rustCall() {
     
-    ynative_268e_Doc_get_text(self.pointer, 
+    yniffi_a03a_YrsDoc_get_text(self.pointer, 
         FfiConverterString.lower(`name`), $0
     )
 }
         )
     }
-    public func `getArray`(`name`: String)  -> YArray {
-        return try! FfiConverterTypeYArray.lift(
+    public func `getArray`(`name`: String)  -> YrsArray {
+        return try! FfiConverterTypeYrsArray.lift(
             try!
     rustCall() {
     
-    ynative_268e_Doc_get_array(self.pointer, 
+    yniffi_a03a_YrsDoc_get_array(self.pointer, 
         FfiConverterString.lower(`name`), $0
     )
 }
         )
     }
-    public func `transact`()  -> Transaction {
-        return try! FfiConverterTypeTransaction.lift(
+    public func `transact`()  -> YrsTransaction {
+        return try! FfiConverterTypeYrsTransaction.lift(
             try!
     rustCall() {
     
-    ynative_268e_Doc_transact(self.pointer, $0
+    yniffi_a03a_YrsDoc_transact(self.pointer, $0
     )
 }
         )
@@ -425,11 +597,11 @@ public class Doc: DocProtocol {
 }
 
 
-public struct FfiConverterTypeDoc: FfiConverter {
+public struct FfiConverterTypeYrsDoc: FfiConverter {
     typealias FfiType = UnsafeMutableRawPointer
-    typealias SwiftType = Doc
+    typealias SwiftType = YrsDoc
 
-    public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> Doc {
+    public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> YrsDoc {
         let v: UInt64 = try readInt(&buf)
         // The Rust code won't compile if a pointer won't fit in a UInt64.
         // We have to go via `UInt` because that's the thing that's the size of a pointer.
@@ -440,32 +612,32 @@ public struct FfiConverterTypeDoc: FfiConverter {
         return try lift(ptr!)
     }
 
-    public static func write(_ value: Doc, into buf: inout [UInt8]) {
+    public static func write(_ value: YrsDoc, into buf: inout [UInt8]) {
         // This fiddling is because `Int` is the thing that's the same size as a pointer.
         // The Rust code won't compile if a pointer won't fit in a `UInt64`.
         writeInt(&buf, UInt64(bitPattern: Int64(Int(bitPattern: lower(value)))))
     }
 
-    public static func lift(_ pointer: UnsafeMutableRawPointer) throws -> Doc {
-        return Doc(unsafeFromRawPointer: pointer)
+    public static func lift(_ pointer: UnsafeMutableRawPointer) throws -> YrsDoc {
+        return YrsDoc(unsafeFromRawPointer: pointer)
     }
 
-    public static func lower(_ value: Doc) -> UnsafeMutableRawPointer {
+    public static func lower(_ value: YrsDoc) -> UnsafeMutableRawPointer {
         return value.pointer
     }
 }
 
 
-public protocol TextProtocol {
-    func `append`(`tx`: Transaction, `text`: String) 
-    func `insert`(`tx`: Transaction, `index`: UInt32, `chunk`: String) 
-    func `getString`(`tx`: Transaction)  -> String
-    func `removeRange`(`tx`: Transaction, `start`: UInt32, `length`: UInt32) 
-    func `length`(`tx`: Transaction)  -> UInt32
+public protocol YrsTextProtocol {
+    func `append`(`tx`: YrsTransaction, `text`: String) 
+    func `insert`(`tx`: YrsTransaction, `index`: UInt32, `chunk`: String) 
+    func `getString`(`tx`: YrsTransaction)  -> String
+    func `removeRange`(`tx`: YrsTransaction, `start`: UInt32, `length`: UInt32) 
+    func `length`(`tx`: YrsTransaction)  -> UInt32
     
 }
 
-public class Text: TextProtocol {
+public class YrsText: YrsTextProtocol {
     fileprivate let pointer: UnsafeMutableRawPointer
 
     // TODO: We'd like this to be `private` but for Swifty reasons,
@@ -476,62 +648,62 @@ public class Text: TextProtocol {
     }
 
     deinit {
-        try! rustCall { ffi_ynative_268e_Text_object_free(pointer, $0) }
+        try! rustCall { ffi_yniffi_a03a_YrsText_object_free(pointer, $0) }
     }
 
     
 
     
-    public func `append`(`tx`: Transaction, `text`: String)  {
+    public func `append`(`tx`: YrsTransaction, `text`: String)  {
         try!
     rustCall() {
     
-    ynative_268e_Text_append(self.pointer, 
-        FfiConverterTypeTransaction.lower(`tx`), 
+    yniffi_a03a_YrsText_append(self.pointer, 
+        FfiConverterTypeYrsTransaction.lower(`tx`), 
         FfiConverterString.lower(`text`), $0
     )
 }
     }
-    public func `insert`(`tx`: Transaction, `index`: UInt32, `chunk`: String)  {
+    public func `insert`(`tx`: YrsTransaction, `index`: UInt32, `chunk`: String)  {
         try!
     rustCall() {
     
-    ynative_268e_Text_insert(self.pointer, 
-        FfiConverterTypeTransaction.lower(`tx`), 
+    yniffi_a03a_YrsText_insert(self.pointer, 
+        FfiConverterTypeYrsTransaction.lower(`tx`), 
         FfiConverterUInt32.lower(`index`), 
         FfiConverterString.lower(`chunk`), $0
     )
 }
     }
-    public func `getString`(`tx`: Transaction)  -> String {
+    public func `getString`(`tx`: YrsTransaction)  -> String {
         return try! FfiConverterString.lift(
             try!
     rustCall() {
     
-    ynative_268e_Text_get_string(self.pointer, 
-        FfiConverterTypeTransaction.lower(`tx`), $0
+    yniffi_a03a_YrsText_get_string(self.pointer, 
+        FfiConverterTypeYrsTransaction.lower(`tx`), $0
     )
 }
         )
     }
-    public func `removeRange`(`tx`: Transaction, `start`: UInt32, `length`: UInt32)  {
+    public func `removeRange`(`tx`: YrsTransaction, `start`: UInt32, `length`: UInt32)  {
         try!
     rustCall() {
     
-    ynative_268e_Text_remove_range(self.pointer, 
-        FfiConverterTypeTransaction.lower(`tx`), 
+    yniffi_a03a_YrsText_remove_range(self.pointer, 
+        FfiConverterTypeYrsTransaction.lower(`tx`), 
         FfiConverterUInt32.lower(`start`), 
         FfiConverterUInt32.lower(`length`), $0
     )
 }
     }
-    public func `length`(`tx`: Transaction)  -> UInt32 {
+    public func `length`(`tx`: YrsTransaction)  -> UInt32 {
         return try! FfiConverterUInt32.lift(
             try!
     rustCall() {
     
-    ynative_268e_Text_length(self.pointer, 
-        FfiConverterTypeTransaction.lower(`tx`), $0
+    yniffi_a03a_YrsText_length(self.pointer, 
+        FfiConverterTypeYrsTransaction.lower(`tx`), $0
     )
 }
         )
@@ -540,11 +712,11 @@ public class Text: TextProtocol {
 }
 
 
-public struct FfiConverterTypeText: FfiConverter {
+public struct FfiConverterTypeYrsText: FfiConverter {
     typealias FfiType = UnsafeMutableRawPointer
-    typealias SwiftType = Text
+    typealias SwiftType = YrsText
 
-    public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> Text {
+    public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> YrsText {
         let v: UInt64 = try readInt(&buf)
         // The Rust code won't compile if a pointer won't fit in a UInt64.
         // We have to go via `UInt` because that's the thing that's the size of a pointer.
@@ -555,35 +727,35 @@ public struct FfiConverterTypeText: FfiConverter {
         return try lift(ptr!)
     }
 
-    public static func write(_ value: Text, into buf: inout [UInt8]) {
+    public static func write(_ value: YrsText, into buf: inout [UInt8]) {
         // This fiddling is because `Int` is the thing that's the same size as a pointer.
         // The Rust code won't compile if a pointer won't fit in a `UInt64`.
         writeInt(&buf, UInt64(bitPattern: Int64(Int(bitPattern: lower(value)))))
     }
 
-    public static func lift(_ pointer: UnsafeMutableRawPointer) throws -> Text {
-        return Text(unsafeFromRawPointer: pointer)
+    public static func lift(_ pointer: UnsafeMutableRawPointer) throws -> YrsText {
+        return YrsText(unsafeFromRawPointer: pointer)
     }
 
-    public static func lower(_ value: Text) -> UnsafeMutableRawPointer {
+    public static func lower(_ value: YrsText) -> UnsafeMutableRawPointer {
         return value.pointer
     }
 }
 
 
-public protocol TransactionProtocol {
+public protocol YrsTransactionProtocol {
     func `transactionApplyUpdate`(`update`: [UInt8]) throws
     func `transactionEncodeStateAsUpdateFromSv`(`stateVector`: [UInt8]) throws -> [UInt8]
     func `transactionEncodeStateAsUpdate`()  -> [UInt8]
     func `transactionEncodeUpdate`()  -> [UInt8]
     func `transactionStateVector`()  -> [UInt8]
-    func `transactionGetText`(`name`: String)  -> Text?
-    func `transactionGetArray`(`name`: String)  -> YArray?
+    func `transactionGetText`(`name`: String)  -> YrsText?
+    func `transactionGetArray`(`name`: String)  -> YrsArray?
     func `free`() 
     
 }
 
-public class Transaction: TransactionProtocol {
+public class YrsTransaction: YrsTransactionProtocol {
     fileprivate let pointer: UnsafeMutableRawPointer
 
     // TODO: We'd like this to be `private` but for Swifty reasons,
@@ -594,7 +766,7 @@ public class Transaction: TransactionProtocol {
     }
 
     deinit {
-        try! rustCall { ffi_ynative_268e_Transaction_object_free(pointer, $0) }
+        try! rustCall { ffi_yniffi_a03a_YrsTransaction_object_free(pointer, $0) }
     }
 
     
@@ -603,7 +775,7 @@ public class Transaction: TransactionProtocol {
     public func `transactionApplyUpdate`(`update`: [UInt8]) throws {
         try
     rustCallWithError(FfiConverterTypeCodingError.self) {
-    ynative_268e_Transaction_transaction_apply_update(self.pointer, 
+    yniffi_a03a_YrsTransaction_transaction_apply_update(self.pointer, 
         FfiConverterSequenceUInt8.lower(`update`), $0
     )
 }
@@ -612,7 +784,7 @@ public class Transaction: TransactionProtocol {
         return try FfiConverterSequenceUInt8.lift(
             try
     rustCallWithError(FfiConverterTypeCodingError.self) {
-    ynative_268e_Transaction_transaction_encode_state_as_update_from_sv(self.pointer, 
+    yniffi_a03a_YrsTransaction_transaction_encode_state_as_update_from_sv(self.pointer, 
         FfiConverterSequenceUInt8.lower(`stateVector`), $0
     )
 }
@@ -623,7 +795,7 @@ public class Transaction: TransactionProtocol {
             try!
     rustCall() {
     
-    ynative_268e_Transaction_transaction_encode_state_as_update(self.pointer, $0
+    yniffi_a03a_YrsTransaction_transaction_encode_state_as_update(self.pointer, $0
     )
 }
         )
@@ -633,7 +805,7 @@ public class Transaction: TransactionProtocol {
             try!
     rustCall() {
     
-    ynative_268e_Transaction_transaction_encode_update(self.pointer, $0
+    yniffi_a03a_YrsTransaction_transaction_encode_update(self.pointer, $0
     )
 }
         )
@@ -643,28 +815,28 @@ public class Transaction: TransactionProtocol {
             try!
     rustCall() {
     
-    ynative_268e_Transaction_transaction_state_vector(self.pointer, $0
+    yniffi_a03a_YrsTransaction_transaction_state_vector(self.pointer, $0
     )
 }
         )
     }
-    public func `transactionGetText`(`name`: String)  -> Text? {
-        return try! FfiConverterOptionTypeText.lift(
+    public func `transactionGetText`(`name`: String)  -> YrsText? {
+        return try! FfiConverterOptionTypeYrsText.lift(
             try!
     rustCall() {
     
-    ynative_268e_Transaction_transaction_get_text(self.pointer, 
+    yniffi_a03a_YrsTransaction_transaction_get_text(self.pointer, 
         FfiConverterString.lower(`name`), $0
     )
 }
         )
     }
-    public func `transactionGetArray`(`name`: String)  -> YArray? {
-        return try! FfiConverterOptionTypeYArray.lift(
+    public func `transactionGetArray`(`name`: String)  -> YrsArray? {
+        return try! FfiConverterOptionTypeYrsArray.lift(
             try!
     rustCall() {
     
-    ynative_268e_Transaction_transaction_get_array(self.pointer, 
+    yniffi_a03a_YrsTransaction_transaction_get_array(self.pointer, 
         FfiConverterString.lower(`name`), $0
     )
 }
@@ -674,7 +846,7 @@ public class Transaction: TransactionProtocol {
         try!
     rustCall() {
     
-    ynative_268e_Transaction_free(self.pointer, $0
+    yniffi_a03a_YrsTransaction_free(self.pointer, $0
     )
 }
     }
@@ -682,11 +854,11 @@ public class Transaction: TransactionProtocol {
 }
 
 
-public struct FfiConverterTypeTransaction: FfiConverter {
+public struct FfiConverterTypeYrsTransaction: FfiConverter {
     typealias FfiType = UnsafeMutableRawPointer
-    typealias SwiftType = Transaction
+    typealias SwiftType = YrsTransaction
 
-    public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> Transaction {
+    public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> YrsTransaction {
         let v: UInt64 = try readInt(&buf)
         // The Rust code won't compile if a pointer won't fit in a UInt64.
         // We have to go via `UInt` because that's the thing that's the size of a pointer.
@@ -697,189 +869,17 @@ public struct FfiConverterTypeTransaction: FfiConverter {
         return try lift(ptr!)
     }
 
-    public static func write(_ value: Transaction, into buf: inout [UInt8]) {
+    public static func write(_ value: YrsTransaction, into buf: inout [UInt8]) {
         // This fiddling is because `Int` is the thing that's the same size as a pointer.
         // The Rust code won't compile if a pointer won't fit in a `UInt64`.
         writeInt(&buf, UInt64(bitPattern: Int64(Int(bitPattern: lower(value)))))
     }
 
-    public static func lift(_ pointer: UnsafeMutableRawPointer) throws -> Transaction {
-        return Transaction(unsafeFromRawPointer: pointer)
+    public static func lift(_ pointer: UnsafeMutableRawPointer) throws -> YrsTransaction {
+        return YrsTransaction(unsafeFromRawPointer: pointer)
     }
 
-    public static func lower(_ value: Transaction) -> UnsafeMutableRawPointer {
-        return value.pointer
-    }
-}
-
-
-public protocol YArrayProtocol {
-    func `each`(`tx`: Transaction, `delegate`: YArrayEachDelegate) 
-    func `get`(`tx`: Transaction, `index`: UInt32) throws -> String
-    func `insert`(`tx`: Transaction, `index`: UInt32, `value`: String) 
-    func `insertRange`(`tx`: Transaction, `index`: UInt32, `values`: [String]) 
-    func `length`(`tx`: Transaction)  -> UInt32
-    func `pushBack`(`tx`: Transaction, `value`: String) 
-    func `pushFront`(`tx`: Transaction, `value`: String) 
-    func `remove`(`tx`: Transaction, `index`: UInt32) 
-    func `removeRange`(`tx`: Transaction, `index`: UInt32, `len`: UInt32) 
-    func `toA`(`tx`: Transaction)  -> [String]
-    
-}
-
-public class YArray: YArrayProtocol {
-    fileprivate let pointer: UnsafeMutableRawPointer
-
-    // TODO: We'd like this to be `private` but for Swifty reasons,
-    // we can't implement `FfiConverter` without making this `required` and we can't
-    // make it `required` without making it `public`.
-    required init(unsafeFromRawPointer pointer: UnsafeMutableRawPointer) {
-        self.pointer = pointer
-    }
-
-    deinit {
-        try! rustCall { ffi_ynative_268e_YArray_object_free(pointer, $0) }
-    }
-
-    
-
-    
-    public func `each`(`tx`: Transaction, `delegate`: YArrayEachDelegate)  {
-        try!
-    rustCall() {
-    
-    ynative_268e_YArray_each(self.pointer, 
-        FfiConverterTypeTransaction.lower(`tx`), 
-        FfiConverterCallbackInterfaceYArrayEachDelegate.lower(`delegate`), $0
-    )
-}
-    }
-    public func `get`(`tx`: Transaction, `index`: UInt32) throws -> String {
-        return try FfiConverterString.lift(
-            try
-    rustCallWithError(FfiConverterTypeCodingError.self) {
-    ynative_268e_YArray_get(self.pointer, 
-        FfiConverterTypeTransaction.lower(`tx`), 
-        FfiConverterUInt32.lower(`index`), $0
-    )
-}
-        )
-    }
-    public func `insert`(`tx`: Transaction, `index`: UInt32, `value`: String)  {
-        try!
-    rustCall() {
-    
-    ynative_268e_YArray_insert(self.pointer, 
-        FfiConverterTypeTransaction.lower(`tx`), 
-        FfiConverterUInt32.lower(`index`), 
-        FfiConverterString.lower(`value`), $0
-    )
-}
-    }
-    public func `insertRange`(`tx`: Transaction, `index`: UInt32, `values`: [String])  {
-        try!
-    rustCall() {
-    
-    ynative_268e_YArray_insert_range(self.pointer, 
-        FfiConverterTypeTransaction.lower(`tx`), 
-        FfiConverterUInt32.lower(`index`), 
-        FfiConverterSequenceString.lower(`values`), $0
-    )
-}
-    }
-    public func `length`(`tx`: Transaction)  -> UInt32 {
-        return try! FfiConverterUInt32.lift(
-            try!
-    rustCall() {
-    
-    ynative_268e_YArray_length(self.pointer, 
-        FfiConverterTypeTransaction.lower(`tx`), $0
-    )
-}
-        )
-    }
-    public func `pushBack`(`tx`: Transaction, `value`: String)  {
-        try!
-    rustCall() {
-    
-    ynative_268e_YArray_push_back(self.pointer, 
-        FfiConverterTypeTransaction.lower(`tx`), 
-        FfiConverterString.lower(`value`), $0
-    )
-}
-    }
-    public func `pushFront`(`tx`: Transaction, `value`: String)  {
-        try!
-    rustCall() {
-    
-    ynative_268e_YArray_push_front(self.pointer, 
-        FfiConverterTypeTransaction.lower(`tx`), 
-        FfiConverterString.lower(`value`), $0
-    )
-}
-    }
-    public func `remove`(`tx`: Transaction, `index`: UInt32)  {
-        try!
-    rustCall() {
-    
-    ynative_268e_YArray_remove(self.pointer, 
-        FfiConverterTypeTransaction.lower(`tx`), 
-        FfiConverterUInt32.lower(`index`), $0
-    )
-}
-    }
-    public func `removeRange`(`tx`: Transaction, `index`: UInt32, `len`: UInt32)  {
-        try!
-    rustCall() {
-    
-    ynative_268e_YArray_remove_range(self.pointer, 
-        FfiConverterTypeTransaction.lower(`tx`), 
-        FfiConverterUInt32.lower(`index`), 
-        FfiConverterUInt32.lower(`len`), $0
-    )
-}
-    }
-    public func `toA`(`tx`: Transaction)  -> [String] {
-        return try! FfiConverterSequenceString.lift(
-            try!
-    rustCall() {
-    
-    ynative_268e_YArray_to_a(self.pointer, 
-        FfiConverterTypeTransaction.lower(`tx`), $0
-    )
-}
-        )
-    }
-    
-}
-
-
-public struct FfiConverterTypeYArray: FfiConverter {
-    typealias FfiType = UnsafeMutableRawPointer
-    typealias SwiftType = YArray
-
-    public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> YArray {
-        let v: UInt64 = try readInt(&buf)
-        // The Rust code won't compile if a pointer won't fit in a UInt64.
-        // We have to go via `UInt` because that's the thing that's the size of a pointer.
-        let ptr = UnsafeMutableRawPointer(bitPattern: UInt(truncatingIfNeeded: v))
-        if (ptr == nil) {
-            throw UniffiInternalError.unexpectedNullPointer
-        }
-        return try lift(ptr!)
-    }
-
-    public static func write(_ value: YArray, into buf: inout [UInt8]) {
-        // This fiddling is because `Int` is the thing that's the same size as a pointer.
-        // The Rust code won't compile if a pointer won't fit in a `UInt64`.
-        writeInt(&buf, UInt64(bitPattern: Int64(Int(bitPattern: lower(value)))))
-    }
-
-    public static func lift(_ pointer: UnsafeMutableRawPointer) throws -> YArray {
-        return YArray(unsafeFromRawPointer: pointer)
-    }
-
-    public static func lower(_ value: YArray) -> UnsafeMutableRawPointer {
+    public static func lower(_ value: YrsTransaction) -> UnsafeMutableRawPointer {
         return value.pointer
     }
 }
@@ -1004,17 +1004,17 @@ fileprivate class UniFFICallbackHandleMap<T> {
 // to free the callback once it's dropped by Rust.
 private let IDX_CALLBACK_FREE: Int32 = 0
 
-// Declaration and FfiConverters for YArrayEachDelegate Callback Interface
+// Declaration and FfiConverters for YrsArrayEachDelegate Callback Interface
 
-public protocol YArrayEachDelegate : AnyObject {
+public protocol YrsArrayEachDelegate : AnyObject {
     func `call`(`value`: String) 
     
 }
 
 // The ForeignCallback that is passed to Rust.
-fileprivate let foreignCallbackCallbackInterfaceYArrayEachDelegate : ForeignCallback =
+fileprivate let foreignCallbackCallbackInterfaceYrsArrayEachDelegate : ForeignCallback =
     { (handle: UniFFICallbackHandle, method: Int32, args: RustBuffer, out_buf: UnsafeMutablePointer<RustBuffer>) -> Int32 in
-        func `invokeCall`(_ swiftCallbackInterface: YArrayEachDelegate, _ args: RustBuffer) throws -> RustBuffer {
+        func `invokeCall`(_ swiftCallbackInterface: YrsArrayEachDelegate, _ args: RustBuffer) throws -> RustBuffer {
         defer { args.deallocate() }
 
             var reader = createReader(data: Data(rustBuffer: args))
@@ -1028,17 +1028,17 @@ fileprivate let foreignCallbackCallbackInterfaceYArrayEachDelegate : ForeignCall
         }
         
 
-        let cb: YArrayEachDelegate
+        let cb: YrsArrayEachDelegate
         do {
-            cb = try FfiConverterCallbackInterfaceYArrayEachDelegate.lift(handle)
+            cb = try FfiConverterCallbackInterfaceYrsArrayEachDelegate.lift(handle)
         } catch {
-            out_buf.pointee = FfiConverterString.lower("YArrayEachDelegate: Invalid handle")
+            out_buf.pointee = FfiConverterString.lower("YrsArrayEachDelegate: Invalid handle")
             return -1
         }
 
         switch method {
             case IDX_CALLBACK_FREE:
-                FfiConverterCallbackInterfaceYArrayEachDelegate.drop(handle: handle)
+                FfiConverterCallbackInterfaceYrsArrayEachDelegate.drop(handle: handle)
                 // No return value.
                 // See docs of ForeignCallback in `uniffi/src/ffi/foreigncallbacks.rs`
                 return 0
@@ -1064,12 +1064,12 @@ fileprivate let foreignCallbackCallbackInterfaceYArrayEachDelegate : ForeignCall
     }
 
 // FfiConverter protocol for callback interfaces
-fileprivate struct FfiConverterCallbackInterfaceYArrayEachDelegate {
+fileprivate struct FfiConverterCallbackInterfaceYrsArrayEachDelegate {
     // Initialize our callback method with the scaffolding code
     private static var callbackInitialized = false
     private static func initCallback() {
         try! rustCall { (err: UnsafeMutablePointer<RustCallStatus>) in
-                ffi_ynative_268e_YArrayEachDelegate_init_callback(foreignCallbackCallbackInterfaceYArrayEachDelegate, err)
+                ffi_yniffi_a03a_YrsArrayEachDelegate_init_callback(foreignCallbackCallbackInterfaceYrsArrayEachDelegate, err)
         }
     }
     private static func ensureCallbackinitialized() {
@@ -1083,11 +1083,11 @@ fileprivate struct FfiConverterCallbackInterfaceYArrayEachDelegate {
         handleMap.remove(handle: handle)
     }
 
-    private static var handleMap = UniFFICallbackHandleMap<YArrayEachDelegate>()
+    private static var handleMap = UniFFICallbackHandleMap<YrsArrayEachDelegate>()
 }
 
-extension FfiConverterCallbackInterfaceYArrayEachDelegate : FfiConverter {
-    typealias SwiftType = YArrayEachDelegate
+extension FfiConverterCallbackInterfaceYrsArrayEachDelegate : FfiConverter {
+    typealias SwiftType = YrsArrayEachDelegate
     // We can use Handle as the FfiType because it's a typealias to UInt64
     typealias FfiType = UniFFICallbackHandle
 
@@ -1116,8 +1116,8 @@ extension FfiConverterCallbackInterfaceYArrayEachDelegate : FfiConverter {
     }
 }
 
-fileprivate struct FfiConverterOptionTypeText: FfiConverterRustBuffer {
-    typealias SwiftType = Text?
+fileprivate struct FfiConverterOptionTypeYrsArray: FfiConverterRustBuffer {
+    typealias SwiftType = YrsArray?
 
     public static func write(_ value: SwiftType, into buf: inout [UInt8]) {
         guard let value = value else {
@@ -1125,20 +1125,20 @@ fileprivate struct FfiConverterOptionTypeText: FfiConverterRustBuffer {
             return
         }
         writeInt(&buf, Int8(1))
-        FfiConverterTypeText.write(value, into: &buf)
+        FfiConverterTypeYrsArray.write(value, into: &buf)
     }
 
     public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> SwiftType {
         switch try readInt(&buf) as Int8 {
         case 0: return nil
-        case 1: return try FfiConverterTypeText.read(from: &buf)
+        case 1: return try FfiConverterTypeYrsArray.read(from: &buf)
         default: throw UniffiInternalError.unexpectedOptionalTag
         }
     }
 }
 
-fileprivate struct FfiConverterOptionTypeYArray: FfiConverterRustBuffer {
-    typealias SwiftType = YArray?
+fileprivate struct FfiConverterOptionTypeYrsText: FfiConverterRustBuffer {
+    typealias SwiftType = YrsText?
 
     public static func write(_ value: SwiftType, into buf: inout [UInt8]) {
         guard let value = value else {
@@ -1146,13 +1146,13 @@ fileprivate struct FfiConverterOptionTypeYArray: FfiConverterRustBuffer {
             return
         }
         writeInt(&buf, Int8(1))
-        FfiConverterTypeYArray.write(value, into: &buf)
+        FfiConverterTypeYrsText.write(value, into: &buf)
     }
 
     public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> SwiftType {
         switch try readInt(&buf) as Int8 {
         case 0: return nil
-        case 1: return try FfiConverterTypeYArray.read(from: &buf)
+        case 1: return try FfiConverterTypeYrsText.read(from: &buf)
         default: throw UniffiInternalError.unexpectedOptionalTag
         }
     }
@@ -1207,7 +1207,7 @@ fileprivate struct FfiConverterSequenceString: FfiConverterRustBuffer {
  *
  * This is generated by uniffi.
  */
-public enum YnativeLifecycle {
+public enum YniffiLifecycle {
     /**
      * Initialize the FFI and Rust library. This should be only called once per application.
      */

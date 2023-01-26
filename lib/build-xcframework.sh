@@ -1,15 +1,15 @@
 #!/usr/bin/env bash
 
-PACKAGE_NAME="ynative"
-LIB_NAME="libuniffi_ynative.a"
+PACKAGE_NAME="yniffi"
+LIB_NAME="libuniffi_yniffi.a"
 
 # *IMPORTANT*: When changing this value, change them in `swift/pkg/YNative.h` and `swift/pkg/Info.plist` as well
-FRAMEWORK_NAME="YNative"
+FRAMEWORK_NAME="YniffiXC"
 
 SWIFT_FOLDER="swift"
 BUILD_FOLDER="target"
 
-XCFRAMEWORK_FOLDER="${FRAMEWORK_NAME}Binary.xcframework"
+XCFRAMEWORK_FOLDER="${FRAMEWORK_NAME}.xcframework"
 FRAMEWORK_FOLDER="${FRAMEWORK_NAME}.framework"
 
 echo "▸ Install toolchains"
@@ -26,7 +26,7 @@ rm -rf "${XCFRAMEWORK_FOLDER}"
 
 mkdir -p "${SWIFT_FOLDER}/scaffold"
 echo "▸ Generate Swift Scaffolding Code"
-$HOME/.cargo/bin/uniffi-bindgen generate "src/ynative.udl" --language swift --out-dir "${SWIFT_FOLDER}/scaffold"
+$HOME/.cargo/bin/uniffi-bindgen generate "src/yniffi.udl" --language swift --out-dir "${SWIFT_FOLDER}/scaffold"
 # Remove unused generated .modulemap
 rm "${SWIFT_FOLDER}/scaffold/${PACKAGE_NAME}FFI.modulemap"
 

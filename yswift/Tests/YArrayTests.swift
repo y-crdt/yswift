@@ -9,7 +9,7 @@ struct SomeType: Codable, Equatable {
 class YArrayTests: XCTestCase {
     func test_insert() {
         let document = YDocument()
-        let array: YYArray<SomeType> = document.getOrCreateArray(named: "some_array")
+        let array: YArray<SomeType> = document.getOrCreateArray(named: "some_array")
         
         let initialInstance = SomeType(name: "Aidar", age: 24)
         
@@ -26,7 +26,7 @@ class YArrayTests: XCTestCase {
     
     func test_insertArray() {
         let document = YDocument()
-        let array: YYArray<SomeType> = document.getOrCreateArray(named: "some_array")
+        let array: YArray<SomeType> = document.getOrCreateArray(named: "some_array")
         
         let arrayToInsert = [SomeType(name: "Some Dude", age: 24), SomeType(name: "Another Dude", age: 32)]
         
@@ -43,7 +43,7 @@ class YArrayTests: XCTestCase {
     
     func test_length() {
         let document = YDocument()
-        let array: YYArray<SomeType> = document.getOrCreateArray(named: "some_array")
+        let array: YArray<SomeType> = document.getOrCreateArray(named: "some_array")
         
         let arrayToInsert = [SomeType(name: "Some Dude", age: 24), SomeType(name: "Another Dude", age: 32)]
         
@@ -60,7 +60,7 @@ class YArrayTests: XCTestCase {
     
     func test_pushBack_and_pushFront() {
         let document = YDocument()
-        let array: YYArray<SomeType> = document.getOrCreateArray(named: "some_array")
+        let array: YArray<SomeType> = document.getOrCreateArray(named: "some_array")
         
         let initialElement = SomeType(name: "I will be in the middle in the end", age: 77)
         let frontElement = SomeType(name: "Some Dude", age: 24)
@@ -81,7 +81,7 @@ class YArrayTests: XCTestCase {
     
     func test_remove() {
         let document = YDocument()
-        let array: YYArray<SomeType> = document.getOrCreateArray(named: "some_array")
+        let array: YArray<SomeType> = document.getOrCreateArray(named: "some_array")
         
         let initialElement = SomeType(name: "I will be in the middle in the end", age: 77)
         let frontElement = SomeType(name: "Some Dude", age: 24)
@@ -106,7 +106,7 @@ class YArrayTests: XCTestCase {
     
     func test_removeRange() {
         let document = YDocument()
-        let array: YYArray<SomeType> = document.getOrCreateArray(named: "some_array")
+        let array: YArray<SomeType> = document.getOrCreateArray(named: "some_array")
         
         let initialElement = SomeType(name: "I will be in the middle in the end", age: 77)
         let frontElement = SomeType(name: "Some Dude", age: 24)
@@ -131,7 +131,7 @@ class YArrayTests: XCTestCase {
     
     func test_forEach() {
         let document = YDocument()
-        let array: YYArray<SomeType> = document.getOrCreateArray(named: "some_array")
+        let array: YArray<SomeType> = document.getOrCreateArray(named: "some_array")
         
         let arrayToInsert = [SomeType(name: "Some Dude", age: 24), SomeType(name: "Another Dude", age: 32)]
         
