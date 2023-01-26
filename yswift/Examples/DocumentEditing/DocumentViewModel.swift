@@ -26,6 +26,7 @@ final class DocumentViewModel: ObservableObject {
         }
     }
     
+    // @TODO: make better integration with `TextEditor`/`UITextView`, because this one doesn't handle all the cases correctly.
     private func syncUpdates(oldText: String, newText: String) {
         let ytext = doc.getOrCreateText(named: "some_text")
         let old = Array(oldText)

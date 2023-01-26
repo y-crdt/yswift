@@ -1,5 +1,10 @@
 import Foundation
 
+/*
+ Note: This is a very-very-very WIP implementation of y-protocol.
+ See https://github.com/yjs/y-protocols/blob/master/PROTOCOL.md
+ */
+
 public struct YSyncMessage: Codable {
     public let kind: Kind
     public let buffer: Buffer
@@ -25,8 +30,6 @@ public final class YProtocol {
         self.document = document
     }
     
-    // MARK: - Handlers
-    
     public func handleConnectionStarted() -> YSyncMessage {
         return sendStep1()
     }
@@ -48,8 +51,6 @@ public final class YProtocol {
     public func handleUpdate(_ update: Buffer, completionHandler: @escaping () -> Void) {
         handleStep2(update, completionHandler: completionHandler)
     }
-    
-    // MARK: - Senders
     
     func sendStep1() -> YSyncMessage {
         let stateVector: Buffer = document.transact { txn in
