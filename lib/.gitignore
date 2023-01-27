@@ -5,4 +5,4 @@
 *.zip
 target
 Derived
-swift/wrapper/include/*.modulemap
+swift/scaffold
