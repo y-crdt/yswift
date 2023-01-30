@@ -3,6 +3,8 @@ import Yniffi
 
 public final class YText {
     private let _text: YrsText
+    private let decoder = JSONDecoder()
+    private let encoder = JSONEncoder()
     
     public init(text: YrsText) {
         _text = text
@@ -14,6 +16,14 @@ public final class YText {
     
     func insert(tx: YrsTransaction, index: UInt32, chunk: String) {
         _text.insert(tx: tx, index: index, chunk: chunk)
+    }
+    
+    func format<T: Encodable>(tx: YrsTransaction, index: UInt32, length: UInt32, attrs: [String: T]) {
+        _text.format(tx: tx, index: index, length: length, attrs: encodedMap(attrs))
+    }
+    
+    func insertEmbed<T: Encodable>(tx: YrsTransaction, index: UInt32, content: T) {
+        _text.insertEmbed(tx: tx, index: index, content: encoded(content))
     }
     
     func removeRange(tx: YrsTransaction, start: UInt32, length: UInt32) {
@@ -36,6 +46,15 @@ public final class YText {
     
     func unobserve(_ subscriptionId: UInt32) {
         _text.unobserve(subscriptionId: subscriptionId)
+    }
+    
+    private func encoded<T: Encodable>(_ value: T) -> String {
+        let data = try! encoder.encode(value)
+        return String(data: data, encoding: .utf8)!
+    }
+    
+    private func encodedMap<T: Encodable>(_ value: [String: T]) -> [String: String] {
+        Dictionary(uniqueKeysWithValues: value.map { ($0, encoded($1)) })
     }
 }
 

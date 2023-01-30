@@ -1,7 +1,10 @@
+use crate::attrs::YrsAttrs;
+use crate::delta::YrsDelta;
 use crate::transaction::YrsTransaction;
+use lib0::any::Any;
 use std::cell::RefCell;
+use std::collections::HashMap;
 use std::fmt::Debug;
-use yrs::types::{Delta, Value};
 use yrs::{GetString, Observable, Text, TextRef};
 
 pub(crate) struct YrsText(RefCell<TextRef>);
@@ -32,6 +35,30 @@ impl YrsText {
         let tx = tx.as_mut().unwrap();
 
         self.0.borrow_mut().insert(tx, index, chunk.as_str())
+    }
+
+    pub(crate) fn format(
+        &self,
+        transaction: &YrsTransaction,
+        index: u32,
+        length: u32,
+        attrs: HashMap<String, String>,
+    ) {
+        let mut tx = transaction.transaction();
+        let tx = tx.as_mut().unwrap();
+
+        let a = YrsAttrs::from(attrs);
+
+        self.0.borrow_mut().format(tx, index, length, a.0)
+    }
+
+    pub(crate) fn insert_embed(&self, transaction: &YrsTransaction, index: u32, content: String) {
+        let mut tx = transaction.transaction();
+        let tx = tx.as_mut().unwrap();
+
+        let avalue = Any::from_json(content.as_str()).unwrap();
+
+        self.0.borrow_mut().insert_embed(tx, index, avalue);
     }
 
     pub(crate) fn get_string(&self, tx: &YrsTransaction) -> String {
@@ -72,39 +99,5 @@ impl YrsText {
 
     pub(crate) fn unobserve(&self, subscription_id: u32) {
         self.0.borrow_mut().unobserve(subscription_id);
-    }
-}
-
-pub enum YrsDelta {
-    Inserted { value: String, attrs: String },
-    Deleted { index: u32 },
-    Retained { index: u32, attrs: String },
-}
-
-impl From<&Delta> for YrsDelta {
-    fn from(item: &Delta) -> Self {
-        match item {
-            Delta::Inserted(value, attrs) => {
-                let mut buf = String::new();
-                if let Value::Any(any) = value {
-                    any.to_json(&mut buf);
-                    YrsDelta::Inserted {
-                        value: (buf),
-                        attrs: ("".into()),
-                    }
-                } else {
-                    // @TODO: fix silly handling, it will just call with empty string if casting fails
-                    YrsDelta::Inserted {
-                        value: ("".into()),
-                        attrs: ("".into()),
-                    }
-                }
-            }
-            Delta::Retain(index, attrs) => YrsDelta::Retained {
-                index: (*index),
-                attrs: ("".into()),
-            },
-            Delta::Deleted(index) => YrsDelta::Deleted { index: (*index) },
-        }
     }
 }

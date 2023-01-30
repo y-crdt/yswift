@@ -1,8 +1,12 @@
 import XCTest
 @testable import YSwift
 
+struct SomeEmbed: Codable, Equatable {
+    let title: String
+}
+
 class YTextTests: XCTestCase {
-    func test_Append() {
+    func test_append() {
         let document = YDocument()
         let text = document.getOrCreateText(named: "some_text")
         let resultString: String = document.transact { txn in
@@ -12,7 +16,7 @@ class YTextTests: XCTestCase {
         XCTAssertEqual(resultString, "hello, world!")
     }
     
-    func test_AppendAndInsert() throws {
+    func test_appendAndInsert() throws {
         let document = YDocument()
         let text = document.getOrCreateText(named: "some_text")
         let resultString: String = document.transact { txn in
@@ -23,7 +27,70 @@ class YTextTests: XCTestCase {
         XCTAssertEqual(resultString, "before that: hello, world!")
     }
     
-    func test_Length() throws {
+
+    func test_format() {
+        let document = YDocument()
+        let text = document.getOrCreateText(named: "some_text")
+        
+        let initialAttrs: [String: String] = ["weight": "bold"]
+        var decodedAttrs: [String: String] = [:]
+        
+        let subscriptionId = text.observe { deltas in
+            deltas.forEach {
+                switch $0 {
+                case let .inserted(_, attrs):
+                    let decoded: [(String, String)] = attrs.map {
+                        let decoder = JSONDecoder()
+                        let decodedValue = try! decoder.decode(String.self, from: $1.data(using: .utf8)!)
+                        return ($0, decodedValue)
+                    }
+                    decodedAttrs = Dictionary(uniqueKeysWithValues: decoded)
+                default: break
+                }
+            }
+        }
+        
+        document.transact { txn in
+            text.append(tx: txn, text: "abc")
+            text.format(tx: txn, index: 0, length: 3, attrs: initialAttrs)
+        }
+        
+        text.unobserve(subscriptionId)
+        
+        XCTAssertEqual(initialAttrs, decodedAttrs)
+    }
+    
+    func test_insertEmbed() {
+        let document = YDocument()
+        let text = document.getOrCreateText(named: "some_text")
+        
+        let content = SomeEmbed(title: "title_123")
+        var insertedContent: SomeEmbed?
+        
+        let subscriptionId = text.observe { deltas in
+            deltas.forEach {
+                switch $0 {
+                case let .inserted(value, _):
+                    let decoder = JSONDecoder()
+                    let decodedValue = try! decoder.decode(SomeEmbed.self, from: value.data(using: .utf8)!)
+                    insertedContent = decodedValue
+                default: break
+                }
+            }
+        }
+        
+        let length: UInt32 = document.transact { txn in
+            text.insertEmbed(tx: txn, index: 0, content: content)
+            return text.length(tx: txn)
+        }
+        
+        text.unobserve(subscriptionId)
+        
+        XCTAssertEqual(length, 1)
+        XCTAssertEqual(content, insertedContent)
+    }
+    
+    func test_length() throws {
         let document = YDocument()
         let text = document.getOrCreateText(named: "some_text")
         let length: UInt32 = document.transact { txn in
@@ -88,6 +155,11 @@ class YTextTests: XCTestCase {
         
         XCTAssertEqual(insertedValue, "asd")
     }
+    
+    /*
+     https://www.swiftbysundell.com/articles/using-unit-tests-to-identify-avoid-memory-leaks-in-swift/
+     https://alisoftware.github.io/swift/closures/2016/07/25/closure-capture-1/
+     */
     
     func test_observationIsLeaking() {
         let document = YDocument()
