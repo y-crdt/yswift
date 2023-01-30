@@ -1,10 +1,15 @@
 use yrs::types::{Change, Value};
 
+
 pub enum YrsChange {
     Added { elements: Vec<String> },
     Removed { range: u32 },
     Retained { range: u32 },
 }
+
+// Watch out for XML types here, because underlying
+// elements from Change::added event could XMLElement instances as well
+// and things might break due to that
 
 impl From<&Change> for YrsChange {
     fn from(item: &Change) -> Self {

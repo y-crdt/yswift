@@ -16,6 +16,10 @@ pub enum YrsDelta {
     },
 }
 
+// Watch out for XML types here, because underlying
+// value from Delta::Inserted event could be XMLText instances as well
+// and things might break due to that
+
 impl From<&Delta> for YrsDelta {
     fn from(item: &Delta) -> Self {
         match item {
