@@ -17,8 +17,8 @@ rustup target add x86_64-apple-ios # iOS Simulator (Intel)
 rustup target add aarch64-apple-ios-sim # iOS Simulator (M1)
 rustup target add aarch64-apple-ios # iOS Device
 
-echo "▸ Install uniffi bindgen"
-cargo install uniffi_bindgen
+#echo "▸ Install uniffi bindgen"
+#cargo install uniffi_bindgen
 
 echo "▸ Clean state"
 rm -rf "${BUILD_FOLDER}"
@@ -26,7 +26,7 @@ rm -rf "${XCFRAMEWORK_FOLDER}"
 
 mkdir -p "${SWIFT_FOLDER}/scaffold"
 echo "▸ Generate Swift Scaffolding Code"
-$HOME/.cargo/bin/uniffi-bindgen generate "src/yniffi.udl" --language swift --out-dir "${SWIFT_FOLDER}/scaffold"
+cargo run -p uniffi-bindgen generate "src/yniffi.udl" --language swift --out-dir "${SWIFT_FOLDER}/scaffold"
 # Remove unused generated .modulemap
 rm "${SWIFT_FOLDER}/scaffold/${PACKAGE_NAME}FFI.modulemap"
 
