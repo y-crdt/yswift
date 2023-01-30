@@ -1,5 +1,6 @@
 mod array;
 mod attrs;
+mod change;
 mod delta;
 mod doc;
 mod error;
@@ -8,7 +9,8 @@ mod transaction;
 
 use crate::array::YrsArray;
 use crate::array::YrsArrayEachDelegate;
-use crate::attrs::YrsAttrs;
+use crate::array::YrsArrayObservationDelegate;
+use crate::change::YrsChange;
 use crate::delta::YrsDelta;
 use crate::doc::YrsDoc;
 use crate::error::CodingError;

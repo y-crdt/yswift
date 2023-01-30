@@ -60,7 +60,78 @@ class YTextTests: XCTestCase {
         XCTAssertEqual(initialAttrs, decodedAttrs)
     }
     
+    func test_insertWithAttributes() {
+        let document = YDocument()
+        let text = document.getOrCreateText(named: "some_text")
+        
+        let initialAttrs: [String: String] = ["weight": "bold"]
+        var decodedAttrs: [String: String] = [:]
+        
+        let subscriptionId = text.observe { deltas in
+            deltas.forEach {
+                switch $0 {
+                case let .inserted(_, attrs):
+                    let decoded: [(String, String)] = attrs.map {
+                        let decoder = JSONDecoder()
+                        let decodedValue = try! decoder.decode(String.self, from: $1.data(using: .utf8)!)
+                        return ($0, decodedValue)
+                    }
+                    decodedAttrs = Dictionary(uniqueKeysWithValues: decoded)
+                default: break
+                }
+            }
+        }
+        
+        let finalString: String = document.transact { txn in
+            text.insertWithAttributes(tx: txn, index: 0, chunk: "abc", attrs: initialAttrs)
+            return text.getString(tx: txn)
+        }
+        
+        text.unobserve(subscriptionId)
+        
+        XCTAssertEqual(initialAttrs, decodedAttrs)
+        XCTAssertEqual(finalString, "abc")
+    }
+    
     func test_insertEmbed() {
+        let document = YDocument()
+        let text = document.getOrCreateText(named: "some_text")
+        
+        let content = SomeEmbed(title: "title_123")
+        var insertedContent: SomeEmbed?
+        
+        let initialAttrs: [String: String] = ["weight": "bold"]
+        var decodedAttrs: [String: String] = [:]
+        
+        let subscriptionId = text.observe { deltas in
+            deltas.forEach {
+                switch $0 {
+                case let .inserted(value, attrs):
+                    let decoder = JSONDecoder()
+                    let decodedValue = try! decoder.decode(SomeEmbed.self, from: value.data(using: .utf8)!)
+                    insertedContent = decodedValue
+                    let decoded: [(String, String)] = attrs.map {
+                        let decoder = JSONDecoder()
+                        let decodedValue = try! decoder.decode(String.self, from: $1.data(using: .utf8)!)
+                        return ($0, decodedValue)
+                    }
+                    decodedAttrs = Dictionary(uniqueKeysWithValues: decoded)
+                default: break
+                }
+            }
+        }
+        
+        document.transact { txn in
+            text.insertEmbedWithAttributes(tx: txn, index: 0, content: content, attrs: initialAttrs)
+        }
+        
+        text.unobserve(subscriptionId)
+        
+        XCTAssertEqual(content, insertedContent)
+        XCTAssertEqual(initialAttrs, decodedAttrs)
+    }
+    
+    func test_insertEmbedWithAttributes() {
         let document = YDocument()
         let text = document.getOrCreateText(named: "some_text")
         

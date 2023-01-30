@@ -1,9 +1,9 @@
-use crate::error::CodingError;
 use crate::transaction::YrsTransaction;
+use crate::{change::YrsChange, error::CodingError};
 use lib0::any::Any;
 use std::cell::RefCell;
 use std::fmt::Debug;
-use yrs::{types::Value, Array, ArrayRef};
+use yrs::{types::Value, Array, ArrayRef, Observable};
 
 pub(crate) struct YrsArray(RefCell<ArrayRef>);
 
@@ -17,6 +17,10 @@ impl From<ArrayRef> for YrsArray {
 }
 pub(crate) trait YrsArrayEachDelegate: Send + Sync + Debug {
     fn call(&self, value: String);
+}
+
+pub(crate) trait YrsArrayObservationDelegate: Send + Sync + Debug {
+    fn call(&self, value: Vec<YrsChange>);
 }
 
 impl YrsArray {
@@ -127,6 +131,25 @@ impl YrsArray {
 
         let arr = self.0.borrow_mut();
         arr.remove_range(tx, index, len)
+    }
+
+    pub(crate) fn observe(&self, delegate: Box<dyn YrsArrayObservationDelegate>) -> u32 {
+        let subscription_id = self
+            .0
+            .borrow_mut()
+            .observe(move |transaction, text_event| {
+                let delta = text_event.delta(transaction);
+                let result: Vec<YrsChange> =
+                    delta.iter().map(|change| YrsChange::from(change)).collect();
+                delegate.call(result)
+            })
+            .into();
+
+        subscription_id
+    }
+
+    pub(crate) fn unobserve(&self, subscription_id: u32) {
+        self.0.borrow_mut().unobserve(subscription_id);
     }
 
     pub(crate) fn to_a(&self, transaction: &YrsTransaction) -> Vec<String> {

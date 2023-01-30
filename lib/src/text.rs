@@ -23,20 +23,6 @@ pub(crate) trait YrsTextObservationDelegate: Send + Sync + Debug {
 }
 
 impl YrsText {
-    pub(crate) fn append(&self, tx: &YrsTransaction, text: String) {
-        let mut tx = tx.transaction();
-        let tx = tx.as_mut().unwrap();
-
-        self.0.borrow_mut().push(tx, text.as_str());
-    }
-
-    pub(crate) fn insert(&self, tx: &YrsTransaction, index: u32, chunk: String) {
-        let mut tx = tx.transaction();
-        let tx = tx.as_mut().unwrap();
-
-        self.0.borrow_mut().insert(tx, index, chunk.as_str())
-    }
-
     pub(crate) fn format(
         &self,
         transaction: &YrsTransaction,
@@ -52,6 +38,37 @@ impl YrsText {
         self.0.borrow_mut().format(tx, index, length, a.0)
     }
 
+    pub(crate) fn append(&self, tx: &YrsTransaction, text: String) {
+        let mut tx = tx.transaction();
+        let tx = tx.as_mut().unwrap();
+
+        self.0.borrow_mut().push(tx, text.as_str());
+    }
+
+    pub(crate) fn insert(&self, tx: &YrsTransaction, index: u32, chunk: String) {
+        let mut tx = tx.transaction();
+        let tx = tx.as_mut().unwrap();
+
+        self.0.borrow_mut().insert(tx, index, chunk.as_str())
+    }
+
+    pub(crate) fn insert_with_attributes(
+        &self,
+        transaction: &YrsTransaction,
+        index: u32,
+        chunk: String,
+        attrs: HashMap<String, String>,
+    ) {
+        let mut tx = transaction.transaction();
+        let tx = tx.as_mut().unwrap();
+
+        let a = YrsAttrs::from(attrs);
+
+        self.0
+            .borrow_mut()
+            .insert_with_attributes(tx, index, chunk.as_str(), a.0)
+    }
+
     pub(crate) fn insert_embed(&self, transaction: &YrsTransaction, index: u32, content: String) {
         let mut tx = transaction.transaction();
         let tx = tx.as_mut().unwrap();
@@ -59,6 +76,25 @@ impl YrsText {
         let avalue = Any::from_json(content.as_str()).unwrap();
 
         self.0.borrow_mut().insert_embed(tx, index, avalue);
+    }
+
+    pub(crate) fn insert_embed_with_attributes(
+        &self,
+        transaction: &YrsTransaction,
+        index: u32,
+        content: String,
+        attrs: HashMap<String, String>,
+    ) {
+        let mut tx = transaction.transaction();
+        let tx = tx.as_mut().unwrap();
+
+        let avalue = Any::from_json(content.as_str()).unwrap();
+
+        let a = YrsAttrs::from(attrs);
+
+        self.0
+            .borrow_mut()
+            .insert_embed_with_attributes(tx, index, avalue, a.0);
     }
 
     pub(crate) fn get_string(&self, tx: &YrsTransaction) -> String {

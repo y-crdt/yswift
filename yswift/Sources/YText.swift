@@ -18,12 +18,20 @@ public final class YText {
         _text.insert(tx: tx, index: index, chunk: chunk)
     }
     
+    func insertWithAttributes<T: Encodable>(tx: YrsTransaction, index: UInt32, chunk: String, attrs: [String: T]) {
+        _text.insertWithAttributes(tx: tx, index: index, chunk: chunk, attrs: encodedMap(attrs))
+    }
+    
     func format<T: Encodable>(tx: YrsTransaction, index: UInt32, length: UInt32, attrs: [String: T]) {
         _text.format(tx: tx, index: index, length: length, attrs: encodedMap(attrs))
     }
     
     func insertEmbed<T: Encodable>(tx: YrsTransaction, index: UInt32, content: T) {
         _text.insertEmbed(tx: tx, index: index, content: encoded(content))
+    }
+    
+    func insertEmbedWithAttributes<T: Encodable, R: Encodable>(tx: YrsTransaction, index: UInt32, content: T, attrs: [String: R]) {
+        _text.insertEmbedWithAttributes(tx: tx, index: index, content: encoded(content), attrs: encodedMap(attrs))
     }
     
     func removeRange(tx: YrsTransaction, start: UInt32, length: UInt32) {
@@ -34,7 +42,6 @@ public final class YText {
         _text.getString(tx: tx)
     }
     
-
     func length(tx: YrsTransaction) -> UInt32 {
         _text.length(tx: tx)
     }

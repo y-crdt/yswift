@@ -149,4 +149,91 @@ class YArrayTests: XCTestCase {
         
         XCTAssertEqual(arrayToInsert, collectedArray)
     }
+    
+    func test_observation() {
+        let document = YDocument()
+        let array: YArray<SomeType> = document.getOrCreateArray(named: "some_array")
+        let decoder = JSONDecoder()
+
+        let insertedElements = [SomeType(name: "Some Dude", age: 24), SomeType(name: "Another Dude", age: 32)]
+        var receivedElements: [SomeType] = []
+        
+        let subscriptionId = array.observe { changes in
+            changes.forEach {
+                switch $0 {
+                case let .added(elements):
+                    receivedElements = elements.map {
+                        let data = $0.data(using: .utf8)!
+                        return try! decoder.decode(SomeType.self, from: data)
+                    }
+                default: break
+                }
+            }
+        }
+        
+        document.transact { txn in
+            array.insertArray(tx: txn, index: 0, values: insertedElements)
+        }
+        
+        array.unobserve(subscriptionId)
+        
+        XCTAssertEqual(insertedElements, receivedElements)
+    }
+    
+    /*
+     https://www.swiftbysundell.com/articles/using-unit-tests-to-identify-avoid-memory-leaks-in-swift/
+     https://alisoftware.github.io/swift/closures/2016/07/25/closure-capture-1/
+     */
+    
+    func test_observationIsLeaking() {
+        let document = YDocument()
+        let array: YArray<SomeType> = document.getOrCreateArray(named: "some_array")
+        
+        // Create an object (it can be of any type), and hold both
+        // a strong and a weak reference to it
+        var object = NSObject()
+        weak var weakObject = object
+        
+        let _ = array.observe { [object] changes in
+            // Capture the object in the closure (note that we need to use
+            // a capture list like [object] above in order for the object
+            // to be captured by reference instead of by pointer value)
+            _ = object
+            changes.forEach { _ in }
+        }
+        
+        // When we re-assign our local strong reference to a new object the
+        // weak reference should still persist.
+        // Because we didn't explicitly unobserved/unsubscribed.
+        object = NSObject()
+        XCTAssertNotNil(weakObject)
+    }
+    
+    func test_observation_IsNotLeaking_afterUnobserving() {
+        let document = YDocument()
+        let array: YArray<SomeType> = document.getOrCreateArray(named: "some_array")
+        
+        // Create an object (it can be of any type), and hold both
+        // a strong and a weak reference to it
+        var object = NSObject()
+        weak var weakObject = object
+        
+        let subscriptionId = array.observe { [object] changes in
+            // Capture the object in the closure (note that we need to use
+            // a capture list like [object] above in order for the object
+            // to be captured by reference instead of by pointer value)
+            _ = object
+            changes.forEach { _ in }
+        }
+        
+        // Explicit unobserving, to prevent leaking
+        array.unobserve(subscriptionId)
+        
+        // When we re-assign our local strong reference to a new object the
+        // weak reference should become nil, since the closure should
+        // have been run and removed at this point
+        // Because we did explicitly unobserve/unsubscribe at this point.
+        object = NSObject()
+        XCTAssertNil(weakObject)
+    }
 }

@@ -1,8 +1,6 @@
-use std::collections::HashMap;
-
-use yrs::types::{Delta, Value};
-
 use crate::attrs::YrsAttrs;
+use std::collections::HashMap;
+use yrs::types::{Delta, Value};
 
 pub enum YrsDelta {
     Inserted {
