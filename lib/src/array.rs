@@ -3,7 +3,7 @@ use crate::transaction::YrsTransaction;
 use lib0::any::Any;
 use std::cell::RefCell;
 use std::fmt::Debug;
-use yrs::{types::Value, Array as YArray, ArrayRef};
+use yrs::{types::Value, Array, ArrayRef};
 
 pub(crate) struct YrsArray(RefCell<ArrayRef>);
 

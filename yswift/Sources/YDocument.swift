@@ -21,8 +21,8 @@ public final class YDocument {
         }
     }
     
-    public func getOrCreateText(named: String) -> YrsText {
-        document.getText(name: named)
+    public func getOrCreateText(named: String) -> YText {
+        YText(text: document.getText(name: named))
     }
     
     public func getOrCreateArray<T: Codable>(named: String) -> YArray<T> {

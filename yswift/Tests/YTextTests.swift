@@ -61,4 +61,83 @@ class YTextTests: XCTestCase {
         }
         XCTAssertEqual(resultString, "h world!")
     }
+    
+    func test_observation() {
+        let document = YDocument()
+        let text = document.getOrCreateText(named: "some_text")
+        
+        var insertedValue = String()
+        
+        let subscriptionId = text.observe { deltas in
+            deltas.forEach {
+                switch $0 {
+                case let .inserted(value, _):
+                    let decoder = JSONDecoder()
+                    let decodedValue = try! decoder.decode(String.self, from: value.data(using: .utf8)!)
+                    insertedValue = decodedValue
+                default: break
+                }
+            }
+        }
+        
+        document.transact { txn in
+            text.append(tx: txn, text: "asd")
+        }
+        
+        text.unobserve(subscriptionId)
+        
+        XCTAssertEqual(insertedValue, "asd")
+    }
+    
+    func test_observationIsLeaking() {
+        let document = YDocument()
+        let text = document.getOrCreateText(named: "some_text")
+        
+        // Create an object (it can be of any type), and hold both
+        // a strong and a weak reference to it
+        var object = NSObject()
+        weak var weakObject = object
+        
+        let _ = text.observe { [object] deltas in
+            // Capture the object in the closure (note that we need to use
+            // a capture list like [object] above in order for the object
+            // to be captured by reference instead of by pointer value)
+            _ = object
+            deltas.forEach { _ in }
+        }
+        
+        // When we re-assign our local strong reference to a new object the
+        // weak reference should still persist.
+        // Because we didn't explicitly unobserved/unsubscribed.
+        object = NSObject()
+        XCTAssertNotNil(weakObject)
+    }
+    
+    func test_observation_IsNotLeaking_afterUnobserving() {
+        let document = YDocument()
+        let text = document.getOrCreateText(named: "some_text")
+        
+        // Create an object (it can be of any type), and hold both
+        // a strong and a weak reference to it
+        var object = NSObject()
+        weak var weakObject = object
+        
+        let subscriptionId = text.observe { [object] deltas in
+            // Capture the object in the closure (note that we need to use
+            // a capture list like [object] above in order for the object
+            // to be captured by reference instead of by pointer value)
+            _ = object
+            deltas.forEach { _ in }
+        }
+        
+        // Explicit unobserving, to prevent leaking
+        text.unobserve(subscriptionId)
+        
+        // When we re-assign our local strong reference to a new object the
+        // weak reference should become nil, since the closure should
+        // have been run and removed at this point
+        // Because we did explicitly unobserve/unsubscribe at this point.
+        object = NSObject()
+        XCTAssertNil(weakObject)
+    }
 }

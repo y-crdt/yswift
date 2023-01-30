@@ -1,6 +1,8 @@
 use crate::transaction::YrsTransaction;
 use std::cell::RefCell;
-use yrs::{GetString, Text as YText, TextRef};
+use std::fmt::Debug;
+use yrs::types::{Delta, Value};
+use yrs::{GetString, Observable, Text, TextRef};
 
 pub(crate) struct YrsText(RefCell<TextRef>);
 
@@ -11,6 +13,10 @@ impl From<TextRef> for YrsText {
     fn from(value: TextRef) -> Self {
         YrsText(RefCell::from(value))
     }
+}
+
+pub(crate) trait YrsTextObservationDelegate: Send + Sync + Debug {
+    fn call(&self, value: Vec<YrsDelta>);
 }
 
 impl YrsText {
@@ -47,5 +53,58 @@ impl YrsText {
         let tx = tx.as_ref().unwrap();
 
         self.0.borrow().len(tx)
+    }
+
+    pub(crate) fn observe(&self, delegate: Box<dyn YrsTextObservationDelegate>) -> u32 {
+        let subscription_id = self
+            .0
+            .borrow_mut()
+            .observe(move |transaction, text_event| {
+                let delta = text_event.delta(transaction);
+                let result: Vec<YrsDelta> =
+                    delta.iter().map(|change| YrsDelta::from(change)).collect();
+                delegate.call(result)
+            })
+            .into();
+
+        subscription_id
+    }
+
+    pub(crate) fn unobserve(&self, subscription_id: u32) {
+        self.0.borrow_mut().unobserve(subscription_id);
+    }
+}
+
+pub enum YrsDelta {
+    Inserted { value: String, attrs: String },
+    Deleted { index: u32 },
+    Retained { index: u32, attrs: String },
+}
+
+impl From<&Delta> for YrsDelta {
+    fn from(item: &Delta) -> Self {
+        match item {
+            Delta::Inserted(value, attrs) => {
+                let mut buf = String::new();
+                if let Value::Any(any) = value {
+                    any.to_json(&mut buf);
+                    YrsDelta::Inserted {
+                        value: (buf),
+                        attrs: ("".into()),
+                    }
+                } else {
+                    // @TODO: fix silly handling, it will just call with empty string if casting fails
+                    YrsDelta::Inserted {
+                        value: ("".into()),
+                        attrs: ("".into()),
+                    }
+                }
+            }
+            Delta::Retain(index, attrs) => YrsDelta::Retained {
+                index: (*index),
+                attrs: ("".into()),
+            },
+            Delta::Deleted(index) => YrsDelta::Deleted { index: (*index) },
+        }
     }
 }

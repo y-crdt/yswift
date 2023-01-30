@@ -28,14 +28,6 @@ interface YrsTransaction {
   void free();
 };
 
-interface YrsText {
-  void append([ByRef] YrsTransaction tx, string text);
-  void insert([ByRef] YrsTransaction tx, u32 index, string chunk);
-  string get_string([ByRef] YrsTransaction tx);
-  void remove_range([ByRef] YrsTransaction tx, u32 start, u32 length);
-  u32 length([ByRef] YrsTransaction tx);
-};
-
 interface YrsArray {
   void each([ByRef] YrsTransaction tx, YrsArrayEachDelegate delegate);
   [Throws=CodingError]
@@ -52,4 +44,25 @@ interface YrsArray {
 
 callback interface YrsArrayEachDelegate {
     void call(string value);
+};
+
+interface YrsText {
+  void append([ByRef] YrsTransaction tx, string text);
+  void insert([ByRef] YrsTransaction tx, u32 index, string chunk);
+  string get_string([ByRef] YrsTransaction tx);
+  void remove_range([ByRef] YrsTransaction tx, u32 start, u32 length);
+  u32 length([ByRef] YrsTransaction tx);
+  u32 observe(YrsTextObservationDelegate delegate);
+  void unobserve(u32 subscription_id);
+};
+
+callback interface YrsTextObservationDelegate {
+    void call(sequence<YrsDelta> value);
+};
+
+[Enum]
+interface YrsDelta {
+  Inserted(string value, string attrs);
+  Deleted(u32 index);
+  Retained(u32 index, string attrs);
 };
