@@ -48,7 +48,7 @@ mkdir -p "${XCFRAMEWORK_FOLDER}/ios-arm64/${FRAMEWORK_FOLDER}"
 cp "$SWIFT_FOLDER/pkg/Info.plist" "$XCFRAMEWORK_FOLDER"
 cp -r "${SWIFT_FOLDER}/pkg/Headers" "${XCFRAMEWORK_FOLDER}/ios-arm64/${FRAMEWORK_FOLDER}"
 cp -r "${SWIFT_FOLDER}/pkg/Modules" "${XCFRAMEWORK_FOLDER}/ios-arm64/${FRAMEWORK_FOLDER}"
-mv "${SWIFT_FOLDER}/scaffold/${PACKAGE_NAME}FFI.h" "${XCFRAMEWORK_FOLDER}/ios-arm64/${FRAMEWORK_FOLDER}/Headers"
+cp "${SWIFT_FOLDER}/scaffold/${PACKAGE_NAME}FFI.h" "${XCFRAMEWORK_FOLDER}/ios-arm64/${FRAMEWORK_FOLDER}/Headers"
 # Duplicate same layout for both architectures
 cp -r "${XCFRAMEWORK_FOLDER}/ios-arm64" "${XCFRAMEWORK_FOLDER}/ios-arm64_x86_64-simulator"
 
