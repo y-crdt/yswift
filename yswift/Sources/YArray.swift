@@ -50,6 +50,15 @@ public final class YArray<T: Codable> {
         array.removeRange(tx: tx, index: UInt32(index), len: UInt32(length))
     }
     
+    public func observe(_ body: @escaping ([YrsChange]) -> Void) -> UInt32 {
+        let delegate = YArrayObservationDelegate(callback: body)
+        return array.observe(delegate: delegate)
+    }
+    
+    public func unobserve(_ subscriptionId: UInt32) {
+        array.unobserve(subscriptionId: subscriptionId)
+    }
+    
     public func toArray(tx: YrsTransaction) -> [T] {
         decodedArray(array.toA(tx: tx))
     }
@@ -91,5 +100,17 @@ class YArrayEachDelegate<T: Codable>: YrsArrayEachDelegate {
     
     func call(value: String) {
         callback(decoded(value))
+    }
+}
+
+class YArrayObservationDelegate: YrsArrayObservationDelegate {
+    private var callback: ([YrsChange]) -> Void
+    
+    init(callback: @escaping ([YrsChange]) -> Void) {
+        self.callback = callback
+    }
+
+    func call(value: [YrsChange]) {
+        callback(value)
     }
 }

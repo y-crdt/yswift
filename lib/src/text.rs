@@ -1,6 +1,11 @@
+use crate::attrs::YrsAttrs;
+use crate::delta::YrsDelta;
 use crate::transaction::YrsTransaction;
+use lib0::any::Any;
 use std::cell::RefCell;
-use yrs::{GetString, Text as YText, TextRef};
+use std::collections::HashMap;
+use std::fmt::Debug;
+use yrs::{GetString, Observable, Text, TextRef};
 
 pub(crate) struct YrsText(RefCell<TextRef>);
 
@@ -13,7 +18,26 @@ impl From<TextRef> for YrsText {
     }
 }
 
+pub(crate) trait YrsTextObservationDelegate: Send + Sync + Debug {
+    fn call(&self, value: Vec<YrsDelta>);
+}
+
 impl YrsText {
+    pub(crate) fn format(
+        &self,
+        transaction: &YrsTransaction,
+        index: u32,
+        length: u32,
+        attrs: HashMap<String, String>,
+    ) {
+        let mut tx = transaction.transaction();
+        let tx = tx.as_mut().unwrap();
+
+        let a = YrsAttrs::from(attrs);
+
+        self.0.borrow_mut().format(tx, index, length, a.0)
+    }
+
     pub(crate) fn append(&self, tx: &YrsTransaction, text: String) {
         let mut tx = tx.transaction();
         let tx = tx.as_mut().unwrap();
@@ -26,6 +50,51 @@ impl YrsText {
         let tx = tx.as_mut().unwrap();
 
         self.0.borrow_mut().insert(tx, index, chunk.as_str())
+    }
+
+    pub(crate) fn insert_with_attributes(
+        &self,
+        transaction: &YrsTransaction,
+        index: u32,
+        chunk: String,
+        attrs: HashMap<String, String>,
+    ) {
+        let mut tx = transaction.transaction();
+        let tx = tx.as_mut().unwrap();
+
+        let a = YrsAttrs::from(attrs);
+
+        self.0
+            .borrow_mut()
+            .insert_with_attributes(tx, index, chunk.as_str(), a.0)
+    }
+
+    pub(crate) fn insert_embed(&self, transaction: &YrsTransaction, index: u32, content: String) {
+        let mut tx = transaction.transaction();
+        let tx = tx.as_mut().unwrap();
+
+        let avalue = Any::from_json(content.as_str()).unwrap();
+
+        self.0.borrow_mut().insert_embed(tx, index, avalue);
+    }
+
+    pub(crate) fn insert_embed_with_attributes(
+        &self,
+        transaction: &YrsTransaction,
+        index: u32,
+        content: String,
+        attrs: HashMap<String, String>,
+    ) {
+        let mut tx = transaction.transaction();
+        let tx = tx.as_mut().unwrap();
+
+        let avalue = Any::from_json(content.as_str()).unwrap();
+
+        let a = YrsAttrs::from(attrs);
+
+        self.0
+            .borrow_mut()
+            .insert_embed_with_attributes(tx, index, avalue, a.0);
     }
 
     pub(crate) fn get_string(&self, tx: &YrsTransaction) -> String {
@@ -47,5 +116,24 @@ impl YrsText {
         let tx = tx.as_ref().unwrap();
 
         self.0.borrow().len(tx)
+    }
+
+    pub(crate) fn observe(&self, delegate: Box<dyn YrsTextObservationDelegate>) -> u32 {
+        let subscription_id = self
+            .0
+            .borrow_mut()
+            .observe(move |transaction, text_event| {
+                let delta = text_event.delta(transaction);
+                let result: Vec<YrsDelta> =
+                    delta.iter().map(|change| YrsDelta::from(change)).collect();
+                delegate.call(result)
+            })
+            .into();
+
+        subscription_id
+    }
+
+    pub(crate) fn unobserve(&self, subscription_id: u32) {
+        self.0.borrow_mut().unobserve(subscription_id);
     }
 }

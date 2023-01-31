@@ -5,11 +5,9 @@ use crate::transaction::YrsTransaction;
 use std::sync::Arc;
 use std::{borrow::Borrow, cell::RefCell};
 use yrs::ReadTxn;
-use yrs::{
-    updates::decoder::Decode, ArrayRef, Doc as YDoc, OffsetKind, Options, StateVector, Transact,
-};
+use yrs::{updates::decoder::Decode, ArrayRef, Doc, OffsetKind, Options, StateVector, Transact};
 
-pub(crate) struct YrsDoc(RefCell<YDoc>);
+pub(crate) struct YrsDoc(RefCell<Doc>);
 
 unsafe impl Send for YrsDoc {}
 unsafe impl Sync for YrsDoc {}
