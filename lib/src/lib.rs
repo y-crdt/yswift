@@ -18,4 +18,5 @@ use crate::text::YrsText;
 use crate::text::YrsTextObservationDelegate;
 use crate::transaction::YrsTransaction;
 
-uniffi_macros::include_scaffolding!("yniffi");
+// uniffi_macros::include_scaffolding!("yniffi");
+uniffi::include_scaffolding!("yniffi");

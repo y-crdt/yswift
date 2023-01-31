@@ -11,16 +11,18 @@ codegen-units = 1
 panic = "abort"
 
 [workspace]
+members = [
+    "uniffi-bindgen",
+]
 
 [dependencies]
 lib0 = "0.15.0" # must match yrs version
 thiserror = "1.0.38"
-uniffi = "0.22.0"
-uniffi_macros = "0.22.0"
+uniffi = "0.23.0"
 yrs = "0.15.0"
 
 [build-dependencies]
-uniffi_build = "0.22.0"
+uniffi = { version = "0.23.0", features = [ "build" ] }
 
 [lib]
 name = "uniffi_yniffi"
