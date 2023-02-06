@@ -15,20 +15,32 @@ let package = Package(
         * downloaded/built before trying to use it in the build process
         * A bit hacky but necessary for now https://github.com/mozilla/application-services/issues/4422
         */
-        .target(
-            name: "YniffiWrapper",
-            dependencies: [
-                .target(name: "YniffiXC", condition: .when(platforms: [.iOS]))
-            ],
-            path: "swift/wrapper"
-        ),
+//        .target(
+//            name: "YniffiWrapper",
+//            dependencies: [
+//                .target(name: "YniffiFFI", condition: .when(platforms: [.iOS]))
+//            ],
+//            path: "swift/wrapper"
+//        ),
+
+// If you're getting the error 'does not contain expected binary artifact', then the 
+// filename of the xcframework doesn't match the name module that's exposed within it.
+// There's a *tight* coupling to the module name (case sensitive!!) and the name
+// of the XCFramework. Annoying, yeah - but there it is.
+// In addition to the name of the framework, the binary target name in Package.swift
+// MUST be the same as the exported module. Without it, you'll get the same error.
+// And there's some detail that if you use a compressed, remote framework and forgot to 
+// compress it using ditto with the option '--keepParent', then it'll expand into a 
+// different name, and again - wham - the same "does not contain the expected binary"
+// error.
+
         .binaryTarget(
-            name: "YniffiXC",
-            path: "./YniffiXC.xcframework"
+            name: "yniffiFFI",
+            path: "./yniffiFFI.xcframework"
         ),
         .target(
             name: "Yniffi",
-            dependencies: ["YniffiWrapper"],
+            dependencies: ["yniffiFFI"],
             path: "swift/scaffold"
         )
     ]

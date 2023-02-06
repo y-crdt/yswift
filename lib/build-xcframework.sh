@@ -7,13 +7,13 @@ PACKAGE_NAME="yniffi"
 LIB_NAME="libuniffi_yniffi.a"
 
 # *IMPORTANT*: When changing this value, change them in `swift/pkg/YNative.h` and `swift/pkg/Info.plist` as well
-FRAMEWORK_NAME="YniffiXC"
+FRAMEWORK_NAME="yniffiFFI"
 
 SWIFT_FOLDER="swift"
 BUILD_FOLDER="target"
 
 XCFRAMEWORK_FOLDER="${FRAMEWORK_NAME}.xcframework"
-FRAMEWORK_FOLDER="${FRAMEWORK_NAME}.framework"
+# FRAMEWORK_FOLDER="${FRAMEWORK_NAME}.framework"
 
 echo "▸ Install toolchains"
 rustup target add x86_64-apple-ios # iOS Simulator (Intel)
@@ -44,9 +44,10 @@ cargo build --target aarch64-apple-ios --package "${PACKAGE_NAME}" --locked --re
 
 echo "▸ Consolidating the headers and modulemaps for XCFramework generation"
 mkdir -p "${BUILD_FOLDER}/includes"
-cp "${SWIFT_FOLDER}/pkg/Headers/YniffiXC.h" "${BUILD_FOLDER}/includes"
-cp "${SWIFT_FOLDER}/pkg/Modules/module.modulemap" "${BUILD_FOLDER}/includes"
-cp "${SWIFT_FOLDER}/scaffold/${PACKAGE_NAME}FFI.h" "${BUILD_FOLDER}/includes"
+# cp "${SWIFT_FOLDER}/pkg/Headers/YniffiXC.h" "${BUILD_FOLDER}/includes"
+# cp "${SWIFT_FOLDER}/pkg/Modules/module.modulemap" "${BUILD_FOLDER}/includes"
+cp "${SWIFT_FOLDER}/scaffold/yniffiFFI.h" "${BUILD_FOLDER}/includes"
+cp "${SWIFT_FOLDER}/scaffold/yniffiFFI.modulemap" "${BUILD_FOLDER}/includes"
 
 # echo "▸ Starting xcframework creation"
 # echo "▸ Copy necessary files"
@@ -70,6 +71,10 @@ lipo -create  \
 # echo "▸ Move iOS Device static library to xcframework"
 # cp "$BUILD_FOLDER/aarch64-apple-ios/release/$LIB_NAME" "$XCFRAMEWORK_FOLDER/ios-arm64/$FRAMEWORK_FOLDER/$FRAMEWORK_NAME"
 
+# what docs there are:
+# xcodebuild -create-xcframework -help
+# https://developer.apple.com/documentation/xcode/creating-a-multi-platform-binary-framework-bundle
+
 xcodebuild -create-xcframework \
     -library "./${BUILD_FOLDER}/ios-simulator/release/${LIB_NAME}" \
     -headers "./${BUILD_FOLDER}/includes" \
@@ -79,8 +84,10 @@ xcodebuild -create-xcframework \
 
 #mkdir -p "{$BUILD_FOLDER}/apple-darwin"
 
-echo "▸ Compress xcframework"
-ditto -c -k --sequesterRsrc --keepParent "$XCFRAMEWORK_FOLDER" "$XCFRAMEWORK_FOLDER.zip"
+# TEMP HOLDING OFF ON MAKING ZIP AND GETTING CHECKSUM
 
-echo "▸ Compute checksum"
-openssl dgst -sha256  "$XCFRAMEWORK_FOLDER.zip"
+# echo "▸ Compress xcframework"
+# ditto -c -k --sequesterRsrc --keepParent "$XCFRAMEWORK_FOLDER" "$XCFRAMEWORK_FOLDER.zip"
+
+# echo "▸ Compute checksum"
+# openssl dgst -sha256 "$XCFRAMEWORK_FOLDER.zip"
