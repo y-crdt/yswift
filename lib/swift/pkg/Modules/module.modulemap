@@ -1,6 +1,0 @@
-framework module YniffiXC {
-    umbrella header "YniffiXC.h"
-
-    export *
-    module * { export * }
-}
