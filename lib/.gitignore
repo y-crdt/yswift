@@ -6,4 +6,3 @@
 target
 Derived
 swift/wrapper/include/*.modulemap
-swift/scaffold/yniffi.swift
