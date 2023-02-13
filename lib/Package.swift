@@ -8,6 +8,7 @@ let package = Package(
         .library(name: "Yniffi", targets: ["Yniffi"]),
     ],
     dependencies: [
+        .package(url: "https://github.com/apple/swift-docc-plugin", from: "1.1.0"),
     ],
     targets: [
         // If you're getting the error 'does not contain expected binary artifact',
