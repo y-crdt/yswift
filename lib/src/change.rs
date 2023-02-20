@@ -1,6 +1,5 @@
 use yrs::types::{Change, Value};
 
-
 pub enum YrsChange {
     Added { elements: Vec<String> },
     Removed { range: u32 },

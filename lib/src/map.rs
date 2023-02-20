@@ -21,15 +21,16 @@ impl YrsMap {
     // Array implemented a number of code array-ish methods:
     // these match up with the definitions within the trait
     // defining an `Array` type within Yrs (`yrs::types::array::Array`)
-    // each (wraps `iter`)
-    // get
-    // insert
-    // insert_range
-    // length (len)
-    // push_back
-    // push_front
-    // remove
-    // remove_range
+    // (https://docs.rs/yrs/latest/yrs/types/map/trait.Map.html)
+    // - each (wraps `iter`)
+    // - get
+    // - insert
+    // - insert_range
+    // - length (len)
+    // - push_back
+    // - push_front
+    // - remove
+    // - remove_range
 
     // There's a few trait pieces that aren't replicated (yet?)
     // move_to, move_range_to
