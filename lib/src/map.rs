@@ -11,11 +11,53 @@ pub(crate) struct YrsMap(RefCell<MapRef>);
 unsafe impl Send for YrsMap {}
 unsafe impl Sync for YrsMap {}
 
+// Provides the implementation for the From trait, supporting
+// converting from a MapRef type into a YrsMap type.
 impl From<MapRef> for YrsMap {
     fn from(value: MapRef) -> Self {
         YrsMap(RefCell::from(value))
     }
 }
+
+/* 
+IMPL / Rust learning questions:
+
+- what are Sync, Send, and Debug - traits, but what's their intention?
+- What's a RefCell and how does it work/how is it expected to be used?
+
+- `From` is a trait for converting between types, copied whole-hog from YrsArray
+
+- `ReadTxn` is a read-only transaction for reading out information from the data structure
+  - (https://docs.rs/yrs/latest/yrs/trait.ReadTxn.html)
+- `TransactionMut` is a Read/Write transaction, used for changing the underlying data structure
+  - (https://docs.rs/yrs/latest/yrs/struct.TransactionMut.html)
+
+- The Yrs::Map type appears to expect all the keys to be &str - a reference to a string,
+  but in Swift, it can be any "hashable" type. I'll have to figure out how to handle
+  that impedance mismatch for full conformance, but at the moment constraining it to Strings
+  is probably the easiest path to get started.
+
+  Looking at YrsArray's insert:
+
+      pub(crate) fn insert(&self, transaction: &YrsTransaction, index: u32, value: String) {
+        let avalue = Any::from_json(value.as_str()).unwrap();
+
+        let mut tx = transaction.transaction();
+        ^^ this is getting the transaction that we need to use for the insert on YArray
+
+        let tx = tx.as_mut().unwrap();
+        ^^ kinda unclear on what's being unwrapped here
+
+        let arr = self.0.borrow_mut();
+        ^^ totally confused as to what this represents, and how we end up with a
+        RefMut<ArrayRef> type here
+
+        arr.insert(tx, index, avalue);
+        ^^ this part I get well enough ;-)
+    }
+
+ */
+
 
 impl YrsMap {
     // Array implemented a number of code array-ish methods:
