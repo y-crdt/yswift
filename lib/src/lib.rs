@@ -6,10 +6,12 @@ mod doc;
 mod error;
 mod text;
 mod transaction;
+mod map;
 
 use crate::array::YrsArray;
 use crate::array::YrsArrayEachDelegate;
 use crate::array::YrsArrayObservationDelegate;
+use crate::map::YrsMap;
 use crate::change::YrsChange;
 use crate::delta::YrsDelta;
 use crate::doc::YrsDoc;

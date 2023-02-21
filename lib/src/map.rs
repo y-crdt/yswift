@@ -4,7 +4,9 @@ use lib0::any::Any;
 use std::cell::RefCell;
 use std::fmt::Debug;
 //use yrs::{types::Value, Array, ArrayRef, Observable};
-use yrs::{types::Value, Map, MapRef, Keys, Values};
+use yrs::{types::Value, Map, MapRef};
+use yrs::types::map::Keys;
+use yrs::types::map::Values;
 
 pub(crate) struct YrsMap(RefCell<MapRef>);
 

@@ -29,6 +29,10 @@ interface YrsTransaction {
   void free();
 };
 
+interface YrsMap {
+
+};
+
 interface YrsArray {
   void each([ByRef] YrsTransaction tx, YrsArrayEachDelegate delegate);
   [Throws=CodingError]

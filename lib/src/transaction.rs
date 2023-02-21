@@ -1,4 +1,5 @@
 use crate::array::YrsArray;
+use crate::map::YrsMap;
 use crate::error::CodingError;
 use crate::text::YrsText;
 use std::borrow::Borrow;
