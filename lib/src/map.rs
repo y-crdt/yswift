@@ -10,8 +10,10 @@ use yrs::types::map::Values;
 
 pub(crate) struct YrsMap(RefCell<MapRef>);
 
-unsafe impl Send for YrsMap {}
-unsafe impl Sync for YrsMap {}
+// Marks that this type can be transferred across thread boundaries.
+unsafe impl Send for YrsMap {} 
+// Marks that this type is safe to share references between threads.
+unsafe impl Sync for YrsMap {} 
 
 // Provides the implementation for the From trait, supporting
 // converting from a MapRef type into a YrsMap type.
@@ -23,11 +25,6 @@ impl From<MapRef> for YrsMap {
 
 /* 
 IMPL / Rust learning questions:
-
-- what are Sync, Send, and Debug - traits, but what's their intention?
-- What's a RefCell and how does it work/how is it expected to be used?
-
-- `From` is a trait for converting between types, copied whole-hog from YrsArray
 
 - `ReadTxn` is a read-only transaction for reading out information from the data structure
   - (https://docs.rs/yrs/latest/yrs/trait.ReadTxn.html)
