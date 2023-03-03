@@ -12,6 +12,7 @@ interface YrsDoc {
   sequence<u8> encode_diff_v1([ByRef] YrsTransaction tx, sequence<u8> state_vector);
   YrsText get_text(string name);
   YrsArray get_array(string name);
+  YrsMap get_map(string name);
   YrsTransaction transact();
 };
 

@@ -5,16 +5,16 @@ use std::borrow::BorrowMut;
 use std::cell::RefCell;
 use std::fmt::Debug;
 //use yrs::{types::Value, Array, ArrayRef, Observable};
-use yrs::{types::Value, Map, MapRef};
 use yrs::types::map::Keys;
 use yrs::types::map::Values;
+use yrs::{types::Value, Doc, Map, MapRef};
 
 pub(crate) struct YrsMap(RefCell<MapRef>);
 
 // Marks that this type can be transferred across thread boundaries.
-unsafe impl Send for YrsMap {} 
+unsafe impl Send for YrsMap {}
 // Marks that this type is safe to share references between threads.
-unsafe impl Sync for YrsMap {} 
+unsafe impl Sync for YrsMap {}
 
 // Provides the implementation for the From trait, supporting
 // converting from a MapRef type into a YrsMap type.
@@ -24,7 +24,7 @@ impl From<MapRef> for YrsMap {
     }
 }
 
-/* 
+/*
 Notes for Self:
 
 - `ReadTxn` is a read-only transaction for reading out information from the data structure
@@ -33,10 +33,10 @@ Notes for Self:
   - (https://docs.rs/yrs/latest/yrs/struct.TransactionMut.html)
 
 - The Yrs::Map type appears to expect all the keys to be &str - a reference to a string,
-  but in Swift, it can be any "hashable" type. Checked with Bartosz and that's expected - a 
+  but in Swift, it can be any "hashable" type. Checked with Bartosz and that's expected - a
   limitation when dealing with the other platforms and expecting primarily text based structures
   coming through. I suppose anything Codable in Swift could be a key, as "encoding" it would return
-  a string of JSON, which we could then use as the key in the underling YrsMap, following the 
+  a string of JSON, which we could then use as the key in the underling YrsMap, following the
   pattern set up by YArray.
 
   Looking at YrsArray's insert:
@@ -57,7 +57,7 @@ Notes for Self:
         arr.insert(tx, index, avalue);
     }
 
-    A number of the other methods take in a string type and convert it, with an implicit 
+    A number of the other methods take in a string type and convert it, with an implicit
     assumption that the string being passed in is a JSON representation:
 
     let avalue = Any::from_json(value.as_str()).unwrap();
@@ -73,50 +73,49 @@ Notes for Self:
  */
 
 impl YrsMap {
+    /// Inserts a key/value combination into YrsMap.
+    pub(crate) fn insert(&self, transaction: &YrsTransaction, key: String, value: String) {
+        // decodes the `value` as JSON and converts it into a lib0::Any enumeration
+        let any_value = Any::from_json(value.as_str()).unwrap();
 
-  /// Inserts a key/value combination into YrsMap.
-  pub(crate) fn insert(&self, transaction: &YrsTransaction, key: String, value: String) {
-    // decodes the `value` as JSON and converts it into a lib0::Any enumeration
-    let anyValue = Any::from_json(value.as_str()).unwrap();
+        // acquire a transaction
+        let mut tx = transaction.transaction();
+        let tx = tx.as_mut().unwrap();
 
-    // acquire a transaction
-    let mut tx = transaction.transaction();
-    let tx = tx.as_mut().unwrap();
+        // pull out a mutable reference to the YrsMap this type wraps
+        let map = self.0.borrow_mut();
+        // insert into the wrapped map.
+        map.insert(tx, key, any_value);
 
-    // pull out a mutable reference to the YrsMap this type wraps
-    let map = self.0.borrow_mut();
-    // insert into the wrapped map.
-    map.insert(tx, key, anyValue);
+        // Documentation note from YrsMap about inserting a preliminary type - for future
+        // reference...
+        // // insert nested shared type
+        // let nested = map.insert(&mut txn, "key2", MapPrelim::from([("inner", "value2")]));
+        // nested.insert(&mut txn, "inner2", 100);
+    }
 
-    // Documentation note from YrsMap about inserting a preliminary type - for future
-    // reference...
-    // // insert nested shared type
-    // let nested = map.insert(&mut txn, "key2", MapPrelim::from([("inner", "value2")]));
-    // nested.insert(&mut txn, "inner2", 100);
-  }
+    /// Returns the size of the map.
+    pub(crate) fn length(&self, transaction: &YrsTransaction) -> u32 {
+        let map = self.0.borrow();
+        // acquire a transaction, but we don't need to borrow it since we're
+        // not mutating anything in this method.
+        let tx = transaction.transaction();
+        let tx = tx.as_ref().unwrap();
+        // If we try and do the above on a single line, I get the error:
+        // creates a temporary value which is freed while still in use
 
-  /// Returns the size of the map.
-  pub(crate) fn length(&self, transaction: &YrsTransaction) -> u32 {
-    let map = self.0.borrow();
-    // acquire a transaction, but we don't need to borrow it since we're
-    // not mutating anything in this method.
-    let tx = transaction.transaction();
-    let tx = tx.as_ref().unwrap();
-    // If we try and do the above on a single line, I get the error:
-    // creates a temporary value which is freed while still in use
+        map.len(tx)
+    }
 
-    map.len(tx)
-  }
+    pub(crate) fn contains_key(&self, transaction: &YrsTransaction, key: String) -> bool {
+        let map = self.0.borrow();
+        // acquire a transaction, but we don't need to borrow it since we're
+        // not mutating anything in this method.
+        let tx = transaction.transaction();
+        let tx = tx.as_ref().unwrap();
 
-  pub(crate) fn contains_key(&self, transaction: &YrsTransaction, key: String) -> bool {
-    let map = self.0.borrow();
-    // acquire a transaction, but we don't need to borrow it since we're
-    // not mutating anything in this method.
-    let tx = transaction.transaction();
-    let tx = tx.as_ref().unwrap();
-
-    map.contains_key(tx, key.as_str())
-  }
+        map.contains_key(tx, key.as_str())
+    }
 
     // Array implemented a number of code array-ish methods:
     // these match up with the definitions within the trait
@@ -179,5 +178,42 @@ impl YrsMap {
     // - makeIterator()
     // - next()
     // - index types and getting data in and out via those Indicies
+}
 
+#[cfg(test)]
+mod tests {
+    use lib0::any::{self, Any};
+    use yrs::Map;
+
+    use crate::map::YrsMap;
+    use crate::YrsDoc;
+    use std::sync::Arc;
+
+    #[test]
+    fn verify_new_map_has_zero_count() {
+        let doc = YrsDoc::new();
+        let map = doc.get_map("example_map".to_string());
+
+        let txn = doc.transact();
+        assert_eq!(map.length(&txn), 0);
+    }
+
+    #[test]
+    fn map_insert_and_count() {
+        let doc = YrsDoc::new();
+        let map = doc.get_map("example_map".to_string());
+
+        let key_to_insert = "AB123".to_string();
+        let value_to_insert = "\"Hello\"".to_string();
+
+        let txn = doc.transact();
+        // all Yrs operations happen in scope of a transaction
+
+        assert_eq!(map.contains_key(&txn, key_to_insert.clone()), false);
+
+        map.insert(&txn, key_to_insert.clone(), value_to_insert);
+        assert_eq!(map.length(&txn), 1);
+
+        assert_eq!(map.contains_key(&txn, key_to_insert), true);
+    }
 }
