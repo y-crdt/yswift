@@ -8,8 +8,10 @@ enum CodingError {
 
 interface YrsDoc {
   constructor();
+
   [Throws=CodingError]
   sequence<u8> encode_diff_v1([ByRef] YrsTransaction tx, sequence<u8> state_vector);
+  
   YrsText get_text(string name);
   YrsArray get_array(string name);
   YrsMap get_map(string name);
@@ -19,8 +21,10 @@ interface YrsDoc {
 interface YrsTransaction {
   [Throws=CodingError]
   void transaction_apply_update(sequence<u8> update);
+
   [Throws=CodingError]
   sequence<u8> transaction_encode_state_as_update_from_sv(sequence<u8> state_vector);
+
   sequence<u8> transaction_encode_state_as_update();
   sequence<u8> transaction_encode_update();
   sequence<u8> transaction_state_vector();
@@ -34,10 +38,14 @@ interface YrsMap {
   u32 length([ByRef] YrsTransaction tx);
   boolean contains_key([ByRef] YrsTransaction tx, string key);
   void insert([ByRef] YrsTransaction tx, string key, string value);
+
+  [Throws=CodingError]
+  string get([ByRef] YrsTransaction tx, string key);
 };
 
 interface YrsArray {
   void each([ByRef] YrsTransaction tx, YrsArrayEachDelegate delegate);
+
   [Throws=CodingError]
   string get([ByRef] YrsTransaction tx, u32 index);
   void insert([ByRef] YrsTransaction tx, u32 index, string value);

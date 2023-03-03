@@ -1,13 +1,12 @@
 use crate::transaction::YrsTransaction;
 use crate::{change::YrsChange, error::CodingError};
 use lib0::any::Any;
-use std::borrow::BorrowMut;
 use std::cell::RefCell;
 use std::fmt::Debug;
 //use yrs::{types::Value, Array, ArrayRef, Observable};
 use yrs::types::map::Keys;
 use yrs::types::map::Values;
-use yrs::{types::Value, Doc, Map, MapRef};
+use yrs::{types::Value, Map, MapRef};
 
 pub(crate) struct YrsMap(RefCell<MapRef>);
 
@@ -73,7 +72,7 @@ Notes for Self:
  */
 
 impl YrsMap {
-    /// Inserts a key/value combination into YrsMap.
+    /// Inserts the key and value you provide into the map.
     pub(crate) fn insert(&self, transaction: &YrsTransaction, key: String, value: String) {
         // decodes the `value` as JSON and converts it into a lib0::Any enumeration
         let any_value = Any::from_json(value.as_str()).unwrap();
@@ -107,6 +106,7 @@ impl YrsMap {
         map.len(tx)
     }
 
+    /// Returns a Boolean value that indicates whether the map contains the key you provide.
     pub(crate) fn contains_key(&self, transaction: &YrsTransaction, key: String) -> bool {
         let map = self.0.borrow();
         // acquire a transaction, but we don't need to borrow it since we're
@@ -117,47 +117,36 @@ impl YrsMap {
         map.contains_key(tx, key.as_str())
     }
 
-    // Array implemented a number of code array-ish methods:
-    // these match up with the definitions within the trait
-    // defining an `Array` type within Yrs (`yrs::types::array::Array`)
-    // (https://docs.rs/yrs/latest/yrs/types/map/trait.Map.html)
-    // - each (wraps `iter`)
-    // - get
-    // - insert
-    // - insert_range
-    // - length (len)
-    // - push_back
-    // - push_front
-    // - remove
-    // - remove_range
-
-    // There's a few trait pieces that aren't replicated (yet?)
-    // move_to, move_range_to
-
-    // And then there's methods that support observation of changes:
-    // observe
-    // unobserve
-
-    // Probably obvious, but I'm not sure what `to_a` is about. It
-    // roughly looks like a means to convert YrsArray into a string,
-    // assuming the guts of YrsArray match up with something convertible
-    // to a String type.
-
+    pub(crate) fn get(
+        &self,
+        transaction: &YrsTransaction,
+        key: String,
+    ) -> Result<String, CodingError> {
+        let tx = transaction.transaction();
+        let tx = tx.as_ref().unwrap();
+        let map = self.0.borrow();
+        let v = map.get(tx, key.as_str()).unwrap();
+        let mut buf = String::new();
+        if let Value::Any(any) = v {
+            any.to_json(&mut buf);
+            Ok(buf)
+        } else {
+            Err(CodingError::EncodingError)
+        }
+    }
     // The equivalent Map methods from `yrs::types::map::Map`:
-    // - fn len<T: ReadTxn>(&self, txn: &T) -> u32
     // - fn keys<'a, T: ReadTxn + 'a>(&'a self, txn: &'a T) -> Keys<'a, &'a T, T>
     // - fn values<'a, T: ReadTxn + 'a>(&'a self, txn: &'a T) -> Values<'a, &'a T, T>
     // - fn iter<'a, T: ReadTxn + 'a>(&'a self, txn: &'a T) -> MapIter<'a, &'a T, T>
-    // - fn insert<K, V>(&self, txn: &mut TransactionMut<'_>, key: K, value: V) -> V::Return where K: Into<Rc<str>>, V: Prelim,
     // - fn remove(&self, txn: &mut TransactionMut<'_>, key: &str) -> Option<Value>
     // - fn get<T: ReadTxn>(&self, txn: &T, key: &str) -> Option<Value>
-    // - fn contains_key<T: ReadTxn>(&self, txn: &T, key: &str) -> bool
     // - fn clear(&self, txn: &mut TransactionMut<'_>)
 
     // IMPL order:
-    // [insert, len, contains_key]
-    // [get, remove, clear]
-    // [keys, values, iter]
+    // - [X] [insert, len, contains_key]
+    // - [ ] [get, remove, clear]
+    // - [ ] [keys, values, iter]
+    // - [ ] [observe, unobserve]
 
     // The Swift `Dictionary` methods we'll want to support:
     // - var isEmpty: Bool
@@ -182,12 +171,8 @@ impl YrsMap {
 
 #[cfg(test)]
 mod tests {
-    use lib0::any::{self, Any};
-    use yrs::Map;
-
-    use crate::map::YrsMap;
     use crate::YrsDoc;
-    use std::sync::Arc;
+    use lib0::any::{self, Any};
 
     #[test]
     fn verify_new_map_has_zero_count() {
@@ -207,7 +192,6 @@ mod tests {
         let value_to_insert = "\"Hello\"".to_string();
 
         let txn = doc.transact();
-        // all Yrs operations happen in scope of a transaction
 
         assert_eq!(map.contains_key(&txn, key_to_insert.clone()), false);
 
@@ -216,4 +200,24 @@ mod tests {
 
         assert_eq!(map.contains_key(&txn, key_to_insert), true);
     }
+
+    #[test]
+    fn map_insert_and_get() {
+        let doc = YrsDoc::new();
+        let map = doc.get_map("example_map".to_string());
+
+        let key_to_insert = "AB123".to_string();
+        let value_to_insert = "\"Hello\"".to_string();
+
+        let txn = doc.transact();
+
+        assert_eq!(map.contains_key(&txn, key_to_insert.clone()), false);
+
+        map.insert(&txn, key_to_insert.clone(), value_to_insert.clone());
+        assert_eq!(map.length(&txn), 1);
+
+        let result = map.get(&txn, key_to_insert.clone()).unwrap();
+        assert_eq!(result, value_to_insert);
+    }
+
 }
