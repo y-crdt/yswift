@@ -1,11 +1,6 @@
 import XCTest
 @testable import YSwift
 
-struct SomeType: Codable, Equatable {
-    let name: String
-    let age: Int
-}
-
 class YArrayTests: XCTestCase {
     func test_insert() {
         let document = YDocument()

@@ -28,7 +28,11 @@ public final class YDocument {
     public func getOrCreateArray<T: Codable>(named: String) -> YArray<T> {
         YArray(array: document.getArray(name: named))
     }
-    
+
+    public func getOrCreateMap<T: Codable>(named: String) -> YMap<T> {
+        YMap(map: document.getMap(name: named))
+    }
+
     public func diff(txn: YrsTransaction, from state: [UInt8] = []) -> [UInt8] {
         try! document.encodeDiffV1(tx: txn, stateVector: state)
     }
