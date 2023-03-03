@@ -30,7 +30,9 @@ interface YrsTransaction {
 };
 
 interface YrsMap {
-
+  u32 length([ByRef] YrsTransaction tx);
+  boolean contains_key([ByRef] YrsTransaction tx, string key);
+  void insert([ByRef] YrsTransaction tx, string key, string value);
 };
 
 interface YrsArray {

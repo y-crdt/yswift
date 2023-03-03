@@ -1,6 +1,7 @@
 use crate::transaction::YrsTransaction;
 use crate::{change::YrsChange, error::CodingError};
 use lib0::any::Any;
+use std::borrow::BorrowMut;
 use std::cell::RefCell;
 use std::fmt::Debug;
 //use yrs::{types::Value, Array, ArrayRef, Observable};
@@ -24,7 +25,7 @@ impl From<MapRef> for YrsMap {
 }
 
 /* 
-IMPL / Rust learning questions:
+Notes for Self:
 
 - `ReadTxn` is a read-only transaction for reading out information from the data structure
   - (https://docs.rs/yrs/latest/yrs/trait.ReadTxn.html)
@@ -32,9 +33,11 @@ IMPL / Rust learning questions:
   - (https://docs.rs/yrs/latest/yrs/struct.TransactionMut.html)
 
 - The Yrs::Map type appears to expect all the keys to be &str - a reference to a string,
-  but in Swift, it can be any "hashable" type. I'll have to figure out how to handle
-  that impedance mismatch for full conformance, but at the moment constraining it to Strings
-  is probably the easiest path to get started.
+  but in Swift, it can be any "hashable" type. Checked with Bartosz and that's expected - a 
+  limitation when dealing with the other platforms and expecting primarily text based structures
+  coming through. I suppose anything Codable in Swift could be a key, as "encoding" it would return
+  a string of JSON, which we could then use as the key in the underling YrsMap, following the 
+  pattern set up by YArray.
 
   Looking at YrsArray's insert:
 
@@ -45,20 +48,76 @@ IMPL / Rust learning questions:
         ^^ this is getting the transaction that we need to use for the insert on YArray
 
         let tx = tx.as_mut().unwrap();
-        ^^ kinda unclear on what's being unwrapped here
+                    ^^ converts the underlying type inside the Option to mutable
+                             ^^ unwraps the resulting Optional, panicing if it fails
 
         let arr = self.0.borrow_mut();
-        ^^ totally confused as to what this represents, and how we end up with a
-        RefMut<ArrayRef> type here
-
+                      ^^  grabs the first element of the reference-to-Array that YrsArray wraps
+                        ^^ and borrows it as a mutable element
         arr.insert(tx, index, avalue);
-        ^^ this part I get well enough ;-)
     }
+
+    A number of the other methods take in a string type and convert it, with an implicit 
+    assumption that the string being passed in is a JSON representation:
+
+    let avalue = Any::from_json(value.as_str()).unwrap();
+                                ^^ converts String into &str (a string slice)
+                      ^^ uses the From trait to convert the attempt to create an Any enum
+                         from the string, presuming it's JSON. This returns an Option - as it
+                         might have failed to convert.
+                                                ^^ unwraps the Option, of course it didn't fail!
+
+    `Any` is from lib0, and is a Rust enumeration - sometimes in a tree form - that encodes
+    JSON values down into a memory efficient binary blob.
 
  */
 
-
 impl YrsMap {
+
+  /// Inserts a key/value combination into YrsMap.
+  pub(crate) fn insert(&self, transaction: &YrsTransaction, key: String, value: String) {
+    // decodes the `value` as JSON and converts it into a lib0::Any enumeration
+    let anyValue = Any::from_json(value.as_str()).unwrap();
+
+    // acquire a transaction
+    let mut tx = transaction.transaction();
+    let tx = tx.as_mut().unwrap();
+
+    // pull out a mutable reference to the YrsMap this type wraps
+    let map = self.0.borrow_mut();
+    // insert into the wrapped map.
+    map.insert(tx, key, anyValue);
+
+    // Documentation note from YrsMap about inserting a preliminary type - for future
+    // reference...
+    // // insert nested shared type
+    // let nested = map.insert(&mut txn, "key2", MapPrelim::from([("inner", "value2")]));
+    // nested.insert(&mut txn, "inner2", 100);
+  }
+
+  /// Returns the size of the map.
+  pub(crate) fn length(&self, transaction: &YrsTransaction) -> u32 {
+    let map = self.0.borrow();
+    // acquire a transaction, but we don't need to borrow it since we're
+    // not mutating anything in this method.
+    let tx = transaction.transaction();
+    let tx = tx.as_ref().unwrap();
+    // If we try and do the above on a single line, I get the error:
+    // creates a temporary value which is freed while still in use
+
+    map.len(tx)
+  }
+
+  pub(crate) fn contains_key(&self, transaction: &YrsTransaction, key: String) -> bool {
+    let map = self.0.borrow();
+    // acquire a transaction, but we don't need to borrow it since we're
+    // not mutating anything in this method.
+    let tx = transaction.transaction();
+    let tx = tx.as_ref().unwrap();
+
+    map.contains_key(tx, key.as_str())
+  }
+
     // Array implemented a number of code array-ish methods:
     // these match up with the definitions within the trait
     // defining an `Array` type within Yrs (`yrs::types::array::Array`)
@@ -95,6 +154,11 @@ impl YrsMap {
     // - fn get<T: ReadTxn>(&self, txn: &T, key: &str) -> Option<Value>
     // - fn contains_key<T: ReadTxn>(&self, txn: &T, key: &str) -> bool
     // - fn clear(&self, txn: &mut TransactionMut<'_>)
+
+    // IMPL order:
+    // [insert, len, contains_key]
+    // [get, remove, clear]
+    // [keys, values, iter]
 
     // The Swift `Dictionary` methods we'll want to support:
     // - var isEmpty: Bool
