@@ -41,6 +41,10 @@ interface YrsMap {
 
   [Throws=CodingError]
   string get([ByRef] YrsTransaction tx, string key);
+  
+  [Throws=CodingError]
+  string? remove([ByRef] YrsTransaction tx, string key);
+  void clear([ByRef] YrsTransaction tx);
 };
 
 interface YrsArray {

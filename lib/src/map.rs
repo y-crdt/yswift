@@ -135,16 +135,11 @@ impl YrsMap {
         }
     }
 
-
-    // TODO(heckj): The signature is notably different from other map.remove. The others
-    // tend to return Option<Value>, where here we're trying to helpfully indicate there
-    // was a decoding error in the flight as well. Something I'd like to chat with Aidar
-    // about...
     pub(crate) fn remove(
         &self,
         transaction: &YrsTransaction,
         key: String,
-    ) -> Result<String, CodingError> {
+    ) -> Result<Option<String>, CodingError> {
         // acquire a *mutable* transaction
         let mut binding = transaction.transaction();
         let tx = binding.as_mut().unwrap();
@@ -160,17 +155,15 @@ impl YrsMap {
                 if let Value::Any(any) = v {
                     let mut buf = String::new();
                     any.to_json(&mut buf);
-                    return Ok(buf);
+                    return Ok(Some(buf));
                 } else {
                     return Err(CodingError::EncodingError);
                 }
             }
-            // No value returned from the map on remove (key didn't exist there)
-            // thinking it makes the most sense to return an empty string rather
-            // than an Error type here.
+            // No value returned from the map on remove, so return the Optional
+            // string as None.
             None => {
-                let mut buf = String::new();
-                return Ok(buf);
+                return Ok(None);
             }
         }
     }
