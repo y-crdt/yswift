@@ -38,11 +38,16 @@ public final class YMap<T: Codable> {
         map.containsKey(tx: tx, key: key)
     }
     
-//    public func remove(tx: YrsTransaction, index: Int) {
-//        array.remove(tx: tx, index: UInt32(index))
-//    }
+    public func remove(tx: YrsTransaction, key: String) -> T? {
+        decoded(
+            try! map.remove(tx: tx, key: key)
+        )
+    }
     
-    
+    public func clear(tx: YrsTransaction)  {
+        map.clear(tx: tx)
+    }
+
 //    public func observe(_ body: @escaping ([YrsChange]) -> Void) -> UInt32 {
 //        let delegate = YArrayObservationDelegate(callback: body)
 //        return array.observe(delegate: delegate)
@@ -56,11 +61,21 @@ public final class YMap<T: Codable> {
 //        decodedMap(map.toA(tx: tx))
 //    }
     
+    /// Decodes a string value into the appropriate type
     private func decoded(_ stringValue: String) -> T {
         let data = stringValue.data(using: .utf8)!
         return try! decoder.decode(T.self, from: data)
     }
-    
+
+    /// Decodes an optional string value into an optional form of the appropriate type.
+    private func decoded(_ stringValue: String?) -> T? {
+        if let data = stringValue?.data(using: .utf8)! {
+            return try! decoder.decode(T.self, from: data)
+        } else {
+            return nil
+        }
+    }
+
 //    private func decodedMap(_ arrayValue: [String]) -> [T] {
 //        arrayValue.map {
 //            decoded($0)
