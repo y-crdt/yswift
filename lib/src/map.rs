@@ -77,9 +77,9 @@ impl YrsMap {
         // decodes the `value` as JSON and converts it into a lib0::Any enumeration
         let any_value = Any::from_json(value.as_str()).unwrap();
 
-        // acquire a transaction
-        let mut tx = transaction.transaction();
-        let tx = tx.as_mut().unwrap();
+        // acquire a *mutable* transaction
+        let mut binding = transaction.transaction();
+        let tx = binding.as_mut().unwrap();
 
         // pull out a mutable reference to the YrsMap this type wraps
         let map = self.0.borrow_mut();
@@ -98,8 +98,8 @@ impl YrsMap {
         let map = self.0.borrow();
         // acquire a transaction, but we don't need to borrow it since we're
         // not mutating anything in this method.
-        let tx = transaction.transaction();
-        let tx = tx.as_ref().unwrap();
+        let binding = transaction.transaction();
+        let tx = binding.as_ref().unwrap();
         // If we try and do the above on a single line, I get the error:
         // creates a temporary value which is freed while still in use
 
@@ -122,8 +122,8 @@ impl YrsMap {
         transaction: &YrsTransaction,
         key: String,
     ) -> Result<String, CodingError> {
-        let tx = transaction.transaction();
-        let tx = tx.as_ref().unwrap();
+        let binding = transaction.transaction();
+        let tx = binding.as_ref().unwrap();
         let map = self.0.borrow();
         let v = map.get(tx, key.as_str()).unwrap();
         let mut buf = String::new();
@@ -133,6 +133,57 @@ impl YrsMap {
         } else {
             Err(CodingError::EncodingError)
         }
+    }
+
+
+    // TODO(heckj): The signature is notably different from other map.remove. The others
+    // tend to return Option<Value>, where here we're trying to helpfully indicate there
+    // was a decoding error in the flight as well. Something I'd like to chat with Aidar
+    // about...
+    pub(crate) fn remove(
+        &self,
+        transaction: &YrsTransaction,
+        key: String,
+    ) -> Result<String, CodingError> {
+        // acquire a *mutable* transaction
+        let mut binding = transaction.transaction();
+        let tx = binding.as_mut().unwrap();
+
+        // get a mutable reference to the YrsMap this type wraps
+        let map = self.0.borrow_mut();
+
+        let optional_value = map.remove(tx, key.as_str());
+        match optional_value {
+            // there was some kind of value in the map, try to cast it and convert
+            // to JSON
+            Some(v) => {
+                if let Value::Any(any) = v {
+                    let mut buf = String::new();
+                    any.to_json(&mut buf);
+                    return Ok(buf);
+                } else {
+                    return Err(CodingError::EncodingError);
+                }
+            }
+            // No value returned from the map on remove (key didn't exist there)
+            // thinking it makes the most sense to return an empty string rather
+            // than an Error type here.
+            None => {
+                let mut buf = String::new();
+                return Ok(buf);
+            }
+        }
+    }
+
+    pub(crate) fn clear(&self, transaction: &YrsTransaction) {
+        // acquire a *mutable* transaction
+        let mut binding = transaction.transaction();
+        let tx = binding.as_mut().unwrap();
+
+        // get a mutable reference to the YrsMap this type wraps
+        let map = self.0.borrow_mut();
+
+        map.clear(tx);
     }
     // The equivalent Map methods from `yrs::types::map::Map`:
     // - fn keys<'a, T: ReadTxn + 'a>(&'a self, txn: &'a T) -> Keys<'a, &'a T, T>
@@ -144,7 +195,7 @@ impl YrsMap {
 
     // IMPL order:
     // - [X] [insert, len, contains_key]
-    // - [ ] [get, remove, clear]
+    // - [X] [get, remove, clear]
     // - [ ] [keys, values, iter]
     // - [ ] [observe, unobserve]
 
@@ -220,4 +271,40 @@ mod tests {
         assert_eq!(result, value_to_insert);
     }
 
+    #[test]
+    fn map_remove() {
+        let doc = YrsDoc::new();
+        let map = doc.get_map("example_map".to_string());
+
+        let key_to_insert = "AB123".to_string();
+        let value_to_insert = "\"Hello\"".to_string();
+
+        let txn = doc.transact();
+
+        assert_eq!(map.contains_key(&txn, key_to_insert.clone()), false);
+
+        map.insert(&txn, key_to_insert.clone(), value_to_insert.clone());
+
+        let returned = map.remove(&txn, key_to_insert.clone());
+        let unwrapped_return = returned.unwrap();
+        assert_eq!(unwrapped_return, value_to_insert.clone());
+        assert_eq!(map.length(&txn), 0);
+    }
+
+    #[test]
+    fn map_clear() {
+        let doc = YrsDoc::new();
+        let map = doc.get_map("example_map".to_string());
+
+        let key_to_insert = "AB123".to_string();
+        let value_to_insert = "\"Hello\"".to_string();
+
+        let txn = doc.transact();
+
+        map.insert(&txn, key_to_insert.clone(), value_to_insert.clone());
+        assert_eq!(map.length(&txn), 1);
+
+        map.clear(&txn);
+        assert_eq!(map.length(&txn), 0);
+    }
 }
