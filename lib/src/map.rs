@@ -3,7 +3,7 @@ use crate::{change::YrsChange, error::CodingError};
 use lib0::any::Any;
 use std::cell::RefCell;
 use std::fmt::Debug;
-//use yrs::{types::Value, Array, ArrayRef, Observable};
+//use yrs::types::Observable;
 use yrs::types::map::Keys;
 use yrs::types::map::Values;
 use yrs::{types::Value, Map, MapRef};
@@ -23,6 +23,22 @@ impl From<MapRef> for YrsMap {
     }
 }
 
+// A representation of a callback that is invoked from the various
+// map iterators, specifically to provide the JSON-string of the iterated 
+// value from the map (for example, with `values` or `iter`).
+//
+// This specifically allows the outside code (Swift, for example) to
+// handle the deserialization from JSON string into whatever the appropriate
+// type is within the swift language bindings.
+//
+// The type is boxed and used as a dynamic type:
+// `Box<dyn YrsMapIteratorDelegate>`
+// rather than having the keys, values, or iter functions expose an iterator
+// back to the external language bindings.
+pub(crate) trait YrsMapIteratorDelegate: Send + Sync + Debug {
+    fn call(&self, value: String);
+}
+
 /*
 Notes for Self:
 
@@ -38,36 +54,18 @@ Notes for Self:
   a string of JSON, which we could then use as the key in the underling YrsMap, following the
   pattern set up by YArray.
 
-  Looking at YrsArray's insert:
+  A number of the other methods take in a string type and convert it, with an implicit
+  assumption that the string being passed in is a JSON representation:
 
-      pub(crate) fn insert(&self, transaction: &YrsTransaction, index: u32, value: String) {
-        let avalue = Any::from_json(value.as_str()).unwrap();
-
-        let mut tx = transaction.transaction();
-        ^^ this is getting the transaction that we need to use for the insert on YArray
-
-        let tx = tx.as_mut().unwrap();
-                    ^^ converts the underlying type inside the Option to mutable
-                             ^^ unwraps the resulting Optional, panicing if it fails
-
-        let arr = self.0.borrow_mut();
-                      ^^  grabs the first element of the reference-to-Array that YrsArray wraps
-                        ^^ and borrows it as a mutable element
-        arr.insert(tx, index, avalue);
-    }
-
-    A number of the other methods take in a string type and convert it, with an implicit
-    assumption that the string being passed in is a JSON representation:
-
-    let avalue = Any::from_json(value.as_str()).unwrap();
-                                ^^ converts String into &str (a string slice)
-                      ^^ uses the From trait to convert the attempt to create an Any enum
-                         from the string, presuming it's JSON. This returns an Option - as it
-                         might have failed to convert.
-                                                ^^ unwraps the Option, of course it didn't fail!
+  let avalue = Any::from_json(value.as_str()).unwrap();
+                              ^^ converts String into &str (a string slice)
+                    ^^ uses the From trait to convert the attempt to create an Any enum
+                       from the string, presuming it's JSON. This returns an Option - as it
+                       might have failed to convert.
+                                              ^^ unwraps the Option, of course it didn't fail!
 
     `Any` is from lib0, and is a Rust enumeration - sometimes in a tree form - that encodes
-    JSON values down into a memory efficient binary blob.
+    JSON values into a memory efficient binary data buffer.
 
  */
 
@@ -178,18 +176,47 @@ impl YrsMap {
 
         map.clear(tx);
     }
-    // The equivalent Map methods from `yrs::types::map::Map`:
-    // - fn keys<'a, T: ReadTxn + 'a>(&'a self, txn: &'a T) -> Keys<'a, &'a T, T>
-    // - fn values<'a, T: ReadTxn + 'a>(&'a self, txn: &'a T) -> Values<'a, &'a T, T>
-    // - fn iter<'a, T: ReadTxn + 'a>(&'a self, txn: &'a T) -> MapIter<'a, &'a T, T>
-    // - fn remove(&self, txn: &mut TransactionMut<'_>, key: &str) -> Option<Value>
-    // - fn get<T: ReadTxn>(&self, txn: &T, key: &str) -> Option<Value>
-    // - fn clear(&self, txn: &mut TransactionMut<'_>)
 
+    pub(crate) fn keys(&self, transaction: &YrsTransaction, delegate: Box<dyn YrsMapIteratorDelegate>) {
+        // The internal `keys` function in Rust returns an explicit iterator that you can 
+        // fiddle with. 
+        //
+        // fn keys<'a, T: ReadTxn + 'a>(&'a self, txn: &'a T) -> Keys<'a, &'a T, T>
+        //
+        // For these language bindings we're instead holding onto the iterator
+        // ourselves, and expecting a delegate type from the relevant language binding side that 
+        // we call with each value as it's available.
+
+        // get a mutable transaction
+        let binding = transaction.transaction();
+        let txn = binding.as_ref().unwrap();
+
+        let map = self.0.borrow();
+        map.keys(txn).for_each(|key_value| {
+            delegate.call(key_value.to_string());
+        });
+
+        // arr.iter(tx).for_each(|val| {
+        //     let mut buf = String::new();
+        //     if let Value::Any(any) = val {
+        //         any.to_json(&mut buf);
+        //         delegate.call(buf);
+        //     } else {
+        //         // @TODO: fix silly handling, it will just call with empty string if casting fails
+        //         delegate.call(buf);
+        //     }
+        // });
+
+    }
+    
     // IMPL order:
     // - [X] [insert, len, contains_key]
     // - [X] [get, remove, clear]
     // - [ ] [keys, values, iter]
+    //   The equivalent Map methods from `yrs::types::map::Map`:
+    //   - fn keys<'a, T: ReadTxn + 'a>(&'a self, txn: &'a T) -> Keys<'a, &'a T, T>
+    //   - fn values<'a, T: ReadTxn + 'a>(&'a self, txn: &'a T) -> Values<'a, &'a T, T>
+    //   - fn iter<'a, T: ReadTxn + 'a>(&'a self, txn: &'a T) -> MapIter<'a, &'a T, T>
     // - [ ] [observe, unobserve]
 
     // The Swift `Dictionary` methods we'll want to support:
@@ -280,7 +307,7 @@ mod tests {
 
         let returned = map.remove(&txn, key_to_insert.clone());
         let unwrapped_return = returned.unwrap();
-        assert_eq!(unwrapped_return, value_to_insert.clone());
+        assert_eq!(unwrapped_return, Some(value_to_insert.clone()));
         assert_eq!(map.length(&txn), 0);
     }
 
@@ -300,4 +327,23 @@ mod tests {
         map.clear(&txn);
         assert_eq!(map.length(&txn), 0);
     }
+
+    #[test]
+    fn map_keys() {
+        let doc = YrsDoc::new();
+        let map = doc.get_map("example_map".to_string());
+
+        let first_key_to_insert = "AB123".to_string();
+        let second_key_to_insert = "890YZ".to_string();
+        let value_to_insert = "\"Hello\"".to_string();
+
+        let txn = doc.transact();
+
+        map.insert(&txn, first_key_to_insert.clone(), value_to_insert.clone());
+        map.insert(&txn, second_key_to_insert.clone(), value_to_insert.clone());
+        assert_eq!(map.length(&txn), 2);
+
+        //map.keys(&txn, delegate)
+    }
+
 }
