@@ -328,6 +328,45 @@ mod tests {
         assert_eq!(map.length(&txn), 0);
     }
 
+    #[derive(Debug)]
+    struct KeyDelegate {
+        collected: Vec<String>
+    }
+    // Marks that this type can be transferred across thread boundaries.
+    //unsafe impl Send for RefCell<KeyDelegate> {}
+    // Marks that this type is safe to share references between threads.
+    unsafe impl Sync for KeyDelegate {}
+
+    impl KeyDelegate {
+
+        fn append(&mut self, value: String) {
+            &self.collected.push(value);
+        }
+
+        fn new() -> KeyDelegate {
+            let newDelegate = KeyDelegate {
+                collected: Vec::<String>::new()
+            };
+            return newDelegate
+        }
+
+        // fn test(&self) -> Box<dyn crate::map::YrsMapIteratorDelegate> {
+        //     return Box::new(self)
+        // }
+    }
+
+    impl crate::map::YrsMapIteratorDelegate for Box<KeyDelegate> {
+        fn call(&self, key_value: String) {
+            self.append(key_value)
+        }
+    }
+
+    // impl crate::map::YrsMapIteratorDelegate for KeyDelegate {
+    //     fn call(&self, key_value: String) {
+            
+    //     }
+    // }
+
     #[test]
     fn map_keys() {
         let doc = YrsDoc::new();
@@ -343,7 +382,9 @@ mod tests {
         map.insert(&txn, second_key_to_insert.clone(), value_to_insert.clone());
         assert_eq!(map.length(&txn), 2);
 
-        //map.keys(&txn, delegate)
+        let delegate = Box::new(KeyDelegate::new());
+        map.keys(&txn, delegate);
+        assert_eq!(delegate.collected.len(), 2);
     }
 
 }
