@@ -19,13 +19,13 @@ private extension RustBuffer {
     }
 
     static func from(_ ptr: UnsafeBufferPointer<UInt8>) -> RustBuffer {
-        try! rustCall { ffi_yniffi_7ef6_rustbuffer_from_bytes(ForeignBytes(bufferPointer: ptr), $0) }
+        try! rustCall { ffi_yniffi_b701_rustbuffer_from_bytes(ForeignBytes(bufferPointer: ptr), $0) }
     }
 
     // Frees the buffer in place.
     // The buffer must not be used after this is called.
     func deallocate() {
-        try! rustCall { ffi_yniffi_7ef6_rustbuffer_free(self, $0) }
+        try! rustCall { ffi_yniffi_b701_rustbuffer_free(self, $0) }
     }
 }
 
@@ -391,13 +391,13 @@ public class YrsArray: YrsArrayProtocol {
     }
 
     deinit {
-        try! rustCall { ffi_yniffi_7ef6_YrsArray_object_free(pointer, $0) }
+        try! rustCall { ffi_yniffi_b701_YrsArray_object_free(pointer, $0) }
     }
 
     public func each(tx: YrsTransaction, delegate: YrsArrayEachDelegate) {
         try!
             rustCall {
-                yniffi_7ef6_YrsArray_each(self.pointer,
+                yniffi_b701_YrsArray_each(self.pointer,
                                           FfiConverterTypeYrsTransaction.lower(tx),
                                           FfiConverterCallbackInterfaceYrsArrayEachDelegate.lower(delegate), $0)
             }
@@ -406,7 +406,7 @@ public class YrsArray: YrsArrayProtocol {
     public func get(tx: YrsTransaction, index: UInt32) throws -> String {
         return try FfiConverterString.lift(
             rustCallWithError(FfiConverterTypeCodingError.self) {
-                yniffi_7ef6_YrsArray_get(self.pointer,
+                yniffi_b701_YrsArray_get(self.pointer,
                                          FfiConverterTypeYrsTransaction.lower(tx),
                                          FfiConverterUInt32.lower(index), $0)
             }
@@ -416,7 +416,7 @@ public class YrsArray: YrsArrayProtocol {
     public func insert(tx: YrsTransaction, index: UInt32, value: String) {
         try!
             rustCall {
-                yniffi_7ef6_YrsArray_insert(self.pointer,
+                yniffi_b701_YrsArray_insert(self.pointer,
                                             FfiConverterTypeYrsTransaction.lower(tx),
                                             FfiConverterUInt32.lower(index),
                                             FfiConverterString.lower(value), $0)
@@ -426,7 +426,7 @@ public class YrsArray: YrsArrayProtocol {
     public func insertRange(tx: YrsTransaction, index: UInt32, values: [String]) {
         try!
             rustCall {
-                yniffi_7ef6_YrsArray_insert_range(self.pointer,
+                yniffi_b701_YrsArray_insert_range(self.pointer,
                                                   FfiConverterTypeYrsTransaction.lower(tx),
                                                   FfiConverterUInt32.lower(index),
                                                   FfiConverterSequenceString.lower(values), $0)
@@ -437,7 +437,7 @@ public class YrsArray: YrsArrayProtocol {
         return try! FfiConverterUInt32.lift(
             try!
                 rustCall {
-                    yniffi_7ef6_YrsArray_length(self.pointer,
+                    yniffi_b701_YrsArray_length(self.pointer,
                                                 FfiConverterTypeYrsTransaction.lower(tx), $0)
                 }
         )
@@ -446,7 +446,7 @@ public class YrsArray: YrsArrayProtocol {
     public func pushBack(tx: YrsTransaction, value: String) {
         try!
             rustCall {
-                yniffi_7ef6_YrsArray_push_back(self.pointer,
+                yniffi_b701_YrsArray_push_back(self.pointer,
                                                FfiConverterTypeYrsTransaction.lower(tx),
                                                FfiConverterString.lower(value), $0)
             }
@@ -455,7 +455,7 @@ public class YrsArray: YrsArrayProtocol {
     public func pushFront(tx: YrsTransaction, value: String) {
         try!
             rustCall {
-                yniffi_7ef6_YrsArray_push_front(self.pointer,
+                yniffi_b701_YrsArray_push_front(self.pointer,
                                                 FfiConverterTypeYrsTransaction.lower(tx),
                                                 FfiConverterString.lower(value), $0)
             }
@@ -464,7 +464,7 @@ public class YrsArray: YrsArrayProtocol {
     public func remove(tx: YrsTransaction, index: UInt32) {
         try!
             rustCall {
-                yniffi_7ef6_YrsArray_remove(self.pointer,
+                yniffi_b701_YrsArray_remove(self.pointer,
                                             FfiConverterTypeYrsTransaction.lower(tx),
                                             FfiConverterUInt32.lower(index), $0)
             }
@@ -473,7 +473,7 @@ public class YrsArray: YrsArrayProtocol {
     public func removeRange(tx: YrsTransaction, index: UInt32, len: UInt32) {
         try!
             rustCall {
-                yniffi_7ef6_YrsArray_remove_range(self.pointer,
+                yniffi_b701_YrsArray_remove_range(self.pointer,
                                                   FfiConverterTypeYrsTransaction.lower(tx),
                                                   FfiConverterUInt32.lower(index),
                                                   FfiConverterUInt32.lower(len), $0)
@@ -484,7 +484,7 @@ public class YrsArray: YrsArrayProtocol {
         return try! FfiConverterSequenceString.lift(
             try!
                 rustCall {
-                    yniffi_7ef6_YrsArray_to_a(self.pointer,
+                    yniffi_b701_YrsArray_to_a(self.pointer,
                                               FfiConverterTypeYrsTransaction.lower(tx), $0)
                 }
         )
@@ -494,7 +494,7 @@ public class YrsArray: YrsArrayProtocol {
         return try! FfiConverterUInt32.lift(
             try!
                 rustCall {
-                    yniffi_7ef6_YrsArray_observe(self.pointer,
+                    yniffi_b701_YrsArray_observe(self.pointer,
                                                  FfiConverterCallbackInterfaceYrsArrayObservationDelegate.lower(delegate), $0)
                 }
         )
@@ -503,7 +503,7 @@ public class YrsArray: YrsArrayProtocol {
     public func unobserve(subscriptionId: UInt32) {
         try!
             rustCall {
-                yniffi_7ef6_YrsArray_unobserve(self.pointer,
+                yniffi_b701_YrsArray_unobserve(self.pointer,
                                                FfiConverterUInt32.lower(subscriptionId), $0)
             }
     }
@@ -561,18 +561,18 @@ public class YrsDoc: YrsDocProtocol {
         self.init(unsafeFromRawPointer: try!
 
             rustCall {
-                yniffi_7ef6_YrsDoc_new($0)
+                yniffi_b701_YrsDoc_new($0)
             })
     }
 
     deinit {
-        try! rustCall { ffi_yniffi_7ef6_YrsDoc_object_free(pointer, $0) }
+        try! rustCall { ffi_yniffi_b701_YrsDoc_object_free(pointer, $0) }
     }
 
     public func encodeDiffV1(tx: YrsTransaction, stateVector: [UInt8]) throws -> [UInt8] {
         return try FfiConverterSequenceUInt8.lift(
             rustCallWithError(FfiConverterTypeCodingError.self) {
-                yniffi_7ef6_YrsDoc_encode_diff_v1(self.pointer,
+                yniffi_b701_YrsDoc_encode_diff_v1(self.pointer,
                                                   FfiConverterTypeYrsTransaction.lower(tx),
                                                   FfiConverterSequenceUInt8.lower(stateVector), $0)
             }
@@ -583,7 +583,7 @@ public class YrsDoc: YrsDocProtocol {
         return try! FfiConverterTypeYrsText.lift(
             try!
                 rustCall {
-                    yniffi_7ef6_YrsDoc_get_text(self.pointer,
+                    yniffi_b701_YrsDoc_get_text(self.pointer,
                                                 FfiConverterString.lower(name), $0)
                 }
         )
@@ -593,7 +593,7 @@ public class YrsDoc: YrsDocProtocol {
         return try! FfiConverterTypeYrsArray.lift(
             try!
                 rustCall {
-                    yniffi_7ef6_YrsDoc_get_array(self.pointer,
+                    yniffi_b701_YrsDoc_get_array(self.pointer,
                                                  FfiConverterString.lower(name), $0)
                 }
         )
@@ -603,7 +603,7 @@ public class YrsDoc: YrsDocProtocol {
         return try! FfiConverterTypeYrsMap.lift(
             try!
                 rustCall {
-                    yniffi_7ef6_YrsDoc_get_map(self.pointer,
+                    yniffi_b701_YrsDoc_get_map(self.pointer,
                                                FfiConverterString.lower(name), $0)
                 }
         )
@@ -613,7 +613,7 @@ public class YrsDoc: YrsDocProtocol {
         return try! FfiConverterTypeYrsTransaction.lift(
             try!
                 rustCall {
-                    yniffi_7ef6_YrsDoc_transact(self.pointer, $0)
+                    yniffi_b701_YrsDoc_transact(self.pointer, $0)
                 }
         )
     }
@@ -656,6 +656,7 @@ public protocol YrsMapProtocol {
     func get(tx: YrsTransaction, key: String) throws -> String
     func remove(tx: YrsTransaction, key: String) throws -> String?
     func clear(tx: YrsTransaction)
+    func keys(tx: YrsTransaction, delegate: YrsMapIteratorDelegate)
 }
 
 public class YrsMap: YrsMapProtocol {
@@ -669,14 +670,14 @@ public class YrsMap: YrsMapProtocol {
     }
 
     deinit {
-        try! rustCall { ffi_yniffi_7ef6_YrsMap_object_free(pointer, $0) }
+        try! rustCall { ffi_yniffi_b701_YrsMap_object_free(pointer, $0) }
     }
 
     public func length(tx: YrsTransaction) -> UInt32 {
         return try! FfiConverterUInt32.lift(
             try!
                 rustCall {
-                    yniffi_7ef6_YrsMap_length(self.pointer,
+                    yniffi_b701_YrsMap_length(self.pointer,
                                               FfiConverterTypeYrsTransaction.lower(tx), $0)
                 }
         )
@@ -686,7 +687,7 @@ public class YrsMap: YrsMapProtocol {
         return try! FfiConverterBool.lift(
             try!
                 rustCall {
-                    yniffi_7ef6_YrsMap_contains_key(self.pointer,
+                    yniffi_b701_YrsMap_contains_key(self.pointer,
                                                     FfiConverterTypeYrsTransaction.lower(tx),
                                                     FfiConverterString.lower(key), $0)
                 }
@@ -696,7 +697,7 @@ public class YrsMap: YrsMapProtocol {
     public func insert(tx: YrsTransaction, key: String, value: String) {
         try!
             rustCall {
-                yniffi_7ef6_YrsMap_insert(self.pointer,
+                yniffi_b701_YrsMap_insert(self.pointer,
                                           FfiConverterTypeYrsTransaction.lower(tx),
                                           FfiConverterString.lower(key),
                                           FfiConverterString.lower(value), $0)
@@ -706,7 +707,7 @@ public class YrsMap: YrsMapProtocol {
     public func get(tx: YrsTransaction, key: String) throws -> String {
         return try FfiConverterString.lift(
             rustCallWithError(FfiConverterTypeCodingError.self) {
-                yniffi_7ef6_YrsMap_get(self.pointer,
+                yniffi_b701_YrsMap_get(self.pointer,
                                        FfiConverterTypeYrsTransaction.lower(tx),
                                        FfiConverterString.lower(key), $0)
             }
@@ -716,7 +717,7 @@ public class YrsMap: YrsMapProtocol {
     public func remove(tx: YrsTransaction, key: String) throws -> String? {
         return try FfiConverterOptionString.lift(
             rustCallWithError(FfiConverterTypeCodingError.self) {
-                yniffi_7ef6_YrsMap_remove(self.pointer,
+                yniffi_b701_YrsMap_remove(self.pointer,
                                           FfiConverterTypeYrsTransaction.lower(tx),
                                           FfiConverterString.lower(key), $0)
             }
@@ -726,8 +727,17 @@ public class YrsMap: YrsMapProtocol {
     public func clear(tx: YrsTransaction) {
         try!
             rustCall {
-                yniffi_7ef6_YrsMap_clear(self.pointer,
+                yniffi_b701_YrsMap_clear(self.pointer,
                                          FfiConverterTypeYrsTransaction.lower(tx), $0)
+            }
+    }
+
+    public func keys(tx: YrsTransaction, delegate: YrsMapIteratorDelegate) {
+        try!
+            rustCall {
+                yniffi_b701_YrsMap_keys(self.pointer,
+                                        FfiConverterTypeYrsTransaction.lower(tx),
+                                        FfiConverterCallbackInterfaceYrsMapIteratorDelegate.lower(delegate), $0)
             }
     }
 }
@@ -787,13 +797,13 @@ public class YrsText: YrsTextProtocol {
     }
 
     deinit {
-        try! rustCall { ffi_yniffi_7ef6_YrsText_object_free(pointer, $0) }
+        try! rustCall { ffi_yniffi_b701_YrsText_object_free(pointer, $0) }
     }
 
     public func format(tx: YrsTransaction, index: UInt32, length: UInt32, attrs: [String: String]) {
         try!
             rustCall {
-                yniffi_7ef6_YrsText_format(self.pointer,
+                yniffi_b701_YrsText_format(self.pointer,
                                            FfiConverterTypeYrsTransaction.lower(tx),
                                            FfiConverterUInt32.lower(index),
                                            FfiConverterUInt32.lower(length),
@@ -804,7 +814,7 @@ public class YrsText: YrsTextProtocol {
     public func append(tx: YrsTransaction, text: String) {
         try!
             rustCall {
-                yniffi_7ef6_YrsText_append(self.pointer,
+                yniffi_b701_YrsText_append(self.pointer,
                                            FfiConverterTypeYrsTransaction.lower(tx),
                                            FfiConverterString.lower(text), $0)
             }
@@ -813,7 +823,7 @@ public class YrsText: YrsTextProtocol {
     public func insert(tx: YrsTransaction, index: UInt32, chunk: String) {
         try!
             rustCall {
-                yniffi_7ef6_YrsText_insert(self.pointer,
+                yniffi_b701_YrsText_insert(self.pointer,
                                            FfiConverterTypeYrsTransaction.lower(tx),
                                            FfiConverterUInt32.lower(index),
                                            FfiConverterString.lower(chunk), $0)
@@ -823,7 +833,7 @@ public class YrsText: YrsTextProtocol {
     public func insertWithAttributes(tx: YrsTransaction, index: UInt32, chunk: String, attrs: [String: String]) {
         try!
             rustCall {
-                yniffi_7ef6_YrsText_insert_with_attributes(self.pointer,
+                yniffi_b701_YrsText_insert_with_attributes(self.pointer,
                                                            FfiConverterTypeYrsTransaction.lower(tx),
                                                            FfiConverterUInt32.lower(index),
                                                            FfiConverterString.lower(chunk),
@@ -834,7 +844,7 @@ public class YrsText: YrsTextProtocol {
     public func insertEmbed(tx: YrsTransaction, index: UInt32, content: String) {
         try!
             rustCall {
-                yniffi_7ef6_YrsText_insert_embed(self.pointer,
+                yniffi_b701_YrsText_insert_embed(self.pointer,
                                                  FfiConverterTypeYrsTransaction.lower(tx),
                                                  FfiConverterUInt32.lower(index),
                                                  FfiConverterString.lower(content), $0)
@@ -844,7 +854,7 @@ public class YrsText: YrsTextProtocol {
     public func insertEmbedWithAttributes(tx: YrsTransaction, index: UInt32, content: String, attrs: [String: String]) {
         try!
             rustCall {
-                yniffi_7ef6_YrsText_insert_embed_with_attributes(self.pointer,
+                yniffi_b701_YrsText_insert_embed_with_attributes(self.pointer,
                                                                  FfiConverterTypeYrsTransaction.lower(tx),
                                                                  FfiConverterUInt32.lower(index),
                                                                  FfiConverterString.lower(content),
@@ -856,7 +866,7 @@ public class YrsText: YrsTextProtocol {
         return try! FfiConverterString.lift(
             try!
                 rustCall {
-                    yniffi_7ef6_YrsText_get_string(self.pointer,
+                    yniffi_b701_YrsText_get_string(self.pointer,
                                                    FfiConverterTypeYrsTransaction.lower(tx), $0)
                 }
         )
@@ -865,7 +875,7 @@ public class YrsText: YrsTextProtocol {
     public func removeRange(tx: YrsTransaction, start: UInt32, length: UInt32) {
         try!
             rustCall {
-                yniffi_7ef6_YrsText_remove_range(self.pointer,
+                yniffi_b701_YrsText_remove_range(self.pointer,
                                                  FfiConverterTypeYrsTransaction.lower(tx),
                                                  FfiConverterUInt32.lower(start),
                                                  FfiConverterUInt32.lower(length), $0)
@@ -876,7 +886,7 @@ public class YrsText: YrsTextProtocol {
         return try! FfiConverterUInt32.lift(
             try!
                 rustCall {
-                    yniffi_7ef6_YrsText_length(self.pointer,
+                    yniffi_b701_YrsText_length(self.pointer,
                                                FfiConverterTypeYrsTransaction.lower(tx), $0)
                 }
         )
@@ -886,7 +896,7 @@ public class YrsText: YrsTextProtocol {
         return try! FfiConverterUInt32.lift(
             try!
                 rustCall {
-                    yniffi_7ef6_YrsText_observe(self.pointer,
+                    yniffi_b701_YrsText_observe(self.pointer,
                                                 FfiConverterCallbackInterfaceYrsTextObservationDelegate.lower(delegate), $0)
                 }
         )
@@ -895,7 +905,7 @@ public class YrsText: YrsTextProtocol {
     public func unobserve(subscriptionId: UInt32) {
         try!
             rustCall {
-                yniffi_7ef6_YrsText_unobserve(self.pointer,
+                yniffi_b701_YrsText_unobserve(self.pointer,
                                               FfiConverterUInt32.lower(subscriptionId), $0)
             }
     }
@@ -954,13 +964,13 @@ public class YrsTransaction: YrsTransactionProtocol {
     }
 
     deinit {
-        try! rustCall { ffi_yniffi_7ef6_YrsTransaction_object_free(pointer, $0) }
+        try! rustCall { ffi_yniffi_b701_YrsTransaction_object_free(pointer, $0) }
     }
 
     public func transactionApplyUpdate(update: [UInt8]) throws {
         try
             rustCallWithError(FfiConverterTypeCodingError.self) {
-                yniffi_7ef6_YrsTransaction_transaction_apply_update(self.pointer,
+                yniffi_b701_YrsTransaction_transaction_apply_update(self.pointer,
                                                                     FfiConverterSequenceUInt8.lower(update), $0)
             }
     }
@@ -968,7 +978,7 @@ public class YrsTransaction: YrsTransactionProtocol {
     public func transactionEncodeStateAsUpdateFromSv(stateVector: [UInt8]) throws -> [UInt8] {
         return try FfiConverterSequenceUInt8.lift(
             rustCallWithError(FfiConverterTypeCodingError.self) {
-                yniffi_7ef6_YrsTransaction_transaction_encode_state_as_update_from_sv(self.pointer,
+                yniffi_b701_YrsTransaction_transaction_encode_state_as_update_from_sv(self.pointer,
                                                                                       FfiConverterSequenceUInt8.lower(stateVector), $0)
             }
         )
@@ -978,7 +988,7 @@ public class YrsTransaction: YrsTransactionProtocol {
         return try! FfiConverterSequenceUInt8.lift(
             try!
                 rustCall {
-                    yniffi_7ef6_YrsTransaction_transaction_encode_state_as_update(self.pointer, $0)
+                    yniffi_b701_YrsTransaction_transaction_encode_state_as_update(self.pointer, $0)
                 }
         )
     }
@@ -987,7 +997,7 @@ public class YrsTransaction: YrsTransactionProtocol {
         return try! FfiConverterSequenceUInt8.lift(
             try!
                 rustCall {
-                    yniffi_7ef6_YrsTransaction_transaction_encode_update(self.pointer, $0)
+                    yniffi_b701_YrsTransaction_transaction_encode_update(self.pointer, $0)
                 }
         )
     }
@@ -996,7 +1006,7 @@ public class YrsTransaction: YrsTransactionProtocol {
         return try! FfiConverterSequenceUInt8.lift(
             try!
                 rustCall {
-                    yniffi_7ef6_YrsTransaction_transaction_state_vector(self.pointer, $0)
+                    yniffi_b701_YrsTransaction_transaction_state_vector(self.pointer, $0)
                 }
         )
     }
@@ -1005,7 +1015,7 @@ public class YrsTransaction: YrsTransactionProtocol {
         return try! FfiConverterOptionTypeYrsText.lift(
             try!
                 rustCall {
-                    yniffi_7ef6_YrsTransaction_transaction_get_text(self.pointer,
+                    yniffi_b701_YrsTransaction_transaction_get_text(self.pointer,
                                                                     FfiConverterString.lower(name), $0)
                 }
         )
@@ -1015,7 +1025,7 @@ public class YrsTransaction: YrsTransactionProtocol {
         return try! FfiConverterOptionTypeYrsArray.lift(
             try!
                 rustCall {
-                    yniffi_7ef6_YrsTransaction_transaction_get_array(self.pointer,
+                    yniffi_b701_YrsTransaction_transaction_get_array(self.pointer,
                                                                      FfiConverterString.lower(name), $0)
                 }
         )
@@ -1025,7 +1035,7 @@ public class YrsTransaction: YrsTransactionProtocol {
         return try! FfiConverterOptionTypeYrsMap.lift(
             try!
                 rustCall {
-                    yniffi_7ef6_YrsTransaction_transaction_get_map(self.pointer,
+                    yniffi_b701_YrsTransaction_transaction_get_map(self.pointer,
                                                                    FfiConverterString.lower(name), $0)
                 }
         )
@@ -1034,7 +1044,7 @@ public class YrsTransaction: YrsTransactionProtocol {
     public func free() {
         try!
             rustCall {
-                yniffi_7ef6_YrsTransaction_free(self.pointer, $0)
+                yniffi_b701_YrsTransaction_free(self.pointer, $0)
             }
     }
 }
@@ -1352,7 +1362,7 @@ private enum FfiConverterCallbackInterfaceYrsArrayEachDelegate {
     private static var callbackInitialized = false
     private static func initCallback() {
         try! rustCall { (err: UnsafeMutablePointer<RustCallStatus>) in
-            ffi_yniffi_7ef6_YrsArrayEachDelegate_init_callback(foreignCallbackCallbackInterfaceYrsArrayEachDelegate, err)
+            ffi_yniffi_b701_YrsArrayEachDelegate_init_callback(foreignCallbackCallbackInterfaceYrsArrayEachDelegate, err)
         }
     }
 
@@ -1462,7 +1472,7 @@ private enum FfiConverterCallbackInterfaceYrsArrayObservationDelegate {
     private static var callbackInitialized = false
     private static func initCallback() {
         try! rustCall { (err: UnsafeMutablePointer<RustCallStatus>) in
-            ffi_yniffi_7ef6_YrsArrayObservationDelegate_init_callback(foreignCallbackCallbackInterfaceYrsArrayObservationDelegate, err)
+            ffi_yniffi_b701_YrsArrayObservationDelegate_init_callback(foreignCallbackCallbackInterfaceYrsArrayObservationDelegate, err)
         }
     }
 
@@ -1482,6 +1492,116 @@ private enum FfiConverterCallbackInterfaceYrsArrayObservationDelegate {
 
 extension FfiConverterCallbackInterfaceYrsArrayObservationDelegate: FfiConverter {
     typealias SwiftType = YrsArrayObservationDelegate
+    // We can use Handle as the FfiType because it's a typealias to UInt64
+    typealias FfiType = UniFFICallbackHandle
+
+    public static func lift(_ handle: UniFFICallbackHandle) throws -> SwiftType {
+        ensureCallbackinitialized()
+        guard let callback = handleMap.get(handle: handle) else {
+            throw UniffiInternalError.unexpectedStaleHandle
+        }
+        return callback
+    }
+
+    public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> SwiftType {
+        ensureCallbackinitialized()
+        let handle: UniFFICallbackHandle = try readInt(&buf)
+        return try lift(handle)
+    }
+
+    public static func lower(_ v: SwiftType) -> UniFFICallbackHandle {
+        ensureCallbackinitialized()
+        return handleMap.insert(obj: v)
+    }
+
+    public static func write(_ v: SwiftType, into buf: inout [UInt8]) {
+        ensureCallbackinitialized()
+        writeInt(&buf, lower(v))
+    }
+}
+
+// Declaration and FfiConverters for YrsMapIteratorDelegate Callback Interface
+
+public protocol YrsMapIteratorDelegate: AnyObject {
+    func call(value: String)
+}
+
+// The ForeignCallback that is passed to Rust.
+private let foreignCallbackCallbackInterfaceYrsMapIteratorDelegate: ForeignCallback =
+    { (handle: UniFFICallbackHandle, method: Int32, args: RustBuffer, out_buf: UnsafeMutablePointer<RustBuffer>) -> Int32 in
+        func invokeCall(_ swiftCallbackInterface: YrsMapIteratorDelegate, _ args: RustBuffer) throws -> RustBuffer {
+            defer { args.deallocate() }
+
+            var reader = createReader(data: Data(rustBuffer: args))
+            try swiftCallbackInterface.call(
+                value: FfiConverterString.read(from: &reader)
+            )
+            return RustBuffer()
+            // TODO: catch errors and report them back to Rust.
+            // https://github.com/mozilla/uniffi-rs/issues/351
+        }
+
+        let cb: YrsMapIteratorDelegate
+        do {
+            cb = try FfiConverterCallbackInterfaceYrsMapIteratorDelegate.lift(handle)
+        } catch {
+            out_buf.pointee = FfiConverterString.lower("YrsMapIteratorDelegate: Invalid handle")
+            return -1
+        }
+
+        switch method {
+        case IDX_CALLBACK_FREE:
+            FfiConverterCallbackInterfaceYrsMapIteratorDelegate.drop(handle: handle)
+            // No return value.
+            // See docs of ForeignCallback in `uniffi/src/ffi/foreigncallbacks.rs`
+            return 0
+        case 1:
+            do {
+                out_buf.pointee = try invokeCall(cb, args)
+                // Value written to out buffer.
+                // See docs of ForeignCallback in `uniffi/src/ffi/foreigncallbacks.rs`
+                return 1
+            } catch {
+                out_buf.pointee = FfiConverterString.lower(String(describing: error))
+                return -1
+            }
+
+        // This should never happen, because an out of bounds method index won't
+        // ever be used. Once we can catch errors, we should return an InternalError.
+        // https://github.com/mozilla/uniffi-rs/issues/351
+        default:
+            // An unexpected error happened.
+            // See docs of ForeignCallback in `uniffi/src/ffi/foreigncallbacks.rs`
+            return -1
+        }
+    }
+
+// FfiConverter protocol for callback interfaces
+private enum FfiConverterCallbackInterfaceYrsMapIteratorDelegate {
+    // Initialize our callback method with the scaffolding code
+    private static var callbackInitialized = false
+    private static func initCallback() {
+        try! rustCall { (err: UnsafeMutablePointer<RustCallStatus>) in
+            ffi_yniffi_b701_YrsMapIteratorDelegate_init_callback(foreignCallbackCallbackInterfaceYrsMapIteratorDelegate, err)
+        }
+    }
+
+    private static func ensureCallbackinitialized() {
+        if !callbackInitialized {
+            initCallback()
+            callbackInitialized = true
+        }
+    }
+
+    static func drop(handle: UniFFICallbackHandle) {
+        handleMap.remove(handle: handle)
+    }
+
+    private static var handleMap = UniFFICallbackHandleMap<YrsMapIteratorDelegate>()
+}
+
+extension FfiConverterCallbackInterfaceYrsMapIteratorDelegate: FfiConverter {
+    typealias SwiftType = YrsMapIteratorDelegate
     // We can use Handle as the FfiType because it's a typealias to UInt64
     typealias FfiType = UniFFICallbackHandle
 
@@ -1572,7 +1692,7 @@ private enum FfiConverterCallbackInterfaceYrsTextObservationDelegate {
     private static var callbackInitialized = false
     private static func initCallback() {
         try! rustCall { (err: UnsafeMutablePointer<RustCallStatus>) in
-            ffi_yniffi_7ef6_YrsTextObservationDelegate_init_callback(foreignCallbackCallbackInterfaceYrsTextObservationDelegate, err)
+            ffi_yniffi_b701_YrsTextObservationDelegate_init_callback(foreignCallbackCallbackInterfaceYrsTextObservationDelegate, err)
         }
     }
 
