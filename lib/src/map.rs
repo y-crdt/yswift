@@ -193,18 +193,35 @@ impl YrsMap {
         map.keys(txn).for_each(|key_value| {
             delegate.call(key_value.to_string());
         });
+    }
 
-        // arr.iter(tx).for_each(|val| {
-        //     let mut buf = String::new();
-        //     if let Value::Any(any) = val {
-        //         any.to_json(&mut buf);
-        //         delegate.call(buf);
-        //     } else {
-        //         // @TODO: fix silly handling, it will just call with empty string if casting fails
-        //         delegate.call(buf);
-        //     }
-        // });
+    pub(crate) fn values(&self, transaction: &YrsTransaction, delegate: Box<dyn YrsMapIteratorDelegate>) {
+        // Like the `keys` iterator pattern, we're holding onto the Rust iterator
+        // ourselves, and expecting a delegate type from the language binding side that 
+        // we call with each value as it is available.
 
+        // get a mutable transaction
+        let binding = transaction.transaction();
+        let txn = binding.as_ref().unwrap();
+
+        let map = self.0.borrow();
+        let iterator = map.values(txn);
+        iterator.for_each(|value_list| {
+            // value is being returned as Vec<Value> from YrsMap - unclear
+            // why, but maybe we iterate over each element and attempt to any.to_json on it?
+            // 20mar2023 - checking w/ Bartosz on if I'm missing something about 
+            // the values iterator here.
+            value_list.iter().for_each(|val_in_list| {
+                let mut buf = String::new();
+                if let Value::Any(any) = val_in_list {
+                    any.to_json(&mut buf);
+                    delegate.call(buf);
+                } else {
+                    // @TODO: fix silly handling, it will just call with empty string if casting fails
+                    delegate.call(buf);
+                }
+            });
+        });
     }
     
     // IMPL order:

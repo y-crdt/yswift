@@ -46,6 +46,7 @@ interface YrsMap {
   string? remove([ByRef] YrsTransaction tx, string key);
   void clear([ByRef] YrsTransaction tx);
   void keys([ByRef] YrsTransaction tx, YrsMapIteratorDelegate delegate);
+  void values([ByRef] YrsTransaction tx, YrsMapIteratorDelegate delegate);
 };
 
 callback interface YrsMapIteratorDelegate {
