@@ -43,16 +43,18 @@ public final class YMap<T: Codable> {
         // Wrap the closure that accepts the key (:String) callback for each key
         // found within the map into a reference object to safely pass across
         // the UniFFI language bindings into Rust.
-        let delegate = YMapIteratorDelegate(callback: body)
+        let delegate = YMapKeyIteratorDelegate(callback: body)
         map.keys(tx: tx, delegate: delegate)
     }
 
-//    public func forEach(tx: YrsTransaction, _ body: @escaping (T) -> Void) {
-//        // @TODO: check for memory leaks
-//        let delegate = YArrayEachDelegate(callback: body, decoded: decoded)
-//        array.each(tx: tx, delegate: delegate)
-//    }
-    
+    public func values(tx: YrsTransaction, _ body: @escaping (T) -> Void) {
+        // @TODO: check for memory leaks
+        // Wrap the closure that accepts the key (:String) callback for each key
+        // found within the map into a reference object to safely pass across
+        // the UniFFI language bindings into Rust.
+        let delegate = YMapValueIteratorDelegate(callback: body, decoded: decoded)
+        map.values(tx: tx, delegate: delegate)
+    }
 
 //    public func observe(_ body: @escaping ([YrsChange]) -> Void) -> UInt32 {
 //        let delegate = YArrayObservationDelegate(callback: body)
@@ -102,7 +104,7 @@ public final class YMap<T: Codable> {
 
 /// A type that holds a closure that the Rust language bindings calls
 /// while iterating the keys of a Map.
-class YMapIteratorDelegate: YrsMapIteratorDelegate {
+class YMapKeyIteratorDelegate: YrsMapIteratorDelegate {
     private var callback: (String) -> Void
     
     init(callback: @escaping (String) -> Void) {
@@ -114,19 +116,23 @@ class YMapIteratorDelegate: YrsMapIteratorDelegate {
     }
 }
 
-//class YArrayEachDelegate<T: Codable>: YrsArrayEachDelegate {
-//    private var callback: (T) -> Void
-//    private var decoded: (String) -> T
-//
-//    init(
-//        callback: @escaping (T) -> Void,
-//        decoded: @escaping (String) -> T
-//    ) {
-//        self.callback = callback
-//        self.decoded = decoded
-//    }
-//
-//    func call(value: String) {
-//        callback(decoded(value))
-//    }
-//}
+/// A type that holds a closure that the Rust language bindings calls
+/// while iterating the values of a Map.
+///
+/// The values returned by Rust is a String with a JSON encoded object that this
+/// delegate needs to unwrap/decode on the fly...
+class YMapValueIteratorDelegate<T: Codable>: YrsMapIteratorDelegate {
+    private var callback: (T) -> Void
+    private var decoded: (String) -> T
+    
+    init(callback: @escaping (T) -> Void,
+         decoded: @escaping (String) -> T
+    ) {
+        self.callback = callback
+        self.decoded = decoded
+    }
+
+    func call(value: String) {
+        callback(decoded(value))
+    }
+}
