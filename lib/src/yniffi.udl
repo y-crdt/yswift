@@ -45,6 +45,11 @@ interface YrsMap {
   [Throws=CodingError]
   string? remove([ByRef] YrsTransaction tx, string key);
   void clear([ByRef] YrsTransaction tx);
+  void keys([ByRef] YrsTransaction tx, YrsMapIteratorDelegate delegate);
+};
+
+callback interface YrsMapIteratorDelegate {
+    void call(string value);
 };
 
 interface YrsArray {

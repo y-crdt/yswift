@@ -4,8 +4,6 @@ use lib0::any::Any;
 use std::cell::RefCell;
 use std::fmt::Debug;
 //use yrs::types::Observable;
-use yrs::types::map::Keys;
-use yrs::types::map::Values;
 use yrs::{types::Value, Map, MapRef};
 
 pub(crate) struct YrsMap(RefCell<MapRef>);
@@ -184,8 +182,8 @@ impl YrsMap {
         // fn keys<'a, T: ReadTxn + 'a>(&'a self, txn: &'a T) -> Keys<'a, &'a T, T>
         //
         // For these language bindings we're instead holding onto the iterator
-        // ourselves, and expecting a delegate type from the relevant language binding side that 
-        // we call with each value as it's available.
+        // ourselves, and expecting a delegate type from the language binding side that 
+        // we call with each value as it is available.
 
         // get a mutable transaction
         let binding = transaction.transaction();
@@ -328,6 +326,18 @@ mod tests {
         assert_eq!(map.length(&txn), 0);
     }
 
+/*
+    ## The section below is Joe trying to sort out the pieces to make a unit test
+    that "works" the code structure when you invoke "keys" - which involves multiple
+    calls to a delegate object that you need to provide. I haven't been able to figure
+    out how to structure the dyn Box<T> object and get it implementing the required
+    trait on the Rust side of things: `crate::map::YrsMapIteratorDelegate`
+
+    I'll work/test the pattern through the Swift language side of this binding setup,
+    but I'd really like to understand how to get it working on the Rust side as well. 
+    For now, however, I'll just leave this at where I got to - and hope to come back to
+    resolve it in the future with some more experience Rust brains alongside.
+
     #[derive(Debug)]
     struct KeyDelegate {
         collected: Vec<String>
@@ -384,7 +394,11 @@ mod tests {
 
         let delegate = Box::new(KeyDelegate::new());
         map.keys(&txn, delegate);
+//                     ^^^^^^^^ the trait `YrsMapIteratorDelegate` is not implemented for `KeyDelegate`
+//                     Compiler error when invoking `cargo test`
         assert_eq!(delegate.collected.len(), 2);
     }
+
+ */
 
 }
