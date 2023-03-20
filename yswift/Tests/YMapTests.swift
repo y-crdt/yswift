@@ -79,4 +79,30 @@ final class YMapTests: XCTestCase {
             XCTAssertEqual(map.length(tx: txn), 0)
         }
     }
+    
+    func test_keys() {
+        let document = YDocument()
+        let map: YMap<SomeType> = document.getOrCreateMap(named: "some_map")
+
+        let initialInstance = SomeType(name: "Aidar", age: 24)
+        let secondInstance = SomeType(name: "Joe", age: 55)
+
+        document.transact { txn in
+            XCTAssertEqual(map.length(tx: txn), 0)
+            map.insert(tx: txn, key: initialInstance.name, value: initialInstance)
+            map.insert(tx: txn, key: secondInstance.name, value: secondInstance)
+            XCTAssertEqual(map.length(tx: txn), 2)
+        }
+
+        let collectedKeys: [String] = document.transact { txn in
+            var collectedKeys: [String] = []
+            map.keys(tx: txn) {
+                collectedKeys.append($0)
+            }
+            return collectedKeys
+        }
+        
+        XCTAssertEqual(collectedKeys.sorted(), ["Aidar", "Joe"])
+    }
+
 }
