@@ -17,6 +17,7 @@ use crate::doc::YrsDoc;
 use crate::error::CodingError;
 use crate::map::YrsMap;
 use crate::map::YrsMapIteratorDelegate;
+use crate::map::YrsMapKVIteratorDelegate;
 use crate::text::YrsText;
 use crate::text::YrsTextObservationDelegate;
 use crate::transaction::YrsTransaction;

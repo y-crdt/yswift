@@ -37,6 +37,10 @@ pub(crate) trait YrsMapIteratorDelegate: Send + Sync + Debug {
     fn call(&self, value: String);
 }
 
+pub(crate) trait YrsMapKVIteratorDelegate: Send + Sync + Debug {
+    fn call(&self, key: String, value: String);
+}
+
 /*
 Notes for Self:
 
@@ -224,10 +228,37 @@ impl YrsMap {
         });
     }
     
+
+    pub(crate) fn each(&self, transaction: &YrsTransaction, delegate: Box<dyn YrsMapKVIteratorDelegate>) {
+        // Like the `keys` iterator pattern, we're holding onto the Rust iterator
+        // ourselves, and expecting a delegate type from the language binding side that 
+        // we call with each value as it is available.
+
+        // get a mutable transaction
+        let binding = transaction.transaction();
+        let txn = binding.as_ref().unwrap();
+
+        let map = self.0.borrow();
+        let iterator = map.iter(txn);
+        iterator.for_each(|key_value_pair| {
+            // key_value_pair is being returned as a tuple of (&str, Value)
+            // we'll pass the key value (String) straight through to the delegate,
+            // but do the extra work to convert Value to a JSON string for decoding
+            // on the far side of the language binding - or at least try to.
+            let mut buf = String::new();
+            if let Value::Any(any) = key_value_pair.1 {
+                any.to_json(&mut buf);
+                delegate.call(key_value_pair.0.to_string(), buf);
+            } else {
+                // @TODO: fix silly handling, it will just call with empty string if casting fails
+                delegate.call(key_value_pair.0.to_string(), buf);
+            }
+        });
+    }
     // IMPL order:
     // - [X] [insert, len, contains_key]
     // - [X] [get, remove, clear]
-    // - [ ] [keys, values, iter]
+    // - [X] [keys, values, iter]
     //   The equivalent Map methods from `yrs::types::map::Map`:
     //   - fn keys<'a, T: ReadTxn + 'a>(&'a self, txn: &'a T) -> Keys<'a, &'a T, T>
     //   - fn values<'a, T: ReadTxn + 'a>(&'a self, txn: &'a T) -> Values<'a, &'a T, T>

@@ -47,10 +47,15 @@ interface YrsMap {
   void clear([ByRef] YrsTransaction tx);
   void keys([ByRef] YrsTransaction tx, YrsMapIteratorDelegate delegate);
   void values([ByRef] YrsTransaction tx, YrsMapIteratorDelegate delegate);
+  void each([ByRef] YrsTransaction tx, YrsMapKVIteratorDelegate delegate);
 };
 
 callback interface YrsMapIteratorDelegate {
     void call(string value);
+};
+
+callback interface YrsMapKVIteratorDelegate {
+    void call(string key, string value);
 };
 
 interface YrsArray {
