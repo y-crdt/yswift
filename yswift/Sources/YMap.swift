@@ -49,11 +49,22 @@ public final class YMap<T: Codable> {
 
     public func values(tx: YrsTransaction, _ body: @escaping (T) -> Void) {
         // @TODO: check for memory leaks
-        // Wrap the closure that accepts the key (:String) callback for each key
+        // Wrap the closure that accepts the value (:String) callback for each value
         // found within the map into a reference object to safely pass across
-        // the UniFFI language bindings into Rust.
+        // the UniFFI language bindings into Rust. The second closure in the delegate
+        // is the function that decodes the JSON string into whatever `T` is.
         let delegate = YMapValueIteratorDelegate(callback: body, decoded: decoded)
         map.values(tx: tx, delegate: delegate)
+    }
+
+    public func each(tx: YrsTransaction, _ body: @escaping (String, T) -> Void) {
+        // @TODO: check for memory leaks
+        // Wrap the closure that accepts both the key and value (:String) callback for every
+        // key-value pair within the map into a reference object to safely pass across
+        // the UniFFI language bindings into Rust. The second closure in the delegate
+        // is the function that decodes the value JSON string into whatever `T` is.
+        let delegate = YMapKeyValueIteratorDelegate(callback: body, decoded: decoded)
+        map.each(tx: tx, delegate: delegate)
     }
 
 //    public func observe(_ body: @escaping ([YrsChange]) -> Void) -> UInt32 {
@@ -134,5 +145,26 @@ class YMapValueIteratorDelegate<T: Codable>: YrsMapIteratorDelegate {
 
     func call(value: String) {
         callback(decoded(value))
+    }
+}
+
+/// A type that holds a closure that the Rust language bindings calls
+/// while iterating the keys and values of a Map.
+///
+/// The key is a string, and the value is a String with a JSON encoded object that this
+/// delegate needs to unwrap/decode on the fly.
+class YMapKeyValueIteratorDelegate<T: Codable>: YrsMapKvIteratorDelegate {
+    private var callback: (String, T) -> Void
+    private var decoded: (String) -> T
+    
+    init(callback: @escaping (String, T) -> Void,
+         decoded: @escaping (String) -> T
+    ) {
+        self.callback = callback
+        self.decoded = decoded
+    }
+
+    func call(key: String, value: String) {
+        callback(key, decoded(value))
     }
 }
