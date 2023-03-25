@@ -12,10 +12,10 @@ import Foundation
 /// diffId: Each object must be uniquely identified by id. This is to tell if there is deletion or insertion
 /// compareContent: An object can change some properties but having its id intact. This is to tell if there is replacement
 public protocol DiffAware {
-  associatedtype DiffId: Hashable
+    associatedtype DiffId: Hashable
 
-  var diffId: DiffId { get }
-  static func compareContent(_ a: Self, _ b: Self) -> Bool
+    var diffId: DiffId { get }
+    static func compareContent(_ a: Self, _ b: Self) -> Bool
 }
 
 public extension DiffAware where Self: Hashable {
@@ -32,4 +32,3 @@ extension Int: DiffAware {}
 extension String: DiffAware {}
 extension Character: DiffAware {}
 extension UUID: DiffAware {}
-

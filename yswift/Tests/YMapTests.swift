@@ -2,7 +2,6 @@ import XCTest
 @testable import YSwift
 
 final class YMapTests: XCTestCase {
-
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
     }
@@ -14,22 +13,21 @@ final class YMapTests: XCTestCase {
     func test_insert() {
         let document = YDocument()
         let map: YMap<SomeType> = document.getOrCreateMap(named: "some_map")
-        
+
         let initialInstance = SomeType(name: "Aidar", age: 24)
         let secondInstance = SomeType(name: "Joe", age: 55)
-        
-        
+
         document.transact { txn in
             XCTAssertEqual(map.length(tx: txn), 0)
             map.insert(tx: txn, key: initialInstance.name, value: initialInstance)
             map.insert(tx: txn, key: secondInstance.name, value: secondInstance)
             XCTAssertEqual(map.length(tx: txn), 2)
         }
-        
+
         let finalInstance = document.transact { txn in
             map.get(tx: txn, key: initialInstance.name)
         }
-        
+
         XCTAssertEqual(initialInstance, finalInstance)
 
         let contains = document.transact { txn in
@@ -37,14 +35,14 @@ final class YMapTests: XCTestCase {
         }
         XCTAssertTrue(contains)
     }
-    
+
     func test_remove() {
         let document = YDocument()
         let map: YMap<SomeType> = document.getOrCreateMap(named: "some_map")
-        
+
         let initialInstance = SomeType(name: "Aidar", age: 24)
         let secondInstance = SomeType(name: "Joe", age: 55)
-        
+
         document.transact { txn in
             XCTAssertEqual(map.length(tx: txn), 0)
             map.insert(tx: txn, key: initialInstance.name, value: initialInstance)
@@ -58,14 +56,14 @@ final class YMapTests: XCTestCase {
             XCTAssertEqual(map.length(tx: txn), 1)
         }
     }
-    
+
     func test_clear() {
         let document = YDocument()
         let map: YMap<SomeType> = document.getOrCreateMap(named: "some_map")
-        
+
         let initialInstance = SomeType(name: "Aidar", age: 24)
         let secondInstance = SomeType(name: "Joe", age: 55)
-        
+
         document.transact { txn in
             XCTAssertEqual(map.length(tx: txn), 0)
             map.insert(tx: txn, key: initialInstance.name, value: initialInstance)
@@ -79,7 +77,7 @@ final class YMapTests: XCTestCase {
             XCTAssertEqual(map.length(tx: txn), 0)
         }
     }
-    
+
     func test_keys() {
         let document = YDocument()
         let map: YMap<SomeType> = document.getOrCreateMap(named: "some_map")
@@ -101,7 +99,7 @@ final class YMapTests: XCTestCase {
             }
             return collectedKeys
         }
-        
+
         XCTAssertEqual(collectedKeys.sorted(), ["Aidar", "Joe"])
     }
 
@@ -126,11 +124,11 @@ final class YMapTests: XCTestCase {
             }
             return collectedValues
         }
-        
+
         XCTAssertTrue(collectedValues.contains(initialInstance))
         XCTAssertTrue(collectedValues.contains(secondInstance))
     }
-    
+
     func test_each() {
         let document = YDocument()
         let map: YMap<SomeType> = document.getOrCreateMap(named: "some_map")
@@ -145,8 +143,8 @@ final class YMapTests: XCTestCase {
             XCTAssertEqual(map.length(tx: txn), 2)
         }
 
-        let collectedValues: [String:SomeType] = document.transact { txn in
-            var collectedValues: [String:SomeType] = [:]
+        let collectedValues: [String: SomeType] = document.transact { txn in
+            var collectedValues: [String: SomeType] = [:]
             map.each(tx: txn) { key, value in
                 collectedValues[key] = value
             }

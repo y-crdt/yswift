@@ -1,5 +1,5 @@
-import Foundation
 import Combine
+import Foundation
 import YSwift
 
 final class DocumentViewModel: ObservableObject {
@@ -7,7 +7,7 @@ final class DocumentViewModel: ObservableObject {
     @Published var text: String = ""
     private var bag = Set<AnyCancellable>()
     private var doc: YDocument
-    
+
     init(doc: YDocument, connectionManager: ConnectionManager) {
         self.doc = doc
         self.connectionManager = connectionManager
@@ -25,14 +25,14 @@ final class DocumentViewModel: ObservableObject {
             self.refresh()
         }
     }
-    
+
     // @TODO: make better integration with `TextEditor`/`UITextView`, because this one doesn't handle all the cases correctly.
     private func syncUpdates(oldText: String, newText: String) {
         let ytext = doc.getOrCreateText(named: "some_text")
         let old = Array(oldText)
         let new = Array(newText)
         let changes = diff(old: old, new: new)
-        
+
         let update: Buffer = doc.transact { txn in
             for change in changes {
                 switch change {
@@ -46,19 +46,19 @@ final class DocumentViewModel: ObservableObject {
                 default: break
                 }
             }
-            
+
             return txn.transactionEncodeUpdate()
         }
         connectionManager.sendEveryone(.init(kind: .UPDATE, buffer: update))
     }
-    
+
     var skipNextTextChange = false
-    
+
     private func refresh() {
         let newText: String? = doc.transact { txn in
-            return txn.transactionGetText(name: "some_text")?.getString(tx: txn)
+            txn.transactionGetText(name: "some_text")?.getString(tx: txn)
         }
-        
+
         DispatchQueue.main.async {
             self.skipNextTextChange = true
             self.text = newText ?? ""

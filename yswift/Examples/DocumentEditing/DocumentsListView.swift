@@ -1,12 +1,11 @@
-import SwiftUI
 import Combine
 import MultipeerConnectivity
+import SwiftUI
 import YSwift
-
 
 struct DocumentsListView: View {
     @ObservedObject var connectionManager: ConnectionManager
-    
+
     var body: some View {
         List {
             Section("Documents") {

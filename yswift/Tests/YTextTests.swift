@@ -15,7 +15,7 @@ class YTextTests: XCTestCase {
         }
         XCTAssertEqual(resultString, "hello, world!")
     }
-    
+
     func test_appendAndInsert() throws {
         let document = YDocument()
         let text = document.getOrCreateText(named: "some_text")
@@ -26,15 +26,14 @@ class YTextTests: XCTestCase {
         }
         XCTAssertEqual(resultString, "before that: hello, world!")
     }
-    
 
     func test_format() {
         let document = YDocument()
         let text = document.getOrCreateText(named: "some_text")
-        
-        let initialAttrs: [String: String] = ["weight": "bold"]
+
+        let initialAttrs = ["weight": "bold"]
         var decodedAttrs: [String: String] = [:]
-        
+
         let subscriptionId = text.observe { deltas in
             deltas.forEach {
                 switch $0 {
@@ -49,24 +48,24 @@ class YTextTests: XCTestCase {
                 }
             }
         }
-        
+
         document.transact { txn in
             text.append(tx: txn, text: "abc")
             text.format(tx: txn, index: 0, length: 3, attrs: initialAttrs)
         }
-        
+
         text.unobserve(subscriptionId)
-        
+
         XCTAssertEqual(initialAttrs, decodedAttrs)
     }
-    
+
     func test_insertWithAttributes() {
         let document = YDocument()
         let text = document.getOrCreateText(named: "some_text")
-        
-        let initialAttrs: [String: String] = ["weight": "bold"]
+
+        let initialAttrs = ["weight": "bold"]
         var decodedAttrs: [String: String] = [:]
-        
+
         let subscriptionId = text.observe { deltas in
             deltas.forEach {
                 switch $0 {
@@ -81,28 +80,28 @@ class YTextTests: XCTestCase {
                 }
             }
         }
-        
+
         let finalString: String = document.transact { txn in
             text.insertWithAttributes(tx: txn, index: 0, chunk: "abc", attrs: initialAttrs)
             return text.getString(tx: txn)
         }
-        
+
         text.unobserve(subscriptionId)
-        
+
         XCTAssertEqual(initialAttrs, decodedAttrs)
         XCTAssertEqual(finalString, "abc")
     }
-    
+
     func test_insertEmbed() {
         let document = YDocument()
         let text = document.getOrCreateText(named: "some_text")
-        
+
         let content = SomeEmbed(title: "title_123")
         var insertedContent: SomeEmbed?
-        
-        let initialAttrs: [String: String] = ["weight": "bold"]
+
+        let initialAttrs = ["weight": "bold"]
         var decodedAttrs: [String: String] = [:]
-        
+
         let subscriptionId = text.observe { deltas in
             deltas.forEach {
                 switch $0 {
@@ -120,24 +119,24 @@ class YTextTests: XCTestCase {
                 }
             }
         }
-        
+
         document.transact { txn in
             text.insertEmbedWithAttributes(tx: txn, index: 0, content: content, attrs: initialAttrs)
         }
-        
+
         text.unobserve(subscriptionId)
-        
+
         XCTAssertEqual(content, insertedContent)
         XCTAssertEqual(initialAttrs, decodedAttrs)
     }
-    
+
     func test_insertEmbedWithAttributes() {
         let document = YDocument()
         let text = document.getOrCreateText(named: "some_text")
-        
+
         let content = SomeEmbed(title: "title_123")
         var insertedContent: SomeEmbed?
-        
+
         let subscriptionId = text.observe { deltas in
             deltas.forEach {
                 switch $0 {
@@ -149,18 +148,18 @@ class YTextTests: XCTestCase {
                 }
             }
         }
-        
+
         let length: UInt32 = document.transact { txn in
             text.insertEmbed(tx: txn, index: 0, content: content)
             return text.length(tx: txn)
         }
-        
+
         text.unobserve(subscriptionId)
-        
+
         XCTAssertEqual(length, 1)
         XCTAssertEqual(content, insertedContent)
     }
-    
+
     func test_length() throws {
         let document = YDocument()
         let text = document.getOrCreateText(named: "some_text")
@@ -170,7 +169,7 @@ class YTextTests: XCTestCase {
         }
         XCTAssertEqual(length, 4)
     }
-    
+
     func test_getExistingText_FromWithinTransaction() throws {
         let document = YDocument()
         let _ = document.getOrCreateText(named: "some_text")
@@ -179,7 +178,7 @@ class YTextTests: XCTestCase {
         }
         XCTAssertNotNil(existingText)
     }
-    
+
     func test_getNonExistingText_FromWithinTransaction() throws {
         let document = YDocument()
         let _ = document.getOrCreateText(named: "some_text")
@@ -188,7 +187,7 @@ class YTextTests: XCTestCase {
         }
         XCTAssertNil(anotherText)
     }
-    
+
     func test_removeRange() throws {
         let document = YDocument()
         let text = document.getOrCreateText(named: "some_text")
@@ -199,13 +198,13 @@ class YTextTests: XCTestCase {
         }
         XCTAssertEqual(resultString, "h world!")
     }
-    
+
     func test_observation() {
         let document = YDocument()
         let text = document.getOrCreateText(named: "some_text")
-        
+
         var insertedValue = String()
-        
+
         let subscriptionId = text.observe { deltas in
             deltas.forEach {
                 switch $0 {
@@ -217,30 +216,30 @@ class YTextTests: XCTestCase {
                 }
             }
         }
-        
+
         document.transact { txn in
             text.append(tx: txn, text: "asd")
         }
-        
+
         text.unobserve(subscriptionId)
-        
+
         XCTAssertEqual(insertedValue, "asd")
     }
-    
+
     /*
      https://www.swiftbysundell.com/articles/using-unit-tests-to-identify-avoid-memory-leaks-in-swift/
      https://alisoftware.github.io/swift/closures/2016/07/25/closure-capture-1/
      */
-    
+
     func test_observationIsLeaking() {
         let document = YDocument()
         let text = document.getOrCreateText(named: "some_text")
-        
+
         // Create an object (it can be of any type), and hold both
         // a strong and a weak reference to it
         var object = NSObject()
         weak var weakObject = object
-        
+
         let _ = text.observe { [object] deltas in
             // Capture the object in the closure (note that we need to use
             // a capture list like [object] above in order for the object
@@ -248,23 +247,23 @@ class YTextTests: XCTestCase {
             _ = object
             deltas.forEach { _ in }
         }
-        
+
         // When we re-assign our local strong reference to a new object the
         // weak reference should still persist.
         // Because we didn't explicitly unobserved/unsubscribed.
         object = NSObject()
         XCTAssertNotNil(weakObject)
     }
-    
+
     func test_observation_IsNotLeaking_afterUnobserving() {
         let document = YDocument()
         let text = document.getOrCreateText(named: "some_text")
-        
+
         // Create an object (it can be of any type), and hold both
         // a strong and a weak reference to it
         var object = NSObject()
         weak var weakObject = object
-        
+
         let subscriptionId = text.observe { [object] deltas in
             // Capture the object in the closure (note that we need to use
             // a capture list like [object] above in order for the object
@@ -272,10 +271,10 @@ class YTextTests: XCTestCase {
             _ = object
             deltas.forEach { _ in }
         }
-        
+
         // Explicit unobserving, to prevent leaking
         text.unobserve(subscriptionId)
-        
+
         // When we re-assign our local strong reference to a new object the
         // weak reference should become nil, since the closure should
         // have been run and removed at this point

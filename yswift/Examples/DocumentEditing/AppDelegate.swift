@@ -1,11 +1,11 @@
-import UIKit
 import SwiftUI
+import UIKit
 import YSwift
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
-    
+
     func application(
         _: UIApplication,
         didFinishLaunchingWithOptions _: [UIApplication.LaunchOptionsKey: Any]? = nil
@@ -15,15 +15,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         setupNavigation()
         return true
     }
-    
+
     lazy var document: YDocument = {
         let document = YDocument()
         let _ = document.getOrCreateText(named: "some_text")
         return document
     }()
+
     lazy var connectionManager = ConnectionManager(document: document)
     lazy var viewModel = DocumentViewModel(doc: document, connectionManager: connectionManager)
-    
+
     private func setupNavigation() {
         let listViewController = UIHostingController(rootView: DocumentsListView(connectionManager: connectionManager))
         let documentViewController = UIHostingController(rootView: DocumentView(viewModel: viewModel))

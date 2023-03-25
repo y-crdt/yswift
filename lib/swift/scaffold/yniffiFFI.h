@@ -46,247 +46,259 @@ typedef struct RustCallStatus {
 // ⚠️ increment the version suffix in all instances of UNIFFI_SHARED_HEADER_V4 in this file.           ⚠️
 #endif // def UNIFFI_SHARED_H
 
-void ffi_yniffi_83fd_YrsDoc_object_free(
+void ffi_yniffi_44af_YrsDoc_object_free(
       void*_Nonnull ptr,
     RustCallStatus *_Nonnull out_status
     );
-void*_Nonnull yniffi_83fd_YrsDoc_new(
+void*_Nonnull yniffi_44af_YrsDoc_new(
       
     RustCallStatus *_Nonnull out_status
     );
-RustBuffer yniffi_83fd_YrsDoc_encode_diff_v1(
+RustBuffer yniffi_44af_YrsDoc_encode_diff_v1(
       void*_Nonnull ptr,void*_Nonnull tx,RustBuffer state_vector,
     RustCallStatus *_Nonnull out_status
     );
-void*_Nonnull yniffi_83fd_YrsDoc_get_text(
+void*_Nonnull yniffi_44af_YrsDoc_get_text(
       void*_Nonnull ptr,RustBuffer name,
     RustCallStatus *_Nonnull out_status
     );
-void*_Nonnull yniffi_83fd_YrsDoc_get_array(
+void*_Nonnull yniffi_44af_YrsDoc_get_array(
       void*_Nonnull ptr,RustBuffer name,
     RustCallStatus *_Nonnull out_status
     );
-void*_Nonnull yniffi_83fd_YrsDoc_get_map(
+void*_Nonnull yniffi_44af_YrsDoc_get_map(
       void*_Nonnull ptr,RustBuffer name,
     RustCallStatus *_Nonnull out_status
     );
-void*_Nonnull yniffi_83fd_YrsDoc_transact(
+void*_Nonnull yniffi_44af_YrsDoc_transact(
       void*_Nonnull ptr,
     RustCallStatus *_Nonnull out_status
     );
-void ffi_yniffi_83fd_YrsTransaction_object_free(
+void ffi_yniffi_44af_YrsTransaction_object_free(
       void*_Nonnull ptr,
     RustCallStatus *_Nonnull out_status
     );
-void yniffi_83fd_YrsTransaction_transaction_apply_update(
+void yniffi_44af_YrsTransaction_transaction_apply_update(
       void*_Nonnull ptr,RustBuffer update,
     RustCallStatus *_Nonnull out_status
     );
-RustBuffer yniffi_83fd_YrsTransaction_transaction_encode_state_as_update_from_sv(
+RustBuffer yniffi_44af_YrsTransaction_transaction_encode_state_as_update_from_sv(
       void*_Nonnull ptr,RustBuffer state_vector,
     RustCallStatus *_Nonnull out_status
     );
-RustBuffer yniffi_83fd_YrsTransaction_transaction_encode_state_as_update(
+RustBuffer yniffi_44af_YrsTransaction_transaction_encode_state_as_update(
       void*_Nonnull ptr,
     RustCallStatus *_Nonnull out_status
     );
-RustBuffer yniffi_83fd_YrsTransaction_transaction_encode_update(
+RustBuffer yniffi_44af_YrsTransaction_transaction_encode_update(
       void*_Nonnull ptr,
     RustCallStatus *_Nonnull out_status
     );
-RustBuffer yniffi_83fd_YrsTransaction_transaction_state_vector(
+RustBuffer yniffi_44af_YrsTransaction_transaction_state_vector(
       void*_Nonnull ptr,
     RustCallStatus *_Nonnull out_status
     );
-RustBuffer yniffi_83fd_YrsTransaction_transaction_get_text(
+RustBuffer yniffi_44af_YrsTransaction_transaction_get_text(
       void*_Nonnull ptr,RustBuffer name,
     RustCallStatus *_Nonnull out_status
     );
-RustBuffer yniffi_83fd_YrsTransaction_transaction_get_array(
+RustBuffer yniffi_44af_YrsTransaction_transaction_get_array(
       void*_Nonnull ptr,RustBuffer name,
     RustCallStatus *_Nonnull out_status
     );
-RustBuffer yniffi_83fd_YrsTransaction_transaction_get_map(
+RustBuffer yniffi_44af_YrsTransaction_transaction_get_map(
       void*_Nonnull ptr,RustBuffer name,
     RustCallStatus *_Nonnull out_status
     );
-void yniffi_83fd_YrsTransaction_free(
+void yniffi_44af_YrsTransaction_free(
       void*_Nonnull ptr,
     RustCallStatus *_Nonnull out_status
     );
-void ffi_yniffi_83fd_YrsMap_object_free(
+void ffi_yniffi_44af_YrsMap_object_free(
       void*_Nonnull ptr,
     RustCallStatus *_Nonnull out_status
     );
-uint32_t yniffi_83fd_YrsMap_length(
+uint32_t yniffi_44af_YrsMap_length(
       void*_Nonnull ptr,void*_Nonnull tx,
     RustCallStatus *_Nonnull out_status
     );
-int8_t yniffi_83fd_YrsMap_contains_key(
+int8_t yniffi_44af_YrsMap_contains_key(
       void*_Nonnull ptr,void*_Nonnull tx,RustBuffer key,
     RustCallStatus *_Nonnull out_status
     );
-void yniffi_83fd_YrsMap_insert(
+void yniffi_44af_YrsMap_insert(
       void*_Nonnull ptr,void*_Nonnull tx,RustBuffer key,RustBuffer value,
     RustCallStatus *_Nonnull out_status
     );
-RustBuffer yniffi_83fd_YrsMap_get(
+RustBuffer yniffi_44af_YrsMap_get(
       void*_Nonnull ptr,void*_Nonnull tx,RustBuffer key,
     RustCallStatus *_Nonnull out_status
     );
-RustBuffer yniffi_83fd_YrsMap_remove(
+RustBuffer yniffi_44af_YrsMap_remove(
       void*_Nonnull ptr,void*_Nonnull tx,RustBuffer key,
     RustCallStatus *_Nonnull out_status
     );
-void yniffi_83fd_YrsMap_clear(
+void yniffi_44af_YrsMap_clear(
       void*_Nonnull ptr,void*_Nonnull tx,
     RustCallStatus *_Nonnull out_status
     );
-void yniffi_83fd_YrsMap_keys(
+void yniffi_44af_YrsMap_keys(
       void*_Nonnull ptr,void*_Nonnull tx,uint64_t delegate,
     RustCallStatus *_Nonnull out_status
     );
-void yniffi_83fd_YrsMap_values(
+void yniffi_44af_YrsMap_values(
       void*_Nonnull ptr,void*_Nonnull tx,uint64_t delegate,
     RustCallStatus *_Nonnull out_status
     );
-void yniffi_83fd_YrsMap_each(
+void yniffi_44af_YrsMap_each(
       void*_Nonnull ptr,void*_Nonnull tx,uint64_t delegate,
     RustCallStatus *_Nonnull out_status
     );
-void ffi_yniffi_83fd_YrsArray_object_free(
+uint32_t yniffi_44af_YrsMap_observe(
+      void*_Nonnull ptr,uint64_t delegate,
+    RustCallStatus *_Nonnull out_status
+    );
+void yniffi_44af_YrsMap_unobserve(
+      void*_Nonnull ptr,uint32_t subscription_id,
+    RustCallStatus *_Nonnull out_status
+    );
+void ffi_yniffi_44af_YrsArray_object_free(
       void*_Nonnull ptr,
     RustCallStatus *_Nonnull out_status
     );
-void yniffi_83fd_YrsArray_each(
+void yniffi_44af_YrsArray_each(
       void*_Nonnull ptr,void*_Nonnull tx,uint64_t delegate,
     RustCallStatus *_Nonnull out_status
     );
-RustBuffer yniffi_83fd_YrsArray_get(
+RustBuffer yniffi_44af_YrsArray_get(
       void*_Nonnull ptr,void*_Nonnull tx,uint32_t index,
     RustCallStatus *_Nonnull out_status
     );
-void yniffi_83fd_YrsArray_insert(
+void yniffi_44af_YrsArray_insert(
       void*_Nonnull ptr,void*_Nonnull tx,uint32_t index,RustBuffer value,
     RustCallStatus *_Nonnull out_status
     );
-void yniffi_83fd_YrsArray_insert_range(
+void yniffi_44af_YrsArray_insert_range(
       void*_Nonnull ptr,void*_Nonnull tx,uint32_t index,RustBuffer values,
     RustCallStatus *_Nonnull out_status
     );
-uint32_t yniffi_83fd_YrsArray_length(
+uint32_t yniffi_44af_YrsArray_length(
       void*_Nonnull ptr,void*_Nonnull tx,
     RustCallStatus *_Nonnull out_status
     );
-void yniffi_83fd_YrsArray_push_back(
+void yniffi_44af_YrsArray_push_back(
       void*_Nonnull ptr,void*_Nonnull tx,RustBuffer value,
     RustCallStatus *_Nonnull out_status
     );
-void yniffi_83fd_YrsArray_push_front(
+void yniffi_44af_YrsArray_push_front(
       void*_Nonnull ptr,void*_Nonnull tx,RustBuffer value,
     RustCallStatus *_Nonnull out_status
     );
-void yniffi_83fd_YrsArray_remove(
+void yniffi_44af_YrsArray_remove(
       void*_Nonnull ptr,void*_Nonnull tx,uint32_t index,
     RustCallStatus *_Nonnull out_status
     );
-void yniffi_83fd_YrsArray_remove_range(
+void yniffi_44af_YrsArray_remove_range(
       void*_Nonnull ptr,void*_Nonnull tx,uint32_t index,uint32_t len,
     RustCallStatus *_Nonnull out_status
     );
-RustBuffer yniffi_83fd_YrsArray_to_a(
+RustBuffer yniffi_44af_YrsArray_to_a(
       void*_Nonnull ptr,void*_Nonnull tx,
     RustCallStatus *_Nonnull out_status
     );
-uint32_t yniffi_83fd_YrsArray_observe(
+uint32_t yniffi_44af_YrsArray_observe(
       void*_Nonnull ptr,uint64_t delegate,
     RustCallStatus *_Nonnull out_status
     );
-void yniffi_83fd_YrsArray_unobserve(
+void yniffi_44af_YrsArray_unobserve(
       void*_Nonnull ptr,uint32_t subscription_id,
     RustCallStatus *_Nonnull out_status
     );
-void ffi_yniffi_83fd_YrsText_object_free(
+void ffi_yniffi_44af_YrsText_object_free(
       void*_Nonnull ptr,
     RustCallStatus *_Nonnull out_status
     );
-void yniffi_83fd_YrsText_format(
+void yniffi_44af_YrsText_format(
       void*_Nonnull ptr,void*_Nonnull tx,uint32_t index,uint32_t length,RustBuffer attrs,
     RustCallStatus *_Nonnull out_status
     );
-void yniffi_83fd_YrsText_append(
+void yniffi_44af_YrsText_append(
       void*_Nonnull ptr,void*_Nonnull tx,RustBuffer text,
     RustCallStatus *_Nonnull out_status
     );
-void yniffi_83fd_YrsText_insert(
+void yniffi_44af_YrsText_insert(
       void*_Nonnull ptr,void*_Nonnull tx,uint32_t index,RustBuffer chunk,
     RustCallStatus *_Nonnull out_status
     );
-void yniffi_83fd_YrsText_insert_with_attributes(
+void yniffi_44af_YrsText_insert_with_attributes(
       void*_Nonnull ptr,void*_Nonnull tx,uint32_t index,RustBuffer chunk,RustBuffer attrs,
     RustCallStatus *_Nonnull out_status
     );
-void yniffi_83fd_YrsText_insert_embed(
+void yniffi_44af_YrsText_insert_embed(
       void*_Nonnull ptr,void*_Nonnull tx,uint32_t index,RustBuffer content,
     RustCallStatus *_Nonnull out_status
     );
-void yniffi_83fd_YrsText_insert_embed_with_attributes(
+void yniffi_44af_YrsText_insert_embed_with_attributes(
       void*_Nonnull ptr,void*_Nonnull tx,uint32_t index,RustBuffer content,RustBuffer attrs,
     RustCallStatus *_Nonnull out_status
     );
-RustBuffer yniffi_83fd_YrsText_get_string(
+RustBuffer yniffi_44af_YrsText_get_string(
       void*_Nonnull ptr,void*_Nonnull tx,
     RustCallStatus *_Nonnull out_status
     );
-void yniffi_83fd_YrsText_remove_range(
+void yniffi_44af_YrsText_remove_range(
       void*_Nonnull ptr,void*_Nonnull tx,uint32_t start,uint32_t length,
     RustCallStatus *_Nonnull out_status
     );
-uint32_t yniffi_83fd_YrsText_length(
+uint32_t yniffi_44af_YrsText_length(
       void*_Nonnull ptr,void*_Nonnull tx,
     RustCallStatus *_Nonnull out_status
     );
-uint32_t yniffi_83fd_YrsText_observe(
+uint32_t yniffi_44af_YrsText_observe(
       void*_Nonnull ptr,uint64_t delegate,
     RustCallStatus *_Nonnull out_status
     );
-void yniffi_83fd_YrsText_unobserve(
+void yniffi_44af_YrsText_unobserve(
       void*_Nonnull ptr,uint32_t subscription_id,
     RustCallStatus *_Nonnull out_status
     );
-void ffi_yniffi_83fd_YrsMapIteratorDelegate_init_callback(
+void ffi_yniffi_44af_YrsMapIteratorDelegate_init_callback(
       ForeignCallback  _Nonnull callback_stub,
     RustCallStatus *_Nonnull out_status
     );
-void ffi_yniffi_83fd_YrsMapKVIteratorDelegate_init_callback(
+void ffi_yniffi_44af_YrsMapKVIteratorDelegate_init_callback(
       ForeignCallback  _Nonnull callback_stub,
     RustCallStatus *_Nonnull out_status
     );
-void ffi_yniffi_83fd_YrsArrayEachDelegate_init_callback(
+void ffi_yniffi_44af_YrsMapObservationDelegate_init_callback(
       ForeignCallback  _Nonnull callback_stub,
     RustCallStatus *_Nonnull out_status
     );
-void ffi_yniffi_83fd_YrsArrayObservationDelegate_init_callback(
+void ffi_yniffi_44af_YrsArrayEachDelegate_init_callback(
       ForeignCallback  _Nonnull callback_stub,
     RustCallStatus *_Nonnull out_status
     );
-void ffi_yniffi_83fd_YrsTextObservationDelegate_init_callback(
+void ffi_yniffi_44af_YrsArrayObservationDelegate_init_callback(
       ForeignCallback  _Nonnull callback_stub,
     RustCallStatus *_Nonnull out_status
     );
-RustBuffer ffi_yniffi_83fd_rustbuffer_alloc(
+void ffi_yniffi_44af_YrsTextObservationDelegate_init_callback(
+      ForeignCallback  _Nonnull callback_stub,
+    RustCallStatus *_Nonnull out_status
+    );
+RustBuffer ffi_yniffi_44af_rustbuffer_alloc(
       int32_t size,
     RustCallStatus *_Nonnull out_status
     );
-RustBuffer ffi_yniffi_83fd_rustbuffer_from_bytes(
+RustBuffer ffi_yniffi_44af_rustbuffer_from_bytes(
       ForeignBytes bytes,
     RustCallStatus *_Nonnull out_status
     );
-void ffi_yniffi_83fd_rustbuffer_free(
+void ffi_yniffi_44af_rustbuffer_free(
       RustBuffer buf,
     RustCallStatus *_Nonnull out_status
     );
-RustBuffer ffi_yniffi_83fd_rustbuffer_reserve(
+RustBuffer ffi_yniffi_44af_rustbuffer_reserve(
       RustBuffer buf,int32_t additional,
     RustCallStatus *_Nonnull out_status
     );

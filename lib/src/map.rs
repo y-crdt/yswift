@@ -3,7 +3,7 @@ use crate::{change::YrsChange, error::CodingError};
 use lib0::any::Any;
 use std::cell::RefCell;
 use std::fmt::Debug;
-//use yrs::types::Observable;
+use yrs::types::Observable;
 use yrs::{types::Value, Map, MapRef};
 
 pub(crate) struct YrsMap(RefCell<MapRef>);
@@ -25,9 +25,10 @@ impl From<MapRef> for YrsMap {
 // map iterators, specifically to provide the JSON-string of the iterated 
 // value from the map (for example, with `values` or `iter`).
 //
-// This specifically allows the outside code (Swift, for example) to
+// This allows the outside code (Swift, for example) to
 // handle the deserialization from JSON string into whatever the appropriate
-// type is within the swift language bindings.
+// type is within the swift language bindings. The `keys` iterator doesn't
+// need this "translation", while `values` does.
 //
 // The type is boxed and used as a dynamic type:
 // `Box<dyn YrsMapIteratorDelegate>`
@@ -41,34 +42,16 @@ pub(crate) trait YrsMapKVIteratorDelegate: Send + Sync + Debug {
     fn call(&self, key: String, value: String);
 }
 
+pub(crate) trait YrsMapObservationDelegate: Send + Sync + Debug {
+    fn call(&self, value: Vec<YrsChange>);
+}
+
 /*
-Notes for Self:
-
-- `ReadTxn` is a read-only transaction for reading out information from the data structure
-  - (https://docs.rs/yrs/latest/yrs/trait.ReadTxn.html)
-- `TransactionMut` is a Read/Write transaction, used for changing the underlying data structure
-  - (https://docs.rs/yrs/latest/yrs/struct.TransactionMut.html)
-
-- The Yrs::Map type appears to expect all the keys to be &str - a reference to a string,
-  but in Swift, it can be any "hashable" type. Checked with Bartosz and that's expected - a
-  limitation when dealing with the other platforms and expecting primarily text based structures
-  coming through. I suppose anything Codable in Swift could be a key, as "encoding" it would return
-  a string of JSON, which we could then use as the key in the underling YrsMap, following the
-  pattern set up by YArray.
-
-  A number of the other methods take in a string type and convert it, with an implicit
-  assumption that the string being passed in is a JSON representation:
-
-  let avalue = Any::from_json(value.as_str()).unwrap();
-                              ^^ converts String into &str (a string slice)
-                    ^^ uses the From trait to convert the attempt to create an Any enum
-                       from the string, presuming it's JSON. This returns an Option - as it
-                       might have failed to convert.
-                                              ^^ unwraps the Option, of course it didn't fail!
-
-    `Any` is from lib0, and is a Rust enumeration - sometimes in a tree form - that encodes
-    JSON values into a memory efficient binary data buffer.
-
+IMPL order:
+- [X] [insert, len, contains_key]
+- [X] [get, remove, clear]
+- [X] [keys, values, iter]
+- [ ] [observe, unobserve]
  */
 
 impl YrsMap {
@@ -215,6 +198,10 @@ impl YrsMap {
             // why, but maybe we iterate over each element and attempt to any.to_json on it?
             // 20mar2023 - checking w/ Bartosz on if I'm missing something about 
             // the values iterator here.
+            //
+            // The upstream yrs value iterator goes into the Yrs internal type
+            // `Item`, which can potentially contain a list of values within it.
+            // In practice, it appears to contains a single value for this usage of it.
             value_list.iter().for_each(|val_in_list| {
                 let mut buf = String::new();
                 if let Value::Any(any) = val_in_list {
@@ -228,9 +215,8 @@ impl YrsMap {
         });
     }
     
-
     pub(crate) fn each(&self, transaction: &YrsTransaction, delegate: Box<dyn YrsMapKVIteratorDelegate>) {
-        // Like the `keys` iterator pattern, we're holding onto the Rust iterator
+        // Like the `keys` and `values` iterator pattern, we're holding onto the Rust iterator
         // ourselves, and expecting a delegate type from the language binding side that 
         // we call with each value as it is available.
 
@@ -255,35 +241,25 @@ impl YrsMap {
             }
         });
     }
-    // IMPL order:
-    // - [X] [insert, len, contains_key]
-    // - [X] [get, remove, clear]
-    // - [X] [keys, values, iter]
-    //   The equivalent Map methods from `yrs::types::map::Map`:
-    //   - fn keys<'a, T: ReadTxn + 'a>(&'a self, txn: &'a T) -> Keys<'a, &'a T, T>
-    //   - fn values<'a, T: ReadTxn + 'a>(&'a self, txn: &'a T) -> Values<'a, &'a T, T>
-    //   - fn iter<'a, T: ReadTxn + 'a>(&'a self, txn: &'a T) -> MapIter<'a, &'a T, T>
-    // - [ ] [observe, unobserve]
 
-    // The Swift `Dictionary` methods we'll want to support:
-    // - var isEmpty: Bool
-    // - var count: Int
-    // - var capacity: Int
-    // - fn subscript(Key) -> Value?
-    // - fn subscript(Key, default _: () -> Value) -> Value
-    // - var keys
-    // - var values
 
-    // - updateValue(Value, forKey: Key) -> Value?
-    // - removeValue(forKey: Key) -> Value?
-    // - removeAll(keepingCapacity: Bool)
+    pub(crate) fn observe(&self, delegate: Box<dyn YrsMapObservationDelegate>) -> u32 {
+        let subscription_id = self
+            .0
+            .borrow_mut()
+            .observe(move |transaction, map_event| {
+                let updated_key_values = map_event.keys(transaction);
+                // delegate.call(updated_key_values); <-- incorrect values being returned - need to poke through YrsChange
+            })
+            .into();
 
-    // And at least Sequence (https://developer.apple.com/documentation/swift/sequence/)
-    // and Collection (https://developer.apple.com/documentation/swift/collection/)
-    // protocol conformances:
-    // - makeIterator()
-    // - next()
-    // - index types and getting data in and out via those Indicies
+        subscription_id
+    }
+
+    pub(crate) fn unobserve(&self, subscription_id: u32) {
+        self.0.borrow_mut().unobserve(subscription_id);
+    }
+
 }
 
 #[cfg(test)]

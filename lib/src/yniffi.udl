@@ -48,6 +48,9 @@ interface YrsMap {
   void keys([ByRef] YrsTransaction tx, YrsMapIteratorDelegate delegate);
   void values([ByRef] YrsTransaction tx, YrsMapIteratorDelegate delegate);
   void each([ByRef] YrsTransaction tx, YrsMapKVIteratorDelegate delegate);
+
+  u32 observe(YrsMapObservationDelegate delegate);
+  void unobserve(u32 subscription_id);
 };
 
 callback interface YrsMapIteratorDelegate {
@@ -56,6 +59,10 @@ callback interface YrsMapIteratorDelegate {
 
 callback interface YrsMapKVIteratorDelegate {
     void call(string key, string value);
+};
+
+callback interface YrsMapObservationDelegate {
+    void call(sequence<YrsChange> value);
 };
 
 interface YrsArray {
