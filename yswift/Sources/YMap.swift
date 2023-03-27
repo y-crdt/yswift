@@ -139,7 +139,7 @@ public final class YMap<T: Codable>: Sequence {
 
         public func next() -> (String, T)? {
             if let key = self.keyList.popLast() {
-                let iterSet = self.map.docRef.transact { txn in
+                let iterSet = self.map.docRef.transact { txn -> (String, T) in
                     let valueForKey: T = self.map.get(tx: txn, key: key) as! T
                     return (key, valueForKey)
                 }
