@@ -5,6 +5,7 @@ mod delta;
 mod doc;
 mod error;
 mod map;
+mod mapchange;
 mod text;
 mod transaction;
 
@@ -19,6 +20,8 @@ use crate::map::YrsMap;
 use crate::map::YrsMapIteratorDelegate;
 use crate::map::YrsMapKVIteratorDelegate;
 use crate::map::YrsMapObservationDelegate;
+use crate::mapchange::YrsEntryChange;
+use crate::mapchange::YrsMapChange;
 use crate::text::YrsText;
 use crate::text::YrsTextObservationDelegate;
 use crate::transaction::YrsTransaction;

@@ -53,6 +53,18 @@ interface YrsMap {
   void unobserve(u32 subscription_id);
 };
 
+[Enum]
+interface YrsEntryChange {
+  Inserted(string value);
+  Updated(string old_value, string new_value);
+  Removed(string value);
+};
+
+dictionary YrsMapChange {
+    string key;
+    YrsEntryChange change;
+};
+
 callback interface YrsMapIteratorDelegate {
     void call(string value);
 };
@@ -62,7 +74,7 @@ callback interface YrsMapKVIteratorDelegate {
 };
 
 callback interface YrsMapObservationDelegate {
-    void call(sequence<YrsChange> value);
+    void call(sequence<YrsMapChange> value);
 };
 
 interface YrsArray {

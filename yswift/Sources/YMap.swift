@@ -44,6 +44,7 @@ public final class YMap<T: Codable>: Sequence {
         map.containsKey(tx: tx, key: key)
     }
 
+    @discardableResult
     public func remove(tx: YrsTransaction, key: String) -> T? {
         decoded(
             try! map.remove(tx: tx, key: key)
@@ -83,14 +84,14 @@ public final class YMap<T: Codable>: Sequence {
         map.each(tx: tx, delegate: delegate)
     }
 
-//    public func observe(_ body: @escaping ([YrsChange]) -> Void) -> UInt32 {
-//        let delegate = YArrayObservationDelegate(callback: body)
-//        return array.observe(delegate: delegate)
-//    }
+    public func observe(_ body: @escaping ([YMapChange<T>]) -> Void) -> UInt32 {
+        let delegate = YMapObservationDelegate(callback: body, decoded: decoded)
+        return map.observe(delegate: delegate)
+    }
 
-//    public func unobserve(_ subscriptionId: UInt32) {
-//        array.unobserve(subscriptionId: subscriptionId)
-//    }
+    public func unobserve(_ subscriptionId: UInt32) {
+        map.unobserve(subscriptionId: subscriptionId)
+    }
 
     public func toMap(tx: YrsTransaction) -> [String: T] {
         var replicatedMap: [String: T] = [:]
@@ -211,5 +212,54 @@ class YMapKeyValueIteratorDelegate<T: Codable>: YrsMapKvIteratorDelegate {
 
     func call(key: String, value: String) {
         callback(key, decoded(value))
+    }
+}
+
+
+class YMapObservationDelegate<T: Codable>: YrsMapObservationDelegate {
+    private var callback: ([YMapChange<T>]) -> Void
+    private var decoded: (String) -> T
+
+    init(
+        callback: @escaping ([YMapChange<T>]) -> Void,
+        decoded: @escaping (String) -> T
+    ) {
+        self.callback = callback
+        self.decoded = decoded
+    }
+
+    func call(value: [YrsMapChange]) {
+        let result: [YMapChange<T>] = value.map { rsChange -> YMapChange<T> in
+            switch rsChange.change {
+            case let .inserted(value):
+                return YMapChange.inserted(key: rsChange.key, value: decoded(value))
+            case let .updated(oldValue, newValue):
+                return YMapChange.updated(key: rsChange.key, oldValue: decoded(oldValue), newValue: decoded(newValue))
+            case let .removed(value):
+                return YMapChange.removed(key: rsChange.key, value: decoded(value))
+            }
+        }
+        callback(result)
+    }
+}
+
+public enum YMapChange<T> {
+    case inserted(key: String, value: T)
+    case updated(key: String, oldValue: T, newValue: T)
+    case removed(key: String, value: T)
+}
+
+extension YMapChange: Equatable where T: Equatable {
+    public static func ==(lhs: YMapChange<T>, rhs: YMapChange<T>) -> Bool {
+        switch (lhs, rhs) {
+        case let (.inserted(key1, value1), .inserted(key2, value2)):
+            return key1 == key2 && value1 == value2
+        case let (.updated(key1, oldValue1, newValue1), .updated(key2, oldValue2, newValue2)):
+            return key1 == key2 && oldValue1 == oldValue2 && newValue1 == newValue2
+        case let (.removed(key1, value1), .removed(key2, value2)):
+            return key1 == key2 && value1 == value2
+        default:
+            return false
+        }
     }
 }

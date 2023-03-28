@@ -157,4 +157,41 @@ final class YMapTests: XCTestCase {
         XCTAssertTrue(collectedValues.values.contains(initialInstance))
         XCTAssertTrue(collectedValues.values.contains(secondInstance))
     }
+    
+    func test_observation() {
+        let document = YDocument()
+        let map: YMap<String> = document.getOrCreateMap(named: "some_map")
+        
+        var actualChanges: [YMapChange<String>] = []
+
+        let subscriptionId = map.observe { changes in
+            changes.forEach { change in
+                actualChanges.append(change)
+            }
+        }
+        
+        document.transact { txn in
+            map.insert(tx: txn, key: "Aidar", value: "24")
+            map.insert(tx: txn, key: "Joe", value: "55")
+        }
+        
+        document.transact { txn in
+            map.remove(tx: txn, key: "Aidar")
+            map.insert(tx: txn, key: "Joe", value: "101")
+        }
+
+        map.unobserve(subscriptionId)
+        
+        print(actualChanges)
+        
+        XCTAssertEqual(
+            actualChanges,
+            [
+                .inserted(key: "Aidar", value: "24"),
+                .inserted(key: "Joe", value: "55"),
+                .removed(key: "Aidar", value: "24"),
+                .updated(key: "Joe", oldValue: "55", newValue: "101")
+            ]
+        )
+    }
 }
