@@ -53,14 +53,15 @@ public final class YDocument {
     }
     
     // MARK: - Factory methods
+    
+    #warning("@TODO: check for memory leaks when passing reference to document")
 
     public func getOrCreateText(named: String) -> YText {
-        // check for memory leaks with ytext <- -> document referencing
         YText(text: document.getText(name: named), document: self)
     }
 
     public func getOrCreateArray<T: Codable>(named: String) -> YArray<T> {
-        YArray(array: document.getArray(name: named))
+        YArray(array: document.getArray(name: named), document: self)
     }
 
     public func getOrCreateMap<T: Codable>(named: String) -> YMap<T> {

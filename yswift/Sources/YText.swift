@@ -1,12 +1,12 @@
 import Foundation
 import Yniffi
 
-public final class YText {
+#warning("@TODO: check if `self` in Transactions is not leaking")
+#warning("@TODO: check if strong reference to Document is ok (no retain cycles)")
+
+public final class YText: Transactable {
     private let _text: YrsText
-    private let document: YDocument
-    
-    private let decoder = JSONDecoder()
-    private let encoder = JSONEncoder()
+    internal let document: YDocument
 
     internal init(text: YrsText, document: YDocument) {
         self._text = text
@@ -75,6 +75,11 @@ public final class YText {
     public func unobserve(_ subscriptionId: UInt32) {
         _text.unobserve(subscriptionId: subscriptionId)
     }
+    
+    // MARK: - Encoding/Decoding
+    
+    private let decoder = JSONDecoder()
+    private let encoder = JSONEncoder()
 
     private func encoded<T: Encodable>(_ value: T) -> String {
         let data = try! encoder.encode(value)
@@ -83,14 +88,6 @@ public final class YText {
 
     private func encodedMap<T: Encodable>(_ value: [String: T]) -> [String: String] {
         Dictionary(uniqueKeysWithValues: value.map { ($0, encoded($1)) })
-    }
-    
-    private func inTransaction<T>(_ transaction: YrsTransaction?, changes: @escaping (YrsTransaction) -> T) -> T {
-        if let transaction = transaction {
-            return changes(transaction)
-        } else {
-            return document.transact(changes)
-        }
     }
 }
 
