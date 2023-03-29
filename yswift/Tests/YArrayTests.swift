@@ -2,155 +2,101 @@ import XCTest
 @testable import YSwift
 
 class YArrayTests: XCTestCase {
+    var document: YDocument!
+    var array: YArray<SomeType>!
+    
+    override func setUp() {
+        document = YDocument()
+        array = document.getOrCreateArray(named: "test")
+    }
+    
+    override func tearDown() {
+        document = nil
+        array = nil
+    }
+    
     func test_insert() {
-        let document = YDocument()
-        let array: YArray<SomeType> = document.getOrCreateArray(named: "some_array")
-
         let initialInstance = SomeType(name: "Aidar", age: 24)
-
-        document.transact { txn in
-            array.insert(tx: txn, index: 0, value: initialInstance)
-        }
-
-        let finalInstance = document.transact { txn in
-            array.get(tx: txn, index: 0)
-        }
-
-        XCTAssertEqual(initialInstance, finalInstance)
+        
+        array.insert(index: 0, value: initialInstance)
+        
+        XCTAssertEqual(array.get(index: 0), initialInstance)
     }
 
     func test_insertArray() {
-        let document = YDocument()
-        let array: YArray<SomeType> = document.getOrCreateArray(named: "some_array")
+        let arrayToInsert = [SomeType(name: "Aidar", age: 24), SomeType(name: "Joe", age: 55)]
 
-        let arrayToInsert = [SomeType(name: "Some Dude", age: 24), SomeType(name: "Another Dude", age: 32)]
+        array.insertArray(index: 0, values: arrayToInsert)
 
-        document.transact { txn in
-            array.insertArray(tx: txn, index: 0, values: arrayToInsert)
-        }
-
-        let finalArray = document.transact { txn in
-            array.toArray(tx: txn)
-        }
-
-        XCTAssertEqual(arrayToInsert, finalArray)
+        XCTAssertEqual(array.toArray(), arrayToInsert)
     }
 
     func test_length() {
-        let document = YDocument()
-        let array: YArray<SomeType> = document.getOrCreateArray(named: "some_array")
-
-        let arrayToInsert = [SomeType(name: "Some Dude", age: 24), SomeType(name: "Another Dude", age: 32)]
-
-        document.transact { txn in
-            array.insertArray(tx: txn, index: 0, values: arrayToInsert)
-        }
-
-        let length = document.transact { txn in
-            array.length(tx: txn)
-        }
-
-        XCTAssertEqual(length, 2)
+        array.insert(index: 0, value: SomeType(name: "Aidar", age: 24))
+        XCTAssertEqual(array.length(), 1)
     }
 
     func test_pushBack_and_pushFront() {
-        let document = YDocument()
-        let array: YArray<SomeType> = document.getOrCreateArray(named: "some_array")
+        let initial = SomeType(name: "Middleton", age: 77)
+        let front = SomeType(name: "Aidar", age: 24)
+        let back = SomeType(name: "Joe", age: 55)
+        
+        array.insert(index: 0, value: initial)
+        array.pushBack(value: back)
+        array.pushFront(value: front)
 
-        let initialElement = SomeType(name: "I will be in the middle in the end", age: 77)
-        let frontElement = SomeType(name: "Some Dude", age: 24)
-        let backElement = SomeType(name: "Another Dude", age: 32)
-
-        document.transact { txn in
-            array.insert(tx: txn, index: 0, value: initialElement)
-            array.pushBack(tx: txn, value: backElement)
-            array.pushFront(tx: txn, value: frontElement)
-        }
-
-        let finalArray = document.transact { txn in
-            array.toArray(tx: txn)
-        }
-
-        XCTAssertEqual(finalArray, [frontElement, initialElement, backElement])
+        XCTAssertEqual(array.toArray(), [front, initial, back])
     }
 
     func test_remove() {
-        let document = YDocument()
-        let array: YArray<SomeType> = document.getOrCreateArray(named: "some_array")
+        let initial = SomeType(name: "Middleton", age: 77)
+        let front = SomeType(name: "Aidar", age: 24)
+        let back = SomeType(name: "Joe", age: 55)
+        
+        array.insert(index: 0, value: initial)
+        array.pushBack(value: back)
+        array.pushFront(value: front)
+        
+        XCTAssertEqual(array.toArray(), [front, initial, back])
 
-        let initialElement = SomeType(name: "I will be in the middle in the end", age: 77)
-        let frontElement = SomeType(name: "Some Dude", age: 24)
-        let backElement = SomeType(name: "Another Dude", age: 32)
+        array.remove(index: 1)
 
-        document.transact { txn in
-            array.insert(tx: txn, index: 0, value: initialElement)
-            array.pushBack(tx: txn, value: backElement)
-            array.pushFront(tx: txn, value: frontElement)
-        }
-
-        document.transact { txn in
-            array.remove(tx: txn, index: 1)
-        }
-
-        let finalArray = document.transact { txn in
-            array.toArray(tx: txn)
-        }
-
-        XCTAssertEqual(finalArray, [frontElement, backElement])
+        XCTAssertEqual(array.toArray(), [front, back])
     }
 
     func test_removeRange() {
-        let document = YDocument()
-        let array: YArray<SomeType> = document.getOrCreateArray(named: "some_array")
+        let initial = SomeType(name: "Middleton", age: 77)
+        let front = SomeType(name: "Aidar", age: 24)
+        let back = SomeType(name: "Joe", age: 55)
+        
+        array.insert(index: 0, value: initial)
+        array.pushBack(value: back)
+        array.pushFront(value: front)
+        
+        XCTAssertEqual(array.toArray(), [front, initial, back])
+        
+        array.removeRange(index: 0, length: 3)
 
-        let initialElement = SomeType(name: "I will be in the middle in the end", age: 77)
-        let frontElement = SomeType(name: "Some Dude", age: 24)
-        let backElement = SomeType(name: "Another Dude", age: 32)
-
-        document.transact { txn in
-            array.insert(tx: txn, index: 0, value: initialElement)
-            array.pushBack(tx: txn, value: backElement)
-            array.pushFront(tx: txn, value: frontElement)
-        }
-
-        document.transact { txn in
-            array.removeRange(tx: txn, index: 0, length: 3)
-        }
-
-        let finalArray = document.transact { txn in
-            array.toArray(tx: txn)
-        }
-
-        XCTAssertEqual(finalArray, [])
+        XCTAssertEqual(array.length(), 0)
     }
 
     func test_forEach() {
-        let document = YDocument()
-        let array: YArray<SomeType> = document.getOrCreateArray(named: "some_array")
+        let arrayToInsert = [SomeType(name: "Aidar", age: 24), SomeType(name: "Joe", age: 55)]
+        var collectedArray: [SomeType] = []
 
-        let arrayToInsert = [SomeType(name: "Some Dude", age: 24), SomeType(name: "Another Dude", age: 32)]
+        array.insertArray(index: 0, values: arrayToInsert)
 
-        document.transact { txn in
-            array.insertArray(tx: txn, index: 0, values: arrayToInsert)
+        array.forEach {
+            collectedArray.append($0)
         }
-
-        let collectedArray: [SomeType] = document.transact { txn in
-            var collectedArray: [SomeType] = []
-            array.forEach(tx: txn) {
-                collectedArray.append($0)
-            }
-            return collectedArray
-        }
-
+        
         XCTAssertEqual(arrayToInsert, collectedArray)
     }
 
     func test_observation() {
-        let document = YDocument()
-        let array: YArray<SomeType> = document.getOrCreateArray(named: "some_array")
         let decoder = JSONDecoder()
 
-        let insertedElements = [SomeType(name: "Some Dude", age: 24), SomeType(name: "Another Dude", age: 32)]
+        let insertedElements = [SomeType(name: "Aidar", age: 24), SomeType(name: "Joe", age: 55)]
         var receivedElements: [SomeType] = []
 
         let subscriptionId = array.observe { changes in
@@ -166,9 +112,7 @@ class YArrayTests: XCTestCase {
             }
         }
 
-        document.transact { txn in
-            array.insertArray(tx: txn, index: 0, values: insertedElements)
-        }
+        array.insertArray(index: 0, values: insertedElements)
 
         array.unobserve(subscriptionId)
 

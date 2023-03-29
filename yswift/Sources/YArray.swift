@@ -1,67 +1,89 @@
 import Foundation
 import Yniffi
 
-public final class YArray<T: Codable> {
-    private let array: YrsArray
-    private let decoder = JSONDecoder()
-    private let encoder = JSONEncoder()
+public final class YArray<T: Codable>: Transactable {
+    private let _array: YrsArray
+    internal let document: YDocument
 
-    public init(array: YrsArray) {
-        self.array = array
+    internal init(array: YrsArray, document: YDocument) {
+        self._array = array
+        self.document = document
     }
 
-    public func forEach(tx: YrsTransaction, _ body: @escaping (T) -> Void) {
-        // @TODO: check for memory leaks
+    public func get(index: Int, transaction: YrsTransaction? = nil) -> T {
+        inTransaction(transaction) { txn in
+            self.decoded(try! self._array.get(tx: txn, index: UInt32(index)))
+        }
+    }
+
+    public func insert(index: Int, value: T, transaction: YrsTransaction? = nil) {
+        inTransaction(transaction) { txn in
+            self._array.insert(tx: txn, index: UInt32(index), value: self.encoded(value))
+        }
+    }
+
+    public func insertArray(index: Int, values: [T], transaction: YrsTransaction? = nil) {
+        inTransaction(transaction) { txn in
+            self._array.insertRange(tx: txn, index: UInt32(index), values: self.encodedArray(values))
+        }
+    }
+
+    public func pushBack(value: T, transaction: YrsTransaction? = nil) {
+        inTransaction(transaction) { txn in
+            self._array.pushBack(tx: txn, value: self.encoded(value))
+        }
+    }
+
+    public func pushFront(value: T, transaction: YrsTransaction? = nil) {
+        inTransaction(transaction) { txn in
+            self._array.pushFront(tx: txn, value: self.encoded(value))
+        }
+    }
+
+    public func remove(index: Int, transaction: YrsTransaction? = nil) {
+        inTransaction(transaction) { txn in
+            self._array.remove(tx: txn, index: UInt32(index))
+        }
+    }
+
+    public func removeRange(index: Int, length: Int, transaction: YrsTransaction? = nil) {
+        inTransaction(transaction) { txn in
+            self._array.removeRange(tx: txn, index: UInt32(index), len: UInt32(length))
+        }
+    }
+    
+    public func length(transaction: YrsTransaction? = nil) -> UInt32 {
+        inTransaction(transaction) { txn in
+            self._array.length(tx: txn)
+        }
+    }
+    
+    public func toArray(transaction: YrsTransaction? = nil) -> [T] {
+        inTransaction(transaction) { txn in
+            self.decodedArray(self._array.toA(tx: txn))
+        }
+    }
+    
+    public func forEach(_ body: @escaping (T) -> Void, transaction: YrsTransaction? = nil) {
         let delegate = YArrayEachDelegate(callback: body, decoded: decoded)
-        array.each(tx: tx, delegate: delegate)
-    }
-
-    public func get(tx: YrsTransaction, index: Int) -> T {
-        decoded(
-            try! array.get(tx: tx, index: UInt32(index))
-        )
-    }
-
-    public func insert(tx: YrsTransaction, index: Int, value: T) {
-        array.insert(tx: tx, index: UInt32(index), value: encoded(value))
-    }
-
-    public func insertArray(tx: YrsTransaction, index: Int, values: [T]) {
-        array.insertRange(tx: tx, index: UInt32(index), values: encodedArray(values))
-    }
-
-    public func length(tx: YrsTransaction) -> Int {
-        Int(array.length(tx: tx))
-    }
-
-    public func pushBack(tx: YrsTransaction, value: T) {
-        array.pushBack(tx: tx, value: encoded(value))
-    }
-
-    public func pushFront(tx: YrsTransaction, value: T) {
-        array.pushFront(tx: tx, value: encoded(value))
-    }
-
-    public func remove(tx: YrsTransaction, index: Int) {
-        array.remove(tx: tx, index: UInt32(index))
-    }
-
-    public func removeRange(tx: YrsTransaction, index: Int, length: Int) {
-        array.removeRange(tx: tx, index: UInt32(index), len: UInt32(length))
+        inTransaction(transaction) { txn in
+            self._array.each(tx: txn, delegate: delegate)
+        }
     }
 
     public func observe(_ body: @escaping ([YrsChange]) -> Void) -> UInt32 {
         let delegate = YArrayObservationDelegate(callback: body)
-        return array.observe(delegate: delegate)
+        return _array.observe(delegate: delegate)
     }
 
     public func unobserve(_ subscriptionId: UInt32) {
-        array.unobserve(subscriptionId: subscriptionId)
+        _array.unobserve(subscriptionId: subscriptionId)
     }
-
-    public func toArray(tx: YrsTransaction) -> [T] {
-        decodedArray(array.toA(tx: tx))
-    }
+    
+    // MARK: - Encoding/Decoding
+    
+    private let decoder = JSONDecoder()
+    private let encoder = JSONEncoder()
 
     private func decoded(_ stringValue: String) -> T {
         let data = stringValue.data(using: .utf8)!
