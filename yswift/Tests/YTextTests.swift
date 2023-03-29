@@ -36,12 +36,11 @@ class YTextTests: XCTestCase {
             deltas.forEach {
                 switch $0 {
                 case let .retained(_, attrs):
-                    let decoded: [(String, String)] = attrs.map {
-                        let decoder = JSONDecoder()
-                        let decodedValue = try! decoder.decode(String.self, from: $1.data(using: .utf8)!)
-                        return ($0, decodedValue)
-                    }
-                    actualAttributes = Dictionary(uniqueKeysWithValues: decoded)
+                    actualAttributes = Dictionary(
+                        uniqueKeysWithValues: attrs.map {
+                            ($0, Coder.decoded($1))
+                        }
+                    )
                 default: break
                 }
             }
@@ -63,12 +62,11 @@ class YTextTests: XCTestCase {
             deltas.forEach {
                 switch $0 {
                 case let .inserted(_, attrs):
-                    let decoded: [(String, String)] = attrs.map {
-                        let decoder = JSONDecoder()
-                        let decodedValue = try! decoder.decode(String.self, from: $1.data(using: .utf8)!)
-                        return ($0, decodedValue)
-                    }
-                    actualAttributes = Dictionary(uniqueKeysWithValues: decoded)
+                    actualAttributes = Dictionary(
+                        uniqueKeysWithValues: attrs.map {
+                            ($0, Coder.decoded($1))
+                        }
+                    )
                 default: break
                 }
             }
@@ -90,9 +88,7 @@ class YTextTests: XCTestCase {
             deltas.forEach {
                 switch $0 {
                 case let .inserted(value, _):
-                    let decoder = JSONDecoder()
-                    let decodedValue = try! decoder.decode(SomeType.self, from: value.data(using: .utf8)!)
-                    insertedEmbed = decodedValue
+                    insertedEmbed = Coder.decoded(value)
                 default: break
                 }
             }
@@ -117,15 +113,12 @@ class YTextTests: XCTestCase {
             deltas.forEach {
                 switch $0 {
                 case let .inserted(value, attrs):
-                    let decoder = JSONDecoder()
-                    let decodedValue = try! decoder.decode(SomeType.self, from: value.data(using: .utf8)!)
-                    let decodedAttributes: [(String, String)] = attrs.map {
-                        let decoder = JSONDecoder()
-                        let decodedValue = try! decoder.decode(String.self, from: $1.data(using: .utf8)!)
-                        return ($0, decodedValue)
-                    }
-                    insertedEmbed = decodedValue
-                    actualAttributes = Dictionary(uniqueKeysWithValues: decodedAttributes)
+                    insertedEmbed = Coder.decoded(value)
+                    actualAttributes = Dictionary(
+                        uniqueKeysWithValues: attrs.map {
+                            ($0, Coder.decoded($1))
+                        }
+                    )
                 default: break
                 }
             }
@@ -158,9 +151,7 @@ class YTextTests: XCTestCase {
             deltas.forEach {
                 switch $0 {
                 case let .inserted(value, _):
-                    let decoder = JSONDecoder()
-                    let decodedValue = try! decoder.decode(String.self, from: value.data(using: .utf8)!)
-                    insertedValue = decodedValue
+                    insertedValue = Coder.decoded(value)
                 default: break
                 }
             }

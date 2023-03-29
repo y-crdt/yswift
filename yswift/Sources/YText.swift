@@ -27,25 +27,25 @@ public final class YText: Transactable {
     
     public func insertWithAttributes<T: Encodable>(at index: UInt32, text: String, attributes: [String: T], transaction: YrsTransaction? = nil) {
         inTransaction(transaction) { txn in
-            self._text.insertWithAttributes(tx: txn, index: index, chunk: text, attrs: self.encodedMap(attributes))
+            self._text.insertWithAttributes(tx: txn, index: index, chunk: text, attrs: Coder.encodedDictionary(attributes))
         }
     }
     
     public func insertEmbed<T: Encodable>(at index: UInt32, embed: T, transaction: YrsTransaction? = nil) {
         inTransaction(transaction) { txn in
-            self._text.insertEmbed(tx: txn, index: index, content: self.encoded(embed))
+            self._text.insertEmbed(tx: txn, index: index, content: Coder.encoded(embed))
         }
     }
 
     public func insertEmbedWithAttributes<T: Encodable, R: Encodable>(at index: UInt32, embed: T, attributes: [String: R], transaction: YrsTransaction? = nil) {
         inTransaction(transaction) { txn in
-            self._text.insertEmbedWithAttributes(tx: txn, index: index, content: self.encoded(embed), attrs: self.encodedMap(attributes))
+            self._text.insertEmbedWithAttributes(tx: txn, index: index, content: Coder.encoded(embed), attrs: Coder.encodedDictionary(attributes))
         }
     }
     
     public func format<T: Encodable>(at index: UInt32, length: UInt32, attributes: [String: T], transaction: YrsTransaction? = nil) {
         inTransaction(transaction) { txn in
-            self._text.format(tx: txn, index: index, length: length, attrs: self.encodedMap(attributes))
+            self._text.format(tx: txn, index: index, length: length, attrs: Coder.encodedDictionary(attributes))
         }
     }
     
@@ -74,20 +74,6 @@ public final class YText: Transactable {
 
     public func unobserve(_ subscriptionId: UInt32) {
         _text.unobserve(subscriptionId: subscriptionId)
-    }
-    
-    // MARK: - Encoding/Decoding
-    
-    private let decoder = JSONDecoder()
-    private let encoder = JSONEncoder()
-
-    private func encoded<T: Encodable>(_ value: T) -> String {
-        let data = try! encoder.encode(value)
-        return String(data: data, encoding: .utf8)!
-    }
-
-    private func encodedMap<T: Encodable>(_ value: [String: T]) -> [String: String] {
-        Dictionary(uniqueKeysWithValues: value.map { ($0, encoded($1)) })
     }
 }
 
