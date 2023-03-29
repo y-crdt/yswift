@@ -1,70 +1,63 @@
 import XCTest
 @testable import YSwift
 
-struct SomeEmbed: Codable, Equatable {
-    let title: String
-}
-
 class YTextTests: XCTestCase {
-    func test_append() {
-        let document = YDocument()
-        let text = document.getOrCreateText(named: "some_text")
-        let resultString: String = document.transact { txn in
-            text.append(tx: txn, text: "hello, world!")
-            return text.getString(tx: txn)
-        }
-        XCTAssertEqual(resultString, "hello, world!")
+    var document: YDocument!
+    var text: YText!
+    
+    override func setUp() {
+        document = YDocument()
+        text = document.getOrCreateText(named: "test")
     }
-
+    
+    override func tearDown() {
+        document = nil
+        text = nil
+    }
+    
+    func test_append() {
+        text.append(text: "hello, world!")
+        
+        XCTAssertEqual(text.getString(), "hello, world!")
+    }
+    
     func test_appendAndInsert() throws {
-        let document = YDocument()
-        let text = document.getOrCreateText(named: "some_text")
-        let resultString: String = document.transact { txn in
-            text.append(tx: txn, text: "hello, world!")
-            text.insert(tx: txn, index: 0, chunk: "before that: ")
-            return text.getString(tx: txn)
-        }
-        XCTAssertEqual(resultString, "before that: hello, world!")
+        text.append(text: "trailing text")
+        text.insert(at: 0, text: "leading text, ")
+        
+        XCTAssertEqual(text.getString(), "leading text, trailing text")
     }
 
     func test_format() {
-        let document = YDocument()
-        let text = document.getOrCreateText(named: "some_text")
-
-        let initialAttrs = ["weight": "bold"]
-        var decodedAttrs: [String: String] = [:]
+        let expectedAttributes = ["weight": "bold"]
+        var actualAttributes: [String: String] = [:]
 
         let subscriptionId = text.observe { deltas in
             deltas.forEach {
                 switch $0 {
-                case let .inserted(_, attrs):
+                case let .retained(_, attrs):
                     let decoded: [(String, String)] = attrs.map {
                         let decoder = JSONDecoder()
                         let decodedValue = try! decoder.decode(String.self, from: $1.data(using: .utf8)!)
                         return ($0, decodedValue)
                     }
-                    decodedAttrs = Dictionary(uniqueKeysWithValues: decoded)
+                    actualAttributes = Dictionary(uniqueKeysWithValues: decoded)
                 default: break
                 }
             }
         }
-
-        document.transact { txn in
-            text.append(tx: txn, text: "abc")
-            text.format(tx: txn, index: 0, length: 3, attrs: initialAttrs)
-        }
+        
+        text.append(text: "abc")
+        text.format(at: 0, length: 3, attributes: expectedAttributes)
 
         text.unobserve(subscriptionId)
 
-        XCTAssertEqual(initialAttrs, decodedAttrs)
+        XCTAssertEqual(expectedAttributes, actualAttributes)
     }
 
     func test_insertWithAttributes() {
-        let document = YDocument()
-        let text = document.getOrCreateText(named: "some_text")
-
-        let initialAttrs = ["weight": "bold"]
-        var decodedAttrs: [String: String] = [:]
+        let expectedAttributes = ["weight": "bold"]
+        var actualAttributes: [String: String] = [:]
 
         let subscriptionId = text.observe { deltas in
             deltas.forEach {
@@ -75,134 +68,90 @@ class YTextTests: XCTestCase {
                         let decodedValue = try! decoder.decode(String.self, from: $1.data(using: .utf8)!)
                         return ($0, decodedValue)
                     }
-                    decodedAttrs = Dictionary(uniqueKeysWithValues: decoded)
+                    actualAttributes = Dictionary(uniqueKeysWithValues: decoded)
                 default: break
                 }
             }
         }
-
-        let finalString: String = document.transact { txn in
-            text.insertWithAttributes(tx: txn, index: 0, chunk: "abc", attrs: initialAttrs)
-            return text.getString(tx: txn)
-        }
-
+        
+        text.insertWithAttributes(at: 0, text: "abc", attributes: expectedAttributes)
+        
         text.unobserve(subscriptionId)
 
-        XCTAssertEqual(initialAttrs, decodedAttrs)
-        XCTAssertEqual(finalString, "abc")
+        XCTAssertEqual(text.getString(), "abc")
+        XCTAssertEqual(expectedAttributes, actualAttributes)
     }
-
+    
     func test_insertEmbed() {
-        let document = YDocument()
-        let text = document.getOrCreateText(named: "some_text")
-
-        let content = SomeEmbed(title: "title_123")
-        var insertedContent: SomeEmbed?
-
-        let initialAttrs = ["weight": "bold"]
-        var decodedAttrs: [String: String] = [:]
-
-        let subscriptionId = text.observe { deltas in
-            deltas.forEach {
-                switch $0 {
-                case let .inserted(value, attrs):
-                    let decoder = JSONDecoder()
-                    let decodedValue = try! decoder.decode(SomeEmbed.self, from: value.data(using: .utf8)!)
-                    insertedContent = decodedValue
-                    let decoded: [(String, String)] = attrs.map {
-                        let decoder = JSONDecoder()
-                        let decodedValue = try! decoder.decode(String.self, from: $1.data(using: .utf8)!)
-                        return ($0, decodedValue)
-                    }
-                    decodedAttrs = Dictionary(uniqueKeysWithValues: decoded)
-                default: break
-                }
-            }
-        }
-
-        document.transact { txn in
-            text.insertEmbedWithAttributes(tx: txn, index: 0, content: content, attrs: initialAttrs)
-        }
-
-        text.unobserve(subscriptionId)
-
-        XCTAssertEqual(content, insertedContent)
-        XCTAssertEqual(initialAttrs, decodedAttrs)
-    }
-
-    func test_insertEmbedWithAttributes() {
-        let document = YDocument()
-        let text = document.getOrCreateText(named: "some_text")
-
-        let content = SomeEmbed(title: "title_123")
-        var insertedContent: SomeEmbed?
+        let embed = SomeType(name: "Aidar", age: 24)
+        var insertedEmbed: SomeType?
 
         let subscriptionId = text.observe { deltas in
             deltas.forEach {
                 switch $0 {
                 case let .inserted(value, _):
                     let decoder = JSONDecoder()
-                    let decodedValue = try! decoder.decode(SomeEmbed.self, from: value.data(using: .utf8)!)
-                    insertedContent = decodedValue
+                    let decodedValue = try! decoder.decode(SomeType.self, from: value.data(using: .utf8)!)
+                    insertedEmbed = decodedValue
+                default: break
+                }
+            }
+        }
+        
+        text.insertEmbed(at: 0, embed: embed)
+
+        text.unobserve(subscriptionId)
+
+        XCTAssertEqual(embed, insertedEmbed)
+        XCTAssertEqual(text.length(), 1)
+    }
+
+    func test_insertEmbedWithAttributes() {
+        let embed = SomeType(name: "Aidar", age: 24)
+        var insertedEmbed: SomeType?
+
+        let expectedAttributes = ["weight": "bold"]
+        var actualAttributes: [String: String] = [:]
+
+        let subscriptionId = text.observe { deltas in
+            deltas.forEach {
+                switch $0 {
+                case let .inserted(value, attrs):
+                    let decoder = JSONDecoder()
+                    let decodedValue = try! decoder.decode(SomeType.self, from: value.data(using: .utf8)!)
+                    let decodedAttributes: [(String, String)] = attrs.map {
+                        let decoder = JSONDecoder()
+                        let decodedValue = try! decoder.decode(String.self, from: $1.data(using: .utf8)!)
+                        return ($0, decodedValue)
+                    }
+                    insertedEmbed = decodedValue
+                    actualAttributes = Dictionary(uniqueKeysWithValues: decodedAttributes)
                 default: break
                 }
             }
         }
 
-        let length: UInt32 = document.transact { txn in
-            text.insertEmbed(tx: txn, index: 0, content: content)
-            return text.length(tx: txn)
-        }
+        text.insertEmbedWithAttributes(at: 0, embed: embed, attributes: expectedAttributes)
 
         text.unobserve(subscriptionId)
 
-        XCTAssertEqual(length, 1)
-        XCTAssertEqual(content, insertedContent)
+        XCTAssertEqual(embed, insertedEmbed)
+        XCTAssertEqual(expectedAttributes, actualAttributes)
     }
-
+    
     func test_length() throws {
-        let document = YDocument()
-        let text = document.getOrCreateText(named: "some_text")
-        let length: UInt32 = document.transact { txn in
-            text.append(tx: txn, text: "abcd")
-            return text.length(tx: txn)
-        }
-        XCTAssertEqual(length, 4)
-    }
-
-    func test_getExistingText_FromWithinTransaction() throws {
-        let document = YDocument()
-        let _ = document.getOrCreateText(named: "some_text")
-        let existingText = document.transact { txn in
-            txn.transactionGetText(name: "some_text")
-        }
-        XCTAssertNotNil(existingText)
-    }
-
-    func test_getNonExistingText_FromWithinTransaction() throws {
-        let document = YDocument()
-        let _ = document.getOrCreateText(named: "some_text")
-        let anotherText = document.transact { txn in
-            txn.transactionGetText(name: "another_text")
-        }
-        XCTAssertNil(anotherText)
+        text.append(text: "abcd")
+        XCTAssertEqual(text.length(), 4)
     }
 
     func test_removeRange() throws {
-        let document = YDocument()
-        let text = document.getOrCreateText(named: "some_text")
-        let resultString: String = document.transact { txn in
-            text.append(tx: txn, text: "hello, world!")
-            text.removeRange(tx: txn, start: 1, length: 5)
-            return text.getString(tx: txn)
-        }
-        XCTAssertEqual(resultString, "h world!")
+        text.append(text: "few apples")
+        text.removeRange(start: 0, length: 4)
+        
+        XCTAssertEqual(text.getString(), "apples")
     }
 
     func test_observation() {
-        let document = YDocument()
-        let text = document.getOrCreateText(named: "some_text")
-
         var insertedValue = String()
 
         let subscriptionId = text.observe { deltas in
@@ -217,13 +166,11 @@ class YTextTests: XCTestCase {
             }
         }
 
-        document.transact { txn in
-            text.append(tx: txn, text: "asd")
-        }
+        text.append(text: "test")
 
         text.unobserve(subscriptionId)
 
-        XCTAssertEqual(insertedValue, "asd")
+        XCTAssertEqual(insertedValue, "test")
     }
 
     /*
@@ -231,10 +178,7 @@ class YTextTests: XCTestCase {
      https://alisoftware.github.io/swift/closures/2016/07/25/closure-capture-1/
      */
 
-    func test_observationIsLeaking() {
-        let document = YDocument()
-        let text = document.getOrCreateText(named: "some_text")
-
+    func test_observationIsLeaking_withoutUnobserving() {
         // Create an object (it can be of any type), and hold both
         // a strong and a weak reference to it
         var object = NSObject()
@@ -256,9 +200,6 @@ class YTextTests: XCTestCase {
     }
 
     func test_observation_IsNotLeaking_afterUnobserving() {
-        let document = YDocument()
-        let text = document.getOrCreateText(named: "some_text")
-
         // Create an object (it can be of any type), and hold both
         // a strong and a weak reference to it
         var object = NSObject()
