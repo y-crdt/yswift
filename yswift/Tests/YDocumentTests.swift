@@ -3,11 +3,24 @@ import XCTest
 @testable import YSwift
 
 class YDocumentTests: XCTestCase {
+    
+//    func test_nestedTransactionCall() {
+//        let document = YDocument()
+//        let someText = document.getOrCreateText(named: "example")
+//
+//        document.transact { txn1 in
+//            someText.append(tx: txn1, text: "123")
+//            document.transact { txn2 in
+//                someText.append(tx: txn2, text: "asd")
+//            }
+//        }
+//    }
+    
     func test_localAndRemoteSyncing() {
         let localDocument = YDocument()
         let localText = localDocument.getOrCreateText(named: "example")
         localDocument.transact { txn in
-            localText.append(tx: txn, text: "hello, world!")
+            localText.append(text: "hello, world!", transaction: txn)
         }
 
         let remoteDocument = YDocument()
@@ -24,11 +37,11 @@ class YDocumentTests: XCTestCase {
         }
 
         let localString = localDocument.transact { txn in
-            localText.getString(tx: txn)
+            localText.getString(transaction: txn)
         }
 
         let remoteString = remoteDocument.transact { txn in
-            remoteText.getString(tx: txn)
+            remoteText.getString(transaction: txn)
         }
 
         XCTAssertEqual(localString, remoteString)
@@ -38,13 +51,13 @@ class YDocumentTests: XCTestCase {
         let localDocument = YDocument()
         let localText = localDocument.getOrCreateText(named: "example")
         localDocument.transact { txn in
-            localText.append(tx: txn, text: "hello, world!")
+            localText.append(text: "hello, world!", transaction: txn)
         }
 
         let remoteDocument = YDocument()
         let remoteText = remoteDocument.getOrCreateText(named: "example")
         remoteDocument.transact { txn in
-            remoteText.append(tx: txn, text: "123456")
+            remoteText.append(text: "123456", transaction: txn)
         }
 
         let remoteState = remoteDocument.transact { txn in
@@ -68,11 +81,11 @@ class YDocumentTests: XCTestCase {
         }
 
         let localString = localDocument.transact { txn in
-            localText.getString(tx: txn)
+            localText.getString(transaction: txn)
         }
 
         let remoteString = remoteDocument.transact { txn in
-            remoteText.getString(tx: txn)
+            remoteText.getString(transaction: txn)
         }
 
         XCTAssertEqual(localString, remoteString)

@@ -3,55 +3,76 @@ import Yniffi
 
 public final class YText {
     private let _text: YrsText
+    private let document: YDocument
+    
     private let decoder = JSONDecoder()
     private let encoder = JSONEncoder()
 
-    public init(text: YrsText) {
-        _text = text
+    internal init(text: YrsText, document: YDocument) {
+        self._text = text
+        self.document = document
     }
 
-    func append(tx: YrsTransaction, text: String) {
-        _text.append(tx: tx, text: text)
+    public func append(text: String, transaction: YrsTransaction? = nil) {
+        inTransaction(transaction) { txn in
+            self._text.append(tx: txn, text: text)
+        }
+    }
+    
+    public func insert(at index: UInt32, text: String, transaction: YrsTransaction? = nil) {
+        inTransaction(transaction) { txn in
+            self._text.insert(tx: txn, index: index, chunk: text)
+        }
+    }
+    
+    public func insertWithAttributes<T: Encodable>(at index: UInt32, text: String, attributes: [String: T], transaction: YrsTransaction? = nil) {
+        inTransaction(transaction) { txn in
+            self._text.insertWithAttributes(tx: txn, index: index, chunk: text, attrs: self.encodedMap(attributes))
+        }
+    }
+    
+    public func insertEmbed<T: Encodable>(at index: UInt32, embed: T, transaction: YrsTransaction? = nil) {
+        inTransaction(transaction) { txn in
+            self._text.insertEmbed(tx: txn, index: index, content: self.encoded(embed))
+        }
     }
 
-    func insert(tx: YrsTransaction, index: UInt32, chunk: String) {
-        _text.insert(tx: tx, index: index, chunk: chunk)
+    public func insertEmbedWithAttributes<T: Encodable, R: Encodable>(at index: UInt32, embed: T, attributes: [String: R], transaction: YrsTransaction? = nil) {
+        inTransaction(transaction) { txn in
+            self._text.insertEmbedWithAttributes(tx: txn, index: index, content: self.encoded(embed), attrs: self.encodedMap(attributes))
+        }
+    }
+    
+    public func format<T: Encodable>(at index: UInt32, length: UInt32, attributes: [String: T], transaction: YrsTransaction? = nil) {
+        inTransaction(transaction) { txn in
+            self._text.format(tx: txn, index: index, length: length, attrs: self.encodedMap(attributes))
+        }
+    }
+    
+    public func removeRange(start: UInt32, length: UInt32, transaction: YrsTransaction? = nil) {
+        inTransaction(transaction) { txn in
+            self._text.removeRange(tx: txn, start: start, length: length)
+        }
     }
 
-    func insertWithAttributes<T: Encodable>(tx: YrsTransaction, index: UInt32, chunk: String, attrs: [String: T]) {
-        _text.insertWithAttributes(tx: tx, index: index, chunk: chunk, attrs: encodedMap(attrs))
+    public func getString(transaction: YrsTransaction? = nil) -> String {
+        inTransaction(transaction) { txn in
+            self._text.getString(tx: txn)
+        }
     }
 
-    func format<T: Encodable>(tx: YrsTransaction, index: UInt32, length: UInt32, attrs: [String: T]) {
-        _text.format(tx: tx, index: index, length: length, attrs: encodedMap(attrs))
+    public func length(transaction: YrsTransaction? = nil) -> UInt32 {
+        inTransaction(transaction) { txn in
+            self._text.length(tx: txn)
+        }
     }
 
-    func insertEmbed<T: Encodable>(tx: YrsTransaction, index: UInt32, content: T) {
-        _text.insertEmbed(tx: tx, index: index, content: encoded(content))
-    }
-
-    func insertEmbedWithAttributes<T: Encodable, R: Encodable>(tx: YrsTransaction, index: UInt32, content: T, attrs: [String: R]) {
-        _text.insertEmbedWithAttributes(tx: tx, index: index, content: encoded(content), attrs: encodedMap(attrs))
-    }
-
-    func removeRange(tx: YrsTransaction, start: UInt32, length: UInt32) {
-        _text.removeRange(tx: tx, start: start, length: length)
-    }
-
-    func getString(tx: YrsTransaction) -> String {
-        _text.getString(tx: tx)
-    }
-
-    func length(tx: YrsTransaction) -> UInt32 {
-        _text.length(tx: tx)
-    }
-
-    func observe(_ body: @escaping ([YrsDelta]) -> Void) -> UInt32 {
+    public func observe(_ body: @escaping ([YrsDelta]) -> Void) -> UInt32 {
         let delegate = YTextObservationDelegate(callback: body)
         return _text.observe(delegate: delegate)
     }
 
-    func unobserve(_ subscriptionId: UInt32) {
+    public func unobserve(_ subscriptionId: UInt32) {
         _text.unobserve(subscriptionId: subscriptionId)
     }
 
@@ -63,16 +84,24 @@ public final class YText {
     private func encodedMap<T: Encodable>(_ value: [String: T]) -> [String: String] {
         Dictionary(uniqueKeysWithValues: value.map { ($0, encoded($1)) })
     }
+    
+    private func inTransaction<T>(_ transaction: YrsTransaction?, changes: @escaping (YrsTransaction) -> T) -> T {
+        if let transaction = transaction {
+            return changes(transaction)
+        } else {
+            return document.transact(changes)
+        }
+    }
 }
 
-class YTextObservationDelegate: YrsTextObservationDelegate {
+internal class YTextObservationDelegate: YrsTextObservationDelegate {
     private var callback: ([YrsDelta]) -> Void
 
-    init(callback: @escaping ([YrsDelta]) -> Void) {
+    internal init(callback: @escaping ([YrsDelta]) -> Void) {
         self.callback = callback
     }
 
-    func call(value: [YrsDelta]) {
+    internal func call(value: [YrsDelta]) {
         callback(value)
     }
 }
