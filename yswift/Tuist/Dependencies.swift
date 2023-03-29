@@ -2,7 +2,7 @@ import ProjectDescription
 
 let dependencies = Dependencies(
     swiftPackageManager: [
-        .package(path: .relativeToRoot("../lib"))
+        .package(path: .relativeToRoot("../lib")),
     ],
     platforms: [.iOS]
 )

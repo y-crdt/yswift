@@ -28,7 +28,9 @@ rm -rf "${XCFRAMEWORK_FOLDER}"
 
 mkdir -p "${SWIFT_FOLDER}/scaffold"
 echo "▸ Generate Swift Scaffolding Code"
-cargo run -p uniffi-bindgen generate "src/yniffi.udl" --language swift --out-dir "${SWIFT_FOLDER}/scaffold"
+# cargo run -p uniffi-bindgen generate "src/yniffi.udl" --language swift --out-dir "${SWIFT_FOLDER}/scaffold"
+# nugmanoff [23.03.2023]: for some reason the above command only works for me when I prepend `generate` with `--`. Like above:
+cargo run -p uniffi-bindgen -- generate "src/yniffi.udl" --language swift --out-dir "${SWIFT_FOLDER}/scaffold"
 
 echo "▸ Building for x86_64-apple-ios"
 CFLAGS_x86_64_apple_ios="-target x86_64-apple-ios" \

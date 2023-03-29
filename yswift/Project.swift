@@ -20,7 +20,7 @@ let exampleDocumentEditing = Target(
     deploymentTarget: .iOS(targetVersion: "15.0", devices: .iphone),
     infoPlist: .extendingDefault(with: [
         "UILaunchStoryboardName": "LaunchScreen",
-        "NSLocalNetworkUsageDescription": "YSwiftExample needs to use your phone’s data to discover devices nearby"
+        "NSLocalNetworkUsageDescription": "YSwiftExample needs to use your phone’s data to discover devices nearby",
     ]),
     sources: ["Examples/DocumentEditing/**"],
     resources: ["Examples/DocumentEditing/LaunchScreen.storyboard"],
@@ -35,7 +35,7 @@ let exampleTodolist = Target(
     deploymentTarget: .iOS(targetVersion: "15.0", devices: .iphone),
     infoPlist: .extendingDefault(with: [
         "UILaunchStoryboardName": "LaunchScreen",
-        "NSLocalNetworkUsageDescription": "YSwiftExample needs to use your phone’s data to discover devices nearby"
+        "NSLocalNetworkUsageDescription": "YSwiftExample needs to use your phone’s data to discover devices nearby",
     ]),
     sources: ["Examples/Todolist/**"],
     resources: ["Examples/Todolist/LaunchScreen.storyboard"],

@@ -8,28 +8,78 @@ enum CodingError {
 
 interface YrsDoc {
   constructor();
+
   [Throws=CodingError]
   sequence<u8> encode_diff_v1([ByRef] YrsTransaction tx, sequence<u8> state_vector);
+  
   YrsText get_text(string name);
   YrsArray get_array(string name);
+  YrsMap get_map(string name);
   YrsTransaction transact();
 };
 
 interface YrsTransaction {
   [Throws=CodingError]
   void transaction_apply_update(sequence<u8> update);
+
   [Throws=CodingError]
   sequence<u8> transaction_encode_state_as_update_from_sv(sequence<u8> state_vector);
+
   sequence<u8> transaction_encode_state_as_update();
   sequence<u8> transaction_encode_update();
   sequence<u8> transaction_state_vector();
   YrsText? transaction_get_text(string name);
   YrsArray? transaction_get_array(string name);
+  YrsMap? transaction_get_map(string name);
   void free();
+};
+
+interface YrsMap {
+  u32 length([ByRef] YrsTransaction tx);
+  boolean contains_key([ByRef] YrsTransaction tx, string key);
+  void insert([ByRef] YrsTransaction tx, string key, string value);
+
+  [Throws=CodingError]
+  string get([ByRef] YrsTransaction tx, string key);
+  
+  [Throws=CodingError]
+  string? remove([ByRef] YrsTransaction tx, string key);
+  void clear([ByRef] YrsTransaction tx);
+  void keys([ByRef] YrsTransaction tx, YrsMapIteratorDelegate delegate);
+  void values([ByRef] YrsTransaction tx, YrsMapIteratorDelegate delegate);
+  void each([ByRef] YrsTransaction tx, YrsMapKVIteratorDelegate delegate);
+
+  u32 observe(YrsMapObservationDelegate delegate);
+  void unobserve(u32 subscription_id);
+};
+
+[Enum]
+interface YrsEntryChange {
+  Inserted(string value);
+  Updated(string old_value, string new_value);
+  Removed(string value);
+};
+
+dictionary YrsMapChange {
+    string key;
+    YrsEntryChange change;
+};
+
+callback interface YrsMapIteratorDelegate {
+    void call(string value);
+};
+
+callback interface YrsMapKVIteratorDelegate {
+    void call(string key, string value);
+};
+
+callback interface YrsMapObservationDelegate {
+    void call(sequence<YrsMapChange> value);
 };
 
 interface YrsArray {
   void each([ByRef] YrsTransaction tx, YrsArrayEachDelegate delegate);
+
   [Throws=CodingError]
   string get([ByRef] YrsTransaction tx, u32 index);
   void insert([ByRef] YrsTransaction tx, u32 index, string value);

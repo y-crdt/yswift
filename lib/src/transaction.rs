@@ -1,5 +1,6 @@
 use crate::array::YrsArray;
 use crate::error::CodingError;
+use crate::map::YrsMap;
 use crate::text::YrsText;
 use std::borrow::Borrow;
 use std::cell::{RefCell, RefMut};
@@ -79,6 +80,16 @@ impl YrsTransaction {
             .unwrap()
             .get_array(name.as_str())
             .map(YrsArray::from)
+            .map(Arc::from)
+    }
+
+    pub(crate) fn transaction_get_map(&self, name: String) -> Option<Arc<YrsMap>> {
+        self.transaction()
+            .as_ref()
+            .unwrap()
+            .get_map(name.as_str())
+            .map(YrsMap::from)
+            // ^^ this is reporting as return Option<{unknown}> instead of Option<YrsMap>, and I'm not sure why...
             .map(Arc::from)
     }
 

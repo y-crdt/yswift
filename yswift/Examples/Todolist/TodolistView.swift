@@ -1,11 +1,11 @@
-import SwiftUI
 import Combine
+import SwiftUI
 import YSwift
 
 struct TodoItem: Codable, Hashable, Identifiable {
     var title: String
     var isCompleted: Bool = false
-    
+
     var id: Int {
         hashValue
     }
@@ -14,11 +14,11 @@ struct TodoItem: Codable, Hashable, Identifiable {
 struct TodolistView: View {
     @ObservedObject var viewModel: TodolistViewModel
     @State private var text = ""
-    
+
     var body: some View {
         VStack {
             HStack {
-                TextField("New task", text: $text, onCommit:  {
+                TextField("New task", text: $text, onCommit: {
                     viewModel.addItem(.init(title: text))
                     text = ""
                 }).padding()
@@ -38,7 +38,6 @@ struct TodolistView: View {
                             viewModel.disconnect()
                         }
                     }
-                    
                 }
                 .padding()
             }
@@ -74,4 +73,3 @@ struct TodolistView: View {
         }
     }
 }
-
