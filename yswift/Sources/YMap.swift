@@ -13,13 +13,9 @@ import Yniffi
 // - removeValue(forKey: Key) -> Value?
 // - removeAll(keepingCapacity: Bool)
 
-
 public final class YMap<T: Codable>: Sequence {
-    
     private let docRef: YDocument
     private let map: YrsMap
-    private let decoder = JSONDecoder()
-    private let encoder = JSONEncoder()
 
     public init(map: YrsMap, doc: YDocument) {
         self.docRef = doc
@@ -27,7 +23,7 @@ public final class YMap<T: Codable>: Sequence {
     }
 
     public func insert(tx: YrsTransaction, key: String, value: T) {
-        map.insert(tx: tx, key: key, value: encoded(value))
+        map.insert(tx: tx, key: key, value: Coder.encoded(value))
     }
 
     public func length(tx: YrsTransaction) -> Int {
@@ -35,7 +31,7 @@ public final class YMap<T: Codable>: Sequence {
     }
 
     public func get(tx: YrsTransaction, key: String) -> T {
-        decoded(
+        Coder.decoded(
             try! map.get(tx: tx, key: key)
         )
     }
@@ -46,7 +42,7 @@ public final class YMap<T: Codable>: Sequence {
 
     @discardableResult
     public func remove(tx: YrsTransaction, key: String) -> T? {
-        decoded(
+        Coder.decoded(
             try! map.remove(tx: tx, key: key)
         )
     }
@@ -70,7 +66,7 @@ public final class YMap<T: Codable>: Sequence {
         // found within the map into a reference object to safely pass across
         // the UniFFI language bindings into Rust. The second closure in the delegate
         // is the function that decodes the JSON string into whatever `T` is.
-        let delegate = YMapValueIteratorDelegate(callback: body, decoded: decoded)
+        let delegate = YMapValueIteratorDelegate(callback: body, decoded: Coder.decoded)
         map.values(tx: tx, delegate: delegate)
     }
 
@@ -80,12 +76,12 @@ public final class YMap<T: Codable>: Sequence {
         // key-value pair within the map into a reference object to safely pass across
         // the UniFFI language bindings into Rust. The second closure in the delegate
         // is the function that decodes the value JSON string into whatever `T` is.
-        let delegate = YMapKeyValueIteratorDelegate(callback: body, decoded: decoded)
+        let delegate = YMapKeyValueIteratorDelegate(callback: body, decoded: Coder.decoded)
         map.each(tx: tx, delegate: delegate)
     }
 
     public func observe(_ body: @escaping ([YMapChange<T>]) -> Void) -> UInt32 {
-        let delegate = YMapObservationDelegate(callback: body, decoded: decoded)
+        let delegate = YMapObservationDelegate(callback: body, decoded: Coder.decoded)
         return map.observe(delegate: delegate)
     }
 
@@ -99,26 +95,6 @@ public final class YMap<T: Codable>: Sequence {
             replicatedMap[keyValue] = typeValue
         }
         return replicatedMap
-    }
-
-    /// Decodes a string value into the appropriate type
-    private func decoded(_ stringValue: String) -> T {
-        let data = stringValue.data(using: .utf8)!
-        return try! decoder.decode(T.self, from: data)
-    }
-
-    /// Decodes an optional string value into an optional form of the appropriate type.
-    private func decoded(_ stringValue: String?) -> T? {
-        if let data = stringValue?.data(using: .utf8)! {
-            return try! decoder.decode(T.self, from: data)
-        } else {
-            return nil
-        }
-    }
-
-    private func encoded(_ value: T) -> String {
-        let data = try! encoder.encode(value)
-        return String(data: data, encoding: .utf8)!
     }
 
     public typealias Iterator = YMapIterator<T>

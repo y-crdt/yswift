@@ -10,33 +10,34 @@ public final class YArray<T: Codable>: Transactable {
         self.document = document
     }
 
+    #warning("@TODO: wrap `try` in `do/catch`")
     public func get(index: Int, transaction: YrsTransaction? = nil) -> T {
         inTransaction(transaction) { txn in
-            self.decoded(try! self._array.get(tx: txn, index: UInt32(index)))
+            Coder.decoded(try! self._array.get(tx: txn, index: UInt32(index)))
         }
     }
 
     public func insert(index: Int, value: T, transaction: YrsTransaction? = nil) {
         inTransaction(transaction) { txn in
-            self._array.insert(tx: txn, index: UInt32(index), value: self.encoded(value))
+            self._array.insert(tx: txn, index: UInt32(index), value: Coder.encoded(value))
         }
     }
 
     public func insertArray(index: Int, values: [T], transaction: YrsTransaction? = nil) {
         inTransaction(transaction) { txn in
-            self._array.insertRange(tx: txn, index: UInt32(index), values: self.encodedArray(values))
+            self._array.insertRange(tx: txn, index: UInt32(index), values: Coder.encodedArray(values))
         }
     }
 
     public func pushBack(value: T, transaction: YrsTransaction? = nil) {
         inTransaction(transaction) { txn in
-            self._array.pushBack(tx: txn, value: self.encoded(value))
+            self._array.pushBack(tx: txn, value: Coder.encoded(value))
         }
     }
 
     public func pushFront(value: T, transaction: YrsTransaction? = nil) {
         inTransaction(transaction) { txn in
-            self._array.pushFront(tx: txn, value: self.encoded(value))
+            self._array.pushFront(tx: txn, value: Coder.encoded(value))
         }
     }
 
@@ -60,12 +61,12 @@ public final class YArray<T: Codable>: Transactable {
     
     public func toArray(transaction: YrsTransaction? = nil) -> [T] {
         inTransaction(transaction) { txn in
-            self.decodedArray(self._array.toA(tx: txn))
+            Coder.decodedArray(self._array.toA(tx: txn))
         }
     }
     
     public func forEach(_ body: @escaping (T) -> Void, transaction: YrsTransaction? = nil) {
-        let delegate = YArrayEachDelegate(callback: body, decoded: decoded)
+        let delegate = YArrayEachDelegate(callback: body, decoded: Coder.decoded)
         inTransaction(transaction) { txn in
             self._array.each(tx: txn, delegate: delegate)
         }
@@ -78,33 +79,6 @@ public final class YArray<T: Codable>: Transactable {
 
     public func unobserve(_ subscriptionId: UInt32) {
         _array.unobserve(subscriptionId: subscriptionId)
-    }
-    
-    // MARK: - Encoding/Decoding
-    
-    private let decoder = JSONDecoder()
-    private let encoder = JSONEncoder()
-
-    private func decoded(_ stringValue: String) -> T {
-        let data = stringValue.data(using: .utf8)!
-        return try! decoder.decode(T.self, from: data)
-    }
-
-    private func decodedArray(_ arrayValue: [String]) -> [T] {
-        arrayValue.map {
-            decoded($0)
-        }
-    }
-
-    private func encoded(_ value: T) -> String {
-        let data = try! encoder.encode(value)
-        return String(data: data, encoding: .utf8)!
-    }
-
-    private func encodedArray(_ value: [T]) -> [String] {
-        value.map {
-            encoded($0)
-        }
     }
 }
 
