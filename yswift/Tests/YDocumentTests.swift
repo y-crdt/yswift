@@ -19,28 +19,28 @@ class YDocumentTests: XCTestCase {
     func test_localAndRemoteSyncing() {
         let localDocument = YDocument()
         let localText = localDocument.getOrCreateText(named: "example")
-        localDocument.transact { txn in
+        localDocument.transactSync { txn in
             localText.append(text: "hello, world!", transaction: txn)
         }
 
         let remoteDocument = YDocument()
         let remoteText = remoteDocument.getOrCreateText(named: "example")
 
-        let remoteState = remoteDocument.transact { txn in
+        let remoteState = remoteDocument.transactSync { txn in
             txn.transactionStateVector()
         }
-        let updateRemote = localDocument.transact { txn in
+        let updateRemote = localDocument.transactSync { txn in
             localDocument.diff(txn: txn, from: remoteState)
         }
-        remoteDocument.transact { txn in
+        remoteDocument.transactSync { txn in
             try! txn.transactionApplyUpdate(update: updateRemote)
         }
 
-        let localString = localDocument.transact { txn in
+        let localString = localDocument.transactSync { txn in
             localText.getString(transaction: txn)
         }
 
-        let remoteString = remoteDocument.transact { txn in
+        let remoteString = remoteDocument.transactSync { txn in
             remoteText.getString(transaction: txn)
         }
 
@@ -50,41 +50,41 @@ class YDocumentTests: XCTestCase {
     func test_localAndRemoteEditingAndSyncing() {
         let localDocument = YDocument()
         let localText = localDocument.getOrCreateText(named: "example")
-        localDocument.transact { txn in
+        localDocument.transactSync { txn in
             localText.append(text: "hello, world!", transaction: txn)
         }
 
         let remoteDocument = YDocument()
         let remoteText = remoteDocument.getOrCreateText(named: "example")
-        remoteDocument.transact { txn in
+        remoteDocument.transactSync { txn in
             remoteText.append(text: "123456", transaction: txn)
         }
 
-        let remoteState = remoteDocument.transact { txn in
+        let remoteState = remoteDocument.transactSync { txn in
             txn.transactionStateVector()
         }
-        let updateRemote = localDocument.transact { txn in
+        let updateRemote = localDocument.transactSync { txn in
             localDocument.diff(txn: txn, from: remoteState)
         }
-        remoteDocument.transact { txn in
+        remoteDocument.transactSync { txn in
             try! txn.transactionApplyUpdate(update: updateRemote)
         }
 
-        let localState = localDocument.transact { txn in
+        let localState = localDocument.transactSync { txn in
             txn.transactionStateVector()
         }
-        let updateLocal = remoteDocument.transact { txn in
+        let updateLocal = remoteDocument.transactSync { txn in
             localDocument.diff(txn: txn, from: localState)
         }
-        localDocument.transact { txn in
+        localDocument.transactSync { txn in
             try! txn.transactionApplyUpdate(update: updateLocal)
         }
 
-        let localString = localDocument.transact { txn in
+        let localString = localDocument.transactSync { txn in
             localText.getString(transaction: txn)
         }
 
-        let remoteString = remoteDocument.transact { txn in
+        let remoteString = remoteDocument.transactSync { txn in
             remoteText.getString(transaction: txn)
         }
 

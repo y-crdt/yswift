@@ -33,7 +33,7 @@ final class DocumentViewModel: ObservableObject {
         let new = Array(newText)
         let changes = diff(old: old, new: new)
 
-        let update: Buffer = doc.transact { txn in
+        let update: Buffer = doc.transactSync { txn in
             for change in changes {
                 switch change {
                 case let .insert(insertion):
@@ -55,7 +55,7 @@ final class DocumentViewModel: ObservableObject {
     var skipNextTextChange = false
 
     private func refresh() {
-        let newText: String? = doc.transact { txn in
+        let newText: String? = doc.transactSync { txn in
             txn.transactionGetText(name: "some_text")?.getString(tx: txn)
         }
 
