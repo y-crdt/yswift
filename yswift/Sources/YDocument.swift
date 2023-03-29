@@ -17,7 +17,7 @@ public final class YDocument {
     
     // MARK: - Transaction methods
     
-    public func transact<T>(_ changes: @escaping (YrsTransaction) -> T) -> T {
+    public func transactSync<T>(_ changes: @escaping (YrsTransaction) -> T) -> T {
         // Avoiding deadlocks & thread explosion. We do not allow re-entrancy in Transaction methods.
         // It is a programmer's error to invoke synchronuous transact from within transaction.
         // Better approach would be to leverage something like `DispatchSpecificKey` in Watchdog style implementation
@@ -34,13 +34,13 @@ public final class YDocument {
     
     public func transact<T>(_ changes: @escaping (YrsTransaction) -> T) async -> T {
         await withCheckedContinuation { continuation in
-            asyncTransact(changes) { result in
+            transactAsync(changes) { result in
                 continuation.resume(returning: result)
             }
         }
     }
     
-    public func asyncTransact<T>(_ changes: @escaping (YrsTransaction) -> T, completion: @escaping (T) -> Void) {
+    public func transactAsync<T>(_ changes: @escaping (YrsTransaction) -> T, completion: @escaping (T) -> Void) {
         transactionQueue.async { [weak self] in
             guard let self = self else { return }
             let transaction = self.document.transact()

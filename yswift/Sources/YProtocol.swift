@@ -35,14 +35,14 @@ public final class YProtocol {
     }
 
     public func handleStep1(_ stateVector: Buffer) -> YSyncMessage {
-        let update = document.transact { txn in
+        let update = document.transactSync { txn in
             try! txn.transactionEncodeStateAsUpdateFromSv(stateVector: stateVector)
         }
         return sendStep2(update)
     }
 
     public func handleStep2(_ update: Buffer, completionHandler: @escaping () -> Void) {
-        document.transact { txn in
+        document.transactSync { txn in
             try! txn.transactionApplyUpdate(update: update)
         }
         completionHandler()
@@ -53,7 +53,7 @@ public final class YProtocol {
     }
 
     func sendStep1() -> YSyncMessage {
-        let stateVector: Buffer = document.transact { txn in
+        let stateVector: Buffer = document.transactSync { txn in
             txn.transactionStateVector()
         }
         return YSyncMessage(kind: .STEP_1, buffer: stateVector)

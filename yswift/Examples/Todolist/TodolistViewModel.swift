@@ -43,7 +43,7 @@ final class TodolistViewModel: ObservableObject {
     }
 
     var items: [TodoItem] {
-        document.transact { txn in
+        document.transactSync { txn in
             let items = YYArray<TodoItem>(array: txn.transactionGetArray(name: "todo_items")!)
             return items.toArray(tx: txn)
         }
@@ -63,7 +63,7 @@ final class TodolistViewModel: ObservableObject {
         var newItem = item
         newItem.isCompleted.toggle()
 
-        let update: Buffer = document.transact { txn in
+        let update: Buffer = document.transactSync { txn in
             let items = YYArray<TodoItem>(array: txn.transactionGetArray(name: "todo_items")!)
             items.remove(tx: txn, index: index)
             items.insert(tx: txn, index: index, value: newItem)
@@ -77,7 +77,7 @@ final class TodolistViewModel: ObservableObject {
     }
 
     func addItem(_ item: TodoItem) {
-        let update: Buffer = document.transact { txn in
+        let update: Buffer = document.transactSync { txn in
             let items = YYArray<TodoItem>(array: txn.transactionGetArray(name: "todo_items")!)
             items.pushBack(tx: txn, value: item)
             return txn.transactionEncodeUpdate()
@@ -90,7 +90,7 @@ final class TodolistViewModel: ObservableObject {
 
     func removeItem(_ item: TodoItem) {
         guard let index = items.firstIndex(of: item) else { return }
-        let update: Buffer = document.transact { txn in
+        let update: Buffer = document.transactSync { txn in
             let items = YYArray<TodoItem>(array: txn.transactionGetArray(name: "todo_items")!)
             items.remove(tx: txn, index: index)
             return txn.transactionEncodeUpdate()
