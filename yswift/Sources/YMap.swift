@@ -263,3 +263,5 @@ extension YMapChange: Equatable where T: Equatable {
         }
     }
 }
+
+extension YMapChange: Hashable where T: Hashable {}

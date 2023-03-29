@@ -163,7 +163,7 @@ final class YMapTests: XCTestCase {
         let map: YMap<String> = document.getOrCreateMap(named: "some_map")
         
         var actualChanges: [YMapChange<String>] = []
-
+        
         let subscriptionId = map.observe { changes in
             changes.forEach { change in
                 actualChanges.append(change)
@@ -182,16 +182,15 @@ final class YMapTests: XCTestCase {
 
         map.unobserve(subscriptionId)
         
-        print(actualChanges)
-        
+        // Use set here, to compare two arrays by the composition not by order
         XCTAssertEqual(
-            actualChanges,
-            [
+            Set(actualChanges),
+            Set([
                 .inserted(key: "Aidar", value: "24"),
                 .inserted(key: "Joe", value: "55"),
                 .removed(key: "Aidar", value: "24"),
                 .updated(key: "Joe", oldValue: "55", newValue: "101")
-            ]
+            ])
         )
     }
 }
