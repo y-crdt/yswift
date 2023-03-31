@@ -20,7 +20,7 @@ class YDocumentTests: XCTestCase {
         let localDocument = YDocument()
         let localText = localDocument.getOrCreateText(named: "example")
         localDocument.transactSync { txn in
-            localText.append(text: "hello, world!", transaction: txn)
+            localText.append("hello, world!", in: txn)
         }
 
         let remoteDocument = YDocument()
@@ -37,11 +37,11 @@ class YDocumentTests: XCTestCase {
         }
 
         let localString = localDocument.transactSync { txn in
-            localText.getString(transaction: txn)
+            localText.getString(in: txn)
         }
 
         let remoteString = remoteDocument.transactSync { txn in
-            remoteText.getString(transaction: txn)
+            remoteText.getString(in: txn)
         }
 
         XCTAssertEqual(localString, remoteString)
@@ -51,13 +51,13 @@ class YDocumentTests: XCTestCase {
         let localDocument = YDocument()
         let localText = localDocument.getOrCreateText(named: "example")
         localDocument.transactSync { txn in
-            localText.append(text: "hello, world!", transaction: txn)
+            localText.append("hello, world!", in: txn)
         }
 
         let remoteDocument = YDocument()
         let remoteText = remoteDocument.getOrCreateText(named: "example")
         remoteDocument.transactSync { txn in
-            remoteText.append(text: "123456", transaction: txn)
+            remoteText.append("123456", in: txn)
         }
 
         let remoteState = remoteDocument.transactSync { txn in
@@ -81,11 +81,11 @@ class YDocumentTests: XCTestCase {
         }
 
         let localString = localDocument.transactSync { txn in
-            localText.getString(transaction: txn)
+            localText.getString(in: txn)
         }
 
         let remoteString = remoteDocument.transactSync { txn in
-            remoteText.getString(transaction: txn)
+            remoteText.getString(in: txn)
         }
 
         XCTAssertEqual(localString, remoteString)

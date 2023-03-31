@@ -16,16 +16,16 @@ class YTextTests: XCTestCase {
     }
     
     func test_append() {
-        text.append(text: "hello, world!")
+        text.append("hello, world!")
         
-        XCTAssertEqual(text.getString(), "hello, world!")
+        XCTAssertEqual(String(text), "hello, world!")
     }
     
     func test_appendAndInsert() throws {
-        text.append(text: "trailing text")
-        text.insert(at: 0, text: "leading text, ")
+        text.append("trailing text")
+        text.insert("leading text, ", at: 0)
         
-        XCTAssertEqual(text.getString(), "leading text, trailing text")
+        XCTAssertEqual(String(text), "leading text, trailing text")
     }
 
     func test_format() {
@@ -46,7 +46,7 @@ class YTextTests: XCTestCase {
             }
         }
         
-        text.append(text: "abc")
+        text.append("abc")
         text.format(at: 0, length: 3, attributes: expectedAttributes)
 
         text.unobserve(subscriptionId)
@@ -72,11 +72,11 @@ class YTextTests: XCTestCase {
             }
         }
         
-        text.insertWithAttributes(at: 0, text: "abc", attributes: expectedAttributes)
+        text.insertWithAttributes("abc", attributes: expectedAttributes, at: 0)
         
         text.unobserve(subscriptionId)
 
-        XCTAssertEqual(text.getString(), "abc")
+        XCTAssertEqual(String(text), "abc")
         XCTAssertEqual(expectedAttributes, actualAttributes)
     }
     
@@ -94,7 +94,7 @@ class YTextTests: XCTestCase {
             }
         }
         
-        text.insertEmbed(at: 0, embed: embed)
+        text.insertEmbed(embed, at: 0)
 
         text.unobserve(subscriptionId)
 
@@ -124,7 +124,7 @@ class YTextTests: XCTestCase {
             }
         }
 
-        text.insertEmbedWithAttributes(at: 0, embed: embed, attributes: expectedAttributes)
+        text.insertEmbedWithAttributes(embed, attributes: expectedAttributes, at: 0)
 
         text.unobserve(subscriptionId)
 
@@ -133,15 +133,15 @@ class YTextTests: XCTestCase {
     }
     
     func test_length() throws {
-        text.append(text: "abcd")
+        text.append("abcd")
         XCTAssertEqual(text.length(), 4)
     }
 
     func test_removeRange() throws {
-        text.append(text: "few apples")
+        text.append("few apples")
         text.removeRange(start: 0, length: 4)
         
-        XCTAssertEqual(text.getString(), "apples")
+        XCTAssertEqual(String(text), "apples")
     }
 
     func test_observation() {
@@ -157,7 +157,7 @@ class YTextTests: XCTestCase {
             }
         }
 
-        text.append(text: "test")
+        text.append("test")
 
         text.unobserve(subscriptionId)
 
