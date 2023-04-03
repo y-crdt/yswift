@@ -4,17 +4,17 @@ import XCTest
 
 class YDocumentTests: XCTestCase {
     
-//    func test_nestedTransactionCall() {
-//        let document = YDocument()
-//        let someText = document.getOrCreateText(named: "example")
-//
-//        document.transact { txn1 in
-//            someText.append(tx: txn1, text: "123")
-//            document.transact { txn2 in
-//                someText.append(tx: txn2, text: "asd")
-//            }
-//        }
-//    }
+    func test_memoryLeaks() {
+        let document = YDocument()
+        let array: YArray<String> = document.getOrCreateArray(named: "array")
+        let map: YMap<String> = document.getOrCreateMap(named: "map")
+        let text: YText = document.getOrCreateText(named: "text")
+        
+        trackForMemoryLeaks(array)
+        trackForMemoryLeaks(map)
+        trackForMemoryLeaks(text)
+        trackForMemoryLeaks(document)
+    }
     
     func test_localAndRemoteSyncing() {
         let localDocument = YDocument()

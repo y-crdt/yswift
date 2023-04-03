@@ -83,8 +83,8 @@ class YTextTests: XCTestCase {
     }
     
     func test_insertEmbed() {
-        let embed = SomeType(name: "Aidar", age: 24)
-        var insertedEmbed: SomeType?
+        let embed = TestType(name: "Aidar", age: 24)
+        var insertedEmbed: TestType?
 
         let subscriptionId = text.observe { deltas in
             deltas.forEach {
@@ -105,8 +105,8 @@ class YTextTests: XCTestCase {
     }
 
     func test_insertEmbedWithAttributes() {
-        let embed = SomeType(name: "Aidar", age: 24)
-        var insertedEmbed: SomeType?
+        let embed = TestType(name: "Aidar", age: 24)
+        var insertedEmbed: TestType?
 
         let expectedAttributes = ["weight": "bold"]
         var actualAttributes: [String: String] = [:]
