@@ -72,8 +72,8 @@ public final class YArray<T: Codable>: Transactable {
         }
     }
 
-    public func observe(_ body: @escaping ([YrsChange]) -> Void) -> UInt32 {
-        let delegate = YArrayObservationDelegate(callback: body)
+    public func observe(_ body: @escaping ([YArrayChange<T>]) -> Void) -> UInt32 {
+        let delegate = YArrayObservationDelegate(callback: body, decoded: Coder.decodedArray)
         return _array.observe(delegate: delegate)
     }
 
@@ -139,14 +139,52 @@ class YArrayEachDelegate<T: Codable>: YrsArrayEachDelegate {
     }
 }
 
-class YArrayObservationDelegate: YrsArrayObservationDelegate {
-    private var callback: ([YrsChange]) -> Void
+class YArrayObservationDelegate<T: Codable>: YrsArrayObservationDelegate {
+    private var callback: ([YArrayChange<T>]) -> Void
+    private var decoded: ([String]) -> [T]
 
-    init(callback: @escaping ([YrsChange]) -> Void) {
+    init(
+        callback: @escaping ([YArrayChange<T>]) -> Void,
+        decoded: @escaping ([String]) -> [T]
+    ) {
         self.callback = callback
+        self.decoded = decoded
     }
 
     func call(value: [YrsChange]) {
-        callback(value)
+        let result: [YArrayChange<T>] = value.map { rsChange -> YArrayChange<T> in
+            switch rsChange {
+            case let .added(elements):
+                return YArrayChange.added(elements: decoded(elements))
+            case let .removed(range):
+                return YArrayChange.removed(range: range)
+            case let .retained(range):
+                return YArrayChange.retained(range: range)
+            }
+        }
+        callback(result)
     }
 }
+
+public enum YArrayChange<T> {
+    case added(elements: [T])
+    case removed(range: UInt32)
+    case retained(range: UInt32)
+}
+
+extension YArrayChange: Equatable where T: Equatable {
+    public static func ==(lhs: YArrayChange<T>, rhs: YArrayChange<T>) -> Bool {
+        switch (lhs, rhs) {
+        case let (.added(elements1), .added(elements2)):
+            return elements1 == elements2
+        case let (.removed(range1), .removed(range2)):
+            return range1 == range2
+        case let (.retained(range1), .retained(range2)):
+            return range1 == range2
+        default:
+            return false
+        }
+    }
+}
+
+extension YArrayChange: Hashable where T: Hashable {}

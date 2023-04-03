@@ -1,5 +1,4 @@
 use lib0::any::Any;
-use std::collections::HashMap;
 use std::ops::{Deref, DerefMut};
 use std::rc::Rc;
 use yrs::types::Attrs;
@@ -12,31 +11,27 @@ impl From<Attrs> for YrsAttrs {
     }
 }
 
-impl From<HashMap<String, String>> for YrsAttrs {
-    fn from(value: HashMap<String, String>) -> Self {
-        let mut attrs = Attrs::new();
-
-        value.iter().for_each(|pair| {
-            let key = Rc::from(pair.0.as_str());
-            let value = Any::from_json(pair.1.as_str()).unwrap();
-            attrs.insert(key, value);
-        });
-
-        YrsAttrs(attrs)
+impl From<String> for YrsAttrs {
+    fn from(value: String) -> YrsAttrs {
+        let any = Any::from_json(value.as_str()).unwrap();
+        match any {
+            Any::Map(m) => YrsAttrs(m.into_iter().map(|(k, v)| (Rc::from(&k[..]), v)).collect()),
+            _ => YrsAttrs(Attrs::new()),
+        }
     }
 }
 
-impl From<YrsAttrs> for HashMap<String, String> {
-    fn from(attrs: YrsAttrs) -> Self {
-        let mut hash_map_attrs = HashMap::new();
-
-        attrs.0.into_iter().for_each(|(key, val)| {
-            let mut buf = String::new();
-            val.to_json(&mut buf);
-            hash_map_attrs.insert(key.to_string(), buf);
-        });
-
-        hash_map_attrs
+impl From<YrsAttrs> for String {
+    fn from(value: YrsAttrs) -> String {
+        let mut buf = String::new();
+        let attrs_map = value
+            .0
+            .iter()
+            .map(|(k, v)| (k.to_string(), v.clone()))
+            .collect();
+        let any_map = Any::Map(Box::new(attrs_map));
+        any_map.to_json(&mut buf);
+        buf
     }
 }
 

@@ -29,14 +29,14 @@ public final class YText: Transactable {
         }
     }
     
-    public func insertWithAttributes<T: Encodable>(
+    public func insertWithAttributes(
         _ text: String,
-        attributes: [String: T],
+        attributes: [String: Any],
         at index: UInt32,
         in transaction: YrsTransaction? = nil
     ) {
         inTransaction(transaction) { txn in
-            self._text.insertWithAttributes(tx: txn, index: index, chunk: text, attrs: Coder.encodedDictionary(attributes))
+            self._text.insertWithAttributes(tx: txn, index: index, chunk: text, attrs: Coder.encoded(attributes))
         }
     }
     
@@ -50,25 +50,25 @@ public final class YText: Transactable {
         }
     }
 
-    public func insertEmbedWithAttributes<T: Encodable, R: Encodable>(
+    public func insertEmbedWithAttributes<T: Encodable>(
         _ embed: T,
-        attributes: [String: R],
+        attributes: [String: Any],
         at index: UInt32,
         in transaction: YrsTransaction? = nil
     ) {
         inTransaction(transaction) { txn in
-            self._text.insertEmbedWithAttributes(tx: txn, index: index, content: Coder.encoded(embed), attrs: Coder.encodedDictionary(attributes))
+            self._text.insertEmbedWithAttributes(tx: txn, index: index, content: Coder.encoded(embed), attrs: Coder.encoded(attributes))
         }
     }
     
-    public func format<T: Encodable>(
+    public func format(
         at index: UInt32,
         length: UInt32,
-        attributes: [String: T],
+        attributes: [String: Any],
         in transaction: YrsTransaction? = nil
     ) {
         inTransaction(transaction) { txn in
-            self._text.format(tx: txn, index: index, length: length, attrs: Coder.encodedDictionary(attributes))
+            self._text.format(tx: txn, index: index, length: length, attrs: Coder.encoded(attributes))
         }
     }
     
@@ -94,10 +94,11 @@ public final class YText: Transactable {
         }
     }
 
-    public func observe(_ callback: @escaping ([YrsDelta]) -> Void) -> UInt32 {
+    public func observe(_ callback: @escaping ([YTextChange]) -> Void) -> UInt32 {
         _text.observe(
             delegate: YTextObservationDelegate(
-                callback: callback
+                callback: callback,
+                decoded: Coder.decoded(_:)
             )
         )
     }
@@ -127,13 +128,36 @@ extension YText: CustomStringConvertible {
 
 
 internal class YTextObservationDelegate: YrsTextObservationDelegate {
-    private var callback: ([YrsDelta]) -> Void
+    private var callback: ([YTextChange]) -> Void
+    private var decoded: (String) -> [String: Any]
 
-    internal init(callback: @escaping ([YrsDelta]) -> Void) {
+    internal init(
+        callback: @escaping ([YTextChange]) -> Void,
+        decoded: @escaping (String) -> [String: Any]
+    ) {
         self.callback = callback
+        self.decoded = decoded
     }
 
     internal func call(value: [YrsDelta]) {
-        callback(value)
+        let result: [YTextChange] = value.map { rsChange -> YTextChange in
+            switch rsChange {
+            case let .inserted(value, attrs):
+                return YTextChange.inserted(value: value, attributes: decoded(attrs))
+            case let .retained(index, attrs):
+                return YTextChange.retained(index: index, attributes: decoded(attrs))
+            case let .deleted(index):
+                return YTextChange.deleted(index: index)
+            }
+            
+        }
+        callback(result)
     }
 }
+
+public enum YTextChange {
+    case inserted(value: String, attributes: [String: Any])
+    case deleted(index: UInt32)
+    case retained(index: UInt32, attributes: [String: Any])
+}
+

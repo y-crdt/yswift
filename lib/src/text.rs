@@ -28,7 +28,7 @@ impl YrsText {
         transaction: &YrsTransaction,
         index: u32,
         length: u32,
-        attrs: HashMap<String, String>,
+        attrs: String,
     ) {
         let mut tx = transaction.transaction();
         let tx = tx.as_mut().unwrap();
@@ -57,7 +57,7 @@ impl YrsText {
         transaction: &YrsTransaction,
         index: u32,
         chunk: String,
-        attrs: HashMap<String, String>,
+        attrs: String,
     ) {
         let mut tx = transaction.transaction();
         let tx = tx.as_mut().unwrap();
@@ -83,7 +83,7 @@ impl YrsText {
         transaction: &YrsTransaction,
         index: u32,
         content: String,
-        attrs: HashMap<String, String>,
+        attrs: String,
     ) {
         let mut tx = transaction.transaction();
         let tx = tx.as_mut().unwrap();

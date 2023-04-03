@@ -94,8 +94,6 @@ class YArrayTests: XCTestCase {
     }
 
     func test_observation() {
-        let decoder = JSONDecoder()
-
         let insertedElements = [SomeType(name: "Aidar", age: 24), SomeType(name: "Joe", age: 55)]
         var receivedElements: [SomeType] = []
 
@@ -103,10 +101,7 @@ class YArrayTests: XCTestCase {
             changes.forEach {
                 switch $0 {
                 case let .added(elements):
-                    receivedElements = elements.map {
-                        let data = $0.data(using: .utf8)!
-                        return try! decoder.decode(SomeType.self, from: data)
-                    }
+                    receivedElements = elements
                 default: break
                 }
             }

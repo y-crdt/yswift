@@ -38,7 +38,7 @@ class YTextTests: XCTestCase {
                 case let .retained(_, attrs):
                     actualAttributes = Dictionary(
                         uniqueKeysWithValues: attrs.map {
-                            ($0, Coder.decoded($1))
+                            ($0, $1 as! String)
                         }
                     )
                 default: break
@@ -64,7 +64,7 @@ class YTextTests: XCTestCase {
                 case let .inserted(_, attrs):
                     actualAttributes = Dictionary(
                         uniqueKeysWithValues: attrs.map {
-                            ($0, Coder.decoded($1))
+                            ($0, $1 as! String)
                         }
                     )
                 default: break
@@ -116,7 +116,7 @@ class YTextTests: XCTestCase {
                     insertedEmbed = Coder.decoded(value)
                     actualAttributes = Dictionary(
                         uniqueKeysWithValues: attrs.map {
-                            ($0, Coder.decoded($1))
+                            ($0, $1 as! String)
                         }
                     )
                 default: break

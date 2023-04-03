@@ -3,17 +3,9 @@ use std::collections::HashMap;
 use yrs::types::{Delta, Value};
 
 pub enum YrsDelta {
-    Inserted {
-        value: String,
-        attrs: HashMap<String, String>,
-    },
-    Deleted {
-        index: u32,
-    },
-    Retained {
-        index: u32,
-        attrs: HashMap<String, String>,
-    },
+    Inserted { value: String, attrs: String },
+    Deleted { index: u32 },
+    Retained { index: u32, attrs: String },
 }
 
 // Watch out for XML types here, because underlying
@@ -36,7 +28,7 @@ impl From<&Delta> for YrsDelta {
                     // @TODO: fix silly handling, it will just call with empty string if casting fails
                     YrsDelta::Inserted {
                         value: ("".into()),
-                        attrs: (HashMap::new()),
+                        attrs: ("".into()),
                     }
                 }
             }
