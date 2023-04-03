@@ -78,6 +78,7 @@ callback interface YrsMapObservationDelegate {
 };
 
 interface YrsArray {
+  YrsArrayIterator iter([ByRef] YrsTransaction tx);
   void each([ByRef] YrsTransaction tx, YrsArrayEachDelegate delegate);
 
   [Throws=CodingError]
@@ -92,6 +93,10 @@ interface YrsArray {
   sequence<string> to_a([ByRef] YrsTransaction tx);
   u32 observe(YrsArrayObservationDelegate delegate);
   void unobserve(u32 subscription_id);
+};
+
+interface YrsArrayIterator {
+  string? next();
 };
 
 callback interface YrsArrayEachDelegate {

@@ -6,7 +6,7 @@ protocol Transactable {
 }
 
 extension Transactable {
-    func inTransaction<T>(_ transaction: YrsTransaction?, changes: @escaping (YrsTransaction) -> T) -> T {
+    func inTransaction<T>(_ transaction: YrsTransaction? = nil, changes: @escaping (YrsTransaction) -> T) -> T {
         if let transaction = transaction {
             return changes(transaction)
         } else {
