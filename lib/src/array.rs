@@ -89,12 +89,16 @@ impl YrsArray {
         let tx = transaction.transaction();
         let tx = tx.as_ref().unwrap();
         let arr = self.0.borrow();
-        let v = arr.get(tx, index).unwrap();
-        let mut buf = String::new();
-        if let Value::Any(any) = v {
-            any.to_json(&mut buf);
-            Ok(buf)
+        if let Some(value) = arr.get(tx, index) {
+            let mut buf = String::new();
+            if let Value::Any(any) = value {
+                any.to_json(&mut buf);
+                Ok(buf)
+            } else {
+                Err(CodingError::EncodingError)
+            }
         } else {
+            // Actually there is no element here, so it shouldn't be EncodingErro
             Err(CodingError::EncodingError)
         }
     }
