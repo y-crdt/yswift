@@ -9,6 +9,7 @@ use yrs::{
     updates::decoder::Decode, updates::encoder::Encode, ReadTxn, StateVector, TransactionMut,
     Update,
 };
+use yrs::{Store, WriteTxn};
 
 pub(crate) struct YrsTransaction(pub(crate) RefCell<Option<TransactionMut<'static>>>);
 
@@ -16,6 +17,16 @@ unsafe impl Send for YrsTransaction {}
 unsafe impl Sync for YrsTransaction {}
 
 impl YrsTransaction {}
+
+impl ReadTxn for YrsTransaction {
+    fn store(&self) -> &Store {
+        let mut tx = self.transaction();
+        let tx = tx.as_mut().unwrap();
+
+        // Use transmute to cast the mutable reference to the `Store` to a reference with a shorter lifetime
+        unsafe { std::mem::transmute::<&mut Store, &'static Store>(tx.store_mut()) }
+    }
+}
 
 impl<'doc> From<TransactionMut<'doc>> for YrsTransaction {
     fn from(txn: TransactionMut<'doc>) -> Self {

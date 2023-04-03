@@ -82,6 +82,46 @@ public final class YArray<T: Codable>: Transactable {
     }
 }
 
+extension YArray: MutableCollection, RandomAccessCollection {
+    public func index(after i: Int) -> Int {
+        // precondition ensures index nevers goes past
+        precondition(i < endIndex, "Index out of bounds")
+        return i + 1
+    }
+    
+    public var startIndex: Int {
+        0
+    }
+    
+    public var endIndex: Int {
+        Int(self.length())
+    }
+    
+    public subscript(position: Int) -> T {
+        get {
+            self.get(index: position)
+        }
+        set(newValue) {
+            inTransaction { txn in
+                self.remove(index: position, transaction: txn)
+                self.insert(index: position, value: newValue)
+            }
+        }
+    }
+    
+    public func makeIterator() -> YArrayIterator<T> {
+        YArrayIterator()
+    }
+}
+
+public final class YArrayIterator<T: Codable>: IteratorProtocol {
+    public typealias Element = T
+    
+    public func next() -> T? {
+        nil
+    }
+}
+
 class YArrayEachDelegate<T: Codable>: YrsArrayEachDelegate {
     private var callback: (T) -> Void
     private var decoded: (String) -> T

@@ -3,6 +3,8 @@ use crate::{change::YrsChange, error::CodingError};
 use lib0::any::Any;
 use std::cell::RefCell;
 use std::fmt::Debug;
+use std::sync::Arc;
+use yrs::types::array::ArrayIter;
 use yrs::{types::Value, Array, ArrayRef, Observable};
 
 pub(crate) struct YrsArray(RefCell<ArrayRef>);
@@ -23,7 +25,41 @@ pub(crate) trait YrsArrayObservationDelegate: Send + Sync + Debug {
     fn call(&self, value: Vec<YrsChange>);
 }
 
+unsafe impl Send for YrsArrayIterator {}
+unsafe impl Sync for YrsArrayIterator {}
+
+pub(crate) struct YrsArrayIterator {
+    inner: RefCell<ArrayIter<&'static YrsTransaction, YrsTransaction>>,
+}
+
+impl YrsArrayIterator {
+    pub(crate) fn next(&self) -> Option<String> {
+        let val = self.inner.borrow_mut().next();
+
+        match val {
+            Some(val) => {
+                let mut buf = String::new();
+                if let Value::Any(any) = val {
+                    any.to_json(&mut buf);
+                    Some(buf)
+                } else {
+                    // @TODO: fix silly handling, it will just call it with nil if casting fails
+                    None
+                }
+            }
+            None => None,
+        }
+    }
+}
+
 impl YrsArray {
+    pub(crate) fn iter(&self, txn: &'static YrsTransaction) -> Arc<YrsArrayIterator> {
+        let arr = self.0.borrow();
+        Arc::new(YrsArrayIterator {
+            inner: RefCell::new(arr.iter(txn)),
+        })
+    }
+
     pub(crate) fn each(
         &self,
         transaction: &YrsTransaction,
