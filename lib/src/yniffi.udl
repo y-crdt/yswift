@@ -78,7 +78,6 @@ callback interface YrsMapObservationDelegate {
 };
 
 interface YrsArray {
-  YrsArrayIterator iter([ByRef] YrsTransaction tx);
   void each([ByRef] YrsTransaction tx, YrsArrayEachDelegate delegate);
 
   [Throws=CodingError]
@@ -93,10 +92,6 @@ interface YrsArray {
   sequence<string> to_a([ByRef] YrsTransaction tx);
   u32 observe(YrsArrayObservationDelegate delegate);
   void unobserve(u32 subscription_id);
-};
-
-interface YrsArrayIterator {
-  string? next();
 };
 
 callback interface YrsArrayEachDelegate {
@@ -115,12 +110,12 @@ interface YrsChange {
 };
 
 interface YrsText {
-  void format([ByRef] YrsTransaction tx, u32 index, u32 length, record<DOMString, string> attrs);
+  void format([ByRef] YrsTransaction tx, u32 index, u32 length, string attrs);
   void append([ByRef] YrsTransaction tx, string text);
   void insert([ByRef] YrsTransaction tx, u32 index, string chunk);
-  void insert_with_attributes([ByRef] YrsTransaction tx, u32 index, string chunk, record<DOMString, string> attrs);
+  void insert_with_attributes([ByRef] YrsTransaction tx, u32 index, string chunk, string attrs);
   void insert_embed([ByRef] YrsTransaction tx, u32 index, string content);
-  void insert_embed_with_attributes([ByRef] YrsTransaction tx, u32 index, string content, record<DOMString, string> attrs);
+  void insert_embed_with_attributes([ByRef] YrsTransaction tx, u32 index, string content, string attrs);
   string get_string([ByRef] YrsTransaction tx);
   void remove_range([ByRef] YrsTransaction tx, u32 start, u32 length);
   u32 length([ByRef] YrsTransaction tx);
@@ -134,7 +129,7 @@ callback interface YrsTextObservationDelegate {
 
 [Enum]
 interface YrsDelta {
-  Inserted(string value, record<DOMString, string> attrs);
+  Inserted(string value, string attrs);
   Deleted(u32 index);
-  Retained(u32 index, record<DOMString, string> attrs);
+  Retained(u32 index, string attrs);
 };

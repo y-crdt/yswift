@@ -11,7 +11,7 @@ mod transaction;
 
 use crate::array::YrsArray;
 use crate::array::YrsArrayEachDelegate;
-use crate::array::YrsArrayIterator;
+// use crate::array::YrsArrayIterator;
 use crate::array::YrsArrayObservationDelegate;
 use crate::change::YrsChange;
 use crate::delta::YrsDelta;
