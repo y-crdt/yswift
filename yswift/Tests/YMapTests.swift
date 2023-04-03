@@ -12,10 +12,10 @@ final class YMapTests: XCTestCase {
 
     func test_insert() {
         let document = YDocument()
-        let map: YMap<SomeType> = document.getOrCreateMap(named: "some_map")
+        let map: YMap<TestType> = document.getOrCreateMap(named: "some_map")
 
-        let initialInstance = SomeType(name: "Aidar", age: 24)
-        let secondInstance = SomeType(name: "Joe", age: 55)
+        let initialInstance = TestType(name: "Aidar", age: 24)
+        let secondInstance = TestType(name: "Joe", age: 55)
 
         document.transactSync { txn in
             XCTAssertEqual(map.length(tx: txn), 0)
@@ -38,10 +38,10 @@ final class YMapTests: XCTestCase {
 
     func test_remove() {
         let document = YDocument()
-        let map: YMap<SomeType> = document.getOrCreateMap(named: "some_map")
+        let map: YMap<TestType> = document.getOrCreateMap(named: "some_map")
 
-        let initialInstance = SomeType(name: "Aidar", age: 24)
-        let secondInstance = SomeType(name: "Joe", age: 55)
+        let initialInstance = TestType(name: "Aidar", age: 24)
+        let secondInstance = TestType(name: "Joe", age: 55)
 
         document.transactSync { txn in
             XCTAssertEqual(map.length(tx: txn), 0)
@@ -59,10 +59,10 @@ final class YMapTests: XCTestCase {
 
     func test_clear() {
         let document = YDocument()
-        let map: YMap<SomeType> = document.getOrCreateMap(named: "some_map")
+        let map: YMap<TestType> = document.getOrCreateMap(named: "some_map")
 
-        let initialInstance = SomeType(name: "Aidar", age: 24)
-        let secondInstance = SomeType(name: "Joe", age: 55)
+        let initialInstance = TestType(name: "Aidar", age: 24)
+        let secondInstance = TestType(name: "Joe", age: 55)
 
         document.transactSync { txn in
             XCTAssertEqual(map.length(tx: txn), 0)
@@ -80,10 +80,10 @@ final class YMapTests: XCTestCase {
 
     func test_keys() {
         let document = YDocument()
-        let map: YMap<SomeType> = document.getOrCreateMap(named: "some_map")
+        let map: YMap<TestType> = document.getOrCreateMap(named: "some_map")
 
-        let initialInstance = SomeType(name: "Aidar", age: 24)
-        let secondInstance = SomeType(name: "Joe", age: 55)
+        let initialInstance = TestType(name: "Aidar", age: 24)
+        let secondInstance = TestType(name: "Joe", age: 55)
 
         document.transactSync { txn in
             XCTAssertEqual(map.length(tx: txn), 0)
@@ -105,10 +105,10 @@ final class YMapTests: XCTestCase {
 
     func test_values() {
         let document = YDocument()
-        let map: YMap<SomeType> = document.getOrCreateMap(named: "some_map")
+        let map: YMap<TestType> = document.getOrCreateMap(named: "some_map")
 
-        let initialInstance = SomeType(name: "Aidar", age: 24)
-        let secondInstance = SomeType(name: "Joe", age: 55)
+        let initialInstance = TestType(name: "Aidar", age: 24)
+        let secondInstance = TestType(name: "Joe", age: 55)
 
         document.transactSync { txn in
             XCTAssertEqual(map.length(tx: txn), 0)
@@ -117,8 +117,8 @@ final class YMapTests: XCTestCase {
             XCTAssertEqual(map.length(tx: txn), 2)
         }
 
-        let collectedValues: [SomeType] = document.transactSync { txn in
-            var collectedValues: [SomeType] = []
+        let collectedValues: [TestType] = document.transactSync { txn in
+            var collectedValues: [TestType] = []
             map.values(tx: txn) {
                 collectedValues.append($0)
             }
@@ -131,10 +131,10 @@ final class YMapTests: XCTestCase {
 
     func test_each() {
         let document = YDocument()
-        let map: YMap<SomeType> = document.getOrCreateMap(named: "some_map")
+        let map: YMap<TestType> = document.getOrCreateMap(named: "some_map")
 
-        let initialInstance = SomeType(name: "Aidar", age: 24)
-        let secondInstance = SomeType(name: "Joe", age: 55)
+        let initialInstance = TestType(name: "Aidar", age: 24)
+        let secondInstance = TestType(name: "Joe", age: 55)
 
         document.transactSync { txn in
             XCTAssertEqual(map.length(tx: txn), 0)
@@ -143,8 +143,8 @@ final class YMapTests: XCTestCase {
             XCTAssertEqual(map.length(tx: txn), 2)
         }
 
-        let collectedValues: [String: SomeType] = document.transactSync { txn in
-            var collectedValues: [String: SomeType] = [:]
+        let collectedValues: [String: TestType] = document.transactSync { txn in
+            var collectedValues: [String: TestType] = [:]
             map.each(tx: txn) { key, value in
                 collectedValues[key] = value
             }

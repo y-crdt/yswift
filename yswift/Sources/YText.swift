@@ -1,17 +1,11 @@
 import Foundation
 import Yniffi
 
-#warning("@TODO: check if `self` in Transactions is not leaking")
-#warning("@TODO: check if strong reference to Document is ok (no retain cycles)")
-
-
-
-
 public final class YText: Transactable {
     private let _text: YrsText
-    internal let document: YDocument
+    let document: YDocument
 
-    internal init(text: YrsText, document: YDocument) {
+    init(text: YrsText, document: YDocument) {
         self._text = text
         self.document = document
     }
@@ -130,11 +124,11 @@ extension YText: CustomStringConvertible {
 }
 
 
-internal class YTextObservationDelegate: YrsTextObservationDelegate {
+class YTextObservationDelegate: YrsTextObservationDelegate {
     private var callback: ([YTextChange]) -> Void
     private var decoded: (String) -> [String: Any]
 
-    internal init(
+    init(
         callback: @escaping ([YTextChange]) -> Void,
         decoded: @escaping (String) -> [String: Any]
     ) {
@@ -142,7 +136,7 @@ internal class YTextObservationDelegate: YrsTextObservationDelegate {
         self.decoded = decoded
     }
 
-    internal func call(value: [YrsDelta]) {
+    func call(value: [YrsDelta]) {
         let result: [YTextChange] = value.map { rsChange -> YTextChange in
             switch rsChange {
             case let .inserted(value, attrs):

@@ -3,7 +3,7 @@ import XCTest
 
 class YArrayTests: XCTestCase {
     var document: YDocument!
-    var array: YArray<SomeType>!
+    var array: YArray<TestType>!
     
     override func setUp() {
         document = YDocument()
@@ -16,7 +16,7 @@ class YArrayTests: XCTestCase {
     }
     
     func test_insert() {
-        let initialInstance = SomeType(name: "Aidar", age: 24)
+        let initialInstance = TestType(name: "Aidar", age: 24)
         
         array.insert(index: 0, value: initialInstance)
         
@@ -24,7 +24,7 @@ class YArrayTests: XCTestCase {
     }
     
     func test_getIndexOutOfBounds() {
-        let initialInstance = SomeType(name: "Aidar", age: 24)
+        let initialInstance = TestType(name: "Aidar", age: 24)
         
         array.insert(index: 0, value: initialInstance)
         
@@ -32,7 +32,7 @@ class YArrayTests: XCTestCase {
     }
 
     func test_insertArray() {
-        let arrayToInsert = [SomeType(name: "Aidar", age: 24), SomeType(name: "Joe", age: 55)]
+        let arrayToInsert = [TestType(name: "Aidar", age: 24), TestType(name: "Joe", age: 55)]
 
         array.insertArray(index: 0, values: arrayToInsert)
 
@@ -40,14 +40,14 @@ class YArrayTests: XCTestCase {
     }
 
     func test_length() {
-        array.insert(index: 0, value: SomeType(name: "Aidar", age: 24))
+        array.insert(index: 0, value: TestType(name: "Aidar", age: 24))
         XCTAssertEqual(array.length(), 1)
     }
 
     func test_pushBack_and_pushFront() {
-        let initial = SomeType(name: "Middleton", age: 77)
-        let front = SomeType(name: "Aidar", age: 24)
-        let back = SomeType(name: "Joe", age: 55)
+        let initial = TestType(name: "Middleton", age: 77)
+        let front = TestType(name: "Aidar", age: 24)
+        let back = TestType(name: "Joe", age: 55)
         
         array.insert(index: 0, value: initial)
         array.pushBack(value: back)
@@ -57,9 +57,9 @@ class YArrayTests: XCTestCase {
     }
 
     func test_remove() {
-        let initial = SomeType(name: "Middleton", age: 77)
-        let front = SomeType(name: "Aidar", age: 24)
-        let back = SomeType(name: "Joe", age: 55)
+        let initial = TestType(name: "Middleton", age: 77)
+        let front = TestType(name: "Aidar", age: 24)
+        let back = TestType(name: "Joe", age: 55)
         
         array.insert(index: 0, value: initial)
         array.pushBack(value: back)
@@ -73,9 +73,9 @@ class YArrayTests: XCTestCase {
     }
 
     func test_removeRange() {
-        let initial = SomeType(name: "Middleton", age: 77)
-        let front = SomeType(name: "Aidar", age: 24)
-        let back = SomeType(name: "Joe", age: 55)
+        let initial = TestType(name: "Middleton", age: 77)
+        let front = TestType(name: "Aidar", age: 24)
+        let back = TestType(name: "Joe", age: 55)
         
         array.insert(index: 0, value: initial)
         array.pushBack(value: back)
@@ -89,8 +89,8 @@ class YArrayTests: XCTestCase {
     }
 
     func test_forEach() {
-        let arrayToInsert = [SomeType(name: "Aidar", age: 24), SomeType(name: "Joe", age: 55)]
-        var collectedArray: [SomeType] = []
+        let arrayToInsert = [TestType(name: "Aidar", age: 24), TestType(name: "Joe", age: 55)]
+        var collectedArray: [TestType] = []
 
         array.insertArray(index: 0, values: arrayToInsert)
 
@@ -102,8 +102,8 @@ class YArrayTests: XCTestCase {
     }
 
     func test_observation() {
-        let insertedElements = [SomeType(name: "Aidar", age: 24), SomeType(name: "Joe", age: 55)]
-        var receivedElements: [SomeType] = []
+        let insertedElements = [TestType(name: "Aidar", age: 24), TestType(name: "Joe", age: 55)]
+        var receivedElements: [TestType] = []
 
         let subscriptionId = array.observe { changes in
             changes.forEach {
@@ -121,16 +121,31 @@ class YArrayTests: XCTestCase {
 
         XCTAssertEqual(insertedElements, receivedElements)
     }
+    
+    func test_transaction_IsNotLeaking() {
+        let localDocument = YDocument()
+        let localArray: YArray<TestType> = localDocument.getOrCreateArray(named: "test")
+        
+        var object = NSObject()
+        weak var weakObject = object
+        
+        localDocument.transactSync { [object] txn in
+            _ = object
+            localArray.insert(index: 0, value: .init(name: "Aidar", age: 24), transaction: txn)
+        }
+        
+        object = NSObject()
+        XCTAssertNil(weakObject)
+        trackForMemoryLeaks(localArray)
+        trackForMemoryLeaks(localDocument)
+    }
 
     /*
      https://www.swiftbysundell.com/articles/using-unit-tests-to-identify-avoid-memory-leaks-in-swift/
      https://alisoftware.github.io/swift/closures/2016/07/25/closure-capture-1/
      */
 
-    func test_observationIsLeaking() {
-        let document = YDocument()
-        let array: YArray<SomeType> = document.getOrCreateArray(named: "some_array")
-
+    func test_observation_IsLeaking() {
         // Create an object (it can be of any type), and hold both
         // a strong and a weak reference to it
         var object = NSObject()
@@ -152,9 +167,6 @@ class YArrayTests: XCTestCase {
     }
 
     func test_observation_IsNotLeaking_afterUnobserving() {
-        let document = YDocument()
-        let array: YArray<SomeType> = document.getOrCreateArray(named: "some_array")
-
         // Create an object (it can be of any type), and hold both
         // a strong and a weak reference to it
         var object = NSObject()

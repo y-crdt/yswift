@@ -3,9 +3,9 @@ import Yniffi
 
 public final class YArray<T: Codable>: Transactable {
     private let _array: YrsArray
-    internal let document: YDocument
+    let document: YDocument
 
-    internal init(array: YrsArray, document: YDocument) {
+    init(array: YrsArray, document: YDocument) {
         self._array = array
         self.document = document
     }

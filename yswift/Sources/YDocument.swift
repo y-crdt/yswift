@@ -54,8 +54,6 @@ public final class YDocument {
     
     // MARK: - Factory methods
     
-    #warning("@TODO: check for memory leaks when passing reference to document")
-
     public func getOrCreateText(named: String) -> YText {
         YText(text: document.getText(name: named), document: self)
     }
