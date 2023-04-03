@@ -22,6 +22,14 @@ class YArrayTests: XCTestCase {
         
         XCTAssertEqual(array.get(index: 0), initialInstance)
     }
+    
+    func test_getIndexOutOfBounds() {
+        let initialInstance = SomeType(name: "Aidar", age: 24)
+        
+        array.insert(index: 0, value: initialInstance)
+        
+        XCTAssertEqual(array.get(index: 1), nil)
+    }
 
     func test_insertArray() {
         let arrayToInsert = [SomeType(name: "Aidar", age: 24), SomeType(name: "Joe", age: 55)]

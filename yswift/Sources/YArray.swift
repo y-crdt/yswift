@@ -10,10 +10,14 @@ public final class YArray<T: Codable>: Transactable {
         self.document = document
     }
 
-    #warning("@TODO: wrap `try` in `do/catch`")
-    public func get(index: Int, transaction: YrsTransaction? = nil) -> T {
+    public func get(index: Int, transaction: YrsTransaction? = nil) -> T? {
         inTransaction(transaction) { txn in
-            Coder.decoded(try! self._array.get(tx: txn, index: UInt32(index)))
+            if let result = try? self._array.get(tx: txn, index: UInt32(index)) {
+                return Coder.decoded(result)
+            } else {
+                return nil
+            }
+            
         }
     }
 
@@ -99,7 +103,7 @@ extension YArray: MutableCollection, RandomAccessCollection {
     
     public subscript(position: Int) -> T {
         get {
-            self.get(index: position)
+            self.get(index: position)!
         }
         set(newValue) {
             inTransaction { txn in

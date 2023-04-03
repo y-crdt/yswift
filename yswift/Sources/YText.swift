@@ -4,6 +4,9 @@ import Yniffi
 #warning("@TODO: check if `self` in Transactions is not leaking")
 #warning("@TODO: check if strong reference to Document is ok (no retain cycles)")
 
+
+
+
 public final class YText: Transactable {
     private let _text: YrsText
     internal let document: YDocument
