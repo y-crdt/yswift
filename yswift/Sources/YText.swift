@@ -1,5 +1,6 @@
 import Foundation
 import Yniffi
+import Combine
 
 public final class YText: Transactable {
     private let _text: YrsText
@@ -89,6 +90,15 @@ public final class YText: Transactable {
         inTransaction(transaction) { txn in
             self._text.length(tx: txn)
         }
+    }
+    
+    public func observe() -> AnyPublisher<[YTextChange], Never> {
+        let subject = PassthroughSubject<[YTextChange], Never>()
+        let subscriptionId = observe { subject.send($0) }
+        return subject.handleEvents(receiveCancel: { [weak self] in
+            self?._text.unobserve(subscriptionId: subscriptionId)
+        })
+        .eraseToAnyPublisher()
     }
 
     public func observe(_ callback: @escaping ([YTextChange]) -> Void) -> UInt32 {

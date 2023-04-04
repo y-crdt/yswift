@@ -1,7 +1,7 @@
 import Foundation
 
 /*
- Note: This is a very-very-very WIP implementation of y-protocol.
+ Note: This is a very-very-very naive implementation of y-protocol.
  See https://github.com/yjs/y-protocols/blob/master/PROTOCOL.md
  */
 
