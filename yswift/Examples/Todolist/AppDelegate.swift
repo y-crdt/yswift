@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     lazy var document: YDocument = {
         let document = YDocument()
-        let _: YYArray<TodoItem> = document.getOrCreateArray(named: "todo_items")
+        let _: YArray<TodoItem> = document.getOrCreateArray(named: "TodoItem")
         return document
     }()
 

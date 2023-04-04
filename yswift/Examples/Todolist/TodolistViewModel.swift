@@ -24,28 +24,24 @@ enum ConnectionState: String {
 
 final class TodolistViewModel: ObservableObject {
     @Published var connectionState: ConnectionState?
+    let items: YArray<TodoItem>
+    
     private let connectionManager: ConnectionManager
     private let document: YDocument
 
     init(connectionManager: ConnectionManager, document: YDocument) {
         self.connectionManager = connectionManager
         self.document = document
+        self.items = document.getOrCreateArray(named: "TodoItem")
 
         connectionManager.onUpdatesReceived = { [weak self] in
-            guard let self = self else { return }
-            self.refresh()
+            self?.reloadUI()
         }
+        
         connectionManager.onConnectionStateChanged = { [weak self] sessionState in
             DispatchQueue.main.async {
                 self?.connectionState = .init(sessionState)
             }
-        }
-    }
-
-    var items: [TodoItem] {
-        document.transactSync { txn in
-            let items = YYArray<TodoItem>(array: txn.transactionGetArray(name: "todo_items")!)
-            return items.toArray(tx: txn)
         }
     }
 
@@ -59,49 +55,46 @@ final class TodolistViewModel: ObservableObject {
 
     func toggleItem(_ item: TodoItem) {
         guard let index = items.firstIndex(of: item) else { return }
-
+        
         var newItem = item
         newItem.isCompleted.toggle()
 
-        let update: Buffer = document.transactSync { txn in
-            let items = YYArray<TodoItem>(array: txn.transactionGetArray(name: "todo_items")!)
-            items.remove(tx: txn, index: index)
-            items.insert(tx: txn, index: index, value: newItem)
+        let update: Buffer = document.transactSync { [weak self] txn in
+            guard let self = self else { return [] }
+            self.items.remove(at: index, transaction: txn)
+            self.items.insert(at: index, value: newItem, transaction: txn)
             return txn.transactionEncodeUpdate()
         }
-
-        withAnimation(.default) {
-            objectWillChange.send()
-        }
-        connectionManager.sendEveryone(.init(kind: .UPDATE, buffer: update))
+        
+        propagateUpdate(update)
     }
 
     func addItem(_ item: TodoItem) {
-        let update: Buffer = document.transactSync { txn in
-            let items = YYArray<TodoItem>(array: txn.transactionGetArray(name: "todo_items")!)
-            items.pushBack(tx: txn, value: item)
+        let update: Buffer = document.transactSync { [weak self] txn in
+            guard let self = self else { return [] }
+            self.items.append(item, transaction: txn)
             return txn.transactionEncodeUpdate()
         }
-        withAnimation(.default) {
-            objectWillChange.send()
-        }
-        connectionManager.sendEveryone(.init(kind: .UPDATE, buffer: update))
+        propagateUpdate(update)
     }
 
     func removeItem(_ item: TodoItem) {
         guard let index = items.firstIndex(of: item) else { return }
-        let update: Buffer = document.transactSync { txn in
-            let items = YYArray<TodoItem>(array: txn.transactionGetArray(name: "todo_items")!)
-            items.remove(tx: txn, index: index)
+        let update: Buffer = document.transactSync { [weak self] txn in
+            guard let self = self else { return [] }
+            self.items.remove(at: index, transaction: txn)
             return txn.transactionEncodeUpdate()
         }
-        withAnimation(.default) {
-            objectWillChange.send()
-        }
+        propagateUpdate(update)
+    }
+    
+    private func propagateUpdate(_ update: Buffer) {
+        guard !update.isEmpty else { return }
+        reloadUI()
         connectionManager.sendEveryone(.init(kind: .UPDATE, buffer: update))
     }
 
-    private func refresh() {
+    private func reloadUI() {
         DispatchQueue.main.async {
             withAnimation(.default) {
                 self.objectWillChange.send()
