@@ -17,7 +17,6 @@ public final class YArray<T: Codable>: Transactable {
             } else {
                 return nil
             }
-            
         }
     }
 
@@ -69,7 +68,7 @@ public final class YArray<T: Codable>: Transactable {
         }
     }
     
-    public func forEach(_ body: @escaping (T) -> Void, transaction: YrsTransaction? = nil) {
+    public func each(transaction: YrsTransaction? = nil, _ body: @escaping (T) -> Void) {
         let delegate = YArrayEachDelegate(callback: body, decoded: Coder.decoded)
         inTransaction(transaction) { txn in
             self._array.each(tx: txn, delegate: delegate)
@@ -86,6 +85,29 @@ public final class YArray<T: Codable>: Transactable {
     }
 }
 
+extension YArray: Sequence {
+    public typealias Iterator = YArrayIterator
+    
+    public func makeIterator() -> Iterator {
+        YArrayIterator(self)
+    }
+    
+    public class YArrayIterator: IteratorProtocol {
+        var array: [T]
+
+        init(_ array: YArray) {
+            self.array = array.toArray()
+        }
+        
+        public func next() -> T? {
+            array.popLast()
+        }
+    }
+}
+
+#warning("Implement properly after Iterator is done")
+// At the moment, below protocol implementations are "stub"-ish in nature
+// They need to be completed & tested after Iterator is ported from Rust side
 extension YArray: MutableCollection, RandomAccessCollection {
     public func index(after i: Int) -> Int {
         // precondition ensures index nevers goes past
@@ -111,18 +133,6 @@ extension YArray: MutableCollection, RandomAccessCollection {
                 self.insert(index: position, value: newValue)
             }
         }
-    }
-    
-    public func makeIterator() -> YArrayIterator<T> {
-        YArrayIterator()
-    }
-}
-
-public final class YArrayIterator<T: Codable>: IteratorProtocol {
-    public typealias Element = T
-    
-    public func next() -> T? {
-        nil
     }
 }
 
