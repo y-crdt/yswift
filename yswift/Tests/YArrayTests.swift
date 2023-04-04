@@ -15,18 +15,57 @@ class YArrayTests: XCTestCase {
         array = nil
     }
     
+    func test_subscripts() {
+        let aidar = TestType(name: "Aidar", age: 24)
+        let kevin = TestType(name: "Kevin", age: 100)
+        let joe = TestType(name: "Joe", age: 55)
+        let bart = TestType(name: "Bart", age: 200)
+        
+        array.insertArray(at: 0, values: [aidar, kevin, joe])
+        
+        array[0] = bart
+        array.remove(at: 1)
+        
+        XCTAssertEqual(array.count, 2)
+        XCTAssertEqual(array[0], bart)
+        XCTAssertEqual(array[1], joe)
+    }
+    
+    func test_HOFs() {
+        let aidar = TestType(name: "Aidar", age: 24)
+        let joe = TestType(name: "Joe", age: 55)
+        array.insertArray(at: 0, values: [aidar, joe])
+        
+        XCTAssertEqual(
+            array.filter { $0.name == "Aidar" },
+            [aidar]
+        )
+        
+        XCTAssertEqual(
+            array.map { TestType(name: "Mr. " + $0.name, age: 100) },
+            [TestType(name: "Mr. Aidar", age: 100), TestType(name: "Mr. Joe", age: 100)]
+        )
+        
+        XCTAssertEqual(
+            array.reduce(into: 0, { sum, current in
+                sum += current.age
+            }),
+            79
+        )
+    }
+    
     func test_insert() {
         let initialInstance = TestType(name: "Aidar", age: 24)
         
-        array.insert(index: 0, value: initialInstance)
+        array.insert(at: 0, value: initialInstance)
         
-        XCTAssertEqual(array.get(index: 0), initialInstance)
+        XCTAssertEqual(array[0], initialInstance)
     }
     
     func test_getIndexOutOfBounds() {
         let initialInstance = TestType(name: "Aidar", age: 24)
         
-        array.insert(index: 0, value: initialInstance)
+        array.insert(at: 0, value: initialInstance)
         
         XCTAssertEqual(array.get(index: 1), nil)
     }
@@ -34,13 +73,13 @@ class YArrayTests: XCTestCase {
     func test_insertArray() {
         let arrayToInsert = [TestType(name: "Aidar", age: 24), TestType(name: "Joe", age: 55)]
 
-        array.insertArray(index: 0, values: arrayToInsert)
+        array.insertArray(at: 0, values: arrayToInsert)
 
         XCTAssertEqual(array.toArray(), arrayToInsert)
     }
 
     func test_length() {
-        array.insert(index: 0, value: TestType(name: "Aidar", age: 24))
+        array.insert(at: 0, value: TestType(name: "Aidar", age: 24))
         XCTAssertEqual(array.length(), 1)
     }
 
@@ -49,9 +88,9 @@ class YArrayTests: XCTestCase {
         let front = TestType(name: "Aidar", age: 24)
         let back = TestType(name: "Joe", age: 55)
         
-        array.insert(index: 0, value: initial)
-        array.pushBack(value: back)
-        array.pushFront(value: front)
+        array.insert(at: 0, value: initial)
+        array.append(back)
+        array.prepend(front)
 
         XCTAssertEqual(array.toArray(), [front, initial, back])
     }
@@ -61,13 +100,13 @@ class YArrayTests: XCTestCase {
         let front = TestType(name: "Aidar", age: 24)
         let back = TestType(name: "Joe", age: 55)
         
-        array.insert(index: 0, value: initial)
-        array.pushBack(value: back)
-        array.pushFront(value: front)
+        array.insert(at: 0, value: initial)
+        array.append(back)
+        array.prepend(front)
         
         XCTAssertEqual(array.toArray(), [front, initial, back])
 
-        array.remove(index: 1)
+        array.remove(at: 1)
 
         XCTAssertEqual(array.toArray(), [front, back])
     }
@@ -77,13 +116,13 @@ class YArrayTests: XCTestCase {
         let front = TestType(name: "Aidar", age: 24)
         let back = TestType(name: "Joe", age: 55)
         
-        array.insert(index: 0, value: initial)
-        array.pushBack(value: back)
-        array.pushFront(value: front)
+        array.insert(at: 0, value: initial)
+        array.append(back)
+        array.prepend(front)
         
         XCTAssertEqual(array.toArray(), [front, initial, back])
         
-        array.removeRange(index: 0, length: 3)
+        array.removeRange(start: 0, length: 3)
 
         XCTAssertEqual(array.length(), 0)
     }
@@ -92,7 +131,7 @@ class YArrayTests: XCTestCase {
         let arrayToInsert = [TestType(name: "Aidar", age: 24), TestType(name: "Joe", age: 55)]
         var collectedArray: [TestType] = []
 
-        array.insertArray(index: 0, values: arrayToInsert)
+        array.insertArray(at: 0, values: arrayToInsert)
 
         array.each {
             collectedArray.append($0)
@@ -115,7 +154,7 @@ class YArrayTests: XCTestCase {
             }
         }
 
-        array.insertArray(index: 0, values: insertedElements)
+        array.insertArray(at: 0, values: insertedElements)
 
         array.unobserve(subscriptionId)
 
@@ -131,7 +170,7 @@ class YArrayTests: XCTestCase {
         
         localDocument.transactSync { [object] txn in
             _ = object
-            localArray.insert(index: 0, value: .init(name: "Aidar", age: 24), transaction: txn)
+            localArray.insert(at: 0, value: .init(name: "Aidar", age: 24), transaction: txn)
         }
         
         object = NSObject()
