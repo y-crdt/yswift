@@ -1,6 +1,6 @@
 import XCTest
 
-struct TestType: Codable, Equatable {
+struct TestType: Codable, Equatable, Hashable {
     let name: String
     let age: Int
 }

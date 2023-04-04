@@ -1,140 +1,160 @@
 import Foundation
 import Yniffi
 
-// The Swift `Dictionary` methods we'll want to support:
-// - var isEmpty: Bool
-// - var count: Int
-// - var capacity: Int
-// - fn subscript(Key) -> Value?
-// - fn subscript(Key, default _: () -> Value) -> Value
-// - var keys
-// - var values
-// - updateValue(Value, forKey: Key) -> Value?
-// - removeValue(forKey: Key) -> Value?
-// - removeAll(keepingCapacity: Bool)
+public final class YMap<T: Codable>: Transactable {
+    private let _map: YrsMap
+    let document: YDocument
 
-public final class YMap<T: Codable>: Sequence {
-    private let docRef: YDocument
-    private let map: YrsMap
-
-    public init(map: YrsMap, doc: YDocument) {
-        self.docRef = doc
-        self.map = map
+    init(map: YrsMap, document: YDocument) {
+        self._map = map
+        self.document = document
+    }
+    
+    public var isEmpty: Bool {
+        length() == 0
+    }
+    
+    public var count: Int {
+        Int(length())
+    }
+    
+    public subscript (key: String) -> T? {
+        get {
+            get(key: key)
+        }
+        set {
+            if let newValue = newValue {
+                updateValue(newValue, forKey: key)
+            } else {
+                removeValue(forKey: key)
+            }
+        }
+    }
+    
+    public func updateValue(_ value: T, forKey key: String, transaction: YrsTransaction? = nil) {
+        inTransaction(transaction) { txn in
+            self._map.insert(tx: txn, key: key, value: Coder.encoded(value))
+        }
     }
 
-    public func insert(tx: YrsTransaction, key: String, value: T) {
-        map.insert(tx: tx, key: key, value: Coder.encoded(value))
+    public func length(transaction: YrsTransaction? = nil) -> UInt32 {
+        inTransaction(transaction) { txn in
+            self._map.length(tx: txn)
+        }
     }
 
-    public func length(tx: YrsTransaction) -> Int {
-        Int(map.length(tx: tx))
+    public func get(key: String, transaction: YrsTransaction? = nil) -> T? {
+        inTransaction(transaction) { txn -> T? in
+            if let result = try? self._map.get(tx: txn, key: key) {
+                return Coder.decoded(result)
+            } else {
+                return nil
+            }
+        }
     }
 
-    public func get(tx: YrsTransaction, key: String) -> T {
-        Coder.decoded(
-            try! map.get(tx: tx, key: key)
-        )
-    }
-
-    public func contains_key(tx: YrsTransaction, key: String) -> Bool {
-        map.containsKey(tx: tx, key: key)
+    public func containsKey(_ key: String, transaction: YrsTransaction? = nil) -> Bool {
+        inTransaction(transaction) { txn in
+            self._map.containsKey(tx: txn, key: key)
+        }
     }
 
     @discardableResult
-    public func remove(tx: YrsTransaction, key: String) -> T? {
-        Coder.decoded(
-            try! map.remove(tx: tx, key: key)
-        )
+    public func removeValue(forKey key: String, transaction: YrsTransaction? = nil) -> T? {
+        inTransaction(transaction) { txn -> T? in
+            if let result = try? self._map.remove(tx: txn, key: key) {
+                return Coder.decoded(result)
+            } else {
+                return nil
+            }
+        }
     }
 
-    public func clear(tx: YrsTransaction) {
-        map.clear(tx: tx)
+    public func removeAll(transaction: YrsTransaction? = nil) {
+        inTransaction(transaction) { txn in
+            self._map.clear(tx: txn)
+        }
     }
 
-    public func keys(tx: YrsTransaction, _ body: @escaping (String) -> Void) {
-        // @TODO: check for memory leaks
+    public func keys(transaction: YrsTransaction? = nil, _ body: @escaping (String) -> Void) {
         // Wrap the closure that accepts the key (:String) callback for each key
         // found within the map into a reference object to safely pass across
         // the UniFFI language bindings into Rust.
         let delegate = YMapKeyIteratorDelegate(callback: body)
-        map.keys(tx: tx, delegate: delegate)
+        inTransaction(transaction) { txn in
+            self._map.keys(tx: txn, delegate: delegate)
+        }
     }
 
-    public func values(tx: YrsTransaction, _ body: @escaping (T) -> Void) {
-        // @TODO: check for memory leaks
+    public func values(transaction: YrsTransaction? = nil, _ body: @escaping (T) -> Void) {
         // Wrap the closure that accepts the value (:String) callback for each value
         // found within the map into a reference object to safely pass across
         // the UniFFI language bindings into Rust. The second closure in the delegate
         // is the function that decodes the JSON string into whatever `T` is.
         let delegate = YMapValueIteratorDelegate(callback: body, decoded: Coder.decoded)
-        map.values(tx: tx, delegate: delegate)
+        inTransaction(transaction) { txn in
+            self._map.values(tx: txn, delegate: delegate)
+        }
     }
 
-    public func each(tx: YrsTransaction, _ body: @escaping (String, T) -> Void) {
-        // @TODO: check for memory leaks
+    public func each(transaction: YrsTransaction? = nil, _ body: @escaping (String, T) -> Void) {
         // Wrap the closure that accepts both the key and value (:String) callback for every
         // key-value pair within the map into a reference object to safely pass across
         // the UniFFI language bindings into Rust. The second closure in the delegate
         // is the function that decodes the value JSON string into whatever `T` is.
         let delegate = YMapKeyValueIteratorDelegate(callback: body, decoded: Coder.decoded)
-        map.each(tx: tx, delegate: delegate)
+        inTransaction(transaction) { txn in
+            self._map.each(tx: txn, delegate: delegate)
+        }
     }
 
     public func observe(_ body: @escaping ([YMapChange<T>]) -> Void) -> UInt32 {
         let delegate = YMapObservationDelegate(callback: body, decoded: Coder.decoded)
-        return map.observe(delegate: delegate)
+        return _map.observe(delegate: delegate)
     }
 
     public func unobserve(_ subscriptionId: UInt32) {
-        map.unobserve(subscriptionId: subscriptionId)
+        _map.unobserve(subscriptionId: subscriptionId)
     }
 
-    public func toMap(tx: YrsTransaction) -> [String: T] {
+    public func toMap(transaction: YrsTransaction? = nil) -> [String: T] {
         var replicatedMap: [String: T] = [:]
-        each(tx: tx) { keyValue, typeValue in
-            replicatedMap[keyValue] = typeValue
+        each(transaction: transaction) { key, value in
+            replicatedMap[key] = value
         }
         return replicatedMap
     }
+}
 
-    public typealias Iterator = YMapIterator<T>
-    public class YMapIterator<T>: IteratorProtocol {
-
-        var keyList:[String]
-        let map: YMap
-
-        init(_ map: YMap) {
-            self.map = map
-            var tempList:[String] = []
-            map.docRef.transactSync { txn in
-                map.keys(tx: txn, { keyValue in
-                    tempList.append(keyValue)
-                })
-            }
-            keyList = tempList
-        }
-
-        public func next() -> (String, T)? {
-            if let key = self.keyList.popLast() {
-                let iterSet = self.map.docRef.transactSync { txn -> (String, T) in
-                    let valueForKey: T = self.map.get(tx: txn, key: key) as! T
-                    return (key, valueForKey)
-                }
-                return iterSet
-            }
-            return nil
-        }
-    }
+extension YMap: Sequence {
+    public typealias Iterator = YMapIterator
     
     // this method can't support the Iterator protocol because I've added
     // YrsTransation to the function, needed for any interactions with the
     // map - but the protocol defines it as taking no additional
     // options. So... where do we get a relevant transaction? Do we stash
     // one within the map, or create it afresh on each iterator creation?
-    public func makeIterator() -> YMapIterator<T> {
+    public func makeIterator() -> Iterator {
         YMapIterator(self)
     }
+    
+    public class YMapIterator: IteratorProtocol {
+        var keyValues: [(String, T)]
+
+        init(_ map: YMap) {
+            var collectedKeyValues: [(String, T)] = []
+            map.each { key, value in
+                collectedKeyValues.append((key, value))
+            }
+            keyValues = collectedKeyValues
+        }
+
+        public func next() -> (String, T)? {
+            keyValues.popLast()
+        }
+    }
 }
+
 /// A type that holds a closure that the Rust language bindings calls
 /// while iterating the keys of a Map.
 class YMapKeyIteratorDelegate: YrsMapIteratorDelegate {

@@ -63,6 +63,6 @@ public final class YDocument {
     }
 
     public func getOrCreateMap<T: Codable>(named: String) -> YMap<T> {
-        YMap(map: document.getMap(name: named), doc: self)
+        YMap(map: document.getMap(name: named), document: self)
     }
 }

@@ -94,7 +94,7 @@ class YArrayTests: XCTestCase {
 
         array.insertArray(index: 0, values: arrayToInsert)
 
-        array.forEach {
+        array.each {
             collectedArray.append($0)
         }
         
