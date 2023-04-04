@@ -1,5 +1,6 @@
 import Foundation
 import Yniffi
+import Combine
 
 public final class YMap<T: Codable>: Transactable {
     private let _map: YrsMap
@@ -107,9 +108,18 @@ public final class YMap<T: Codable>: Transactable {
             self._map.each(tx: txn, delegate: delegate)
         }
     }
+    
+    public func observe() -> AnyPublisher<[YMapChange<T>], Never> {
+        let subject = PassthroughSubject<[YMapChange<T>], Never>()
+        let subscriptionId = observe { subject.send($0) }
+        return subject.handleEvents(receiveCancel: { [weak self] in
+            self?._map.unobserve(subscriptionId: subscriptionId)
+        })
+        .eraseToAnyPublisher()
+    }
 
     public func observe(_ body: @escaping ([YMapChange<T>]) -> Void) -> UInt32 {
-        let delegate = YMapObservationDelegate(callback: body, decoded: Coder.decoded)
+        let delegate = YMapObservationDelegate(decoded: Coder.decoded, callback: body)
         return _map.observe(delegate: delegate)
     }
 
@@ -217,11 +227,11 @@ class YMapObservationDelegate<T: Codable>: YrsMapObservationDelegate {
     private var decoded: (String) -> T
 
     init(
-        callback: @escaping ([YMapChange<T>]) -> Void,
-        decoded: @escaping (String) -> T
+        decoded: @escaping (String) -> T,
+        callback: @escaping ([YMapChange<T>]) -> Void
     ) {
-        self.callback = callback
         self.decoded = decoded
+        self.callback = callback
     }
 
     func call(value: [YrsMapChange]) {

@@ -1,5 +1,6 @@
 import Foundation
 import Yniffi
+import Combine
 
 public final class YArray<T: Codable>: Transactable {
     private let _array: YrsArray
@@ -82,6 +83,15 @@ public final class YArray<T: Codable>: Transactable {
             self._array.each(tx: txn, delegate: delegate)
         }
     }
+    
+    public func observe() -> AnyPublisher<[YArrayChange<T>], Never> {
+        let subject = PassthroughSubject<[YArrayChange<T>], Never>()
+        let subscriptionId = observe { subject.send($0) }
+        return subject.handleEvents(receiveCancel: { [weak self] in
+            self?._array.unobserve(subscriptionId: subscriptionId)
+        })
+        .eraseToAnyPublisher()
+    }
 
     public func observe(_ body: @escaping ([YArrayChange<T>]) -> Void) -> UInt32 {
         let delegate = YArrayObservationDelegate(callback: body, decoded: Coder.decodedArray)
@@ -113,7 +123,6 @@ extension YArray: Sequence {
     }
 }
 
-#warning("Implement properly after Iterator is done")
 // At the moment, below protocol implementations are "stub"-ish in nature
 // They need to be completed & tested after Iterator is ported from Rust side
 extension YArray: MutableCollection, RandomAccessCollection {
