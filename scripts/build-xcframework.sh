@@ -3,6 +3,13 @@
 set -e # immediately terminate script on any failure conditions
 set -x # echo script commands for easier debugging
 
+THIS_SCRIPT_DIR="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
+# ^^ provides an absolutely local path to where the script is being invoked,
+# which lets us target further build commands specific to a directory
+# srtucture.
+# example: /Users/heckj/src/y-uniffi/scripts
+pushd "$THIS_SCRIPT_DIR/../lib"
+
 PACKAGE_NAME="yniffi"
 LIB_NAME="libuniffi_yniffi.a"
 

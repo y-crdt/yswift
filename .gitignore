@@ -2,6 +2,8 @@
 
 target/
 build/
+.symbol-graphs
+docs/
 
 Cargo.lock
 
