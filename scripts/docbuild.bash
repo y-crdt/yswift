@@ -23,10 +23,17 @@ export DOCC_JSON_PRETTYPRINT=YES
 #   $(xcrun --find swift) package resolve
 #   $(xcrun --find swift) build
 
+rm -rf .build .ffisymbol-graphs
+mkdir -p .ffisymbol-graphs
+
 rm -rf .build .symbol-graphs
 mkdir -p .symbol-graphs
 
 $(xcrun --find swift) build --target Yniffi \
+    -Xswiftc -emit-symbol-graph \
+    -Xswiftc -emit-symbol-graph-dir -Xswiftc .ffisymbol-graphs
+
+$(xcrun --find swift) build --target YSwift \
     -Xswiftc -emit-symbol-graph \
     -Xswiftc -emit-symbol-graph-dir -Xswiftc .symbol-graphs
 
@@ -34,11 +41,24 @@ $(xcrun --find docc) convert lib/swift/scaffold/Documentation.docc \
     --fallback-display-name Yniffi \
     --fallback-bundle-identifier com.github.y-crdt.Yniffi \
     --fallback-bundle-version 0.16.1 \
-    --additional-symbol-graph-dir .symbol-graphs \
+    --additional-symbol-graph-dir .ffisymbol-graphs \
     --emit-digest \
     --transform-for-static-hosting \
     --output-path ./docs \
     --hosting-base-path 'Yniffi'
+    # --experimental-documentation-coverage \
+    # --level brief
+    # --disable-indexing \
+
+$(xcrun --find docc) convert Sources/YSwift/Documentation.docc \
+    --fallback-display-name YSwift \
+    --fallback-bundle-identifier com.github.y-crdt.YSwift \
+    --fallback-bundle-version 0.16.1 \
+    --additional-symbol-graph-dir .symbol-graphs \
+    --emit-digest \
+    --transform-for-static-hosting \
+    --output-path ./docs \
+    --hosting-base-path 'YSwift'
     # --experimental-documentation-coverage \
     # --level brief
     # --disable-indexing \
@@ -79,10 +99,15 @@ $(xcrun --find docc) convert lib/swift/scaffold/Documentation.docc \
 # Generate a list of all the identifiers to assist in DocC curation
 #
 
-cat docs/linkable-entities.json | jq '.[].referenceURL' -r > all_identifiers.txt
-sort all_identifiers.txt \
-    | sed -e 's/doc:\/\/com\.github\.y-crdt\.Yniffi\/documentation\///g' \
+cat docs/linkable-entities.json | jq '.[].referenceURL' -r | grep 'Yniffi' > yniffi_identifiers.txt
+cat docs/linkable-entities.json | jq '.[].referenceURL' -r | grep 'YSwift' | grep -v "Yniffi" > yswift_identifiers.txt
+sort yniffi_identifiers.txt \
+    | sed -e 's/doc:\/\/com\.github\.y-crdt\.YSwift\/documentation\///g' \
     | sed -e 's/^/- ``/g' \
-    | sed -e 's/$/``/g' > all_symbols.txt
+    | sed -e 's/$/``/g' > yniffi_symbols.txt
+sort yswift_identifiers.txt \
+    | sed -e 's/doc:\/\/com\.github\.y-crdt\.YSwift\/documentation\///g' \
+    | sed -e 's/^/- ``/g' \
+    | sed -e 's/$/``/g' > yswift_symbols.txt
 
 # echo "Page will be available at https://y-crdt.github.io/y-uniffi/documentation/yniffi/"
