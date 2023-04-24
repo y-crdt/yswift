@@ -1,10 +1,14 @@
 *.DS_Store
+.swiftpm
 
 *.xcodeproj
 Derived/
 target/
 build/
 .symbol-graphs
+.ffisymbol-graphs
+*_identifiers.txt
+*_symbols.txt
 docs/
 
 Cargo.lock
