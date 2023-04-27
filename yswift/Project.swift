@@ -12,21 +12,6 @@ let mainTarget = Target(
     dependencies: [.external(name: "Yniffi")]
 )
 
-let exampleDocumentEditing = Target(
-    name: "DocumentEditing",
-    platform: .iOS,
-    product: .app,
-    bundleId: "y-crdt.swift.example.document-editing",
-    deploymentTarget: .iOS(targetVersion: "15.0", devices: .iphone),
-    infoPlist: .extendingDefault(with: [
-        "UILaunchStoryboardName": "LaunchScreen",
-        "NSLocalNetworkUsageDescription": "YSwiftExample needs to use your phone’s data to discover devices nearby",
-    ]),
-    sources: ["Examples/DocumentEditing/**"],
-    resources: ["Examples/DocumentEditing/LaunchScreen.storyboard"],
-    dependencies: [.target(name: "YSwift")]
-)
-
 let exampleTodolist = Target(
     name: "TodoListExample",
     platform: .iOS,
@@ -55,6 +40,6 @@ let testTarget = Target(
 let project = Project(
     name: "YSwift",
     organizationName: "y-crdt",
-    targets: [mainTarget, exampleDocumentEditing, exampleTodolist, testTarget],
+    targets: [mainTarget, exampleTodolist, testTarget],
     fileHeaderTemplate: .none
 )
