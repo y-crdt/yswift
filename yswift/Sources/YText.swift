@@ -12,7 +12,7 @@ public final class YText: Transactable {
     }
     
     public func append(_ text: String, in transaction: YrsTransaction? = nil) {
-        inTransaction(transaction) { txn in
+        withTransaction(transaction) { txn in
             self._text.append(tx: txn, text: text)
         }
     }
@@ -22,7 +22,7 @@ public final class YText: Transactable {
         at index: UInt32,
         in transaction: YrsTransaction? = nil
     ) {
-        inTransaction(transaction) { txn in
+        withTransaction(transaction) { txn in
             self._text.insert(tx: txn, index: index, chunk: text)
         }
     }
@@ -33,7 +33,7 @@ public final class YText: Transactable {
         at index: UInt32,
         in transaction: YrsTransaction? = nil
     ) {
-        inTransaction(transaction) { txn in
+        withTransaction(transaction) { txn in
             self._text.insertWithAttributes(tx: txn, index: index, chunk: text, attrs: Coder.encoded(attributes))
         }
     }
@@ -43,7 +43,7 @@ public final class YText: Transactable {
         at index: UInt32,
         in transaction: YrsTransaction? = nil
     ) {
-        inTransaction(transaction) { txn in
+        withTransaction(transaction) { txn in
             self._text.insertEmbed(tx: txn, index: index, content: Coder.encoded(embed))
         }
     }
@@ -54,7 +54,7 @@ public final class YText: Transactable {
         at index: UInt32,
         in transaction: YrsTransaction? = nil
     ) {
-        inTransaction(transaction) { txn in
+        withTransaction(transaction) { txn in
             self._text.insertEmbedWithAttributes(tx: txn, index: index, content: Coder.encoded(embed), attrs: Coder.encoded(attributes))
         }
     }
@@ -65,7 +65,7 @@ public final class YText: Transactable {
         attributes: [String: Any],
         in transaction: YrsTransaction? = nil
     ) {
-        inTransaction(transaction) { txn in
+        withTransaction(transaction) { txn in
             self._text.format(tx: txn, index: index, length: length, attrs: Coder.encoded(attributes))
         }
     }
@@ -75,19 +75,19 @@ public final class YText: Transactable {
         length: UInt32,
         in transaction: YrsTransaction? = nil
     ) {
-        inTransaction(transaction) { txn in
+        withTransaction(transaction) { txn in
             self._text.removeRange(tx: txn, start: start, length: length)
         }
     }
 
     public func getString(in transaction: YrsTransaction? = nil) -> String {
-        inTransaction(transaction) { txn in
+        withTransaction(transaction) { txn in
             self._text.getString(tx: txn)
         }
     }
 
     public func length(in transaction: YrsTransaction? = nil) -> UInt32 {
-        inTransaction(transaction) { txn in
+        withTransaction(transaction) { txn in
             self._text.length(tx: txn)
         }
     }

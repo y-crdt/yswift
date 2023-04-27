@@ -20,7 +20,7 @@ public final class YArray<T: Codable>: Transactable {
     }
 
     public func get(index: Int, transaction: YrsTransaction? = nil) -> T? {
-        inTransaction(transaction) { txn in
+        withTransaction(transaction) { txn in
             if let result = try? self._array.get(tx: txn, index: UInt32(index)) {
                 return Coder.decoded(result)
             } else {
@@ -30,56 +30,56 @@ public final class YArray<T: Codable>: Transactable {
     }
 
     public func insert(at index: Int, value: T, transaction: YrsTransaction? = nil) {
-        inTransaction(transaction) { txn in
+        withTransaction(transaction) { txn in
             self._array.insert(tx: txn, index: UInt32(index), value: Coder.encoded(value))
         }
     }
 
     public func insertArray(at index: Int, values: [T], transaction: YrsTransaction? = nil) {
-        inTransaction(transaction) { txn in
+        withTransaction(transaction) { txn in
             self._array.insertRange(tx: txn, index: UInt32(index), values: Coder.encodedArray(values))
         }
     }
 
     public func append(_ value: T, transaction: YrsTransaction? = nil) {
-        inTransaction(transaction) { txn in
+        withTransaction(transaction) { txn in
             self._array.pushBack(tx: txn, value: Coder.encoded(value))
         }
     }
 
     public func prepend(_ value: T, transaction: YrsTransaction? = nil) {
-        inTransaction(transaction) { txn in
+        withTransaction(transaction) { txn in
             self._array.pushFront(tx: txn, value: Coder.encoded(value))
         }
     }
 
     public func remove(at index: Int, transaction: YrsTransaction? = nil) {
-        inTransaction(transaction) { txn in
+        withTransaction(transaction) { txn in
             self._array.remove(tx: txn, index: UInt32(index))
         }
     }
 
     public func removeRange(start: Int, length: Int, transaction: YrsTransaction? = nil) {
-        inTransaction(transaction) { txn in
+        withTransaction(transaction) { txn in
             self._array.removeRange(tx: txn, index: UInt32(start), len: UInt32(length))
         }
     }
     
     public func length(transaction: YrsTransaction? = nil) -> UInt32 {
-        inTransaction(transaction) { txn in
+        withTransaction(transaction) { txn in
             self._array.length(tx: txn)
         }
     }
     
     public func toArray(transaction: YrsTransaction? = nil) -> [T] {
-        inTransaction(transaction) { txn in
+        withTransaction(transaction) { txn in
             Coder.decodedArray(self._array.toA(tx: txn))
         }
     }
     
     public func each(transaction: YrsTransaction? = nil, _ body: @escaping (T) -> Void) {
         let delegate = YArrayEachDelegate(callback: body, decoded: Coder.decoded)
-        inTransaction(transaction) { txn in
+        withTransaction(transaction) { txn in
             self._array.each(tx: txn, delegate: delegate)
         }
     }
@@ -147,7 +147,7 @@ extension YArray: MutableCollection, RandomAccessCollection {
         }
         set(newValue) {
             precondition(position < endIndex, "Index out of bounds")
-            inTransaction { txn in
+            withTransaction { txn in
                 self.remove(at: position, transaction: txn)
                 self.insert(at: position, value: newValue, transaction: txn)
             }
