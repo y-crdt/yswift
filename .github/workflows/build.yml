@@ -21,54 +21,51 @@ jobs:
     - name: Show Build Version
       run: xcodebuild -version
 
+    - name: Build XCFramework 
+      run: ./scripts/build-xcframework.sh
+
+    - name: Build YSwift
+      run: swift build
+
+    - name: Test YSwift
+      run: swift test --enable-code-coverage -v
+
     # per https://github.com/tuist/tuist/discussions/2802, we could also
     # bundle and include tuist in tthe repository if that had value.
-    - name: Install Tuist
-      run: curl -Ls https://install.tuist.io | bash
+    # - name: Install Tuist
+    #   run: curl -Ls https://install.tuist.io | bash
 
-    - name: Setup Rust 
-      run: |
-        cd lib
-        ./build-xcframework.sh
+    # - name: Tuist Fetch
+    #   run: |
+    #     cd yswift
+    #     tuist fetch
 
-    - name: Tuist Fetch
-      run: |
-        cd yswift
-        tuist fetch
+    # - name: Tuist Generate
+    #   run: |
+    #     cd yswift
+    #     tuist generate -n
 
-    - name: Tuist Generate
-      run: |
-        cd yswift
-        tuist generate -n
+    # - name: Tuist Test
+    #   run: |
+    #     cd yswift
+    #     tuist test YSwift
 
-    - name: Tuist Test
-      run: |
-        cd yswift
-        tuist test YSwift
+    # NOTE: use `xcodebuild -list` to show the local schemes available
 
     # - name: Show Build Settings
-    #   run: xcodebuild -scheme xxx -showBuildSettings
+    #   run: xcodebuild -scheme YSwift -showBuildSettings
 
     # - name: Show Build SDK
-    #   run: xcodebuild -scheme xxx -showsdks
-    # xcodebuild
-
-    # - name: build and test
-    #   run: swift test --enable-code-coverage -v
-
-      #- name: Xcode iOS build
-      #run: xcodebuild clean build -scheme xxx-Package -destination 'platform=iOS Simulator,OS=15.5,name=iPhone 8' -showBuildTimingSummary
-
-        #- name: check against API breaking changes
-        #  run: swift package diagnose-api-breaking-changes 0.5.0
+    #   run: xcodebuild -scheme YSwift -showsdks
 
     # - name: env review
     #   run: env
 
-      #- name: doc utility build verification
-      # run: |
-      #  cd utils
-      #  swift build
+    #- name: Xcode iOS build
+    #run: xcodebuild clean build -scheme YSwift -destination 'platform=iOS Simulator,OS=15.5,name=iPhone 8' -showBuildTimingSummary
+
+    #- name: check against API breaking changes
+    #  run: swift package diagnose-api-breaking-changes 0.5.0
 
     # - name: Prepare Code Coverage
     #   run: xcrun llvm-cov export -format="lcov" .build/debug/xxx.xctest/Contents/MacOS/xx -instr-profile .build/debug/codecov/default.profdata > info.lcov
