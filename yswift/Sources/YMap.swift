@@ -33,19 +33,19 @@ public final class YMap<T: Codable>: Transactable {
     }
     
     public func updateValue(_ value: T, forKey key: String, transaction: YrsTransaction? = nil) {
-        inTransaction(transaction) { txn in
+        withTransaction(transaction) { txn in
             self._map.insert(tx: txn, key: key, value: Coder.encoded(value))
         }
     }
 
     public func length(transaction: YrsTransaction? = nil) -> UInt32 {
-        inTransaction(transaction) { txn in
+        withTransaction(transaction) { txn in
             self._map.length(tx: txn)
         }
     }
 
     public func get(key: String, transaction: YrsTransaction? = nil) -> T? {
-        inTransaction(transaction) { txn -> T? in
+        withTransaction(transaction) { txn -> T? in
             if let result = try? self._map.get(tx: txn, key: key) {
                 return Coder.decoded(result)
             } else {
@@ -55,14 +55,14 @@ public final class YMap<T: Codable>: Transactable {
     }
 
     public func containsKey(_ key: String, transaction: YrsTransaction? = nil) -> Bool {
-        inTransaction(transaction) { txn in
+        withTransaction(transaction) { txn in
             self._map.containsKey(tx: txn, key: key)
         }
     }
 
     @discardableResult
     public func removeValue(forKey key: String, transaction: YrsTransaction? = nil) -> T? {
-        inTransaction(transaction) { txn -> T? in
+        withTransaction(transaction) { txn -> T? in
             if let result = try? self._map.remove(tx: txn, key: key) {
                 return Coder.decoded(result)
             } else {
@@ -72,7 +72,7 @@ public final class YMap<T: Codable>: Transactable {
     }
 
     public func removeAll(transaction: YrsTransaction? = nil) {
-        inTransaction(transaction) { txn in
+        withTransaction(transaction) { txn in
             self._map.clear(tx: txn)
         }
     }
@@ -82,7 +82,7 @@ public final class YMap<T: Codable>: Transactable {
         // found within the map into a reference object to safely pass across
         // the UniFFI language bindings into Rust.
         let delegate = YMapKeyIteratorDelegate(callback: body)
-        inTransaction(transaction) { txn in
+        withTransaction(transaction) { txn in
             self._map.keys(tx: txn, delegate: delegate)
         }
     }
@@ -93,7 +93,7 @@ public final class YMap<T: Codable>: Transactable {
         // the UniFFI language bindings into Rust. The second closure in the delegate
         // is the function that decodes the JSON string into whatever `T` is.
         let delegate = YMapValueIteratorDelegate(callback: body, decoded: Coder.decoded)
-        inTransaction(transaction) { txn in
+        withTransaction(transaction) { txn in
             self._map.values(tx: txn, delegate: delegate)
         }
     }
@@ -104,7 +104,7 @@ public final class YMap<T: Codable>: Transactable {
         // the UniFFI language bindings into Rust. The second closure in the delegate
         // is the function that decodes the value JSON string into whatever `T` is.
         let delegate = YMapKeyValueIteratorDelegate(callback: body, decoded: Coder.decoded)
-        inTransaction(transaction) { txn in
+        withTransaction(transaction) { txn in
             self._map.each(tx: txn, delegate: delegate)
         }
     }
