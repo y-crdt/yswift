@@ -2,7 +2,7 @@ import ProjectDescription
 
 let dependencies = Dependencies(
     swiftPackageManager: [
-        .local(path: "../")
+        .local(path: "../"),
     ],
     platforms: [.iOS]
 )

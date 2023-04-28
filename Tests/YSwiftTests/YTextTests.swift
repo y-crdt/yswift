@@ -1,31 +1,31 @@
+import Combine
 import XCTest
 @testable import YSwift
-import Combine
 
 class YTextTests: XCTestCase {
     var document: YDocument!
     var text: YText!
-    
+
     override func setUp() {
         document = YDocument()
         text = document.getOrCreateText(named: "test")
     }
-    
+
     override func tearDown() {
         document = nil
         text = nil
     }
-    
+
     func test_append() {
         text.append("hello, world!")
-        
+
         XCTAssertEqual(String(text), "hello, world!")
     }
-    
+
     func test_appendAndInsert() throws {
         text.append("trailing text")
         text.insert("leading text, ", at: 0)
-        
+
         XCTAssertEqual(String(text), "leading text, trailing text")
     }
 
@@ -46,7 +46,7 @@ class YTextTests: XCTestCase {
                 }
             }
         }
-        
+
         text.append("abc")
         text.format(at: 0, length: 3, attributes: expectedAttributes)
 
@@ -72,15 +72,15 @@ class YTextTests: XCTestCase {
                 }
             }
         }
-        
+
         text.insertWithAttributes("abc", attributes: expectedAttributes, at: 0)
-        
+
         text.unobserve(subscriptionId)
 
         XCTAssertEqual(String(text), "abc")
         XCTAssertEqual(expectedAttributes, actualAttributes)
     }
-    
+
     func test_insertEmbed() {
         let embed = TestType(name: "Aidar", age: 24)
         var insertedEmbed: TestType?
@@ -94,7 +94,7 @@ class YTextTests: XCTestCase {
                 }
             }
         }
-        
+
         text.insertEmbed(embed, at: 0)
 
         text.unobserve(subscriptionId)
@@ -132,7 +132,7 @@ class YTextTests: XCTestCase {
         XCTAssertEqual(embed, insertedEmbed)
         XCTAssertEqual(expectedAttributes, actualAttributes)
     }
-    
+
     func test_length() throws {
         text.append("abcd")
         XCTAssertEqual(text.length(), 4)
@@ -141,7 +141,7 @@ class YTextTests: XCTestCase {
     func test_removeRange() throws {
         text.append("few apples")
         text.removeRange(start: 0, length: 4)
-        
+
         XCTAssertEqual(String(text), "apples")
     }
 
@@ -215,7 +215,7 @@ class YTextTests: XCTestCase {
         object = NSObject()
         XCTAssertNil(weakObject)
     }
-    
+
     func test_observation_publisher() {
         var insertedValue = String()
 
@@ -235,7 +235,7 @@ class YTextTests: XCTestCase {
 
         XCTAssertEqual(insertedValue, "test")
     }
-    
+
     func test_observation_publisher_IsLeakingWithoutCancelling() {
         // Create an object (it can be of any type), and hold both
         // a strong and a weak reference to it
@@ -249,7 +249,7 @@ class YTextTests: XCTestCase {
             _ = object
             changes.forEach { _ in }
         }
-        
+
         // this is to just silence the "unused variable" warning regading `cancellable` variable above
         // remove below two lines to see the warning; it cannot be replace with `_`, because Combine
         // automatically cancells the subscription in that case
@@ -262,7 +262,7 @@ class YTextTests: XCTestCase {
         object = NSObject()
         XCTAssertNotNil(weakObject)
     }
-    
+
     func test_observation_publisher_IsNotLeakingAfterCancelling() {
         // Create an object (it can be of any type), and hold both
         // a strong and a weak reference to it
@@ -276,7 +276,7 @@ class YTextTests: XCTestCase {
             _ = object
             changes.forEach { _ in }
         }
-        
+
         // Explicit cancelling, to prevent leaking
         cancellable.cancel()
 

@@ -14,5 +14,3 @@ extension Transactable {
         }
     }
 }
-
-

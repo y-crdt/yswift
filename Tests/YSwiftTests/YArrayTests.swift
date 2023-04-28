@@ -1,73 +1,73 @@
+import Combine
 import XCTest
 @testable import YSwift
-import Combine
 
 class YArrayTests: XCTestCase {
     var document: YDocument!
     var array: YArray<TestType>!
-    
+
     override func setUp() {
         document = YDocument()
         array = document.getOrCreateArray(named: "test")
     }
-    
+
     override func tearDown() {
         document = nil
         array = nil
     }
-    
+
     func test_subscripts() {
         let aidar = TestType(name: "Aidar", age: 24)
         let kevin = TestType(name: "Kevin", age: 100)
         let joe = TestType(name: "Joe", age: 55)
         let bart = TestType(name: "Bart", age: 200)
-        
+
         array.insertArray(at: 0, values: [aidar, kevin, joe])
-        
+
         array[0] = bart
         array.remove(at: 1)
-        
+
         XCTAssertEqual(array.count, 2)
         XCTAssertEqual(array[0], bart)
         XCTAssertEqual(array[1], joe)
     }
-    
+
     func test_HOFs() {
         let aidar = TestType(name: "Aidar", age: 24)
         let joe = TestType(name: "Joe", age: 55)
         array.insertArray(at: 0, values: [aidar, joe])
-        
+
         XCTAssertEqual(
             array.filter { $0.name == "Aidar" },
             [aidar]
         )
-        
+
         XCTAssertEqual(
             array.map { TestType(name: "Mr. " + $0.name, age: 100) },
             [TestType(name: "Mr. Aidar", age: 100), TestType(name: "Mr. Joe", age: 100)]
         )
-        
+
         XCTAssertEqual(
-            array.reduce(into: 0, { sum, current in
+            array.reduce(into: 0) { sum, current in
                 sum += current.age
-            }),
+            },
             79
         )
     }
-    
+
     func test_insert() {
         let initialInstance = TestType(name: "Aidar", age: 24)
-        
+
         array.insert(at: 0, value: initialInstance)
-        
+
         XCTAssertEqual(array[0], initialInstance)
     }
-    
+
     func test_getIndexOutOfBounds() {
         let initialInstance = TestType(name: "Aidar", age: 24)
-        
+
         array.insert(at: 0, value: initialInstance)
-        
+
         XCTAssertEqual(array.get(index: 1), nil)
     }
 
@@ -88,7 +88,7 @@ class YArrayTests: XCTestCase {
         let initial = TestType(name: "Middleton", age: 77)
         let front = TestType(name: "Aidar", age: 24)
         let back = TestType(name: "Joe", age: 55)
-        
+
         array.insert(at: 0, value: initial)
         array.append(back)
         array.prepend(front)
@@ -100,11 +100,11 @@ class YArrayTests: XCTestCase {
         let initial = TestType(name: "Middleton", age: 77)
         let front = TestType(name: "Aidar", age: 24)
         let back = TestType(name: "Joe", age: 55)
-        
+
         array.insert(at: 0, value: initial)
         array.append(back)
         array.prepend(front)
-        
+
         XCTAssertEqual(array.toArray(), [front, initial, back])
 
         array.remove(at: 1)
@@ -116,13 +116,13 @@ class YArrayTests: XCTestCase {
         let initial = TestType(name: "Middleton", age: 77)
         let front = TestType(name: "Aidar", age: 24)
         let back = TestType(name: "Joe", age: 55)
-        
+
         array.insert(at: 0, value: initial)
         array.append(back)
         array.prepend(front)
-        
+
         XCTAssertEqual(array.toArray(), [front, initial, back])
-        
+
         array.removeRange(start: 0, length: 3)
 
         XCTAssertEqual(array.length(), 0)
@@ -137,28 +137,28 @@ class YArrayTests: XCTestCase {
         array.each {
             collectedArray.append($0)
         }
-        
+
         XCTAssertEqual(arrayToInsert, collectedArray)
     }
 
     func test_transaction_IsNotLeaking() {
         let localDocument = YDocument()
         let localArray: YArray<TestType> = localDocument.getOrCreateArray(named: "test")
-        
+
         var object = NSObject()
         weak var weakObject = object
-        
+
         localDocument.transactSync { [object] txn in
             _ = object
             localArray.insert(at: 0, value: .init(name: "Aidar", age: 24), transaction: txn)
         }
-        
+
         object = NSObject()
         XCTAssertNil(weakObject)
         trackForMemoryLeaks(localArray)
         trackForMemoryLeaks(localDocument)
     }
-    
+
     func test_observation_closure() {
         let insertedElements = [TestType(name: "Aidar", age: 24), TestType(name: "Joe", age: 55)]
         var receivedElements: [TestType] = []
@@ -230,11 +230,11 @@ class YArrayTests: XCTestCase {
         object = NSObject()
         XCTAssertNil(weakObject)
     }
-    
+
     func test_observation_publisher() {
         let insertedElements = [TestType(name: "Aidar", age: 24), TestType(name: "Joe", age: 55)]
         var receivedElements: [TestType] = []
-        
+
         let cancellable = array.observe().sink { changes in
             changes.forEach {
                 switch $0 {
@@ -251,7 +251,7 @@ class YArrayTests: XCTestCase {
 
         XCTAssertEqual(insertedElements, receivedElements)
     }
-    
+
     func test_observation_publisher_IsLeakingWithoutCancelling() {
         // Create an object (it can be of any type), and hold both
         // a strong and a weak reference to it
@@ -265,7 +265,7 @@ class YArrayTests: XCTestCase {
             _ = object
             changes.forEach { _ in }
         }
-        
+
         // this is to just silence the "unused variable" warning regading `cancellable` variable above
         // remove below two lines to see the warning; it cannot be replace with `_`, because Combine
         // automatically cancells the subscription in that case
@@ -278,7 +278,7 @@ class YArrayTests: XCTestCase {
         object = NSObject()
         XCTAssertNotNil(weakObject)
     }
-    
+
     func test_observation_publisher_IsNotLeakingAfterCancelling() {
         // Create an object (it can be of any type), and hold both
         // a strong and a weak reference to it
@@ -292,7 +292,7 @@ class YArrayTests: XCTestCase {
             _ = object
             changes.forEach { _ in }
         }
-        
+
         // Explicit cancelling, to prevent leaking
         cancellable.cancel()
 

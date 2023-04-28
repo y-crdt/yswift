@@ -25,19 +25,19 @@ enum ConnectionState: String {
 final class TodolistViewModel: ObservableObject {
     @Published var connectionState: ConnectionState?
     let items: YArray<TodoItem>
-    
+
     private let connectionManager: ConnectionManager
     private let document: YDocument
 
     init(connectionManager: ConnectionManager, document: YDocument) {
         self.connectionManager = connectionManager
         self.document = document
-        self.items = document.getOrCreateArray(named: "TodoItem")
+        items = document.getOrCreateArray(named: "TodoItem")
 
         connectionManager.onUpdatesReceived = { [weak self] in
             self?.reloadUI()
         }
-        
+
         connectionManager.onConnectionStateChanged = { [weak self] sessionState in
             DispatchQueue.main.async {
                 self?.connectionState = .init(sessionState)
@@ -55,7 +55,7 @@ final class TodolistViewModel: ObservableObject {
 
     func toggleItem(_ item: TodoItem) {
         guard let index = items.firstIndex(of: item) else { return }
-        
+
         var newItem = item
         newItem.isCompleted.toggle()
 
@@ -65,7 +65,7 @@ final class TodolistViewModel: ObservableObject {
             self.items.insert(at: index, value: newItem, transaction: txn)
             return txn.transactionEncodeUpdate()
         }
-        
+
         propagateUpdate(update)
     }
 
@@ -87,7 +87,7 @@ final class TodolistViewModel: ObservableObject {
         }
         propagateUpdate(update)
     }
-    
+
     private func propagateUpdate(_ update: Buffer) {
         guard !update.isEmpty else { return }
         reloadUI()

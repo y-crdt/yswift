@@ -1,22 +1,22 @@
+import Combine
 import Foundation
 import Yniffi
-import Combine
 
 public final class YText: Transactable {
     private let _text: YrsText
     let document: YDocument
 
     init(text: YrsText, document: YDocument) {
-        self._text = text
+        _text = text
         self.document = document
     }
-    
+
     public func append(_ text: String, in transaction: YrsTransaction? = nil) {
         withTransaction(transaction) { txn in
             self._text.append(tx: txn, text: text)
         }
     }
-    
+
     public func insert(
         _ text: String,
         at index: UInt32,
@@ -26,7 +26,7 @@ public final class YText: Transactable {
             self._text.insert(tx: txn, index: index, chunk: text)
         }
     }
-    
+
     public func insertWithAttributes(
         _ text: String,
         attributes: [String: Any],
@@ -37,7 +37,7 @@ public final class YText: Transactable {
             self._text.insertWithAttributes(tx: txn, index: index, chunk: text, attrs: Coder.encoded(attributes))
         }
     }
-    
+
     public func insertEmbed<T: Encodable>(
         _ embed: T,
         at index: UInt32,
@@ -58,7 +58,7 @@ public final class YText: Transactable {
             self._text.insertEmbedWithAttributes(tx: txn, index: index, content: Coder.encoded(embed), attrs: Coder.encoded(attributes))
         }
     }
-    
+
     public func format(
         at index: UInt32,
         length: UInt32,
@@ -69,7 +69,7 @@ public final class YText: Transactable {
             self._text.format(tx: txn, index: index, length: length, attrs: Coder.encoded(attributes))
         }
     }
-    
+
     public func removeRange(
         start: UInt32,
         length: UInt32,
@@ -91,7 +91,7 @@ public final class YText: Transactable {
             self._text.length(tx: txn)
         }
     }
-    
+
     public func observe() -> AnyPublisher<[YTextChange], Never> {
         let subject = PassthroughSubject<[YTextChange], Never>()
         let subscriptionId = observe { subject.send($0) }
@@ -121,8 +121,8 @@ extension YText: Equatable {
     }
 }
 
-extension String {
-    public init(_ yText: YText) {
+public extension String {
+    init(_ yText: YText) {
         self = yText.getString()
     }
 }
@@ -132,7 +132,6 @@ extension YText: CustomStringConvertible {
         getString()
     }
 }
-
 
 class YTextObservationDelegate: YrsTextObservationDelegate {
     private var callback: ([YTextChange]) -> Void
@@ -156,7 +155,6 @@ class YTextObservationDelegate: YrsTextObservationDelegate {
             case let .deleted(index):
                 return YTextChange.deleted(index: index)
             }
-            
         }
         callback(result)
     }
@@ -167,4 +165,3 @@ public enum YTextChange {
     case deleted(index: UInt32)
     case retained(index: UInt32, attributes: [String: Any])
 }
-
