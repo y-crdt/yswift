@@ -1,25 +1,25 @@
+import Combine
 import Foundation
 import Yniffi
-import Combine
 
 public final class YMap<T: Codable>: Transactable {
     private let _map: YrsMap
     let document: YDocument
 
     init(map: YrsMap, document: YDocument) {
-        self._map = map
+        _map = map
         self.document = document
     }
-    
+
     public var isEmpty: Bool {
         length() == 0
     }
-    
+
     public var count: Int {
         Int(length())
     }
-    
-    public subscript (key: String) -> T? {
+
+    public subscript(key: String) -> T? {
         get {
             get(key: key)
         }
@@ -31,7 +31,7 @@ public final class YMap<T: Codable>: Transactable {
             }
         }
     }
-    
+
     public func updateValue(_ value: T, forKey key: String, transaction: YrsTransaction? = nil) {
         withTransaction(transaction) { txn in
             self._map.insert(tx: txn, key: key, value: Coder.encoded(value))
@@ -108,7 +108,7 @@ public final class YMap<T: Codable>: Transactable {
             self._map.each(tx: txn, delegate: delegate)
         }
     }
-    
+
     public func observe() -> AnyPublisher<[YMapChange<T>], Never> {
         let subject = PassthroughSubject<[YMapChange<T>], Never>()
         let subscriptionId = observe { subject.send($0) }
@@ -138,7 +138,7 @@ public final class YMap<T: Codable>: Transactable {
 
 extension YMap: Sequence {
     public typealias Iterator = YMapIterator
-    
+
     // this method can't support the Iterator protocol because I've added
     // YrsTransation to the function, needed for any interactions with the
     // map - but the protocol defines it as taking no additional
@@ -147,7 +147,7 @@ extension YMap: Sequence {
     public func makeIterator() -> Iterator {
         YMapIterator(self)
     }
-    
+
     public class YMapIterator: IteratorProtocol {
         var keyValues: [(String, T)]
 
@@ -221,7 +221,6 @@ class YMapKeyValueIteratorDelegate<T: Codable>: YrsMapKvIteratorDelegate {
     }
 }
 
-
 class YMapObservationDelegate<T: Codable>: YrsMapObservationDelegate {
     private var callback: ([YMapChange<T>]) -> Void
     private var decoded: (String) -> T
@@ -256,7 +255,7 @@ public enum YMapChange<T> {
 }
 
 extension YMapChange: Equatable where T: Equatable {
-    public static func ==(lhs: YMapChange<T>, rhs: YMapChange<T>) -> Bool {
+    public static func == (lhs: YMapChange<T>, rhs: YMapChange<T>) -> Bool {
         switch (lhs, rhs) {
         case let (.inserted(key1, value1), .inserted(key2, value2)):
             return key1 == key2 && value1 == value2

@@ -1,20 +1,20 @@
+import Combine
 import Foundation
 import Yniffi
-import Combine
 
 public final class YArray<T: Codable>: Transactable {
     private let _array: YrsArray
     let document: YDocument
 
     init(array: YrsArray, document: YDocument) {
-        self._array = array
+        _array = array
         self.document = document
     }
-    
+
     public var count: Int {
         Int(length())
     }
-    
+
     public var isEmpty: Bool {
         length() == 0
     }
@@ -64,26 +64,26 @@ public final class YArray<T: Codable>: Transactable {
             self._array.removeRange(tx: txn, index: UInt32(start), len: UInt32(length))
         }
     }
-    
+
     public func length(transaction: YrsTransaction? = nil) -> UInt32 {
         withTransaction(transaction) { txn in
             self._array.length(tx: txn)
         }
     }
-    
+
     public func toArray(transaction: YrsTransaction? = nil) -> [T] {
         withTransaction(transaction) { txn in
             Coder.decodedArray(self._array.toA(tx: txn))
         }
     }
-    
+
     public func each(transaction: YrsTransaction? = nil, _ body: @escaping (T) -> Void) {
         let delegate = YArrayEachDelegate(callback: body, decoded: Coder.decoded)
         withTransaction(transaction) { txn in
             self._array.each(tx: txn, delegate: delegate)
         }
     }
-    
+
     public func observe() -> AnyPublisher<[YArrayChange<T>], Never> {
         let subject = PassthroughSubject<[YArrayChange<T>], Never>()
         let subscriptionId = observe { subject.send($0) }
@@ -105,18 +105,18 @@ public final class YArray<T: Codable>: Transactable {
 
 extension YArray: Sequence {
     public typealias Iterator = YArrayIterator
-    
+
     public func makeIterator() -> Iterator {
         YArrayIterator(self)
     }
-    
+
     public class YArrayIterator: IteratorProtocol {
         var array: [T]
 
         init(_ array: YArray) {
             self.array = array.toArray()
         }
-        
+
         public func next() -> T? {
             array.popLast()
         }
@@ -131,19 +131,19 @@ extension YArray: MutableCollection, RandomAccessCollection {
         precondition(i < endIndex, "Index out of bounds")
         return i + 1
     }
-    
+
     public var startIndex: Int {
         0
     }
-    
+
     public var endIndex: Int {
-        Int(self.length())
+        Int(length())
     }
-    
+
     public subscript(position: Int) -> T {
         get {
             precondition(position < endIndex, "Index out of bounds")
-            return self.get(index: position)!
+            return get(index: position)!
         }
         set(newValue) {
             precondition(position < endIndex, "Index out of bounds")
@@ -206,7 +206,7 @@ public enum YArrayChange<T> {
 }
 
 extension YArrayChange: Equatable where T: Equatable {
-    public static func ==(lhs: YArrayChange<T>, rhs: YArrayChange<T>) -> Bool {
+    public static func == (lhs: YArrayChange<T>, rhs: YArrayChange<T>) -> Bool {
         switch (lhs, rhs) {
         case let (.added(elements1), .added(elements2)):
             return elements1 == elements2

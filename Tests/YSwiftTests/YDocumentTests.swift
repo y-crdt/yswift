@@ -3,19 +3,18 @@ import XCTest
 @testable import YSwift
 
 class YDocumentTests: XCTestCase {
-    
     func test_memoryLeaks() {
         let document = YDocument()
         let array: YArray<String> = document.getOrCreateArray(named: "array")
         let map: YMap<String> = document.getOrCreateMap(named: "map")
         let text: YText = document.getOrCreateText(named: "text")
-        
+
         trackForMemoryLeaks(array)
         trackForMemoryLeaks(map)
         trackForMemoryLeaks(text)
         trackForMemoryLeaks(document)
     }
-    
+
     func test_localAndRemoteSyncing() {
         let localDocument = YDocument()
         let localText = localDocument.getOrCreateText(named: "example")

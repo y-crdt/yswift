@@ -21,8 +21,12 @@ public struct YSyncMessage: Codable {
     }
 }
 
+/// A contiguous buffer of bytes.
 public typealias Buffer = [UInt8]
 
+/// A class that implements the Y-CRDT synchronization protocol.
+///
+/// For more information on the synchronization protocol, see [Y Protocol Specification](https://github.com/yjs/y-protocols/blob/master/PROTOCOL.md).
 public final class YProtocol {
     private let document: YDocument
 
