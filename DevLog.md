@@ -1,6 +1,6 @@
 # Decision log
 
-## 2022-01-19
+## 2023-01-19
 
 ### Passing complex types as `String`s through Uniffi bridging
 
