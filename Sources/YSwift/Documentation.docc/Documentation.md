@@ -1,16 +1,18 @@
 # ``YSwift``
 
-Swift language bindings to Y-CRDT data types.
+Swift language bindings to Y-CRDT shared data types to sync and collaborate.
 
 ## Overview
+
+YSwift is part of a collection of cross-platform and cross-language Conflict-free Replicated Data Types (CRDT).
+These data types enable automatic synchronization and merge without conflicts.
+YSwift is network agnostic, supporting offline asynchronous, peer to peer, and server based interactions.
 
 ## Topics
 
 ### Documents
 
 - ``YSwift/YDocument``
-- ``YSwift/YProtocol``
-- ``YSwift/YSyncMessage``
 - ``YSwift/Buffer``
 
 ### Arrays
@@ -27,3 +29,8 @@ Swift language bindings to Y-CRDT data types.
 
 - ``YSwift/YText``
 - ``YSwift/YTextChange``
+
+### Synchronization
+
+- ``YSwift/YProtocol``
+- ``YSwift/YSyncMessage``
