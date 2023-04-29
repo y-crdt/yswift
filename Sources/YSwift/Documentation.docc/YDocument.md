@@ -1,19 +1,48 @@
 # ``YSwift/YDocument``
 
-Swift language bindings to Y-CRDT shared data types to sync and collaborate.
+A type that wraps all Y-CRDT shared data types, and provides transactional interactions for them.
 
 ## Overview
 
-YSwift is part of a collection of cross-platform and cross-language Conflict-free Replicated Data Types (CRDT).
-These data types enable automatic synchronization and merge without conflicts.
-YSwift is network agnostic, supporting peer to peer, server based interactions.
-You can edit offline, and reconnect later to synchronize updates.
+A `YDocument` tracks and coordinates updates to Y-CRDT shared data types, such as ``YSwift/YText``, ``YSwift/YArray``, and ``YSwift/YMap``.
+Make any changes to shared data types within a document within a transaction, such as ``YSwift/YDocument/transactSync(_:)``.
+
+Interact with other copies of the shared data types by synchronizing documents.
+
+To synchronize a remote document with a local one:
+
+1. Retrieve the current state of remote document from within a transaction:
+```
+let remoteState = remoteDocument.transactSync { txn in
+    txn.transactionStateVector()
+}
+```
+
+2. Use the remote state to calculate a difference from the local document:
+```
+let updateRemote = localDocument.transactSync { txn in
+    localDocument.diff(txn: txn, from: remoteState)
+}
+```
+
+3. Apply the difference to the remote document within a transaction:
+```
+remoteDocument.transactSync { txn in
+    try! txn.transactionApplyUpdate(update: updateRemote)
+}
+```
 
 ## Topics
 
 ### Creating or loading a document
 
 - ``YSwift/YDocument/init()``
+
+### Creating Shared Data Types
+
+- ``YSwift/YDocument/getOrCreateText(named:)``
+- ``YSwift/YDocument/getOrCreateArray(named:)``
+- ``YSwift/YDocument/getOrCreateMap(named:)``
 
 ### Creating Transactions
 
@@ -25,8 +54,3 @@ You can edit offline, and reconnect later to synchronize updates.
 
 - ``YSwift/YDocument/diff(txn:from:)``
 
-### Creating Shared Data Types
-
-- ``YSwift/YDocument/getOrCreateText(named:)``
-- ``YSwift/YDocument/getOrCreateArray(named:)``
-- ``YSwift/YDocument/getOrCreateMap(named:)``
