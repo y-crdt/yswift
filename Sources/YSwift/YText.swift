@@ -158,7 +158,7 @@ public final class YText: Transactable {
         )
     }
 
-    /// Stops a closure, identified by the identifier you provide, from being called on changes to the text.
+    /// Unregister an observing closure, identified by the identifier you provide.
     /// - Parameter subscriptionId: The observer identifier to unregister.
     public func unobserve(_ subscriptionId: UInt32) {
         _text.unobserve(subscriptionId: subscriptionId)

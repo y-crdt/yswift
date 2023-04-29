@@ -2,6 +2,11 @@ import Combine
 import Foundation
 import Yniffi
 
+/// A type that provides a list shared data type.
+///
+/// Store, order, and retrieve any single `Codable` type within a `YArray`.
+///
+/// Create a new `YArray` instance using ``YSwift/YDocument/getOrCreateArray(named:)`` from a ``YDocument``.
 public final class YArray<T: Codable>: Transactable {
     private let _array: YrsArray
     let document: YDocument
@@ -11,14 +16,21 @@ public final class YArray<T: Codable>: Transactable {
         self.document = document
     }
 
+    /// The length of the list.
     public var count: Int {
         Int(length())
     }
 
+    /// A Boolean value that indicates whether the list is empty.
     public var isEmpty: Bool {
         length() == 0
     }
 
+    /// Returns the object at the index location you provide.
+    /// - Parameters:
+    ///   - index: The location in the list to retrieve.
+    ///   - transaction: An optional transaction to use when retrieving an object.
+    /// - Returns: Returns the instance of a Codable type that was stored at the location you provided, or `nil` if it isn't available or couldn't be decoded.
     public func get(index: Int, transaction: YrsTransaction? = nil) -> T? {
         withTransaction(transaction) { txn in
             if let result = try? self._array.get(tx: txn, index: UInt32(index)) {
@@ -29,54 +41,89 @@ public final class YArray<T: Codable>: Transactable {
         }
     }
 
+    /// Insert an object at an index location you provide.
+    /// - Parameters:
+    ///   - index: The location in the list to insert the object.
+    ///   - value: The object to insert.
+    ///   - transaction: An optional transaction to use when retrieving an object.
     public func insert(at index: Int, value: T, transaction: YrsTransaction? = nil) {
         withTransaction(transaction) { txn in
             self._array.insert(tx: txn, index: UInt32(index), value: Coder.encoded(value))
         }
     }
 
+    /// Inserts an array of objects at the index location you provide.
+    /// - Parameters:
+    ///   - index: The location in the list to insert the objects.
+    ///   - values: An array of objects to insert.
+    ///   - transaction: An optional transaction to use when retrieving an object.
     public func insertArray(at index: Int, values: [T], transaction: YrsTransaction? = nil) {
         withTransaction(transaction) { txn in
             self._array.insertRange(tx: txn, index: UInt32(index), values: Coder.encodedArray(values))
         }
     }
 
+    /// Append an object to the end of the list.
+    /// - Parameters:
+    ///   - value: The object to insert.
+    ///   - transaction: An optional transaction to use when retrieving an object.
     public func append(_ value: T, transaction: YrsTransaction? = nil) {
         withTransaction(transaction) { txn in
             self._array.pushBack(tx: txn, value: Coder.encoded(value))
         }
     }
 
+    /// Prepends an object at the beginning of the list.
+    /// - Parameters:
+    ///   - value: The object to insert.
+    ///   - transaction: An optional transaction to use when retrieving an object.
     public func prepend(_ value: T, transaction: YrsTransaction? = nil) {
         withTransaction(transaction) { txn in
             self._array.pushFront(tx: txn, value: Coder.encoded(value))
         }
     }
 
+    /// Remove an object from the list.
+    /// - Parameters:
+    ///   - index: The index location of the object to remove.
+    ///   - transaction: An optional transaction to use when retrieving an object.
     public func remove(at index: Int, transaction: YrsTransaction? = nil) {
         withTransaction(transaction) { txn in
             self._array.remove(tx: txn, index: UInt32(index))
         }
     }
 
+    /// Removes a range of objects from the list, starting at the index position and for the number of elements you provide.
+    /// - Parameters:
+    ///   - start: The index location of the first object to remove.
+    ///   - length: The number of objects to remove.
+    ///   - transaction: An optional transaction to use when retrieving an object.
     public func removeRange(start: Int, length: Int, transaction: YrsTransaction? = nil) {
         withTransaction(transaction) { txn in
             self._array.removeRange(tx: txn, index: UInt32(start), len: UInt32(length))
         }
     }
 
+    /// Returns the length of the list.
+    /// - Parameter transaction: An optional transaction to use when retrieving an object.
     public func length(transaction: YrsTransaction? = nil) -> UInt32 {
         withTransaction(transaction) { txn in
             self._array.length(tx: txn)
         }
     }
 
+    /// Returns the contents of the list as an array of objects.
+    /// - Parameter transaction: An optional transaction to use when retrieving an object.
     public func toArray(transaction: YrsTransaction? = nil) -> [T] {
         withTransaction(transaction) { txn in
             Coder.decodedArray(self._array.toA(tx: txn))
         }
     }
 
+    /// Iterates over the list of elements, providing each element to the closure you provide.
+    /// - Parameters:
+    ///   - transaction: An optional transaction to use when retrieving an object.
+    ///   - body: A closure that is called repeatedly with each element in the list.
     public func each(transaction: YrsTransaction? = nil, _ body: @escaping (T) -> Void) {
         let delegate = YArrayEachDelegate(callback: body, decoded: Coder.decoded)
         withTransaction(transaction) { txn in
@@ -84,6 +131,7 @@ public final class YArray<T: Codable>: Transactable {
         }
     }
 
+    /// Returns a publisher of array changes.
     public func observe() -> AnyPublisher<[YArrayChange<T>], Never> {
         let subject = PassthroughSubject<[YArrayChange<T>], Never>()
         let subscriptionId = observe { subject.send($0) }
@@ -93,11 +141,16 @@ public final class YArray<T: Codable>: Transactable {
         .eraseToAnyPublisher()
     }
 
+    /// Registers a closure that is called with an array of changes to the list.
+    /// - Parameter body: A closure that is called with an array of list changes.
+    /// - Returns: An observer identifier.
     public func observe(_ body: @escaping ([YArrayChange<T>]) -> Void) -> UInt32 {
         let delegate = YArrayObservationDelegate(callback: body, decoded: Coder.decodedArray)
         return _array.observe(delegate: delegate)
     }
 
+    /// Unregister an observing closure, identified by the identifier you provide.
+    /// - Parameter subscriptionId: The observer identifier to unregister.
     public func unobserve(_ subscriptionId: UInt32) {
         _array.unobserve(subscriptionId: subscriptionId)
     }
@@ -106,19 +159,26 @@ public final class YArray<T: Codable>: Transactable {
 extension YArray: Sequence {
     public typealias Iterator = YArrayIterator
 
+    /// Returns an iterator for the list.
     public func makeIterator() -> Iterator {
         YArrayIterator(self)
     }
 
     public class YArrayIterator: IteratorProtocol {
-        var array: [T]
+        private var indexPosition: Int
+        private var arrayRef: YArray
 
-        init(_ array: YArray) {
-            self.array = array.toArray()
+        init(_ arrayRef: YArray) {
+            self.arrayRef = arrayRef
+            indexPosition = 0
         }
 
         public func next() -> T? {
-            array.popLast()
+            if let item = arrayRef.get(index: indexPosition) {
+                indexPosition += 1
+                return item
+            }
+            return nil
         }
     }
 }
@@ -127,19 +187,22 @@ extension YArray: Sequence {
 // They need to be completed & tested after Iterator is ported from Rust side
 extension YArray: MutableCollection, RandomAccessCollection {
     public func index(after i: Int) -> Int {
-        // precondition ensures index nevers goes past
+        // precondition ensures index never goes past the bounds
         precondition(i < endIndex, "Index out of bounds")
         return i + 1
     }
 
+    /// The location of the start of the list.
     public var startIndex: Int {
         0
     }
 
+    /// The location at the end of the list.
     public var endIndex: Int {
         Int(length())
     }
 
+    /// Inserts or returns the object in the list at the position you specify.
     public subscript(position: Int) -> T {
         get {
             precondition(position < endIndex, "Index out of bounds")
@@ -199,9 +262,13 @@ class YArrayObservationDelegate<T: Codable>: YrsArrayObservationDelegate {
     }
 }
 
+/// A type that represents changes to a list.
 public enum YArrayChange<T> {
+    /// Objects added to the list.
     case added(elements: [T])
+    /// An index position that is removed.
     case removed(range: UInt32)
+    /// An index position that is retained or updated.
     case retained(range: UInt32)
 }
 
