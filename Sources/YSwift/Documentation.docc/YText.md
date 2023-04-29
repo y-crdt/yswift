@@ -29,6 +29,3 @@
 - ``YSwift/YText/observe(_:)``
 - ``YSwift/YText/unobserve(_:)``
 - ``YSwift/YTextChange``
-- ``YSwift/YTextChange/deleted(index:)``
-- ``YSwift/YTextChange/inserted(value:attributes:)``
-- ``YSwift/YTextChange/retained(index:attributes:)``

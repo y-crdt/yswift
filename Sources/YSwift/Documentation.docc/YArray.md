@@ -16,7 +16,6 @@
 - ``YSwift/YArray/each(transaction:_:)``
 - ``YSwift/YArray/YArrayIterator``
 
-
 ### Updating Arrays
 
 - ``YSwift/YArray/append(_:transaction:)``

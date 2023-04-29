@@ -19,9 +19,9 @@
 - ``YSwift/YMap/updateValue(_:forKey:transaction:)``
 - ``YSwift/YMap/removeAll(transaction:)``
 - ``YSwift/YMap/removeValue(forKey:transaction:)``
-- ``YSwift/YMap/subscript(key:)``
+- ``YSwift/YMap/subscript(_:)``
 
-### Observing Array Changes
+### Observing Map Changes
 
 - ``YSwift/YMap/observe()``
 - ``YSwift/YMap/observe(_:)``
