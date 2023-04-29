@@ -11,15 +11,13 @@
 
 - ``YSwift/YMap/get(key:transaction:)``
 - ``YSwift/YMap/toMap(transaction:)``
-- ``YSwift/YMap/keys(transaction:_:)``
-- ``YSwift/YMap/values(transaction:_:)``
 
 ### Updating Maps
 
-- ``YSwift/YMap/updateValue(_:forKey:transaction:)``
-- ``YSwift/YMap/removeAll(transaction:)``
-- ``YSwift/YMap/removeValue(forKey:transaction:)``
 - ``YSwift/YMap/subscript(_:)``
+- ``YSwift/YMap/updateValue(_:forKey:transaction:)``
+- ``YSwift/YMap/removeValue(forKey:transaction:)``
+- ``YSwift/YMap/removeAll(transaction:)``
 
 ### Observing Map Changes
 
@@ -31,4 +29,6 @@
 ### Iterating over a Map
 
 - ``YSwift/YMap/each(transaction:_:)``
+- ``YSwift/YMap/keys(transaction:_:)``
+- ``YSwift/YMap/values(transaction:_:)``
 - ``YSwift/YMap/YMapIterator``

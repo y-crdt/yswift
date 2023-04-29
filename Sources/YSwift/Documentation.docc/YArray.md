@@ -19,9 +19,9 @@
 ### Updating Arrays
 
 - ``YSwift/YArray/append(_:transaction:)``
+- ``YSwift/YArray/prepend(_:transaction:)``
 - ``YSwift/YArray/insert(at:value:transaction:)``
 - ``YSwift/YArray/insertArray(at:values:transaction:)``
-- ``YSwift/YArray/prepend(_:transaction:)``
 - ``YSwift/YArray/remove(at:transaction:)``
 - ``YSwift/YArray/removeRange(start:length:transaction:)``
 

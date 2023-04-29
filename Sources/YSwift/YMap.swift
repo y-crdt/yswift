@@ -2,6 +2,11 @@ import Combine
 import Foundation
 import Yniffi
 
+/// A type that provides a map shared data type.
+///
+/// Store, order, and retrieve any single `Codable` type within a `YMap` keyed with a `String`.
+///
+/// Create a new `YMap` instance using ``YSwift/YDocument/getOrCreateMap(named:)`` from a ``YDocument``.
 public final class YMap<T: Codable>: Transactable {
     private let _map: YrsMap
     let document: YDocument
@@ -11,14 +16,17 @@ public final class YMap<T: Codable>: Transactable {
         self.document = document
     }
 
+    /// Returns a Boolean value that indicates whether the map is empty.
     public var isEmpty: Bool {
         length() == 0
     }
 
+    /// Returns the number of items in the map.
     public var count: Int {
         Int(length())
     }
 
+    /// Gets or sets the value within a map identified by the string you provide.
     public subscript(key: String) -> T? {
         get {
             get(key: key)
@@ -32,18 +40,30 @@ public final class YMap<T: Codable>: Transactable {
         }
     }
 
+    /// Updates or inserts the object for the key you provide.
+    /// - Parameters:
+    ///   - value: The object to be added into the map.
+    ///   - key: The string that identifies the object to be updated.
+    ///   - transaction: An optional transaction to use when retrieving an object.
     public func updateValue(_ value: T, forKey key: String, transaction: YrsTransaction? = nil) {
         withTransaction(transaction) { txn in
             self._map.insert(tx: txn, key: key, value: Coder.encoded(value))
         }
     }
 
+    /// Returns the length of the map.
+    /// - Parameter transaction: An optional transaction to use when retrieving an object.
     public func length(transaction: YrsTransaction? = nil) -> UInt32 {
         withTransaction(transaction) { txn in
             self._map.length(tx: txn)
         }
     }
 
+    /// Returns the object from the map identified by the key you provide.
+    /// - Parameters:
+    ///   - key: The string that identifies the object to be retrieved.
+    ///   - transaction: An optional transaction to use when retrieving an object.
+    /// - Returns: The object within the map at that key, or `nil` if it's not available.
     public func get(key: String, transaction: YrsTransaction? = nil) -> T? {
         withTransaction(transaction) { txn -> T? in
             if let result = try? self._map.get(tx: txn, key: key) {
@@ -54,12 +74,21 @@ public final class YMap<T: Codable>: Transactable {
         }
     }
 
+    /// Returns a Boolean value indicating whether the key you provide is in the map.
+    /// - Parameters:
+    ///   - key: A string that identifies an object within the map.
+    ///   - transaction: An optional transaction to use when retrieving an object.
     public func containsKey(_ key: String, transaction: YrsTransaction? = nil) -> Bool {
         withTransaction(transaction) { txn in
             self._map.containsKey(tx: txn, key: key)
         }
     }
 
+    /// Removes an object from the map.
+    /// - Parameters:
+    ///   - key: A string that identifies the object to remove.
+    ///   - transaction: An optional transaction to use when retrieving an object.
+    /// - Returns: The item removed, or `nil` if unavailable.
     @discardableResult
     public func removeValue(forKey key: String, transaction: YrsTransaction? = nil) -> T? {
         withTransaction(transaction) { txn -> T? in
@@ -71,12 +100,18 @@ public final class YMap<T: Codable>: Transactable {
         }
     }
 
+    /// Removes all items from the map.
+    /// - Parameter transaction: An optional transaction to use when retrieving an object.
     public func removeAll(transaction: YrsTransaction? = nil) {
         withTransaction(transaction) { txn in
             self._map.clear(tx: txn)
         }
     }
 
+    /// Calls the closure you provide with each key from the map.
+    /// - Parameters:
+    ///   - transaction: An optional transaction to use when retrieving an object.
+    ///   - body: A closure that is called repeatedly with each key in the map.
     public func keys(transaction: YrsTransaction? = nil, _ body: @escaping (String) -> Void) {
         // Wrap the closure that accepts the key (:String) callback for each key
         // found within the map into a reference object to safely pass across
@@ -87,6 +122,10 @@ public final class YMap<T: Codable>: Transactable {
         }
     }
 
+    /// Calls the closure you provide with each value from the map.
+    /// - Parameters:
+    ///   - transaction: An optional transaction to use when retrieving an object.
+    ///   - body: A closure that is called repeatedly with each value in the map.
     public func values(transaction: YrsTransaction? = nil, _ body: @escaping (T) -> Void) {
         // Wrap the closure that accepts the value (:String) callback for each value
         // found within the map into a reference object to safely pass across
@@ -98,6 +137,10 @@ public final class YMap<T: Codable>: Transactable {
         }
     }
 
+    /// Iterates over the map of elements, providing each element to the closure you provide.
+    /// - Parameters:
+    ///   - transaction: An optional transaction to use when retrieving an object.
+    ///   - body: A closure that is called repeatedly with each element in the map.
     public func each(transaction: YrsTransaction? = nil, _ body: @escaping (String, T) -> Void) {
         // Wrap the closure that accepts both the key and value (:String) callback for every
         // key-value pair within the map into a reference object to safely pass across
@@ -109,6 +152,7 @@ public final class YMap<T: Codable>: Transactable {
         }
     }
 
+    /// Returns a publisher of map changes.
     public func observe() -> AnyPublisher<[YMapChange<T>], Never> {
         let subject = PassthroughSubject<[YMapChange<T>], Never>()
         let subscriptionId = observe { subject.send($0) }
@@ -118,11 +162,16 @@ public final class YMap<T: Codable>: Transactable {
         .eraseToAnyPublisher()
     }
 
+    /// Registers a closure that is called with an array of changes to the map.
+    /// - Parameter body: A closure that is called with an array of map changes.
+    /// - Returns: An observer identifier.
     public func observe(_ body: @escaping ([YMapChange<T>]) -> Void) -> UInt32 {
         let delegate = YMapObservationDelegate(decoded: Coder.decoded, callback: body)
         return _map.observe(delegate: delegate)
     }
 
+    /// Unregister an observing closure, identified by the identifier you provide.
+    /// - Parameter subscriptionId: The observer identifier to unregister.
     public func unobserve(_ subscriptionId: UInt32) {
         _map.unobserve(subscriptionId: subscriptionId)
     }
@@ -248,9 +297,13 @@ class YMapObservationDelegate<T: Codable>: YrsMapObservationDelegate {
     }
 }
 
+/// A type that represents changes to a Map.
 public enum YMapChange<T> {
+    /// The key and value inserted into the map.
     case inserted(key: String, value: T)
+    /// The key, old value, and new value updated in the map.
     case updated(key: String, oldValue: T, newValue: T)
+    /// The key and value removed from the map.
     case removed(key: String, value: T)
 }
 

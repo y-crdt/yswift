@@ -268,7 +268,7 @@ public enum YArrayChange<T> {
     case added(elements: [T])
     /// An index position that is removed.
     case removed(range: UInt32)
-    /// An index position that is retained or updated.
+    /// An index position that is updated.
     case retained(range: UInt32)
 }
 
