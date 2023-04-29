@@ -1,14 +1,25 @@
-# y-uniffi
+# YSwift
+
+This library builds on top of [Yrs](https://github.com/y-crdt/y-crdt) to provide Swift language bindings that
+seamlessly interoperate with other Yjs implementations.
 
 **This repository is WIP (Work In Progress)**
+Not all features and capabilities from Yrs or Yjs are exposed at this time. 
+We plan to add them as the library evolves. 
 
-This project provides [yrs](https://github.com/y-crdt/y-crdt) bindings Swift using [UniFFI](https://github.com/mozilla/uniffi-rs/).
+The repository includes two swift packages:
 
-`lib/` contains Rust library that wraps `yrs` crate and `udl` (UniFFI-specific interface definition file), which is required to generate Kotlin & Swift bindings.
+`yniffiFFI` a static binary packaged as an XCFramework in the `lib` directory, built with the Rust compiler and overlaid using [UniFFI](https://github.com/mozilla/uniffi-rs/).
+`YSwift` which is an overlay to provide more idiomatic Swift language operations.
+
+To build the package from source, you need both Rust and XCode installed. 
+The GitHub releases should include versioned links to the `yniffiFFI`. 
+Development releases expect that you will build you own local copy using `./scripts/build-xcframework.sh`.
 
 ## Decision log
 
-We maintain a [decision log](https://github.com/y-crdt/y-uniffi/blob/main/docs/decisions.md). Please consult it in case there is some ambiguity in terms of why certain implementation details look as they are.
+This project maintains a [decision log](./DevLog.md). 
+Please consult it in case there is some ambiguity in terms of why certain implementation details look as they are.
 
 ## License
 

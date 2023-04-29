@@ -1,5 +1,14 @@
 # ``YSwift/YDocument``
 
+Swift language bindings to Y-CRDT shared data types to sync and collaborate.
+
+## Overview
+
+YSwift is part of a collection of cross-platform and cross-language Conflict-free Replicated Data Types (CRDT).
+These data types enable automatic synchronization and merge without conflicts.
+YSwift is network agnostic, supporting peer to peer, server based interactions.
+You can edit offline, and reconnect later to synchronize updates.
+
 ## Topics
 
 ### Creating or loading a document
