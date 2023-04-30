@@ -32,6 +32,8 @@ remoteDocument.transactSync { txn in
 }
 ```
 
+For a more detailed example of synchronizing a document, see <doc:SynchronizingDocuments>.
+
 ## Topics
 
 ### Creating or loading a document

@@ -27,6 +27,9 @@ let package = Package(
     products: [
         .library(name: "YSwift", targets: ["YSwift"]),
     ],
+    dependencies: [
+        .package(url: "https://github.com/apple/swift-docc-plugin", from: "1.1.0"),
+    ],
     targets: [
         // We are using a local file reference to an XCFramework, which is functional
         // on the tags for this package because the XCFramework.zip file is committed with
