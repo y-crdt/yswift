@@ -14,6 +14,7 @@ YSwift is network agnostic, supporting offline asynchronous, peer to peer, and s
 
 - ``YSwift/YDocument``
 - ``YSwift/Buffer``
+- <doc:SynchronizingDocuments>
 
 ### Arrays
 
