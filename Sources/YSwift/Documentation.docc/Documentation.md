@@ -8,6 +8,9 @@ YSwift is part of a collection of cross-platform and cross-language Conflict-fre
 These data types enable automatic synchronization and merge without conflicts.
 YSwift is network agnostic, supporting offline asynchronous, peer to peer, and server based interactions.
 
+YSwift is a Swift language overlay of the Rust library [Yrs](https://docs.rs/yrs/latest/yrs/), but not all of the features of Yrs are current exposed in YSwift.
+For details about the implementation, please read <doc:ImplementationNotes>.
+
 ## Topics
 
 ### Documents
