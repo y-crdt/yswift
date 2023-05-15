@@ -41,25 +41,16 @@ The pattern is roughly:
 https://github.com/heckj/yswift/releases/download/0.1.0/yniffiFFI.xcframework.zip
 ```
 
+- Set the checksum to the one you just captured for the build of the XCFramework.
+
 The end result of that section of Package.swift should look something like:
 
-```
-        .binaryTarget(
-            name: "yniffiFFI",
-            // Uncomment `path`, and comment out url and checksum, for local development
-            // path: "./lib/yniffiFFI.xcframework"
-            url: "https://github.com/y-crdt/yswift/releases/download/0.1.0/yniffiFFI.xcframework.zip",
-            checksum: "9aa2dd069662613b66749a257d753fc7007afe4817278edfd6cc902de94b5f6c"
-        ),
-```
-
-- Set the checksum to the one you just captured for the build of the XCFramework.
-- Comment out the globalSwiftSettings that sets unsafe build flags. An external Xcode project won't allow using this package when it has "unsafe flags" defined on it.
-
-```
-var globalSwiftSettings: [PackageDescription.SwiftSetting] = []
-#if swift(>=5.7)
-    //globalSwiftSettings.append(.unsafeFlags(["-Xfrontend", "-strict-concurrency=complete"]))
+```swift
+  FFIbinaryTarget = .binaryTarget(
+          name: "yniffiFFI",
+          url: "https://github.com/y-crdt/yswift/releases/download/0.1.0/yniffiFFI.xcframework.zip",
+          checksum: "4bba5754a02eec941591dc32efe65692031565371dc0db3cfcf64438d96e5b6c"
+  )
 ```
 
 (Note: at this stage, a local build will not work - as we haven't created the release yet on GitHub with its artifacts)
