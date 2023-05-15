@@ -4,7 +4,7 @@ import PackageDescription
 
 var globalSwiftSettings: [PackageDescription.SwiftSetting] = []
 #if swift(>=5.7)
-    globalSwiftSettings.append(.unsafeFlags(["-Xfrontend", "-strict-concurrency=complete"]))
+    //globalSwiftSettings.append(.unsafeFlags(["-Xfrontend", "-strict-concurrency=complete"]))
     /*
      Summation from https://www.donnywals.com/enabling-concurrency-warnings-in-xcode-14/
      Set `strict-concurrency` to `targeted` to enforce Sendable and actor-isolation
@@ -43,9 +43,13 @@ let package = Package(
         // If you're working from source, or a branch without an existing xcframework.zip,
         // use the script `./scripts/build-xcframework.sh` to create the library locally.
         // This script _does_ expect that you have Rust installed locally in order to function.
+
         .binaryTarget(
             name: "yniffiFFI",
-            path: "./lib/yniffiFFI.xcframework"
+            // Uncomment `path`, and comment out url and checksum, for local development
+            // path: "./lib/yniffiFFI.xcframework"
+            url: "https://github.com/y-crdt/yswift/releases/download/0.1.0/yniffiFFI.xcframework.zip",
+            checksum: "4bba5754a02eec941591dc32efe65692031565371dc0db3cfcf64438d96e5b6c"
         ),
         .target(
             name: "Yniffi",
