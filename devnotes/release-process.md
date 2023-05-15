@@ -24,7 +24,8 @@ The pattern is roughly:
 https://github.com/heckj/yswift/releases/download/0.1.0/yniffiFFI.xcframework.zip
 ```
 
-Set tyhe checksum to the one you just captured for the build of the XCFramework.
+- Set the checksum to the one you just captured for the build of the XCFramework.
+- comment out the globalSwiftSettings that sets unsafe build flags - Xcode gets freaked out and won't use a release with this enabled.
 
 (Note: at this stage, a local build will not work - as we haven't created the release yet on GitHub with its artifacts)
 
