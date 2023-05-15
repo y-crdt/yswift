@@ -9,7 +9,13 @@ The process will be tagging, but not until we've made a commit that explicitly s
 
 Steps:
 
-- run `./scripts/build-xcframework.sh` to build the XCFramework and regenerate all the relevant C/FFI library components.
+- Note the version you are intending to release.
+The version's tag number gets used in a number of places through this process.
+This example uses the version `0.1.0`.
+
+- Run `./scripts/build-xcframework.sh` to build the XCFramework.
+Doing this regenerates the Swift wrappers from UniFFI, so the low-level wrapper swift needs to be aligned with the XCFramework that this script generates.
+
 - Capture the build hash (sha256) of the XCFramework that the script prints out at the end of it's process.
 It will look something like:
 
@@ -17,21 +23,50 @@ It will look something like:
 SHA256(yniffiFFI.xcframework.zip)= 9aa2dd069662613b66749a257d753fc7007afe4817278edfd6cc902de94b5f6c
 ```
 
-- switch the binary target in Package.swift for yniffiFFI to a url and checksum reference. The url references the download path for release artifacts from a tag.
+The part that you need to capture and save from the above example is:
+
+```
+9aa2dd069662613b66749a257d753fc7007afe4817278edfd6cc902de94b5f6c
+```
+
+## Update Package.swift
+
+- Switch the binary target in Package.swift for yniffiFFI to a url and checksum reference.
+
+- Set the url to the download path for a release artifact from a GitHub release.
+The version that you are releasing is embedded in this URL - `0.1.0` in this case.
 The pattern is roughly:
 
 ```
 https://github.com/heckj/yswift/releases/download/0.1.0/yniffiFFI.xcframework.zip
 ```
 
+The end result of that section of Package.swift should look something like:
+
+```
+        .binaryTarget(
+            name: "yniffiFFI",
+            // Uncomment `path`, and comment out url and checksum, for local development
+            // path: "./lib/yniffiFFI.xcframework"
+            url: "https://github.com/y-crdt/yswift/releases/download/0.1.0/yniffiFFI.xcframework.zip",
+            checksum: "9aa2dd069662613b66749a257d753fc7007afe4817278edfd6cc902de94b5f6c"
+        ),
+```
+
 - Set the checksum to the one you just captured for the build of the XCFramework.
-- comment out the globalSwiftSettings that sets unsafe build flags - Xcode gets freaked out and won't use a release with this enabled.
+- Comment out the globalSwiftSettings that sets unsafe build flags. An external Xcode project won't allow using this package when it has "unsafe flags" defined on it.
+
+```
+var globalSwiftSettings: [PackageDescription.SwiftSetting] = []
+#if swift(>=5.7)
+    //globalSwiftSettings.append(.unsafeFlags(["-Xfrontend", "-strict-concurrency=complete"]))
+```
 
 (Note: at this stage, a local build will not work - as we haven't created the release yet on GitHub with its artifacts)
 
-- commit the changes to Package.swift and push those changes to GitHub.
-- tag the release locally after the commit, to set a point that we can build a release from.
-  Set the tag to a semantic version that Package.swift supports.
+- Commit the changes to Package.swift.
+- Tag the release after the commit, to set a point that we can build a release from.
+Set the tag to a semantic version that Package.swift supports.
 (Note: GitHub suggests tags like `v0.1.0`, but Swift packages have a rough time with the preceeding `v` in the semantic coding, so I recommend using a bare tag, and suffixing if `-beta` or such if you're making a beta release.)
 
 ```
@@ -39,17 +74,17 @@ git tag 0.1.0
 git push origin --tags
 ```
 
-- open a browser and navigate to the URL that you can use to create a release on GitHub.
+- Open a browser and navigate to the URL that you can use to create a release on GitHub.
   - https://github.com/y-crdt/yswift/releases/new
   - choose the existing tag (`0.1.0` in this example)
 
 ![GitHub release page with tag selected, but otherwise empty.](./github_release_empty.png)
 
-  - add a release title
-  - add in a description for the release
-  - drag the file `yniffiFFI.xcframework.zip` from the `lib` directory onto the github page to attach the binary.
-  - wait for the upload to complete and verify the file is listed.
-  - select the checkout for a pre-release if relevant.
+  - Add a release title
+  - Add in a description for the release
+  - Drag the file `yniffiFFI.xcframework.zip` from the `lib` directory onto the github page to attach the binary.
+  - Wait for the upload to complete and verify the file is listed.
+  - Select the checkout for a pre-release if relevant.
 
 ![GitHub release page with tag selected, details filled, and binary uploaded.](./github_release_ready.png)
 
@@ -58,3 +93,11 @@ git push origin --tags
 - click `Publish release`
 
 ![GitHub release page after creation.](./github_release_ready.png)
+
+## Oops, I made a mistake - what do I do?
+
+If something in the process goes awry, don't worry - that happens.
+_Do not_ attempt to delete or move any tsgs that you've made.
+Instead, just move on to the next semantic version and call it a day.
+For example, when I was testing this process, I learned about the unsafe flags constraint at the last minute.
+To resolve this, I repeated the process with the next tag `0.1.1` even though it didn't have any meaningful changes in the code.
