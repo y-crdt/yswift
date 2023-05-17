@@ -79,15 +79,6 @@
         {
           "inlineContent" : [
             {
-              "text" : "–>",
-              "type" : "text"
-            }
-          ],
-          "type" : "paragraph"
-        },
-        {
-          "inlineContent" : [
-            {
               "text" : "Once the library is imported, create an instance of ",
               "type" : "text"
             },
