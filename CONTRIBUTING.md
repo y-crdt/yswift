@@ -24,8 +24,22 @@ The rough pattern of dependencies that are reflected in `Package.swift`:
   from Rust lib        generated      Swift overlay
 ```
 
-If you are working on any of the layers within the `lib` directory (the targets `yniffiFFI` or `Yniffi`) then set a local environment variable `LOCALDEV` to true and regenerate the XCFramework using the script `scripts/build-xcframework.sh`.
-The [Package.swift](./Package.swift) file is configured to look for the `LOCALDEV` environment variable and use a local reference to the XCFramework if it is set.
+If you are working on any of the layers within the `lib` directory (the targets `yniffiFFI` or `Yniffi`) then set a local environment variable `YSWIFT_LOCAL` to true and regenerate the XCFramework using the script `scripts/build-xcframework.sh`.
+The script to build the XCFramework file expects that you have Rust installed locally.
+For example, from the roof of the repository:
+
+```bash
+export YSWIFT_LOCAL=true
+`scripts/build-xcframework.sh`
+```
+
+To go back to using the latest released XCFramework, unset the environment variable `YSWIFT_LOCAL`:
+
+```bash
+unset YSWIFT_LOCAL
+```
+
+The [Package.swift](./Package.swift) file is configured to look for the `YSWIFT_LOCAL` environment variable and use a local reference to the XCFramework if it is set.
 Without that environment variable set, `Package.swift` uses the latest release version of the XCFramework.
 
 If you are working on the Swift overlay (`YSwift` target), then you can safely use

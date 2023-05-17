@@ -8,7 +8,7 @@ var globalSwiftSettings: [PackageDescription.SwiftSetting] = []
 // Only enable if Swift 5.7+ is available and the environment variable `LOCALDEV` is
 // set to a value (such as 'true')
 #if swift(>=5.7)
-    if ProcessInfo.processInfo.environment["LOCALDEV"] != nil {
+    if ProcessInfo.processInfo.environment["YSWIFT_LOCAL"] != nil {
         /*
         Summation from https://www.donnywals.com/enabling-concurrency-warnings-in-xcode-14/
         Set `strict-concurrency` to `targeted` to enforce Sendable and actor-isolation
@@ -28,12 +28,13 @@ var globalSwiftSettings: [PackageDescription.SwiftSetting] = []
 #endif
 
 let FFIbinaryTarget: PackageDescription.Target
-// If either of the environment variables `CI` or `LOCALDEV` are set, then use
+// If either the environment variable `YSWIFT_LOCAL` is set to any value, the packages uses
 // a local reference to an XCFramework file (built from `./scripts/build-xcframework.sh`)
-// instead of the previous released version.
+// rather than the previous released version.
 //
-// This script _does_ expect that you have Rust installed locally in order to function.
-if ProcessInfo.processInfo.environment["CI"] != nil || ProcessInfo.processInfo.environment["LOCALDEV"] != nil {
+// The script `./scripts/build-xcframework.sh` _does_ expect that you have Rust 
+// installed locally in order to function.
+if ProcessInfo.processInfo.environment["YSWIFT_LOCAL"] != nil {
     // We are using a local file reference to an XCFramework, which is functional
     // on the tags for this package because the XCFramework.zip file is committed with
     // those specific release points. This does, however, cause a few awkward issues,

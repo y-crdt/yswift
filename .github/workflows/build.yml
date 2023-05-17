@@ -10,6 +10,8 @@ jobs:
   build:
 
     runs-on: macos-12 #macOS Monterey
+    env:
+      YSWIFT_LOCAL: true
 
     steps:
     - name: Checkout Project
@@ -37,17 +39,17 @@ jobs:
 
     # - name: Tuist Fetch
     #   run: |
-    #     cd yswift
+    #     cd examples
     #     tuist fetch
 
     # - name: Tuist Generate
     #   run: |
-    #     cd yswift
+    #     cd examples
     #     tuist generate -n
 
     # - name: Tuist Test
     #   run: |
-    #     cd yswift
+    #     cd examples
     #     tuist test YSwift
 
     # NOTE: use `xcodebuild -list` to show the local schemes available
@@ -65,7 +67,7 @@ jobs:
     #run: xcodebuild clean build -scheme YSwift -destination 'platform=iOS Simulator,OS=15.5,name=iPhone 8' -showBuildTimingSummary
 
     #- name: check against API breaking changes
-    #  run: swift package diagnose-api-breaking-changes 0.5.0
+    #  run: swift package diagnose-api-breaking-changes 0.1.0
 
     # - name: Prepare Code Coverage
     #   run: xcrun llvm-cov export -format="lcov" .build/debug/xxx.xctest/Contents/MacOS/xx -instr-profile .build/debug/codecov/default.profdata > info.lcov
