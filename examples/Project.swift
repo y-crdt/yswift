@@ -1,12 +1,5 @@
 import ProjectDescription
 
-let dependencies = Dependencies(
-    swiftPackageManager: [
-        .local(path: ".."),
-    ],
-    platforms: [.iOS]
-)
-
 let exampleTodolist = Target(
     name: "TodoListExample",
     platform: .iOS,
@@ -19,7 +12,9 @@ let exampleTodolist = Target(
     ]),
     sources: ["Examples/Todolist/**"],
     resources: ["Examples/Todolist/LaunchScreen.storyboard"],
-    dependencies: [.external(name: "YSwift")]
+    dependencies: [
+      .external(name: "YSwift"),
+    ]
 )
 
 let project = Project(

@@ -34,23 +34,23 @@ jobs:
 
     # per https://github.com/tuist/tuist/discussions/2802, we could also
     # bundle and include tuist in tthe repository if that had value.
-    # - name: Install Tuist
-    #   run: curl -Ls https://install.tuist.io | bash
+    - name: Install Tuist
+      run: curl -Ls https://install.tuist.io | bash
 
-    # - name: Tuist Fetch
-    #   run: |
-    #     cd examples
-    #     tuist fetch
+    - name: Tuist Fetch
+      run: |
+        cd examples
+        tuist fetch
 
-    # - name: Tuist Generate
-    #   run: |
-    #     cd examples
-    #     tuist generate -n
+    - name: Tuist Generate
+      run: |
+        cd examples
+        tuist generate -n
 
-    # - name: Tuist Test
-    #   run: |
-    #     cd examples
-    #     tuist test YSwift
+    - name: Tuist Test
+      run: |
+        cd examples
+        tuist build
 
     # NOTE: use `xcodebuild -list` to show the local schemes available
 
