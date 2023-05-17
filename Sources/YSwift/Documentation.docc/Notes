@@ -1,0 +1,23 @@
+# Documentation Notes
+
+Documentation Notes
+
+## Overview
+
+Notes for future me to review
+
+### Using Snippets for code samples, when it's functional anyway
+
+In an ideal world, the snippet code would be the definitive source here.
+The snippet exists in the project as `Snippets/SyncExample.swift` to verify that it
+compiles as the library advances, but the code in this article is replicated.
+
+We're not using it directly because Swift-DocC plugin has a bug where it fails to find any
+symbols for a project when it's using a local reference to a binaryTarget (as we do).
+Issue reference: [https://github.com/apple/swift-docc/issues/399](https://github.com/apple/swift-docc/issues/399)
+
+@Snippet(path: "YSwift/Snippets/SyncExample", slice: "establishDocuments")
+@Snippet(path: "YSwift/Snippets/SyncExample", slice: "displayTextFromDocuments")
+@Snippet(path: "YSwift/Snippets/SyncExample", slice: "syncDocuments")
+@Snippet(path: "YSwift/Snippets/SyncExample", slice: "captureAndDisplaySyncedData")
+

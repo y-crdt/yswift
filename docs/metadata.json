@@ -1,0 +1,9 @@
+{
+  "bundleDisplayName" : "YSwift",
+  "bundleIdentifier" : "com.github.y-crdt.YSwift",
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 1,
+    "patch" : 0
+  }
+}

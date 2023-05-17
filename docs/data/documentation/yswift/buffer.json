@@ -1,0 +1,238 @@
+{
+  "abstract" : [
+    {
+      "text" : "A contiguous buffer of bytes.",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/Buffer"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:6YSwift6Buffera",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "typealias"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "Buffer"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "YSwift"
+      }
+    ],
+    "navigatorTitle" : [
+      {
+        "kind" : "identifier",
+        "text" : "Buffer"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Type Alias",
+    "symbolKind" : "typealias",
+    "title" : "Buffer"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "typealias"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "Buffer"
+            },
+            {
+              "kind" : "text",
+              "text" : " = ["
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:s5UInt8V",
+              "text" : "UInt8"
+            },
+            {
+              "kind" : "text",
+              "text" : "]"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "seeAlsoSections" : [
+    {
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YDocument",
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/SynchronizingDocuments",
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/ImplementationNotes"
+      ],
+      "title" : "Documents"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/yswift\/buffer"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://com.github.y-crdt.YSwift/documentation/YSwift": {
+  "abstract" : [
+    {
+      "text" : "Swift language bindings to Y-CRDT shared data types to sync and collaborate.",
+      "type" : "text"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "YSwift",
+  "type" : "topic",
+  "url" : "\/documentation\/yswift"
+},
+"doc://com.github.y-crdt.YSwift/documentation/YSwift/Buffer": {
+  "abstract" : [
+    {
+      "text" : "A contiguous buffer of bytes.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "typealias"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Buffer"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/Buffer",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Buffer"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "Buffer",
+  "type" : "topic",
+  "url" : "\/documentation\/yswift\/buffer"
+},
+"doc://com.github.y-crdt.YSwift/documentation/YSwift/ImplementationNotes": {
+  "abstract" : [
+    {
+      "text" : "Implementation details related to YSwift as a layer over Yrs",
+      "type" : "text"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/ImplementationNotes",
+  "kind" : "article",
+  "role" : "article",
+  "title" : "Implementation Notes",
+  "type" : "topic",
+  "url" : "\/documentation\/yswift\/implementationnotes"
+},
+"doc://com.github.y-crdt.YSwift/documentation/YSwift/SynchronizingDocuments": {
+  "abstract" : [
+    {
+      "text" : "Consistently merge content between two documents.",
+      "type" : "text"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/SynchronizingDocuments",
+  "kind" : "article",
+  "role" : "article",
+  "title" : "Synchronizing Documents",
+  "type" : "topic",
+  "url" : "\/documentation\/yswift\/synchronizingdocuments"
+},
+"doc://com.github.y-crdt.YSwift/documentation/YSwift/YDocument": {
+  "abstract" : [
+    {
+      "text" : "YDocument holds YSwift shared data types and coordinates collaboration and changes.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "class"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "YDocument"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YDocument",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "YDocument"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "YDocument",
+  "type" : "topic",
+  "url" : "\/documentation\/yswift\/ydocument"
+}
+}
+}

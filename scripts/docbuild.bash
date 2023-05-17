@@ -23,8 +23,8 @@ export DOCC_JSON_PRETTYPRINT=YES
 #   $(xcrun --find swift) package resolve
 #   $(xcrun --find swift) build
 
-rm -rf .build .ffisymbol-graphs
-mkdir -p .ffisymbol-graphs
+# rm -rf .build .ffisymbol-graphs
+# mkdir -p .ffisymbol-graphs
 
 rm -rf .build .symbol-graphs
 mkdir -p .symbol-graphs
@@ -45,7 +45,7 @@ $(xcrun --find docc) convert lib/swift/scaffold/Documentation.docc \
     --emit-digest \
     --transform-for-static-hosting \
     --output-path ./docs \
-    --hosting-base-path 'Yniffi'
+    --hosting-base-path 'yswift'
     # --experimental-documentation-coverage \
     # --level brief
     # --disable-indexing \
@@ -53,12 +53,12 @@ $(xcrun --find docc) convert lib/swift/scaffold/Documentation.docc \
 $(xcrun --find docc) convert Sources/YSwift/Documentation.docc \
     --fallback-display-name YSwift \
     --fallback-bundle-identifier com.github.y-crdt.YSwift \
-    --fallback-bundle-version 0.16.1 \
+    --fallback-bundle-version 0.1.0 \
     --additional-symbol-graph-dir .symbol-graphs \
     --emit-digest \
     --transform-for-static-hosting \
     --output-path ./docs \
-    --hosting-base-path 'YSwift'
+    --hosting-base-path 'yswift'
     # --experimental-documentation-coverage \
     # --level brief
     # --disable-indexing \
@@ -79,8 +79,8 @@ $(xcrun --find docc) convert Sources/YSwift/Documentation.docc \
 # the resource: http://localhost:8000/data/documentation/yniffi.json
 
 # NOTE(heckj): Using the swift-docc-plugin would generally be my preferred
-# path for generating HTML documentation, however there seems to be some notable
-# quirkyness when attempting to build with a binary package. The symbols are
+# path for generating HTML documentation, however there is a bug when building
+# documentation with a binary package dependency. The symbols are
 # coming up "empty, which I suspect is due to not correctly handling the static
 # library from the binary target.
 
@@ -110,4 +110,4 @@ sort yswift_identifiers.txt \
     | sed -e 's/^/- ``/g' \
     | sed -e 's/$/``/g' > yswift_symbols.txt
 
-# echo "Page will be available at https://y-crdt.github.io/y-uniffi/documentation/yniffi/"
+echo "Page will be available at https://y-crdt.github.io/yswift/documentation/yswift/"

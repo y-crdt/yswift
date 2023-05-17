@@ -1,0 +1,792 @@
+{
+  "abstract" : [
+    {
+      "text" : "Consistently merge content between two documents.",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/SynchronizingDocuments"
+  },
+  "kind" : "article",
+  "metadata" : {
+    "modules" : [
+      {
+        "name" : "YSwift"
+      }
+    ],
+    "role" : "article",
+    "roleHeading" : "Article",
+    "title" : "Synchronizing Documents"
+  },
+  "primaryContentSections" : [
+    {
+      "content" : [
+        {
+          "anchor" : "Overview",
+          "level" : 2,
+          "text" : "Overview",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "One of the primary benefits of using ",
+              "type" : "text"
+            },
+            {
+              "code" : "YSwift",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : " is to be able to seamlessly and consistently synchronize data between two or more documents.",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "In this example, we show creating two instances of ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YDocument",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " and synchronizing between them, but in a real-world scenario the synchronization data would more likely be transmitted between two peers, or between a client application and server.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "anchor" : "Establish-the-Documents",
+          "level" : 3,
+          "text" : "Establish the Documents",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Once the library is imported, create an instance of ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YDocument",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " and use that instance to create the schema you wish to synchronize.",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "You can create ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YText",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " to synchronize text, or either of ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YArray",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " or ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YMap",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " to synchronize any ",
+              "type" : "text"
+            },
+            {
+              "code" : "Codable",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : " type you provide.",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "The keys for the schema are strings, and are required to match between two instances of ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YDocument",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " to synchronize the values.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "code" : [
+            "import YSwift",
+            "",
+            "let localDocument = YDocument()",
+            "let localText = localDocument.getOrCreateText(named: \"example\")",
+            "localDocument.transactSync { txn in",
+            "    localText.append(\"hello, world!\", in: txn)",
+            "}",
+            "",
+            "let remoteDocument = YDocument()",
+            "let remoteText = remoteDocument.getOrCreateText(named: \"example\")"
+          ],
+          "syntax" : "swift",
+          "type" : "codeListing"
+        },
+        {
+          "anchor" : "Display-the-Initial-State",
+          "level" : 3,
+          "text" : "Display the Initial State",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "To read, or update, values from within a ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YDocument",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : ", do so from within a transaction.",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "The following sample uses ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YText\/getString(in:)",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " from within the closure passed through ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YDocument\/transactSync(_:)",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " to directly access the values:",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "code" : [
+            "localDocument.transactSync { txn in",
+            "    print(\"local document text from `example`: \\\"\\(localText.getString(in: txn))\\\"\")",
+            "}",
+            "",
+            "remoteDocument.transactSync { txn in",
+            "    print(\"remote document text from `example`: \\\"\\(remoteText.getString(in: txn))\\\"\")",
+            "}"
+          ],
+          "syntax" : "swift",
+          "type" : "codeListing"
+        },
+        {
+          "anchor" : "Synchronize-the-Document",
+          "level" : 3,
+          "text" : "Synchronize the Document",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "The synchronization process follows a three step process:",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "items" : [
+            {
+              "content" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "text" : "Get the current state of document you want to which you want to synchronize data.",
+                      "type" : "text"
+                    }
+                  ],
+                  "type" : "paragraph"
+                }
+              ]
+            },
+            {
+              "content" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "text" : "Compute an update from the document by comparing that state with another document.",
+                      "type" : "text"
+                    }
+                  ],
+                  "type" : "paragraph"
+                }
+              ]
+            },
+            {
+              "content" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "text" : "Apply the computed update to the original document from which you retrieved the initial state.",
+                      "type" : "text"
+                    }
+                  ],
+                  "type" : "paragraph"
+                }
+              ]
+            }
+          ],
+          "type" : "orderedList"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "The retrieved state and computed difference are raw byte buffers.",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "In the following example, we only synchronize in one direction - from the ",
+              "type" : "text"
+            },
+            {
+              "code" : "localDocument",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : " to ",
+              "type" : "text"
+            },
+            {
+              "code" : "remoteDocument",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : ".",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "In most scenarios, you likely should compute the state of both sides, compute the differences, and",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "synchronize in both directions:",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "code" : [
+            "print (\" --> Synchronizing local to remote\")",
+            "let remoteState = remoteDocument.transactSync { txn in",
+            "    txn.transactionStateVector()",
+            "}",
+            "print(\"  . Size of the remote state is \\(remoteState.count) bytes.\")",
+            "",
+            "let updateRemote = localDocument.transactSync { txn in",
+            "    localDocument.diff(txn: txn, from: remoteState)",
+            "}",
+            "print(\"  . Size of the diff from remote state is \\(updateRemote.count) bytes.\")",
+            "",
+            "remoteDocument.transactSync { txn in",
+            "    try! txn.transactionApplyUpdate(update: updateRemote)",
+            "}"
+          ],
+          "syntax" : "swift",
+          "type" : "codeListing"
+        },
+        {
+          "anchor" : "Retrieve-and-display-data",
+          "level" : 3,
+          "text" : "Retrieve and display data",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "With the synchronization complete, the value of the current state of the shared data type can be extracted and used.",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "In the following example, we return the copies of the string values of ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YText",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " back from the ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YDocument\/transactSync(_:)",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " closure in order to use them outside of a transaction:",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "code" : [
+            "let localString = localDocument.transactSync { txn in",
+            "    localText.getString(in: txn)",
+            "}",
+            "",
+            "let remoteString = remoteDocument.transactSync { txn in",
+            "    remoteText.getString(in: txn)",
+            "}",
+            "",
+            "print(\"local document text from `example`: \\\"\\(localString)\\\"\")",
+            "print(\"remote document text from `example`: \\\"\\(remoteString)\\\"\")"
+          ],
+          "syntax" : "swift",
+          "type" : "codeListing"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "For a more complete example that illustrates synchronizing a simple To-Do list, see the ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "https:\/\/github.com\/y-crdt\/yswift\/tree\/main\/examples",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : ".",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        }
+      ],
+      "kind" : "content"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "seeAlsoSections" : [
+    {
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YDocument",
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/Buffer",
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/ImplementationNotes"
+      ],
+      "title" : "Documents"
+    }
+  ]
+, 
+"references": {
+"doc://com.github.y-crdt.YSwift/documentation/YSwift": {
+  "abstract" : [
+    {
+      "text" : "Swift language bindings to Y-CRDT shared data types to sync and collaborate.",
+      "type" : "text"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "YSwift",
+  "type" : "topic",
+  "url" : "\/documentation\/yswift"
+},
+"doc://com.github.y-crdt.YSwift/documentation/YSwift/Buffer": {
+  "abstract" : [
+    {
+      "text" : "A contiguous buffer of bytes.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "typealias"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Buffer"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/Buffer",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Buffer"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "Buffer",
+  "type" : "topic",
+  "url" : "\/documentation\/yswift\/buffer"
+},
+"doc://com.github.y-crdt.YSwift/documentation/YSwift/ImplementationNotes": {
+  "abstract" : [
+    {
+      "text" : "Implementation details related to YSwift as a layer over Yrs",
+      "type" : "text"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/ImplementationNotes",
+  "kind" : "article",
+  "role" : "article",
+  "title" : "Implementation Notes",
+  "type" : "topic",
+  "url" : "\/documentation\/yswift\/implementationnotes"
+},
+"doc://com.github.y-crdt.YSwift/documentation/YSwift/YArray": {
+  "abstract" : [
+    {
+      "text" : "A type that provides a list shared data type.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "class"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "YArray"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YArray",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "YArray"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "YArray",
+  "type" : "topic",
+  "url" : "\/documentation\/yswift\/yarray"
+},
+"doc://com.github.y-crdt.YSwift/documentation/YSwift/YDocument": {
+  "abstract" : [
+    {
+      "text" : "YDocument holds YSwift shared data types and coordinates collaboration and changes.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "class"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "YDocument"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YDocument",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "YDocument"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "YDocument",
+  "type" : "topic",
+  "url" : "\/documentation\/yswift\/ydocument"
+},
+"doc://com.github.y-crdt.YSwift/documentation/YSwift/YDocument/transactSync(_:)": {
+  "abstract" : [
+    {
+      "text" : "Creates a synchronous transaction and provides that transaction to a trailing closure, within which you make changes to shared data types.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "transactSync"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "genericParameter",
+      "text" : "T"
+    },
+    {
+      "kind" : "text",
+      "text" : ">(("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:6Yniffi14YrsTransactionC",
+      "text" : "YrsTransaction"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:6YSwift9YDocumentC12transactSyncyxx6Yniffi14YrsTransactionCclF1TL_xmfp",
+      "text" : "T"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:6YSwift9YDocumentC12transactSyncyxx6Yniffi14YrsTransactionCclF1TL_xmfp",
+      "text" : "T"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YDocument\/transactSync(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "transactSync(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/yswift\/ydocument\/transactsync(_:)"
+},
+"doc://com.github.y-crdt.YSwift/documentation/YSwift/YMap": {
+  "abstract" : [
+    {
+      "text" : "A type that provides a map shared data type.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "class"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "YMap"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YMap",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "YMap"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "YMap",
+  "type" : "topic",
+  "url" : "\/documentation\/yswift\/ymap"
+},
+"doc://com.github.y-crdt.YSwift/documentation/YSwift/YText": {
+  "abstract" : [
+    {
+      "text" : "A type that provides a text-oriented shared data type.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "class"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "YText"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YText",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "YText"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "YText",
+  "type" : "topic",
+  "url" : "\/documentation\/yswift\/ytext"
+},
+"doc://com.github.y-crdt.YSwift/documentation/YSwift/YText/getString(in:)": {
+  "abstract" : [
+    {
+      "text" : "Returns the string within the text.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "getString"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "in"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:6Yniffi14YrsTransactionC",
+      "text" : "YrsTransaction"
+    },
+    {
+      "kind" : "text",
+      "text" : "?) -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YText\/getString(in:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "getString(in:)",
+  "type" : "topic",
+  "url" : "\/documentation\/yswift\/ytext\/getstring(in:)"
+},
+"https://github.com/y-crdt/yswift/tree/main/examples": {
+  "identifier" : "https:\/\/github.com\/y-crdt\/yswift\/tree\/main\/examples",
+  "title" : "examples directory in the YSwift repository",
+  "titleInlineContent" : [
+    {
+      "text" : "examples directory in the YSwift repository",
+      "type" : "text"
+    }
+  ],
+  "type" : "link",
+  "url" : "https:\/\/github.com\/y-crdt\/yswift\/tree\/main\/examples"
+}
+}
+}

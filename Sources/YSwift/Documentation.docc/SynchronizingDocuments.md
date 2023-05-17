@@ -9,21 +9,6 @@ In this example, we show creating two instances of ``YSwift/YDocument`` and sync
 
 ### Establish the Documents
 
-<!-- 
-In an ideal world, the snippet code would be the definitive source here.
-The snippet exists in the project as `Snippets/SyncExample.swift` to verify that it
-compiles as the library advances, but the code in this article is replicated.
-
-We're not using it directly because Swift-DocC plugin has a bug where it fails to find any
-symbols for a project when it's using a local reference to a binaryTarget (as we do).
-Issue reference: https://github.com/apple/swift-docc/issues/399
-
-@Snippet(path: "YSwift/Snippets/SyncExample", slice: "establishDocuments")
-@Snippet(path: "YSwift/Snippets/SyncExample", slice: "displayTextFromDocuments")
-@Snippet(path: "YSwift/Snippets/SyncExample", slice: "syncDocuments")
-@Snippet(path: "YSwift/Snippets/SyncExample", slice: "captureAndDisplaySyncedData")
--->
-
 Once the library is imported, create an instance of ``YSwift/YDocument`` and use that instance to create the schema you wish to synchronize.
 You can create ``YSwift/YText`` to synchronize text, or either of ``YSwift/YArray`` or ``YSwift/YMap`` to synchronize any `Codable` type you provide.
 The keys for the schema are strings, and are required to match between two instances of ``YSwift/YDocument`` to synchronize the values.

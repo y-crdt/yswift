@@ -10,7 +10,6 @@ build/
 .ffisymbol-graphs
 *_identifiers.txt
 *_symbols.txt
-docs/
 
 Cargo.lock
 

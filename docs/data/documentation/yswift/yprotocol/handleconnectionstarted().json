@@ -1,0 +1,428 @@
+{
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift",
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YProtocol"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YProtocol\/handleConnectionStarted()"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:6YSwift9YProtocolC23handleConnectionStartedAA12YSyncMessageVyF",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "func"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "handleConnectionStarted"
+      },
+      {
+        "kind" : "text",
+        "text" : "() -> "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:6YSwift12YSyncMessageV",
+        "text" : "YSyncMessage"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "YSwift"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Instance Method",
+    "symbolKind" : "method",
+    "title" : "handleConnectionStarted()"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "func"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "handleConnectionStarted"
+            },
+            {
+              "kind" : "text",
+              "text" : "() -> "
+            },
+            {
+              "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YSyncMessage",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:6YSwift12YSyncMessageV",
+              "text" : "YSyncMessage"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "seeAlsoSections" : [
+    {
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YProtocol\/init(document:)",
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YProtocol\/handleStep1(_:)",
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YProtocol\/handleStep2(_:completionHandler:)",
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YProtocol\/handleUpdate(_:completionHandler:)"
+      ],
+      "title" : "Synchronizing with another Y-CRDT document"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/yswift\/yprotocol\/handleconnectionstarted()"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://com.github.y-crdt.YSwift/documentation/YSwift": {
+  "abstract" : [
+    {
+      "text" : "Swift language bindings to Y-CRDT shared data types to sync and collaborate.",
+      "type" : "text"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "YSwift",
+  "type" : "topic",
+  "url" : "\/documentation\/yswift"
+},
+"doc://com.github.y-crdt.YSwift/documentation/YSwift/YProtocol": {
+  "abstract" : [
+    {
+      "text" : "A class that implements the Y-CRDT synchronization protocol.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "class"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "YProtocol"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YProtocol",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "YProtocol"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "YProtocol",
+  "type" : "topic",
+  "url" : "\/documentation\/yswift\/yprotocol"
+},
+"doc://com.github.y-crdt.YSwift/documentation/YSwift/YProtocol/handleConnectionStarted()": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "handleConnectionStarted"
+    },
+    {
+      "kind" : "text",
+      "text" : "() -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:6YSwift12YSyncMessageV",
+      "text" : "YSyncMessage"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YProtocol\/handleConnectionStarted()",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "handleConnectionStarted()",
+  "type" : "topic",
+  "url" : "\/documentation\/yswift\/yprotocol\/handleconnectionstarted()"
+},
+"doc://com.github.y-crdt.YSwift/documentation/YSwift/YProtocol/handleStep1(_:)": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "handleStep1"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:6YSwift6Buffera",
+      "text" : "Buffer"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:6YSwift12YSyncMessageV",
+      "text" : "YSyncMessage"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YProtocol\/handleStep1(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "handleStep1(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/yswift\/yprotocol\/handlestep1(_:)"
+},
+"doc://com.github.y-crdt.YSwift/documentation/YSwift/YProtocol/handleStep2(_:completionHandler:)": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "handleStep2"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:6YSwift6Buffera",
+      "text" : "Buffer"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "completionHandler"
+    },
+    {
+      "kind" : "text",
+      "text" : ": () -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:s4Voida",
+      "text" : "Void"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YProtocol\/handleStep2(_:completionHandler:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "handleStep2(_:completionHandler:)",
+  "type" : "topic",
+  "url" : "\/documentation\/yswift\/yprotocol\/handlestep2(_:completionhandler:)"
+},
+"doc://com.github.y-crdt.YSwift/documentation/YSwift/YProtocol/handleUpdate(_:completionHandler:)": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "handleUpdate"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:6YSwift6Buffera",
+      "text" : "Buffer"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "completionHandler"
+    },
+    {
+      "kind" : "text",
+      "text" : ": () -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:s4Voida",
+      "text" : "Void"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YProtocol\/handleUpdate(_:completionHandler:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "handleUpdate(_:completionHandler:)",
+  "type" : "topic",
+  "url" : "\/documentation\/yswift\/yprotocol\/handleupdate(_:completionhandler:)"
+},
+"doc://com.github.y-crdt.YSwift/documentation/YSwift/YProtocol/init(document:)": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "identifier",
+      "text" : "init"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "document"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:6YSwift9YDocumentC",
+      "text" : "YDocument"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YProtocol\/init(document:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "init(document:)",
+  "type" : "topic",
+  "url" : "\/documentation\/yswift\/yprotocol\/init(document:)"
+},
+"doc://com.github.y-crdt.YSwift/documentation/YSwift/YSyncMessage": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "YSyncMessage"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YSyncMessage",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "YSyncMessage"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "YSyncMessage",
+  "type" : "topic",
+  "url" : "\/documentation\/yswift\/ysyncmessage"
+}
+}
+}
