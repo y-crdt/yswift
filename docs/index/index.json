@@ -1,0 +1,3066 @@
+{
+  "interfaceLanguages" : {
+    "swift" : [
+      {
+        "children" : [
+          {
+            "title" : "Documents",
+            "type" : "groupMarker"
+          },
+          {
+            "children" : [
+              {
+                "title" : "Creating or loading a document",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/yswift\/ydocument\/init()",
+                "title" : "init()",
+                "type" : "init"
+              },
+              {
+                "title" : "Creating Shared Data Types",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/yswift\/ydocument\/getorcreatetext(named:)",
+                "title" : "func getOrCreateText(named: String) -> YText",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yswift\/ydocument\/getorcreatearray(named:)",
+                "title" : "func getOrCreateArray<T>(named: String) -> YArray<T>",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yswift\/ydocument\/getorcreatemap(named:)",
+                "title" : "func getOrCreateMap<T>(named: String) -> YMap<T>",
+                "type" : "method"
+              },
+              {
+                "title" : "Creating Transactions",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/yswift\/ydocument\/transactsync(_:)",
+                "title" : "func transactSync<T>((YrsTransaction) -> T) -> T",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yswift\/ydocument\/transact(_:)",
+                "title" : "func transact<T>((YrsTransaction) -> T) async -> T",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yswift\/ydocument\/transactasync(_:completion:)",
+                "title" : "func transactAsync<T>((YrsTransaction) -> T, completion: (T) -> Void)",
+                "type" : "method"
+              },
+              {
+                "title" : "Comparing Documents for Synchronization",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/yswift\/ydocument\/diff(txn:from:)",
+                "title" : "func diff(txn: YrsTransaction, from: [UInt8]) -> [UInt8]",
+                "type" : "method"
+              }
+            ],
+            "path" : "\/documentation\/yswift\/ydocument",
+            "title" : "YDocument",
+            "type" : "class"
+          },
+          {
+            "path" : "\/documentation\/yswift\/buffer",
+            "title" : "Buffer",
+            "type" : "typealias"
+          },
+          {
+            "path" : "\/documentation\/yswift\/synchronizingdocuments",
+            "title" : "Synchronizing Documents",
+            "type" : "article"
+          },
+          {
+            "path" : "\/documentation\/yswift\/implementationnotes",
+            "title" : "Implementation Notes",
+            "type" : "article"
+          },
+          {
+            "title" : "Arrays",
+            "type" : "groupMarker"
+          },
+          {
+            "children" : [
+              {
+                "title" : "Inspecting Arrays",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/yswift\/yarray\/length(transaction:)",
+                "title" : "func length(transaction: YrsTransaction?) -> UInt32",
+                "type" : "method"
+              },
+              {
+                "title" : "Retrieving Data from an Array",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/yswift\/yarray\/get(index:transaction:)",
+                "title" : "func get(index: Int, transaction: YrsTransaction?) -> T?",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yswift\/yarray\/toarray(transaction:)",
+                "title" : "func toArray(transaction: YrsTransaction?) -> [T]",
+                "type" : "method"
+              },
+              {
+                "title" : "Iterating over an Array",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/yswift\/yarray\/each(transaction:_:)",
+                "title" : "func each(transaction: YrsTransaction?, (T) -> Void)",
+                "type" : "method"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Instance Methods",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/yarrayiterator\/next()",
+                    "title" : "func next() -> T?",
+                    "type" : "method"
+                  }
+                ],
+                "path" : "\/documentation\/yswift\/yarray\/yarrayiterator",
+                "title" : "YArray.YArrayIterator",
+                "type" : "class"
+              },
+              {
+                "title" : "Updating Arrays",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/yswift\/yarray\/append(_:transaction:)",
+                "title" : "func append(T, transaction: YrsTransaction?)",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yswift\/yarray\/prepend(_:transaction:)",
+                "title" : "func prepend(T, transaction: YrsTransaction?)",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yswift\/yarray\/insert(at:value:transaction:)",
+                "title" : "func insert(at: Int, value: T, transaction: YrsTransaction?)",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yswift\/yarray\/insertarray(at:values:transaction:)",
+                "title" : "func insertArray(at: Int, values: [T], transaction: YrsTransaction?)",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yswift\/yarray\/remove(at:transaction:)",
+                "title" : "func remove(at: Int, transaction: YrsTransaction?)",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yswift\/yarray\/removerange(start:length:transaction:)",
+                "title" : "func removeRange(start: Int, length: Int, transaction: YrsTransaction?)",
+                "type" : "method"
+              },
+              {
+                "title" : "Observing Array Changes",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/yswift\/yarray\/observe()",
+                "title" : "func observe() -> AnyPublisher<[YArrayChange<T>], Never>",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yswift\/yarray\/observe(_:)",
+                "title" : "func observe(([YArrayChange<T>]) -> Void) -> UInt32",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yswift\/yarray\/unobserve(_:)",
+                "title" : "func unobserve(UInt32)",
+                "type" : "method"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Inspecting Array Changes",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarraychange\/added(elements:)",
+                    "title" : "case added(elements: [T])",
+                    "type" : "case"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarraychange\/removed(range:)",
+                    "title" : "case removed(range: UInt32)",
+                    "type" : "case"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarraychange\/retained(range:)",
+                    "title" : "case retained(range: UInt32)",
+                    "type" : "case"
+                  },
+                  {
+                    "title" : "Default Implementations",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "children" : [
+                      {
+                        "title" : "Operators",
+                        "type" : "groupMarker"
+                      },
+                      {
+                        "path" : "\/documentation\/yswift\/yarraychange\/!=(_:_:)",
+                        "title" : "static func != (Self, Self) -> Bool",
+                        "type" : "op"
+                      },
+                      {
+                        "path" : "\/documentation\/yswift\/yarraychange\/==(_:_:)",
+                        "title" : "static func == (YArrayChange<T>, YArrayChange<T>) -> Bool",
+                        "type" : "op"
+                      }
+                    ],
+                    "path" : "\/documentation\/yswift\/yarraychange\/equatable-implementations",
+                    "title" : "Equatable Implementations",
+                    "type" : "symbol"
+                  }
+                ],
+                "path" : "\/documentation\/yswift\/yarraychange",
+                "title" : "YArrayChange",
+                "type" : "enum"
+              },
+              {
+                "title" : "Instance Properties",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/yswift\/yarray\/count-8owso",
+                "title" : "var count: Int",
+                "type" : "property"
+              },
+              {
+                "path" : "\/documentation\/yswift\/yarray\/isempty-44nw7",
+                "title" : "var isEmpty: Bool",
+                "type" : "property"
+              },
+              {
+                "title" : "Default Implementations",
+                "type" : "groupMarker"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Instance Properties",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/last",
+                    "title" : "var last: Self.Element?",
+                    "type" : "property"
+                  },
+                  {
+                    "title" : "Instance Methods",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/difference(from:)",
+                    "title" : "func difference<C>(from: C) -> CollectionDifference<Self.Element>",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/difference(from:by:)",
+                    "title" : "func difference<C>(from: C, by: (C.Element, Self.Element) -> Bool) -> CollectionDifference<Self.Element>",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/droplast(_:)",
+                    "title" : "func dropLast(Int) -> Self.SubSequence",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/firstrange(of:)-3hx8",
+                    "title" : "func firstRange<C>(of: C) -> Range<Self.Index>?",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/formindex(before:)",
+                    "title" : "func formIndex(before: inout Self.Index)",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/joined(separator:)-8x7xp",
+                    "title" : "func joined(separator: String) -> String",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/last(where:)",
+                    "title" : "func last(where: (Self.Element) throws -> Bool) rethrows -> Self.Element?",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/lastindex(of:)",
+                    "title" : "func lastIndex(of: Self.Element) -> Self.Index?",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/lastindex(where:)",
+                    "title" : "func lastIndex(where: (Self.Element) throws -> Bool) rethrows -> Self.Index?",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/reversed()",
+                    "title" : "func reversed() -> ReversedCollection<Self>",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/suffix(_:)",
+                    "title" : "func suffix(Int) -> Self.SubSequence",
+                    "type" : "method"
+                  }
+                ],
+                "path" : "\/documentation\/yswift\/yarray\/bidirectionalcollection-implementations",
+                "title" : "BidirectionalCollection Implementations",
+                "type" : "symbol"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Instance Properties",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/count-4zr8o",
+                    "title" : "var count: Int",
+                    "type" : "property"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/first",
+                    "title" : "var first: Self.Element?",
+                    "type" : "property"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/isempty-1wx8",
+                    "title" : "var isEmpty: Bool",
+                    "type" : "property"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/underestimatedcount-7ypu6",
+                    "title" : "var underestimatedCount: Int",
+                    "type" : "property"
+                  },
+                  {
+                    "title" : "Instance Methods",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/contains(_:)-9uuee",
+                    "title" : "func contains<C>(C) -> Bool",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/drop(while:)",
+                    "title" : "func drop(while: (Self.Element) throws -> Bool) rethrows -> Self.SubSequence",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/dropfirst(_:)",
+                    "title" : "func dropFirst(Int) -> Self.SubSequence",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/firstindex(of:)",
+                    "title" : "func firstIndex(of: Self.Element) -> Self.Index?",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/firstindex(where:)",
+                    "title" : "func firstIndex(where: (Self.Element) throws -> Bool) rethrows -> Self.Index?",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/firstrange(of:)-4wqcb",
+                    "title" : "func firstRange<C>(of: C) -> Range<Self.Index>?",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/formindex(_:offsetby:)",
+                    "title" : "func formIndex(inout Self.Index, offsetBy: Int)",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/formindex(_:offsetby:limitedby:)",
+                    "title" : "func formIndex(inout Self.Index, offsetBy: Int, limitedBy: Self.Index) -> Bool",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/formindex(after:)",
+                    "title" : "func formIndex(after: inout Self.Index)",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/index(of:)",
+                    "title" : "func index(of: Self.Element) -> Self.Index?",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/map(_:)-9wida",
+                    "title" : "func map<T>((Self.Element) throws -> T) rethrows -> [T]",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/prefix(_:)",
+                    "title" : "func prefix(Int) -> Self.SubSequence",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/prefix(through:)",
+                    "title" : "func prefix(through: Self.Index) -> Self.SubSequence",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/prefix(upto:)",
+                    "title" : "func prefix(upTo: Self.Index) -> Self.SubSequence",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/prefix(while:)",
+                    "title" : "func prefix(while: (Self.Element) throws -> Bool) rethrows -> Self.SubSequence",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/randomelement()",
+                    "title" : "func randomElement() -> Self.Element?",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/randomelement(using:)",
+                    "title" : "func randomElement<T>(using: inout T) -> Self.Element?",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/ranges(of:)",
+                    "title" : "func ranges<C>(of: C) -> [Range<Self.Index>]",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/split(maxsplits:omittingemptysubsequences:whereseparator:)",
+                    "title" : "func split(maxSplits: Int, omittingEmptySubsequences: Bool, whereSeparator: (Self.Element) throws -> Bool) rethrows -> [Self.SubSequence]",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/split(separator:maxsplits:omittingemptysubsequences:)-304ie",
+                    "title" : "func split<C>(separator: C, maxSplits: Int, omittingEmptySubsequences: Bool) -> [Self.SubSequence]",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/split(separator:maxsplits:omittingemptysubsequences:)-3obp0",
+                    "title" : "func split(separator: Self.Element, maxSplits: Int, omittingEmptySubsequences: Bool) -> [Self.SubSequence]",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/suffix(from:)",
+                    "title" : "func suffix(from: Self.Index) -> Self.SubSequence",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/trimmingprefix(_:)",
+                    "title" : "func trimmingPrefix<Prefix>(Prefix) -> Self.SubSequence",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/trimmingprefix(while:)",
+                    "title" : "func trimmingPrefix(while: (Self.Element) throws -> Bool) rethrows -> Self.SubSequence",
+                    "type" : "method"
+                  },
+                  {
+                    "title" : "Subscripts",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/subscript(_:)-479j6",
+                    "title" : "subscript((UnboundedRange_) -> ()) -> Self.SubSequence",
+                    "type" : "subscript"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/subscript(_:)-51hzi",
+                    "title" : "subscript<R>(R) -> Self.SubSequence",
+                    "type" : "subscript"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/subscript(_:)-8qoen",
+                    "title" : "subscript(Range<Self.Index>) -> Slice<Self>",
+                    "type" : "subscript"
+                  }
+                ],
+                "path" : "\/documentation\/yswift\/yarray\/collection-implementations",
+                "title" : "Collection Implementations",
+                "type" : "symbol"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Instance Methods",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/partition(by:)-2vz76",
+                    "title" : "func partition(by: (Self.Element) throws -> Bool) rethrows -> Self.Index",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/partition(by:)-54i6x",
+                    "title" : "func partition(by: (Self.Element) throws -> Bool) rethrows -> Self.Index",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/reverse()",
+                    "title" : "func reverse()",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/shuffle()",
+                    "title" : "func shuffle()",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/shuffle(using:)",
+                    "title" : "func shuffle<T>(using: inout T)",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/sort()",
+                    "title" : "func sort()",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/sort(by:)",
+                    "title" : "func sort(by: (Self.Element, Self.Element) throws -> Bool) rethrows",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/sort(using:)-1nxhv",
+                    "title" : "func sort<Comparator>(using: Comparator)",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/sort(using:)-fi4p",
+                    "title" : "func sort<S, Comparator>(using: S)",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/swapat(_:_:)",
+                    "title" : "func swapAt(Self.Index, Self.Index)",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/withcontiguousmutablestorageifavailable(_:)",
+                    "title" : "func withContiguousMutableStorageIfAvailable<R>((inout UnsafeMutableBufferPointer<Self.Element>) throws -> R) rethrows -> R?",
+                    "type" : "method"
+                  },
+                  {
+                    "title" : "Subscripts",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/subscript(_:)-2t11v",
+                    "title" : "subscript((UnboundedRange_) -> ()) -> Self.SubSequence",
+                    "type" : "subscript"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/subscript(_:)-2yory",
+                    "title" : "subscript(Int) -> T",
+                    "type" : "subscript"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/subscript(_:)-6dgx9",
+                    "title" : "subscript<R>(R) -> Self.SubSequence",
+                    "type" : "subscript"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/subscript(_:)-6pgc4",
+                    "title" : "subscript(Range<Self.Index>) -> Slice<Self>",
+                    "type" : "subscript"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/subscript(_:)-72yfg",
+                    "title" : "subscript(Range<Self.Index>) -> Self.SubSequence",
+                    "type" : "subscript"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/subscript(_:)-9sy5k",
+                    "title" : "subscript(Range<Self.Index>) -> Slice<Self>",
+                    "type" : "subscript"
+                  }
+                ],
+                "path" : "\/documentation\/yswift\/yarray\/mutablecollection-implementations",
+                "title" : "MutableCollection Implementations",
+                "type" : "symbol"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Instance Properties",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/endindex",
+                    "title" : "var endIndex: Int",
+                    "type" : "property"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/startindex",
+                    "title" : "var startIndex: Int",
+                    "type" : "property"
+                  },
+                  {
+                    "title" : "Instance Methods",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/index(_:offsetby:limitedby:)",
+                    "title" : "func index(Self.Index, offsetBy: Int, limitedBy: Self.Index) -> Self.Index?",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/index(after:)",
+                    "title" : "func index(after: Int) -> Int",
+                    "type" : "method"
+                  }
+                ],
+                "path" : "\/documentation\/yswift\/yarray\/randomaccesscollection-implementations",
+                "title" : "RandomAccessCollection Implementations",
+                "type" : "symbol"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Instance Properties",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/lazy",
+                    "title" : "var lazy: LazySequence<Self>",
+                    "type" : "property"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/publisher",
+                    "title" : "var publisher: Publishers.Sequence<Self, Never>",
+                    "type" : "property"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/underestimatedcount-222dx",
+                    "title" : "var underestimatedCount: Int",
+                    "type" : "property"
+                  },
+                  {
+                    "title" : "Instance Methods",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/allsatisfy(_:)",
+                    "title" : "func allSatisfy((Self.Element) throws -> Bool) rethrows -> Bool",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/compactmap(_:)",
+                    "title" : "func compactMap<ElementOfResult>((Self.Element) throws -> ElementOfResult?) rethrows -> [ElementOfResult]",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/compare(_:_:)",
+                    "title" : "func compare<Comparator>(Comparator.Compared, Comparator.Compared) -> ComparisonResult",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/contains(_:)-2i3l",
+                    "title" : "func contains(Self.Element) -> Bool",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/contains(where:)",
+                    "title" : "func contains(where: (Self.Element) throws -> Bool) rethrows -> Bool",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/elementsequal(_:)",
+                    "title" : "func elementsEqual<OtherSequence>(OtherSequence) -> Bool",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/elementsequal(_:by:)",
+                    "title" : "func elementsEqual<OtherSequence>(OtherSequence, by: (Self.Element, OtherSequence.Element) throws -> Bool) rethrows -> Bool",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/enumerated()",
+                    "title" : "func enumerated() -> EnumeratedSequence<Self>",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/filter(_:)",
+                    "title" : "func filter((Self.Element) throws -> Bool) rethrows -> [Self.Element]",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/first(where:)",
+                    "title" : "func first(where: (Self.Element) throws -> Bool) rethrows -> Self.Element?",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/flatmap(_:)-6ni96",
+                    "title" : "func flatMap<SegmentOfResult>((Self.Element) throws -> SegmentOfResult) rethrows -> [SegmentOfResult.Element]",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/flatmap(_:)-77nb7",
+                    "title" : "func flatMap<ElementOfResult>((Self.Element) throws -> ElementOfResult?) rethrows -> [ElementOfResult]",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/foreach(_:)",
+                    "title" : "func forEach((Self.Element) throws -> Void) rethrows",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/formatted()",
+                    "title" : "func formatted() -> String",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/formatted(_:)",
+                    "title" : "func formatted<S>(S) -> S.FormatOutput",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/joined()",
+                    "title" : "func joined() -> FlattenSequence<Self>",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/joined(separator:)-3i0i2",
+                    "title" : "func joined(separator: String) -> String",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/joined(separator:)-7phlp",
+                    "title" : "func joined<Separator>(separator: Separator) -> JoinedSequence<Self>",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/lexicographicallyprecedes(_:)",
+                    "title" : "func lexicographicallyPrecedes<OtherSequence>(OtherSequence) -> Bool",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/lexicographicallyprecedes(_:by:)",
+                    "title" : "func lexicographicallyPrecedes<OtherSequence>(OtherSequence, by: (Self.Element, Self.Element) throws -> Bool) rethrows -> Bool",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/makeiterator()",
+                    "title" : "func makeIterator() -> Iterator",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/map(_:)-3xg7y",
+                    "title" : "func map<T>((Self.Element) throws -> T) rethrows -> [T]",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/max()",
+                    "title" : "func max() -> Self.Element?",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/max(by:)",
+                    "title" : "func max(by: (Self.Element, Self.Element) throws -> Bool) rethrows -> Self.Element?",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/min()",
+                    "title" : "func min() -> Self.Element?",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/min(by:)",
+                    "title" : "func min(by: (Self.Element, Self.Element) throws -> Bool) rethrows -> Self.Element?",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/reduce(_:_:)",
+                    "title" : "func reduce<Result>(Result, (Result, Self.Element) throws -> Result) rethrows -> Result",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/reduce(into:_:)",
+                    "title" : "func reduce<Result>(into: Result, (inout Result, Self.Element) throws -> ()) rethrows -> Result",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/shuffled()",
+                    "title" : "func shuffled() -> [Self.Element]",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/shuffled(using:)",
+                    "title" : "func shuffled<T>(using: inout T) -> [Self.Element]",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/sorted()",
+                    "title" : "func sorted() -> [Self.Element]",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/sorted(by:)",
+                    "title" : "func sorted(by: (Self.Element, Self.Element) throws -> Bool) rethrows -> [Self.Element]",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/sorted(using:)-7byvt",
+                    "title" : "func sorted<S, Comparator>(using: S) -> [Self.Element]",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/sorted(using:)-7t3gx",
+                    "title" : "func sorted<Comparator>(using: Comparator) -> [Self.Element]",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/split(separator:maxsplits:omittingemptysubsequences:)-8sqj0",
+                    "title" : "func split(separator: Self.Element, maxSplits: Int, omittingEmptySubsequences: Bool) -> [ArraySlice<Self.Element>]",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/starts(with:)",
+                    "title" : "func starts<PossiblePrefix>(with: PossiblePrefix) -> Bool",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/starts(with:by:)",
+                    "title" : "func starts<PossiblePrefix>(with: PossiblePrefix, by: (Self.Element, PossiblePrefix.Element) throws -> Bool) rethrows -> Bool",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/withcontiguousstorageifavailable(_:)",
+                    "title" : "func withContiguousStorageIfAvailable<R>((UnsafeBufferPointer<Self.Element>) throws -> R) rethrows -> R?",
+                    "type" : "method"
+                  },
+                  {
+                    "title" : "Type Aliases",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarray\/iterator",
+                    "title" : "YArray.Iterator",
+                    "type" : "typealias"
+                  }
+                ],
+                "path" : "\/documentation\/yswift\/yarray\/sequence-implementations",
+                "title" : "Sequence Implementations",
+                "type" : "symbol"
+              }
+            ],
+            "path" : "\/documentation\/yswift\/yarray",
+            "title" : "YArray",
+            "type" : "class"
+          },
+          {
+            "children" : [
+              {
+                "title" : "Inspecting Array Changes",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/yswift\/yarraychange\/added(elements:)",
+                "title" : "case added(elements: [T])",
+                "type" : "case"
+              },
+              {
+                "path" : "\/documentation\/yswift\/yarraychange\/removed(range:)",
+                "title" : "case removed(range: UInt32)",
+                "type" : "case"
+              },
+              {
+                "path" : "\/documentation\/yswift\/yarraychange\/retained(range:)",
+                "title" : "case retained(range: UInt32)",
+                "type" : "case"
+              },
+              {
+                "title" : "Default Implementations",
+                "type" : "groupMarker"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Operators",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarraychange\/!=(_:_:)",
+                    "title" : "static func != (Self, Self) -> Bool",
+                    "type" : "op"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/yarraychange\/==(_:_:)",
+                    "title" : "static func == (YArrayChange<T>, YArrayChange<T>) -> Bool",
+                    "type" : "op"
+                  }
+                ],
+                "path" : "\/documentation\/yswift\/yarraychange\/equatable-implementations",
+                "title" : "Equatable Implementations",
+                "type" : "symbol"
+              }
+            ],
+            "path" : "\/documentation\/yswift\/yarraychange",
+            "title" : "YArrayChange",
+            "type" : "enum"
+          },
+          {
+            "title" : "Maps",
+            "type" : "groupMarker"
+          },
+          {
+            "children" : [
+              {
+                "title" : "Inspecting Maps",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/yswift\/ymap\/length(transaction:)",
+                "title" : "func length(transaction: YrsTransaction?) -> UInt32",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yswift\/ymap\/containskey(_:transaction:)",
+                "title" : "func containsKey(String, transaction: YrsTransaction?) -> Bool",
+                "type" : "method"
+              },
+              {
+                "title" : "Retrieving Data from a Map",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/yswift\/ymap\/get(key:transaction:)",
+                "title" : "func get(key: String, transaction: YrsTransaction?) -> T?",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yswift\/ymap\/tomap(transaction:)",
+                "title" : "func toMap(transaction: YrsTransaction?) -> [String : T]",
+                "type" : "method"
+              },
+              {
+                "title" : "Updating Maps",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/yswift\/ymap\/subscript(_:)",
+                "title" : "subscript(String) -> T?",
+                "type" : "subscript"
+              },
+              {
+                "path" : "\/documentation\/yswift\/ymap\/updatevalue(_:forkey:transaction:)",
+                "title" : "func updateValue(T, forKey: String, transaction: YrsTransaction?)",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yswift\/ymap\/removevalue(forkey:transaction:)",
+                "title" : "func removeValue(forKey: String, transaction: YrsTransaction?) -> T?",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yswift\/ymap\/removeall(transaction:)",
+                "title" : "func removeAll(transaction: YrsTransaction?)",
+                "type" : "method"
+              },
+              {
+                "title" : "Observing Map Changes",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/yswift\/ymap\/observe()",
+                "title" : "func observe() -> AnyPublisher<[YMapChange<T>], Never>",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yswift\/ymap\/observe(_:)",
+                "title" : "func observe(([YMapChange<T>]) -> Void) -> UInt32",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yswift\/ymap\/unobserve(_:)",
+                "title" : "func unobserve(UInt32)",
+                "type" : "method"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Inspecting Map Changes",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/ymapchange\/inserted(key:value:)",
+                    "title" : "case inserted(key: String, value: T)",
+                    "type" : "case"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/ymapchange\/removed(key:value:)",
+                    "title" : "case removed(key: String, value: T)",
+                    "type" : "case"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/ymapchange\/updated(key:oldvalue:newvalue:)",
+                    "title" : "case updated(key: String, oldValue: T, newValue: T)",
+                    "type" : "case"
+                  },
+                  {
+                    "title" : "Default Implementations",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "children" : [
+                      {
+                        "title" : "Operators",
+                        "type" : "groupMarker"
+                      },
+                      {
+                        "path" : "\/documentation\/yswift\/ymapchange\/!=(_:_:)",
+                        "title" : "static func != (Self, Self) -> Bool",
+                        "type" : "op"
+                      },
+                      {
+                        "path" : "\/documentation\/yswift\/ymapchange\/==(_:_:)",
+                        "title" : "static func == (YMapChange<T>, YMapChange<T>) -> Bool",
+                        "type" : "op"
+                      }
+                    ],
+                    "path" : "\/documentation\/yswift\/ymapchange\/equatable-implementations",
+                    "title" : "Equatable Implementations",
+                    "type" : "symbol"
+                  }
+                ],
+                "path" : "\/documentation\/yswift\/ymapchange",
+                "title" : "YMapChange",
+                "type" : "enum"
+              },
+              {
+                "title" : "Iterating over a Map",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/yswift\/ymap\/each(transaction:_:)",
+                "title" : "func each(transaction: YrsTransaction?, (String, T) -> Void)",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yswift\/ymap\/keys(transaction:_:)",
+                "title" : "func keys(transaction: YrsTransaction?, (String) -> Void)",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yswift\/ymap\/values(transaction:_:)",
+                "title" : "func values(transaction: YrsTransaction?, (T) -> Void)",
+                "type" : "method"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Instance Methods",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/ymap\/ymapiterator\/next()",
+                    "title" : "func next() -> (String, T)?",
+                    "type" : "method"
+                  }
+                ],
+                "path" : "\/documentation\/yswift\/ymap\/ymapiterator",
+                "title" : "YMap.YMapIterator",
+                "type" : "class"
+              },
+              {
+                "title" : "Instance Properties",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/yswift\/ymap\/count",
+                "title" : "var count: Int",
+                "type" : "property"
+              },
+              {
+                "path" : "\/documentation\/yswift\/ymap\/isempty",
+                "title" : "var isEmpty: Bool",
+                "type" : "property"
+              },
+              {
+                "title" : "Default Implementations",
+                "type" : "groupMarker"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Instance Properties",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/ymap\/lazy",
+                    "title" : "var lazy: LazySequence<Self>",
+                    "type" : "property"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/ymap\/publisher",
+                    "title" : "var publisher: Publishers.Sequence<Self, Never>",
+                    "type" : "property"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/ymap\/underestimatedcount",
+                    "title" : "var underestimatedCount: Int",
+                    "type" : "property"
+                  },
+                  {
+                    "title" : "Instance Methods",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/ymap\/allsatisfy(_:)",
+                    "title" : "func allSatisfy((Self.Element) throws -> Bool) rethrows -> Bool",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/ymap\/compactmap(_:)",
+                    "title" : "func compactMap<ElementOfResult>((Self.Element) throws -> ElementOfResult?) rethrows -> [ElementOfResult]",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/ymap\/compare(_:_:)",
+                    "title" : "func compare<Comparator>(Comparator.Compared, Comparator.Compared) -> ComparisonResult",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/ymap\/contains(where:)",
+                    "title" : "func contains(where: (Self.Element) throws -> Bool) rethrows -> Bool",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/ymap\/drop(while:)",
+                    "title" : "func drop(while: (Self.Element) throws -> Bool) rethrows -> DropWhileSequence<Self>",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/ymap\/dropfirst(_:)",
+                    "title" : "func dropFirst(Int) -> DropFirstSequence<Self>",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/ymap\/droplast(_:)",
+                    "title" : "func dropLast(Int) -> [Self.Element]",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/ymap\/elementsequal(_:by:)",
+                    "title" : "func elementsEqual<OtherSequence>(OtherSequence, by: (Self.Element, OtherSequence.Element) throws -> Bool) rethrows -> Bool",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/ymap\/enumerated()",
+                    "title" : "func enumerated() -> EnumeratedSequence<Self>",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/ymap\/filter(_:)",
+                    "title" : "func filter((Self.Element) throws -> Bool) rethrows -> [Self.Element]",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/ymap\/first(where:)",
+                    "title" : "func first(where: (Self.Element) throws -> Bool) rethrows -> Self.Element?",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/ymap\/flatmap(_:)-6edix",
+                    "title" : "func flatMap<ElementOfResult>((Self.Element) throws -> ElementOfResult?) rethrows -> [ElementOfResult]",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/ymap\/flatmap(_:)-8dar0",
+                    "title" : "func flatMap<SegmentOfResult>((Self.Element) throws -> SegmentOfResult) rethrows -> [SegmentOfResult.Element]",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/ymap\/foreach(_:)",
+                    "title" : "func forEach((Self.Element) throws -> Void) rethrows",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/ymap\/formatted(_:)",
+                    "title" : "func formatted<S>(S) -> S.FormatOutput",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/ymap\/lexicographicallyprecedes(_:by:)",
+                    "title" : "func lexicographicallyPrecedes<OtherSequence>(OtherSequence, by: (Self.Element, Self.Element) throws -> Bool) rethrows -> Bool",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/ymap\/makeiterator()",
+                    "title" : "func makeIterator() -> Iterator",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/ymap\/map(_:)",
+                    "title" : "func map<T>((Self.Element) throws -> T) rethrows -> [T]",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/ymap\/max(by:)",
+                    "title" : "func max(by: (Self.Element, Self.Element) throws -> Bool) rethrows -> Self.Element?",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/ymap\/min(by:)",
+                    "title" : "func min(by: (Self.Element, Self.Element) throws -> Bool) rethrows -> Self.Element?",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/ymap\/prefix(_:)",
+                    "title" : "func prefix(Int) -> PrefixSequence<Self>",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/ymap\/prefix(while:)",
+                    "title" : "func prefix(while: (Self.Element) throws -> Bool) rethrows -> [Self.Element]",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/ymap\/reduce(_:_:)",
+                    "title" : "func reduce<Result>(Result, (Result, Self.Element) throws -> Result) rethrows -> Result",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/ymap\/reduce(into:_:)",
+                    "title" : "func reduce<Result>(into: Result, (inout Result, Self.Element) throws -> ()) rethrows -> Result",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/ymap\/reversed()",
+                    "title" : "func reversed() -> [Self.Element]",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/ymap\/shuffled()",
+                    "title" : "func shuffled() -> [Self.Element]",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/ymap\/shuffled(using:)",
+                    "title" : "func shuffled<T>(using: inout T) -> [Self.Element]",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/ymap\/sorted(by:)",
+                    "title" : "func sorted(by: (Self.Element, Self.Element) throws -> Bool) rethrows -> [Self.Element]",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/ymap\/sorted(using:)-34kh7",
+                    "title" : "func sorted<S, Comparator>(using: S) -> [Self.Element]",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/ymap\/sorted(using:)-4uhs9",
+                    "title" : "func sorted<Comparator>(using: Comparator) -> [Self.Element]",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/ymap\/split(maxsplits:omittingemptysubsequences:whereseparator:)",
+                    "title" : "func split(maxSplits: Int, omittingEmptySubsequences: Bool, whereSeparator: (Self.Element) throws -> Bool) rethrows -> [ArraySlice<Self.Element>]",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/ymap\/starts(with:by:)",
+                    "title" : "func starts<PossiblePrefix>(with: PossiblePrefix, by: (Self.Element, PossiblePrefix.Element) throws -> Bool) rethrows -> Bool",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/ymap\/suffix(_:)",
+                    "title" : "func suffix(Int) -> [Self.Element]",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/ymap\/withcontiguousstorageifavailable(_:)",
+                    "title" : "func withContiguousStorageIfAvailable<R>((UnsafeBufferPointer<Self.Element>) throws -> R) rethrows -> R?",
+                    "type" : "method"
+                  },
+                  {
+                    "title" : "Type Aliases",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/ymap\/iterator",
+                    "title" : "YMap.Iterator",
+                    "type" : "typealias"
+                  }
+                ],
+                "path" : "\/documentation\/yswift\/ymap\/sequence-implementations",
+                "title" : "Sequence Implementations",
+                "type" : "symbol"
+              }
+            ],
+            "path" : "\/documentation\/yswift\/ymap",
+            "title" : "YMap",
+            "type" : "class"
+          },
+          {
+            "children" : [
+              {
+                "title" : "Inspecting Map Changes",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/yswift\/ymapchange\/inserted(key:value:)",
+                "title" : "case inserted(key: String, value: T)",
+                "type" : "case"
+              },
+              {
+                "path" : "\/documentation\/yswift\/ymapchange\/removed(key:value:)",
+                "title" : "case removed(key: String, value: T)",
+                "type" : "case"
+              },
+              {
+                "path" : "\/documentation\/yswift\/ymapchange\/updated(key:oldvalue:newvalue:)",
+                "title" : "case updated(key: String, oldValue: T, newValue: T)",
+                "type" : "case"
+              },
+              {
+                "title" : "Default Implementations",
+                "type" : "groupMarker"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Operators",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/ymapchange\/!=(_:_:)",
+                    "title" : "static func != (Self, Self) -> Bool",
+                    "type" : "op"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/ymapchange\/==(_:_:)",
+                    "title" : "static func == (YMapChange<T>, YMapChange<T>) -> Bool",
+                    "type" : "op"
+                  }
+                ],
+                "path" : "\/documentation\/yswift\/ymapchange\/equatable-implementations",
+                "title" : "Equatable Implementations",
+                "type" : "symbol"
+              }
+            ],
+            "path" : "\/documentation\/yswift\/ymapchange",
+            "title" : "YMapChange",
+            "type" : "enum"
+          },
+          {
+            "title" : "Text",
+            "type" : "groupMarker"
+          },
+          {
+            "children" : [
+              {
+                "title" : "Updating Text",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/yswift\/ytext\/append(_:in:)",
+                "title" : "func append(String, in: YrsTransaction?)",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yswift\/ytext\/insert(_:at:in:)",
+                "title" : "func insert(String, at: UInt32, in: YrsTransaction?)",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yswift\/ytext\/insertembed(_:at:in:)",
+                "title" : "func insertEmbed<T>(T, at: UInt32, in: YrsTransaction?)",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yswift\/ytext\/insertembedwithattributes(_:attributes:at:in:)",
+                "title" : "func insertEmbedWithAttributes<T>(T, attributes: [String : Any], at: UInt32, in: YrsTransaction?)",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yswift\/ytext\/insertwithattributes(_:attributes:at:in:)",
+                "title" : "func insertWithAttributes(String, attributes: [String : Any], at: UInt32, in: YrsTransaction?)",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yswift\/ytext\/removerange(start:length:in:)",
+                "title" : "func removeRange(start: UInt32, length: UInt32, in: YrsTransaction?)",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yswift\/ytext\/format(at:length:attributes:in:)",
+                "title" : "func format(at: UInt32, length: UInt32, attributes: [String : Any], in: YrsTransaction?)",
+                "type" : "method"
+              },
+              {
+                "title" : "Inspecting the Text",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/yswift\/ytext\/description",
+                "title" : "var description: String",
+                "type" : "property"
+              },
+              {
+                "path" : "\/documentation\/yswift\/ytext\/length(in:)",
+                "title" : "func length(in: YrsTransaction?) -> UInt32",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yswift\/ytext\/getstring(in:)",
+                "title" : "func getString(in: YrsTransaction?) -> String",
+                "type" : "method"
+              },
+              {
+                "title" : "Comparing Text",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/yswift\/ytext\/!=(_:_:)",
+                "title" : "static func != (Self, Self) -> Bool",
+                "type" : "op"
+              },
+              {
+                "path" : "\/documentation\/yswift\/ytext\/==(_:_:)",
+                "title" : "static func == (YText, YText) -> Bool",
+                "type" : "op"
+              },
+              {
+                "title" : "Observing Text Changes",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/yswift\/ytext\/observe()",
+                "title" : "func observe() -> AnyPublisher<[YTextChange], Never>",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yswift\/ytext\/observe(_:)",
+                "title" : "func observe(([YTextChange]) -> Void) -> UInt32",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yswift\/ytext\/unobserve(_:)",
+                "title" : "func unobserve(UInt32)",
+                "type" : "method"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Inspecting Text Changes",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/ytextchange\/deleted(index:)",
+                    "title" : "case deleted(index: UInt32)",
+                    "type" : "case"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/ytextchange\/inserted(value:attributes:)",
+                    "title" : "case inserted(value: String, attributes: [String : Any])",
+                    "type" : "case"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/ytextchange\/retained(index:attributes:)",
+                    "title" : "case retained(index: UInt32, attributes: [String : Any])",
+                    "type" : "case"
+                  }
+                ],
+                "path" : "\/documentation\/yswift\/ytextchange",
+                "title" : "YTextChange",
+                "type" : "enum"
+              },
+              {
+                "title" : "Default Implementations",
+                "type" : "groupMarker"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Instance Properties",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/ytext\/description",
+                    "title" : "var description: String",
+                    "type" : "property"
+                  }
+                ],
+                "path" : "\/documentation\/yswift\/ytext\/customstringconvertible-implementations",
+                "title" : "CustomStringConvertible Implementations",
+                "type" : "symbol"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Operators",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/ytext\/!=(_:_:)",
+                    "title" : "static func != (Self, Self) -> Bool",
+                    "type" : "op"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/ytext\/==(_:_:)",
+                    "title" : "static func == (YText, YText) -> Bool",
+                    "type" : "op"
+                  }
+                ],
+                "path" : "\/documentation\/yswift\/ytext\/equatable-implementations",
+                "title" : "Equatable Implementations",
+                "type" : "symbol"
+              }
+            ],
+            "path" : "\/documentation\/yswift\/ytext",
+            "title" : "YText",
+            "type" : "class"
+          },
+          {
+            "children" : [
+              {
+                "title" : "Inspecting Text Changes",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/yswift\/ytextchange\/deleted(index:)",
+                "title" : "case deleted(index: UInt32)",
+                "type" : "case"
+              },
+              {
+                "path" : "\/documentation\/yswift\/ytextchange\/inserted(value:attributes:)",
+                "title" : "case inserted(value: String, attributes: [String : Any])",
+                "type" : "case"
+              },
+              {
+                "path" : "\/documentation\/yswift\/ytextchange\/retained(index:attributes:)",
+                "title" : "case retained(index: UInt32, attributes: [String : Any])",
+                "type" : "case"
+              }
+            ],
+            "path" : "\/documentation\/yswift\/ytextchange",
+            "title" : "YTextChange",
+            "type" : "enum"
+          },
+          {
+            "title" : "Synchronization",
+            "type" : "groupMarker"
+          },
+          {
+            "children" : [
+              {
+                "title" : "Synchronizing with another Y-CRDT document",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/yswift\/yprotocol\/init(document:)",
+                "title" : "init(document: YDocument)",
+                "type" : "init"
+              },
+              {
+                "path" : "\/documentation\/yswift\/yprotocol\/handleconnectionstarted()",
+                "title" : "func handleConnectionStarted() -> YSyncMessage",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yswift\/yprotocol\/handlestep1(_:)",
+                "title" : "func handleStep1(Buffer) -> YSyncMessage",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yswift\/yprotocol\/handlestep2(_:completionhandler:)",
+                "title" : "func handleStep2(Buffer, completionHandler: () -> Void)",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yswift\/yprotocol\/handleupdate(_:completionhandler:)",
+                "title" : "func handleUpdate(Buffer, completionHandler: () -> Void)",
+                "type" : "method"
+              }
+            ],
+            "path" : "\/documentation\/yswift\/yprotocol",
+            "title" : "YProtocol",
+            "type" : "class"
+          },
+          {
+            "children" : [
+              {
+                "title" : "Creating a Sync Message",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/yswift\/ysyncmessage\/init(kind:buffer:)",
+                "title" : "init(kind: YSyncMessage.Kind, buffer: Buffer)",
+                "type" : "init"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Creating a Sync Message",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/ysyncmessage\/kind-swift.enum\/init(rawvalue:)",
+                    "title" : "init?(rawValue: Int)",
+                    "type" : "init"
+                  },
+                  {
+                    "title" : "Kinds of Sync Messages",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/ysyncmessage\/kind-swift.enum\/step_1",
+                    "title" : "case STEP_1",
+                    "type" : "case"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/ysyncmessage\/kind-swift.enum\/step_2",
+                    "title" : "case STEP_2",
+                    "type" : "case"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/ysyncmessage\/kind-swift.enum\/update",
+                    "title" : "case UPDATE",
+                    "type" : "case"
+                  },
+                  {
+                    "title" : "Encoding and Decoding the Kind of Sync Messages",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/ysyncmessage\/kind-swift.enum\/encode(to:)",
+                    "title" : "func encode(to: Encoder) throws",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/ysyncmessage\/kind-swift.enum\/init(from:)",
+                    "title" : "init(from: Decoder) throws",
+                    "type" : "init"
+                  },
+                  {
+                    "title" : "Default Implementations",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "children" : [
+                      {
+                        "title" : "Operators",
+                        "type" : "groupMarker"
+                      },
+                      {
+                        "path" : "\/documentation\/yswift\/ysyncmessage\/kind-swift.enum\/!=(_:_:)",
+                        "title" : "static func != (Self, Self) -> Bool",
+                        "type" : "op"
+                      }
+                    ],
+                    "path" : "\/documentation\/yswift\/ysyncmessage\/kind-swift.enum\/equatable-implementations",
+                    "title" : "Equatable Implementations",
+                    "type" : "symbol"
+                  },
+                  {
+                    "children" : [
+                      {
+                        "title" : "Initializers",
+                        "type" : "groupMarker"
+                      },
+                      {
+                        "path" : "\/documentation\/yswift\/ysyncmessage\/kind-swift.enum\/init(from:)",
+                        "title" : "init(from: Decoder) throws",
+                        "type" : "init"
+                      },
+                      {
+                        "title" : "Instance Properties",
+                        "type" : "groupMarker"
+                      },
+                      {
+                        "path" : "\/documentation\/yswift\/ysyncmessage\/kind-swift.enum\/hashvalue",
+                        "title" : "var hashValue: Int",
+                        "type" : "property"
+                      },
+                      {
+                        "title" : "Instance Methods",
+                        "type" : "groupMarker"
+                      },
+                      {
+                        "path" : "\/documentation\/yswift\/ysyncmessage\/kind-swift.enum\/encode(to:)",
+                        "title" : "func encode(to: Encoder) throws",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/yswift\/ysyncmessage\/kind-swift.enum\/hash(into:)",
+                        "title" : "func hash(into: inout Hasher)",
+                        "type" : "method"
+                      }
+                    ],
+                    "path" : "\/documentation\/yswift\/ysyncmessage\/kind-swift.enum\/rawrepresentable-implementations",
+                    "title" : "RawRepresentable Implementations",
+                    "type" : "symbol"
+                  }
+                ],
+                "path" : "\/documentation\/yswift\/ysyncmessage\/kind-swift.enum",
+                "title" : "YSyncMessage.Kind",
+                "type" : "enum"
+              },
+              {
+                "title" : "Decoding a Sync Message",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/yswift\/ysyncmessage\/init(from:)",
+                "title" : "init(from: Decoder) throws",
+                "type" : "init"
+              },
+              {
+                "title" : "Inspecting a Sync Message",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/yswift\/ysyncmessage\/kind-swift.property",
+                "title" : "let kind: Kind",
+                "type" : "property"
+              },
+              {
+                "path" : "\/documentation\/yswift\/ysyncmessage\/buffer",
+                "title" : "let buffer: Buffer",
+                "type" : "property"
+              }
+            ],
+            "path" : "\/documentation\/yswift\/ysyncmessage",
+            "title" : "YSyncMessage",
+            "type" : "struct"
+          }
+        ],
+        "path" : "\/documentation\/yswift",
+        "title" : "YSwift",
+        "type" : "module"
+      },
+      {
+        "children" : [
+          {
+            "title" : "Classes",
+            "type" : "groupMarker"
+          },
+          {
+            "children" : [
+              {
+                "title" : "Instance Methods",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsarray\/each(tx:delegate:)",
+                "title" : "func each(tx: YrsTransaction, delegate: YrsArrayEachDelegate)",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsarray\/get(tx:index:)",
+                "title" : "func get(tx: YrsTransaction, index: UInt32) throws -> String",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsarray\/insert(tx:index:value:)",
+                "title" : "func insert(tx: YrsTransaction, index: UInt32, value: String)",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsarray\/insertrange(tx:index:values:)",
+                "title" : "func insertRange(tx: YrsTransaction, index: UInt32, values: [String])",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsarray\/length(tx:)",
+                "title" : "func length(tx: YrsTransaction) -> UInt32",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsarray\/observe(delegate:)",
+                "title" : "func observe(delegate: YrsArrayObservationDelegate) -> UInt32",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsarray\/pushback(tx:value:)",
+                "title" : "func pushBack(tx: YrsTransaction, value: String)",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsarray\/pushfront(tx:value:)",
+                "title" : "func pushFront(tx: YrsTransaction, value: String)",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsarray\/remove(tx:index:)",
+                "title" : "func remove(tx: YrsTransaction, index: UInt32)",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsarray\/removerange(tx:index:len:)",
+                "title" : "func removeRange(tx: YrsTransaction, index: UInt32, len: UInt32)",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsarray\/toa(tx:)",
+                "title" : "func toA(tx: YrsTransaction) -> [String]",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsarray\/unobserve(subscriptionid:)",
+                "title" : "func unobserve(subscriptionId: UInt32)",
+                "type" : "method"
+              }
+            ],
+            "path" : "\/documentation\/yniffi\/yrsarray",
+            "title" : "YrsArray",
+            "type" : "class"
+          },
+          {
+            "children" : [
+              {
+                "title" : "Initializers",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsdoc\/init()",
+                "title" : "init()",
+                "type" : "init"
+              },
+              {
+                "title" : "Instance Methods",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsdoc\/encodediffv1(tx:statevector:)",
+                "title" : "func encodeDiffV1(tx: YrsTransaction, stateVector: [UInt8]) throws -> [UInt8]",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsdoc\/getarray(name:)",
+                "title" : "func getArray(name: String) -> YrsArray",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsdoc\/getmap(name:)",
+                "title" : "func getMap(name: String) -> YrsMap",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsdoc\/gettext(name:)",
+                "title" : "func getText(name: String) -> YrsText",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsdoc\/transact()",
+                "title" : "func transact() -> YrsTransaction",
+                "type" : "method"
+              }
+            ],
+            "path" : "\/documentation\/yniffi\/yrsdoc",
+            "title" : "YrsDoc",
+            "type" : "class"
+          },
+          {
+            "children" : [
+              {
+                "title" : "Instance Methods",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsmap\/clear(tx:)",
+                "title" : "func clear(tx: YrsTransaction)",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsmap\/containskey(tx:key:)",
+                "title" : "func containsKey(tx: YrsTransaction, key: String) -> Bool",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsmap\/each(tx:delegate:)",
+                "title" : "func each(tx: YrsTransaction, delegate: YrsMapKvIteratorDelegate)",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsmap\/get(tx:key:)",
+                "title" : "func get(tx: YrsTransaction, key: String) throws -> String",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsmap\/insert(tx:key:value:)",
+                "title" : "func insert(tx: YrsTransaction, key: String, value: String)",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsmap\/keys(tx:delegate:)",
+                "title" : "func keys(tx: YrsTransaction, delegate: YrsMapIteratorDelegate)",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsmap\/length(tx:)",
+                "title" : "func length(tx: YrsTransaction) -> UInt32",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsmap\/observe(delegate:)",
+                "title" : "func observe(delegate: YrsMapObservationDelegate) -> UInt32",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsmap\/remove(tx:key:)",
+                "title" : "func remove(tx: YrsTransaction, key: String) throws -> String?",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsmap\/unobserve(subscriptionid:)",
+                "title" : "func unobserve(subscriptionId: UInt32)",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsmap\/values(tx:delegate:)",
+                "title" : "func values(tx: YrsTransaction, delegate: YrsMapIteratorDelegate)",
+                "type" : "method"
+              }
+            ],
+            "path" : "\/documentation\/yniffi\/yrsmap",
+            "title" : "YrsMap",
+            "type" : "class"
+          },
+          {
+            "children" : [
+              {
+                "title" : "Instance Methods",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrstext\/append(tx:text:)",
+                "title" : "func append(tx: YrsTransaction, text: String)",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrstext\/format(tx:index:length:attrs:)",
+                "title" : "func format(tx: YrsTransaction, index: UInt32, length: UInt32, attrs: String)",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrstext\/getstring(tx:)",
+                "title" : "func getString(tx: YrsTransaction) -> String",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrstext\/insert(tx:index:chunk:)",
+                "title" : "func insert(tx: YrsTransaction, index: UInt32, chunk: String)",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrstext\/insertembed(tx:index:content:)",
+                "title" : "func insertEmbed(tx: YrsTransaction, index: UInt32, content: String)",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrstext\/insertembedwithattributes(tx:index:content:attrs:)",
+                "title" : "func insertEmbedWithAttributes(tx: YrsTransaction, index: UInt32, content: String, attrs: String)",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrstext\/insertwithattributes(tx:index:chunk:attrs:)",
+                "title" : "func insertWithAttributes(tx: YrsTransaction, index: UInt32, chunk: String, attrs: String)",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrstext\/length(tx:)",
+                "title" : "func length(tx: YrsTransaction) -> UInt32",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrstext\/observe(delegate:)",
+                "title" : "func observe(delegate: YrsTextObservationDelegate) -> UInt32",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrstext\/removerange(tx:start:length:)",
+                "title" : "func removeRange(tx: YrsTransaction, start: UInt32, length: UInt32)",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrstext\/unobserve(subscriptionid:)",
+                "title" : "func unobserve(subscriptionId: UInt32)",
+                "type" : "method"
+              }
+            ],
+            "path" : "\/documentation\/yniffi\/yrstext",
+            "title" : "YrsText",
+            "type" : "class"
+          },
+          {
+            "children" : [
+              {
+                "title" : "Instance Methods",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrstransaction\/free()",
+                "title" : "func free()",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrstransaction\/transactionapplyupdate(update:)",
+                "title" : "func transactionApplyUpdate(update: [UInt8]) throws",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrstransaction\/transactionencodestateasupdate()",
+                "title" : "func transactionEncodeStateAsUpdate() -> [UInt8]",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrstransaction\/transactionencodestateasupdatefromsv(statevector:)",
+                "title" : "func transactionEncodeStateAsUpdateFromSv(stateVector: [UInt8]) throws -> [UInt8]",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrstransaction\/transactionencodeupdate()",
+                "title" : "func transactionEncodeUpdate() -> [UInt8]",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrstransaction\/transactiongetarray(name:)",
+                "title" : "func transactionGetArray(name: String) -> YrsArray?",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrstransaction\/transactiongetmap(name:)",
+                "title" : "func transactionGetMap(name: String) -> YrsMap?",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrstransaction\/transactiongettext(name:)",
+                "title" : "func transactionGetText(name: String) -> YrsText?",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrstransaction\/transactionstatevector()",
+                "title" : "func transactionStateVector() -> [UInt8]",
+                "type" : "method"
+              }
+            ],
+            "path" : "\/documentation\/yniffi\/yrstransaction",
+            "title" : "YrsTransaction",
+            "type" : "class"
+          },
+          {
+            "title" : "Protocols",
+            "type" : "groupMarker"
+          },
+          {
+            "children" : [
+              {
+                "title" : "Instance Methods",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsarrayeachdelegate\/call(value:)",
+                "title" : "func call(value: String)",
+                "type" : "method"
+              }
+            ],
+            "path" : "\/documentation\/yniffi\/yrsarrayeachdelegate",
+            "title" : "YrsArrayEachDelegate",
+            "type" : "protocol"
+          },
+          {
+            "children" : [
+              {
+                "title" : "Instance Methods",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsarrayobservationdelegate\/call(value:)",
+                "title" : "func call(value: [YrsChange])",
+                "type" : "method"
+              }
+            ],
+            "path" : "\/documentation\/yniffi\/yrsarrayobservationdelegate",
+            "title" : "YrsArrayObservationDelegate",
+            "type" : "protocol"
+          },
+          {
+            "children" : [
+              {
+                "title" : "Instance Methods",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsarrayprotocol\/each(tx:delegate:)",
+                "title" : "func each(tx: YrsTransaction, delegate: YrsArrayEachDelegate)",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsarrayprotocol\/get(tx:index:)",
+                "title" : "func get(tx: YrsTransaction, index: UInt32) throws -> String",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsarrayprotocol\/insert(tx:index:value:)",
+                "title" : "func insert(tx: YrsTransaction, index: UInt32, value: String)",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsarrayprotocol\/insertrange(tx:index:values:)",
+                "title" : "func insertRange(tx: YrsTransaction, index: UInt32, values: [String])",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsarrayprotocol\/length(tx:)",
+                "title" : "func length(tx: YrsTransaction) -> UInt32",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsarrayprotocol\/observe(delegate:)",
+                "title" : "func observe(delegate: YrsArrayObservationDelegate) -> UInt32",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsarrayprotocol\/pushback(tx:value:)",
+                "title" : "func pushBack(tx: YrsTransaction, value: String)",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsarrayprotocol\/pushfront(tx:value:)",
+                "title" : "func pushFront(tx: YrsTransaction, value: String)",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsarrayprotocol\/remove(tx:index:)",
+                "title" : "func remove(tx: YrsTransaction, index: UInt32)",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsarrayprotocol\/removerange(tx:index:len:)",
+                "title" : "func removeRange(tx: YrsTransaction, index: UInt32, len: UInt32)",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsarrayprotocol\/toa(tx:)",
+                "title" : "func toA(tx: YrsTransaction) -> [String]",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsarrayprotocol\/unobserve(subscriptionid:)",
+                "title" : "func unobserve(subscriptionId: UInt32)",
+                "type" : "method"
+              }
+            ],
+            "path" : "\/documentation\/yniffi\/yrsarrayprotocol",
+            "title" : "YrsArrayProtocol",
+            "type" : "protocol"
+          },
+          {
+            "children" : [
+              {
+                "title" : "Instance Methods",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsdocprotocol\/encodediffv1(tx:statevector:)",
+                "title" : "func encodeDiffV1(tx: YrsTransaction, stateVector: [UInt8]) throws -> [UInt8]",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsdocprotocol\/getarray(name:)",
+                "title" : "func getArray(name: String) -> YrsArray",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsdocprotocol\/getmap(name:)",
+                "title" : "func getMap(name: String) -> YrsMap",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsdocprotocol\/gettext(name:)",
+                "title" : "func getText(name: String) -> YrsText",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsdocprotocol\/transact()",
+                "title" : "func transact() -> YrsTransaction",
+                "type" : "method"
+              }
+            ],
+            "path" : "\/documentation\/yniffi\/yrsdocprotocol",
+            "title" : "YrsDocProtocol",
+            "type" : "protocol"
+          },
+          {
+            "children" : [
+              {
+                "title" : "Instance Methods",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsmapiteratordelegate\/call(value:)",
+                "title" : "func call(value: String)",
+                "type" : "method"
+              }
+            ],
+            "path" : "\/documentation\/yniffi\/yrsmapiteratordelegate",
+            "title" : "YrsMapIteratorDelegate",
+            "type" : "protocol"
+          },
+          {
+            "children" : [
+              {
+                "title" : "Instance Methods",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsmapkviteratordelegate\/call(key:value:)",
+                "title" : "func call(key: String, value: String)",
+                "type" : "method"
+              }
+            ],
+            "path" : "\/documentation\/yniffi\/yrsmapkviteratordelegate",
+            "title" : "YrsMapKvIteratorDelegate",
+            "type" : "protocol"
+          },
+          {
+            "children" : [
+              {
+                "title" : "Instance Methods",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsmapobservationdelegate\/call(value:)",
+                "title" : "func call(value: [YrsMapChange])",
+                "type" : "method"
+              }
+            ],
+            "path" : "\/documentation\/yniffi\/yrsmapobservationdelegate",
+            "title" : "YrsMapObservationDelegate",
+            "type" : "protocol"
+          },
+          {
+            "children" : [
+              {
+                "title" : "Instance Methods",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsmapprotocol\/clear(tx:)",
+                "title" : "func clear(tx: YrsTransaction)",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsmapprotocol\/containskey(tx:key:)",
+                "title" : "func containsKey(tx: YrsTransaction, key: String) -> Bool",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsmapprotocol\/each(tx:delegate:)",
+                "title" : "func each(tx: YrsTransaction, delegate: YrsMapKvIteratorDelegate)",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsmapprotocol\/get(tx:key:)",
+                "title" : "func get(tx: YrsTransaction, key: String) throws -> String",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsmapprotocol\/insert(tx:key:value:)",
+                "title" : "func insert(tx: YrsTransaction, key: String, value: String)",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsmapprotocol\/keys(tx:delegate:)",
+                "title" : "func keys(tx: YrsTransaction, delegate: YrsMapIteratorDelegate)",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsmapprotocol\/length(tx:)",
+                "title" : "func length(tx: YrsTransaction) -> UInt32",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsmapprotocol\/observe(delegate:)",
+                "title" : "func observe(delegate: YrsMapObservationDelegate) -> UInt32",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsmapprotocol\/remove(tx:key:)",
+                "title" : "func remove(tx: YrsTransaction, key: String) throws -> String?",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsmapprotocol\/unobserve(subscriptionid:)",
+                "title" : "func unobserve(subscriptionId: UInt32)",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsmapprotocol\/values(tx:delegate:)",
+                "title" : "func values(tx: YrsTransaction, delegate: YrsMapIteratorDelegate)",
+                "type" : "method"
+              }
+            ],
+            "path" : "\/documentation\/yniffi\/yrsmapprotocol",
+            "title" : "YrsMapProtocol",
+            "type" : "protocol"
+          },
+          {
+            "children" : [
+              {
+                "title" : "Instance Methods",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrstextobservationdelegate\/call(value:)",
+                "title" : "func call(value: [YrsDelta])",
+                "type" : "method"
+              }
+            ],
+            "path" : "\/documentation\/yniffi\/yrstextobservationdelegate",
+            "title" : "YrsTextObservationDelegate",
+            "type" : "protocol"
+          },
+          {
+            "children" : [
+              {
+                "title" : "Instance Methods",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrstextprotocol\/append(tx:text:)",
+                "title" : "func append(tx: YrsTransaction, text: String)",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrstextprotocol\/format(tx:index:length:attrs:)",
+                "title" : "func format(tx: YrsTransaction, index: UInt32, length: UInt32, attrs: String)",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrstextprotocol\/getstring(tx:)",
+                "title" : "func getString(tx: YrsTransaction) -> String",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrstextprotocol\/insert(tx:index:chunk:)",
+                "title" : "func insert(tx: YrsTransaction, index: UInt32, chunk: String)",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrstextprotocol\/insertembed(tx:index:content:)",
+                "title" : "func insertEmbed(tx: YrsTransaction, index: UInt32, content: String)",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrstextprotocol\/insertembedwithattributes(tx:index:content:attrs:)",
+                "title" : "func insertEmbedWithAttributes(tx: YrsTransaction, index: UInt32, content: String, attrs: String)",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrstextprotocol\/insertwithattributes(tx:index:chunk:attrs:)",
+                "title" : "func insertWithAttributes(tx: YrsTransaction, index: UInt32, chunk: String, attrs: String)",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrstextprotocol\/length(tx:)",
+                "title" : "func length(tx: YrsTransaction) -> UInt32",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrstextprotocol\/observe(delegate:)",
+                "title" : "func observe(delegate: YrsTextObservationDelegate) -> UInt32",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrstextprotocol\/removerange(tx:start:length:)",
+                "title" : "func removeRange(tx: YrsTransaction, start: UInt32, length: UInt32)",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrstextprotocol\/unobserve(subscriptionid:)",
+                "title" : "func unobserve(subscriptionId: UInt32)",
+                "type" : "method"
+              }
+            ],
+            "path" : "\/documentation\/yniffi\/yrstextprotocol",
+            "title" : "YrsTextProtocol",
+            "type" : "protocol"
+          },
+          {
+            "children" : [
+              {
+                "title" : "Instance Methods",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrstransactionprotocol\/free()",
+                "title" : "func free()",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrstransactionprotocol\/transactionapplyupdate(update:)",
+                "title" : "func transactionApplyUpdate(update: [UInt8]) throws",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrstransactionprotocol\/transactionencodestateasupdate()",
+                "title" : "func transactionEncodeStateAsUpdate() -> [UInt8]",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrstransactionprotocol\/transactionencodestateasupdatefromsv(statevector:)",
+                "title" : "func transactionEncodeStateAsUpdateFromSv(stateVector: [UInt8]) throws -> [UInt8]",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrstransactionprotocol\/transactionencodeupdate()",
+                "title" : "func transactionEncodeUpdate() -> [UInt8]",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrstransactionprotocol\/transactiongetarray(name:)",
+                "title" : "func transactionGetArray(name: String) -> YrsArray?",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrstransactionprotocol\/transactiongetmap(name:)",
+                "title" : "func transactionGetMap(name: String) -> YrsMap?",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrstransactionprotocol\/transactiongettext(name:)",
+                "title" : "func transactionGetText(name: String) -> YrsText?",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrstransactionprotocol\/transactionstatevector()",
+                "title" : "func transactionStateVector() -> [UInt8]",
+                "type" : "method"
+              }
+            ],
+            "path" : "\/documentation\/yniffi\/yrstransactionprotocol",
+            "title" : "YrsTransactionProtocol",
+            "type" : "protocol"
+          },
+          {
+            "title" : "Structures",
+            "type" : "groupMarker"
+          },
+          {
+            "children" : [
+              {
+                "title" : "Type Methods",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/fficonvertertypecodingerror\/read(from:)",
+                "title" : "static func read(from: inout (data: Data, offset: Data.Index)) throws -> CodingError",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/fficonvertertypecodingerror\/write(_:into:)",
+                "title" : "static func write(CodingError, into: inout [UInt8])",
+                "type" : "method"
+              }
+            ],
+            "path" : "\/documentation\/yniffi\/fficonvertertypecodingerror",
+            "title" : "FfiConverterTypeCodingError",
+            "type" : "struct"
+          },
+          {
+            "children" : [
+              {
+                "title" : "Type Methods",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/fficonvertertypeyrsarray\/lift(_:)",
+                "title" : "static func lift(UnsafeMutableRawPointer) throws -> YrsArray",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/fficonvertertypeyrsarray\/lower(_:)",
+                "title" : "static func lower(YrsArray) -> UnsafeMutableRawPointer",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/fficonvertertypeyrsarray\/read(from:)",
+                "title" : "static func read(from: inout (data: Data, offset: Data.Index)) throws -> YrsArray",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/fficonvertertypeyrsarray\/write(_:into:)",
+                "title" : "static func write(YrsArray, into: inout [UInt8])",
+                "type" : "method"
+              }
+            ],
+            "path" : "\/documentation\/yniffi\/fficonvertertypeyrsarray",
+            "title" : "FfiConverterTypeYrsArray",
+            "type" : "struct"
+          },
+          {
+            "children" : [
+              {
+                "title" : "Type Methods",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/fficonvertertypeyrschange\/read(from:)",
+                "title" : "static func read(from: inout (data: Data, offset: Data.Index)) throws -> YrsChange",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/fficonvertertypeyrschange\/write(_:into:)",
+                "title" : "static func write(YrsChange, into: inout [UInt8])",
+                "type" : "method"
+              }
+            ],
+            "path" : "\/documentation\/yniffi\/fficonvertertypeyrschange",
+            "title" : "FfiConverterTypeYrsChange",
+            "type" : "struct"
+          },
+          {
+            "children" : [
+              {
+                "title" : "Type Methods",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/fficonvertertypeyrsdelta\/read(from:)",
+                "title" : "static func read(from: inout (data: Data, offset: Data.Index)) throws -> YrsDelta",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/fficonvertertypeyrsdelta\/write(_:into:)",
+                "title" : "static func write(YrsDelta, into: inout [UInt8])",
+                "type" : "method"
+              }
+            ],
+            "path" : "\/documentation\/yniffi\/fficonvertertypeyrsdelta",
+            "title" : "FfiConverterTypeYrsDelta",
+            "type" : "struct"
+          },
+          {
+            "children" : [
+              {
+                "title" : "Type Methods",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/fficonvertertypeyrsdoc\/lift(_:)",
+                "title" : "static func lift(UnsafeMutableRawPointer) throws -> YrsDoc",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/fficonvertertypeyrsdoc\/lower(_:)",
+                "title" : "static func lower(YrsDoc) -> UnsafeMutableRawPointer",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/fficonvertertypeyrsdoc\/read(from:)",
+                "title" : "static func read(from: inout (data: Data, offset: Data.Index)) throws -> YrsDoc",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/fficonvertertypeyrsdoc\/write(_:into:)",
+                "title" : "static func write(YrsDoc, into: inout [UInt8])",
+                "type" : "method"
+              }
+            ],
+            "path" : "\/documentation\/yniffi\/fficonvertertypeyrsdoc",
+            "title" : "FfiConverterTypeYrsDoc",
+            "type" : "struct"
+          },
+          {
+            "children" : [
+              {
+                "title" : "Type Methods",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/fficonvertertypeyrsentrychange\/read(from:)",
+                "title" : "static func read(from: inout (data: Data, offset: Data.Index)) throws -> YrsEntryChange",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/fficonvertertypeyrsentrychange\/write(_:into:)",
+                "title" : "static func write(YrsEntryChange, into: inout [UInt8])",
+                "type" : "method"
+              }
+            ],
+            "path" : "\/documentation\/yniffi\/fficonvertertypeyrsentrychange",
+            "title" : "FfiConverterTypeYrsEntryChange",
+            "type" : "struct"
+          },
+          {
+            "children" : [
+              {
+                "title" : "Type Methods",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/fficonvertertypeyrsmap\/lift(_:)",
+                "title" : "static func lift(UnsafeMutableRawPointer) throws -> YrsMap",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/fficonvertertypeyrsmap\/lower(_:)",
+                "title" : "static func lower(YrsMap) -> UnsafeMutableRawPointer",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/fficonvertertypeyrsmap\/read(from:)",
+                "title" : "static func read(from: inout (data: Data, offset: Data.Index)) throws -> YrsMap",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/fficonvertertypeyrsmap\/write(_:into:)",
+                "title" : "static func write(YrsMap, into: inout [UInt8])",
+                "type" : "method"
+              }
+            ],
+            "path" : "\/documentation\/yniffi\/fficonvertertypeyrsmap",
+            "title" : "FfiConverterTypeYrsMap",
+            "type" : "struct"
+          },
+          {
+            "children" : [
+              {
+                "title" : "Type Methods",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/fficonvertertypeyrsmapchange\/read(from:)",
+                "title" : "static func read(from: inout (data: Data, offset: Data.Index)) throws -> YrsMapChange",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/fficonvertertypeyrsmapchange\/write(_:into:)",
+                "title" : "static func write(YrsMapChange, into: inout [UInt8])",
+                "type" : "method"
+              }
+            ],
+            "path" : "\/documentation\/yniffi\/fficonvertertypeyrsmapchange",
+            "title" : "FfiConverterTypeYrsMapChange",
+            "type" : "struct"
+          },
+          {
+            "children" : [
+              {
+                "title" : "Type Methods",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/fficonvertertypeyrstext\/lift(_:)",
+                "title" : "static func lift(UnsafeMutableRawPointer) throws -> YrsText",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/fficonvertertypeyrstext\/lower(_:)",
+                "title" : "static func lower(YrsText) -> UnsafeMutableRawPointer",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/fficonvertertypeyrstext\/read(from:)",
+                "title" : "static func read(from: inout (data: Data, offset: Data.Index)) throws -> YrsText",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/fficonvertertypeyrstext\/write(_:into:)",
+                "title" : "static func write(YrsText, into: inout [UInt8])",
+                "type" : "method"
+              }
+            ],
+            "path" : "\/documentation\/yniffi\/fficonvertertypeyrstext",
+            "title" : "FfiConverterTypeYrsText",
+            "type" : "struct"
+          },
+          {
+            "children" : [
+              {
+                "title" : "Type Methods",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/fficonvertertypeyrstransaction\/lift(_:)",
+                "title" : "static func lift(UnsafeMutableRawPointer) throws -> YrsTransaction",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/fficonvertertypeyrstransaction\/lower(_:)",
+                "title" : "static func lower(YrsTransaction) -> UnsafeMutableRawPointer",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/fficonvertertypeyrstransaction\/read(from:)",
+                "title" : "static func read(from: inout (data: Data, offset: Data.Index)) throws -> YrsTransaction",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/fficonvertertypeyrstransaction\/write(_:into:)",
+                "title" : "static func write(YrsTransaction, into: inout [UInt8])",
+                "type" : "method"
+              }
+            ],
+            "path" : "\/documentation\/yniffi\/fficonvertertypeyrstransaction",
+            "title" : "FfiConverterTypeYrsTransaction",
+            "type" : "struct"
+          },
+          {
+            "children" : [
+              {
+                "title" : "Initializers",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsmapchange\/init(key:change:)",
+                "title" : "init(key: String, change: YrsEntryChange)",
+                "type" : "init"
+              },
+              {
+                "title" : "Instance Properties",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsmapchange\/change",
+                "title" : "var change: YrsEntryChange",
+                "type" : "property"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsmapchange\/key",
+                "title" : "var key: String",
+                "type" : "property"
+              },
+              {
+                "title" : "Default Implementations",
+                "type" : "groupMarker"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Operators",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/yniffi\/yrsmapchange\/!=(_:_:)",
+                    "title" : "static func != (Self, Self) -> Bool",
+                    "type" : "op"
+                  },
+                  {
+                    "path" : "\/documentation\/yniffi\/yrsmapchange\/==(_:_:)",
+                    "title" : "static func == (YrsMapChange, YrsMapChange) -> Bool",
+                    "type" : "op"
+                  }
+                ],
+                "path" : "\/documentation\/yniffi\/yrsmapchange\/equatable-implementations",
+                "title" : "Equatable Implementations",
+                "type" : "symbol"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Instance Methods",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/yniffi\/yrsmapchange\/hash(into:)",
+                    "title" : "func hash(into: inout Hasher)",
+                    "type" : "method"
+                  }
+                ],
+                "path" : "\/documentation\/yniffi\/yrsmapchange\/hashable-implementations",
+                "title" : "Hashable Implementations",
+                "type" : "symbol"
+              }
+            ],
+            "path" : "\/documentation\/yniffi\/yrsmapchange",
+            "title" : "YrsMapChange",
+            "type" : "struct"
+          },
+          {
+            "title" : "Functions",
+            "type" : "groupMarker"
+          },
+          {
+            "path" : "\/documentation\/yniffi\/fficonvertertypeyrschange_lift(_:)",
+            "title" : "func FfiConverterTypeYrsChange_lift(RustBuffer) throws -> YrsChange",
+            "type" : "func"
+          },
+          {
+            "path" : "\/documentation\/yniffi\/fficonvertertypeyrschange_lower(_:)",
+            "title" : "func FfiConverterTypeYrsChange_lower(YrsChange) -> RustBuffer",
+            "type" : "func"
+          },
+          {
+            "path" : "\/documentation\/yniffi\/fficonvertertypeyrsdelta_lift(_:)",
+            "title" : "func FfiConverterTypeYrsDelta_lift(RustBuffer) throws -> YrsDelta",
+            "type" : "func"
+          },
+          {
+            "path" : "\/documentation\/yniffi\/fficonvertertypeyrsdelta_lower(_:)",
+            "title" : "func FfiConverterTypeYrsDelta_lower(YrsDelta) -> RustBuffer",
+            "type" : "func"
+          },
+          {
+            "path" : "\/documentation\/yniffi\/fficonvertertypeyrsentrychange_lift(_:)",
+            "title" : "func FfiConverterTypeYrsEntryChange_lift(RustBuffer) throws -> YrsEntryChange",
+            "type" : "func"
+          },
+          {
+            "path" : "\/documentation\/yniffi\/fficonvertertypeyrsentrychange_lower(_:)",
+            "title" : "func FfiConverterTypeYrsEntryChange_lower(YrsEntryChange) -> RustBuffer",
+            "type" : "func"
+          },
+          {
+            "path" : "\/documentation\/yniffi\/fficonvertertypeyrsmapchange_lift(_:)",
+            "title" : "func FfiConverterTypeYrsMapChange_lift(RustBuffer) throws -> YrsMapChange",
+            "type" : "func"
+          },
+          {
+            "path" : "\/documentation\/yniffi\/fficonvertertypeyrsmapchange_lower(_:)",
+            "title" : "func FfiConverterTypeYrsMapChange_lower(YrsMapChange) -> RustBuffer",
+            "type" : "func"
+          },
+          {
+            "title" : "Enumerations",
+            "type" : "groupMarker"
+          },
+          {
+            "children" : [
+              {
+                "title" : "Enumeration Cases",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/codingerror\/decodingerror(message:)",
+                "title" : "case DecodingError(message: String)",
+                "type" : "case"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/codingerror\/encodingerror(message:)",
+                "title" : "case EncodingError(message: String)",
+                "type" : "case"
+              },
+              {
+                "title" : "Default Implementations",
+                "type" : "groupMarker"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Operators",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/yniffi\/codingerror\/!=(_:_:)",
+                    "title" : "static func != (Self, Self) -> Bool",
+                    "type" : "op"
+                  }
+                ],
+                "path" : "\/documentation\/yniffi\/codingerror\/equatable-implementations",
+                "title" : "Equatable Implementations",
+                "type" : "symbol"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Instance Properties",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/yniffi\/codingerror\/localizeddescription",
+                    "title" : "var localizedDescription: String",
+                    "type" : "property"
+                  }
+                ],
+                "path" : "\/documentation\/yniffi\/codingerror\/error-implementations",
+                "title" : "Error Implementations",
+                "type" : "symbol"
+              }
+            ],
+            "path" : "\/documentation\/yniffi\/codingerror",
+            "title" : "CodingError",
+            "type" : "enum"
+          },
+          {
+            "path" : "\/documentation\/yniffi\/yniffilifecycle",
+            "title" : "YniffiLifecycle",
+            "type" : "enum"
+          },
+          {
+            "children" : [
+              {
+                "title" : "Enumeration Cases",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrschange\/added(elements:)",
+                "title" : "case added(elements: [String])",
+                "type" : "case"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrschange\/removed(range:)",
+                "title" : "case removed(range: UInt32)",
+                "type" : "case"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrschange\/retained(range:)",
+                "title" : "case retained(range: UInt32)",
+                "type" : "case"
+              },
+              {
+                "title" : "Default Implementations",
+                "type" : "groupMarker"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Operators",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/yniffi\/yrschange\/!=(_:_:)",
+                    "title" : "static func != (Self, Self) -> Bool",
+                    "type" : "op"
+                  }
+                ],
+                "path" : "\/documentation\/yniffi\/yrschange\/equatable-implementations",
+                "title" : "Equatable Implementations",
+                "type" : "symbol"
+              }
+            ],
+            "path" : "\/documentation\/yniffi\/yrschange",
+            "title" : "YrsChange",
+            "type" : "enum"
+          },
+          {
+            "children" : [
+              {
+                "title" : "Enumeration Cases",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsdelta\/deleted(index:)",
+                "title" : "case deleted(index: UInt32)",
+                "type" : "case"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsdelta\/inserted(value:attrs:)",
+                "title" : "case inserted(value: String, attrs: String)",
+                "type" : "case"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsdelta\/retained(index:attrs:)",
+                "title" : "case retained(index: UInt32, attrs: String)",
+                "type" : "case"
+              },
+              {
+                "title" : "Default Implementations",
+                "type" : "groupMarker"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Operators",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/yniffi\/yrsdelta\/!=(_:_:)",
+                    "title" : "static func != (Self, Self) -> Bool",
+                    "type" : "op"
+                  }
+                ],
+                "path" : "\/documentation\/yniffi\/yrsdelta\/equatable-implementations",
+                "title" : "Equatable Implementations",
+                "type" : "symbol"
+              }
+            ],
+            "path" : "\/documentation\/yniffi\/yrsdelta",
+            "title" : "YrsDelta",
+            "type" : "enum"
+          },
+          {
+            "children" : [
+              {
+                "title" : "Enumeration Cases",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsentrychange\/inserted(value:)",
+                "title" : "case inserted(value: String)",
+                "type" : "case"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsentrychange\/removed(value:)",
+                "title" : "case removed(value: String)",
+                "type" : "case"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsentrychange\/updated(oldvalue:newvalue:)",
+                "title" : "case updated(oldValue: String, newValue: String)",
+                "type" : "case"
+              },
+              {
+                "title" : "Default Implementations",
+                "type" : "groupMarker"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Operators",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/yniffi\/yrsentrychange\/!=(_:_:)",
+                    "title" : "static func != (Self, Self) -> Bool",
+                    "type" : "op"
+                  }
+                ],
+                "path" : "\/documentation\/yniffi\/yrsentrychange\/equatable-implementations",
+                "title" : "Equatable Implementations",
+                "type" : "symbol"
+              }
+            ],
+            "path" : "\/documentation\/yniffi\/yrsentrychange",
+            "title" : "YrsEntryChange",
+            "type" : "enum"
+          }
+        ],
+        "path" : "\/documentation\/yniffi",
+        "title" : "Yniffi",
+        "type" : "module"
+      }
+    ]
+  },
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 1,
+    "patch" : 1
+  }
+}

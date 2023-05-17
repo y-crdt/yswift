@@ -32,7 +32,7 @@ let FFIbinaryTarget: PackageDescription.Target
 // a local reference to an XCFramework file (built from `./scripts/build-xcframework.sh`)
 // rather than the previous released version.
 //
-// The script `./scripts/build-xcframework.sh` _does_ expect that you have Rust 
+// The script `./scripts/build-xcframework.sh` _does_ expect that you have Rust
 // installed locally in order to function.
 if ProcessInfo.processInfo.environment["YSWIFT_LOCAL"] != nil {
     // We are using a local file reference to an XCFramework, which is functional

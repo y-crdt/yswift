@@ -1,0 +1,255 @@
+{
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift",
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YSyncMessage",
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YSyncMessage\/Kind-swift.enum"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YSyncMessage\/Kind-swift.enum\/STEP_1"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:6YSwift12YSyncMessageV4KindO6STEP_1yA2EmF",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "case"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "STEP_1"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "YSwift"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Case",
+    "symbolKind" : "case",
+    "title" : "YSyncMessage.Kind.STEP_1"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "case"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "STEP_1"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "seeAlsoSections" : [
+    {
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YSyncMessage\/Kind-swift.enum\/STEP_2",
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YSyncMessage\/Kind-swift.enum\/UPDATE"
+      ],
+      "title" : "Kinds of Sync Messages"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/yswift\/ysyncmessage\/kind-swift.enum\/step_1"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://com.github.y-crdt.YSwift/documentation/YSwift": {
+  "abstract" : [
+    {
+      "text" : "Swift language bindings to Y-CRDT shared data types to sync and collaborate.",
+      "type" : "text"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "YSwift",
+  "type" : "topic",
+  "url" : "\/documentation\/yswift"
+},
+"doc://com.github.y-crdt.YSwift/documentation/YSwift/YSyncMessage": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "YSyncMessage"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YSyncMessage",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "YSyncMessage"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "YSyncMessage",
+  "type" : "topic",
+  "url" : "\/documentation\/yswift\/ysyncmessage"
+},
+"doc://com.github.y-crdt.YSwift/documentation/YSwift/YSyncMessage/Kind-swift.enum": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "enum"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Kind"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YSyncMessage\/Kind-swift.enum",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Kind"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "YSyncMessage.Kind",
+  "type" : "topic",
+  "url" : "\/documentation\/yswift\/ysyncmessage\/kind-swift.enum"
+},
+"doc://com.github.y-crdt.YSwift/documentation/YSwift/YSyncMessage/Kind-swift.enum/STEP_1": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "case"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "STEP_1"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YSyncMessage\/Kind-swift.enum\/STEP_1",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "YSyncMessage.Kind.STEP_1",
+  "type" : "topic",
+  "url" : "\/documentation\/yswift\/ysyncmessage\/kind-swift.enum\/step_1"
+},
+"doc://com.github.y-crdt.YSwift/documentation/YSwift/YSyncMessage/Kind-swift.enum/STEP_2": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "case"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "STEP_2"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YSyncMessage\/Kind-swift.enum\/STEP_2",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "YSyncMessage.Kind.STEP_2",
+  "type" : "topic",
+  "url" : "\/documentation\/yswift\/ysyncmessage\/kind-swift.enum\/step_2"
+},
+"doc://com.github.y-crdt.YSwift/documentation/YSwift/YSyncMessage/Kind-swift.enum/UPDATE": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "case"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "UPDATE"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YSyncMessage\/Kind-swift.enum\/UPDATE",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "YSyncMessage.Kind.UPDATE",
+  "type" : "topic",
+  "url" : "\/documentation\/yswift\/ysyncmessage\/kind-swift.enum\/update"
+}
+}
+}
