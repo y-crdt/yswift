@@ -16,7 +16,7 @@ unsafe impl Sync for YrsDoc {}
 impl YrsDoc {
     pub(crate) fn new() -> Self {
         let mut options = Options::default();
-        options.offset_kind = OffsetKind::Utf32;
+        options.offset_kind = OffsetKind::Utf16;
         let doc = yrs::Doc::with_options(options);
 
         Self(RefCell::from(doc))

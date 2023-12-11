@@ -1,9 +1,8 @@
 use crate::attrs::YrsAttrs;
 use crate::delta::YrsDelta;
 use crate::transaction::YrsTransaction;
-use lib0::any::Any;
+use yrs::Any;
 use std::cell::RefCell;
-use std::collections::HashMap;
 use std::fmt::Debug;
 use yrs::{GetString, Observable, Text, TextRef};
 

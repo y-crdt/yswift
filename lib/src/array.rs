@@ -1,11 +1,8 @@
 use crate::transaction::YrsTransaction;
 use crate::{change::YrsChange, error::CodingError};
-use lib0::any::Any;
 use std::cell::RefCell;
 use std::fmt::Debug;
-use std::sync::Arc;
-use yrs::types::array::ArrayIter;
-use yrs::{types::Value, Array, ArrayRef, Observable};
+use yrs::{types::Value, Any, Array, ArrayRef, Observable};
 
 pub(crate) struct YrsArray(RefCell<ArrayRef>);
 
