@@ -1,11 +1,10 @@
 use crate::error::CodingError;
 use crate::mapchange::{YrsEntryChange, YrsMapChange};
 use crate::transaction::YrsTransaction;
-use lib0::any::Any;
 use std::cell::RefCell;
 use std::fmt::Debug;
 use yrs::types::Observable;
-use yrs::{types::Value, Map, MapRef};
+use yrs::{types::Value, Any, Map, MapRef};
 
 pub(crate) struct YrsMap(RefCell<MapRef>);
 
@@ -283,7 +282,6 @@ impl YrsMap {
 #[cfg(test)]
 mod tests {
     use crate::YrsDoc;
-    use lib0::any::{self, Any};
 
     #[test]
     fn verify_new_map_has_zero_count() {

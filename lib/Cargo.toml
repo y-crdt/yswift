@@ -16,10 +16,9 @@ members = [
 ]
 
 [dependencies]
-lib0 = "0.16.4" # must match yrs version
 thiserror = "1.0.38"
 uniffi = "0.23.0"
-yrs = "0.16.4"
+yrs = "0.17.2"
 
 [build-dependencies]
 uniffi = { version = "0.23.0", features = [ "build" ] }
