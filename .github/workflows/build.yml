@@ -9,7 +9,7 @@ on:
 jobs:
   build:
 
-    runs-on: macos-12 #macOS Monterey
+    runs-on: macos-latest
     env:
       YSWIFT_LOCAL: true
 
@@ -23,7 +23,7 @@ jobs:
     - name: Show Build Version
       run: xcodebuild -version
 
-    - name: Build XCFramework 
+    - name: Build XCFramework
       run: ./scripts/build-xcframework.sh
 
     - name: Build YSwift
@@ -32,15 +32,8 @@ jobs:
     - name: Test YSwift
       run: swift test --enable-code-coverage -v
 
-    # per https://github.com/tuist/tuist/discussions/2802, we could also
-    # bundle and include tuist in tthe repository if that had value.
-    - name: Install Tuist
-      run: curl -Ls https://install.tuist.io | bash
-
-    - name: Tuist Fetch
-      run: |
-        cd examples
-        tuist fetch
+    - name: Install Mise and Tuist
+      uses: jdx/mise-action@v2
 
     - name: Tuist Generate
       run: |
