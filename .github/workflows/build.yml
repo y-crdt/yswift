@@ -35,6 +35,11 @@ jobs:
     - name: Install Mise and Tuist
       uses: jdx/mise-action@v2
 
+    - name: Tuist Fetch
+      run: |
+        cd examples
+        tuist fetch
+
     - name: Tuist Generate
       run: |
         cd examples
@@ -44,29 +49,4 @@ jobs:
       run: |
         cd examples
         tuist build
-
-    # NOTE: use `xcodebuild -list` to show the local schemes available
-
-    # - name: Show Build Settings
-    #   run: xcodebuild -scheme YSwift -showBuildSettings
-
-    # - name: Show Build SDK
-    #   run: xcodebuild -scheme YSwift -showsdks
-
-    # - name: env review
-    #   run: env
-
-    #- name: Xcode iOS build
-    #run: xcodebuild clean build -scheme YSwift -destination 'platform=iOS Simulator,OS=15.5,name=iPhone 8' -showBuildTimingSummary
-
-    #- name: check against API breaking changes
-    #  run: swift package diagnose-api-breaking-changes 0.1.0
-
-    # - name: Prepare Code Coverage
-    #   run: xcrun llvm-cov export -format="lcov" .build/debug/xxx.xctest/Contents/MacOS/xx -instr-profile .build/debug/codecov/default.profdata > info.lcov
-
-    # - name: Upload to CodeCov.io
-    #   run: bash <(curl https://codecov.io/bash)
-    #   env:
-    #       CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
