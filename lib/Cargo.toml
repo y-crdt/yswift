@@ -10,15 +10,15 @@ lto = true
 codegen-units = 1
 panic = "abort"
 
-[workspace]
-members = [
-    "uniffi-bindgen",
-]
+[[bin]]
+name = "uniffi-bindgen"
+path = "uniffi-bindgen.rs"
+required-features = ["uniffi/cli"]
 
 [dependencies]
+yrs = "0.17.4"
 thiserror = "1.0.38"
 uniffi = "0.26.1"
-yrs = "0.17.2"
 
 [build-dependencies]
 uniffi = { version = "0.26.1", features = [ "build" ] }
