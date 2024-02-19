@@ -4,6 +4,7 @@
 #pragma once
 
 #include <stdbool.h>
+#include <stddef.h>
 #include <stdint.h>
 
 // The following structs are used to implement the lowest level
@@ -28,7 +29,7 @@ typedef struct RustBuffer
     uint8_t *_Nullable data;
 } RustBuffer;
 
-typedef int32_t (*ForeignCallback)(uint64_t, int32_t, RustBuffer, RustBuffer *_Nonnull);
+typedef int32_t (*ForeignCallback)(uint64_t, int32_t, const uint8_t *_Nonnull, int32_t, RustBuffer *_Nonnull);
 
 typedef struct ForeignBytes
 {
@@ -46,259 +47,419 @@ typedef struct RustCallStatus {
 // ⚠️ increment the version suffix in all instances of UNIFFI_SHARED_HEADER_V4 in this file.           ⚠️
 #endif // def UNIFFI_SHARED_H
 
-void ffi_yniffi_f29f_YrsDoc_object_free(
-      void*_Nonnull ptr,
-    RustCallStatus *_Nonnull out_status
-    );
-void*_Nonnull yniffi_f29f_YrsDoc_new(
-      
-    RustCallStatus *_Nonnull out_status
-    );
-RustBuffer yniffi_f29f_YrsDoc_encode_diff_v1(
-      void*_Nonnull ptr,void*_Nonnull tx,RustBuffer state_vector,
-    RustCallStatus *_Nonnull out_status
-    );
-void*_Nonnull yniffi_f29f_YrsDoc_get_text(
-      void*_Nonnull ptr,RustBuffer name,
-    RustCallStatus *_Nonnull out_status
-    );
-void*_Nonnull yniffi_f29f_YrsDoc_get_array(
-      void*_Nonnull ptr,RustBuffer name,
-    RustCallStatus *_Nonnull out_status
-    );
-void*_Nonnull yniffi_f29f_YrsDoc_get_map(
-      void*_Nonnull ptr,RustBuffer name,
-    RustCallStatus *_Nonnull out_status
-    );
-void*_Nonnull yniffi_f29f_YrsDoc_transact(
-      void*_Nonnull ptr,
-    RustCallStatus *_Nonnull out_status
-    );
-void ffi_yniffi_f29f_YrsTransaction_object_free(
-      void*_Nonnull ptr,
-    RustCallStatus *_Nonnull out_status
-    );
-void yniffi_f29f_YrsTransaction_transaction_apply_update(
-      void*_Nonnull ptr,RustBuffer update,
-    RustCallStatus *_Nonnull out_status
-    );
-RustBuffer yniffi_f29f_YrsTransaction_transaction_encode_state_as_update_from_sv(
-      void*_Nonnull ptr,RustBuffer state_vector,
-    RustCallStatus *_Nonnull out_status
-    );
-RustBuffer yniffi_f29f_YrsTransaction_transaction_encode_state_as_update(
-      void*_Nonnull ptr,
-    RustCallStatus *_Nonnull out_status
-    );
-RustBuffer yniffi_f29f_YrsTransaction_transaction_encode_update(
-      void*_Nonnull ptr,
-    RustCallStatus *_Nonnull out_status
-    );
-RustBuffer yniffi_f29f_YrsTransaction_transaction_state_vector(
-      void*_Nonnull ptr,
-    RustCallStatus *_Nonnull out_status
-    );
-RustBuffer yniffi_f29f_YrsTransaction_transaction_get_text(
-      void*_Nonnull ptr,RustBuffer name,
-    RustCallStatus *_Nonnull out_status
-    );
-RustBuffer yniffi_f29f_YrsTransaction_transaction_get_array(
-      void*_Nonnull ptr,RustBuffer name,
-    RustCallStatus *_Nonnull out_status
-    );
-RustBuffer yniffi_f29f_YrsTransaction_transaction_get_map(
-      void*_Nonnull ptr,RustBuffer name,
-    RustCallStatus *_Nonnull out_status
-    );
-void yniffi_f29f_YrsTransaction_free(
-      void*_Nonnull ptr,
-    RustCallStatus *_Nonnull out_status
-    );
-void ffi_yniffi_f29f_YrsMap_object_free(
-      void*_Nonnull ptr,
-    RustCallStatus *_Nonnull out_status
-    );
-uint32_t yniffi_f29f_YrsMap_length(
-      void*_Nonnull ptr,void*_Nonnull tx,
-    RustCallStatus *_Nonnull out_status
-    );
-int8_t yniffi_f29f_YrsMap_contains_key(
-      void*_Nonnull ptr,void*_Nonnull tx,RustBuffer key,
-    RustCallStatus *_Nonnull out_status
-    );
-void yniffi_f29f_YrsMap_insert(
-      void*_Nonnull ptr,void*_Nonnull tx,RustBuffer key,RustBuffer value,
-    RustCallStatus *_Nonnull out_status
-    );
-RustBuffer yniffi_f29f_YrsMap_get(
-      void*_Nonnull ptr,void*_Nonnull tx,RustBuffer key,
-    RustCallStatus *_Nonnull out_status
-    );
-RustBuffer yniffi_f29f_YrsMap_remove(
-      void*_Nonnull ptr,void*_Nonnull tx,RustBuffer key,
-    RustCallStatus *_Nonnull out_status
-    );
-void yniffi_f29f_YrsMap_clear(
-      void*_Nonnull ptr,void*_Nonnull tx,
-    RustCallStatus *_Nonnull out_status
-    );
-void yniffi_f29f_YrsMap_keys(
-      void*_Nonnull ptr,void*_Nonnull tx,uint64_t delegate,
-    RustCallStatus *_Nonnull out_status
-    );
-void yniffi_f29f_YrsMap_values(
-      void*_Nonnull ptr,void*_Nonnull tx,uint64_t delegate,
-    RustCallStatus *_Nonnull out_status
-    );
-void yniffi_f29f_YrsMap_each(
-      void*_Nonnull ptr,void*_Nonnull tx,uint64_t delegate,
-    RustCallStatus *_Nonnull out_status
-    );
-uint32_t yniffi_f29f_YrsMap_observe(
-      void*_Nonnull ptr,uint64_t delegate,
-    RustCallStatus *_Nonnull out_status
-    );
-void yniffi_f29f_YrsMap_unobserve(
-      void*_Nonnull ptr,uint32_t subscription_id,
-    RustCallStatus *_Nonnull out_status
-    );
-void ffi_yniffi_f29f_YrsArray_object_free(
-      void*_Nonnull ptr,
-    RustCallStatus *_Nonnull out_status
-    );
-void yniffi_f29f_YrsArray_each(
-      void*_Nonnull ptr,void*_Nonnull tx,uint64_t delegate,
-    RustCallStatus *_Nonnull out_status
-    );
-RustBuffer yniffi_f29f_YrsArray_get(
-      void*_Nonnull ptr,void*_Nonnull tx,uint32_t index,
-    RustCallStatus *_Nonnull out_status
-    );
-void yniffi_f29f_YrsArray_insert(
-      void*_Nonnull ptr,void*_Nonnull tx,uint32_t index,RustBuffer value,
-    RustCallStatus *_Nonnull out_status
-    );
-void yniffi_f29f_YrsArray_insert_range(
-      void*_Nonnull ptr,void*_Nonnull tx,uint32_t index,RustBuffer values,
-    RustCallStatus *_Nonnull out_status
-    );
-uint32_t yniffi_f29f_YrsArray_length(
-      void*_Nonnull ptr,void*_Nonnull tx,
-    RustCallStatus *_Nonnull out_status
-    );
-void yniffi_f29f_YrsArray_push_back(
-      void*_Nonnull ptr,void*_Nonnull tx,RustBuffer value,
-    RustCallStatus *_Nonnull out_status
-    );
-void yniffi_f29f_YrsArray_push_front(
-      void*_Nonnull ptr,void*_Nonnull tx,RustBuffer value,
-    RustCallStatus *_Nonnull out_status
-    );
-void yniffi_f29f_YrsArray_remove(
-      void*_Nonnull ptr,void*_Nonnull tx,uint32_t index,
-    RustCallStatus *_Nonnull out_status
-    );
-void yniffi_f29f_YrsArray_remove_range(
-      void*_Nonnull ptr,void*_Nonnull tx,uint32_t index,uint32_t len,
-    RustCallStatus *_Nonnull out_status
-    );
-RustBuffer yniffi_f29f_YrsArray_to_a(
-      void*_Nonnull ptr,void*_Nonnull tx,
-    RustCallStatus *_Nonnull out_status
-    );
-uint32_t yniffi_f29f_YrsArray_observe(
-      void*_Nonnull ptr,uint64_t delegate,
-    RustCallStatus *_Nonnull out_status
-    );
-void yniffi_f29f_YrsArray_unobserve(
-      void*_Nonnull ptr,uint32_t subscription_id,
-    RustCallStatus *_Nonnull out_status
-    );
-void ffi_yniffi_f29f_YrsText_object_free(
-      void*_Nonnull ptr,
-    RustCallStatus *_Nonnull out_status
-    );
-void yniffi_f29f_YrsText_format(
-      void*_Nonnull ptr,void*_Nonnull tx,uint32_t index,uint32_t length,RustBuffer attrs,
-    RustCallStatus *_Nonnull out_status
-    );
-void yniffi_f29f_YrsText_append(
-      void*_Nonnull ptr,void*_Nonnull tx,RustBuffer text,
-    RustCallStatus *_Nonnull out_status
-    );
-void yniffi_f29f_YrsText_insert(
-      void*_Nonnull ptr,void*_Nonnull tx,uint32_t index,RustBuffer chunk,
-    RustCallStatus *_Nonnull out_status
-    );
-void yniffi_f29f_YrsText_insert_with_attributes(
-      void*_Nonnull ptr,void*_Nonnull tx,uint32_t index,RustBuffer chunk,RustBuffer attrs,
-    RustCallStatus *_Nonnull out_status
-    );
-void yniffi_f29f_YrsText_insert_embed(
-      void*_Nonnull ptr,void*_Nonnull tx,uint32_t index,RustBuffer content,
-    RustCallStatus *_Nonnull out_status
-    );
-void yniffi_f29f_YrsText_insert_embed_with_attributes(
-      void*_Nonnull ptr,void*_Nonnull tx,uint32_t index,RustBuffer content,RustBuffer attrs,
-    RustCallStatus *_Nonnull out_status
-    );
-RustBuffer yniffi_f29f_YrsText_get_string(
-      void*_Nonnull ptr,void*_Nonnull tx,
-    RustCallStatus *_Nonnull out_status
-    );
-void yniffi_f29f_YrsText_remove_range(
-      void*_Nonnull ptr,void*_Nonnull tx,uint32_t start,uint32_t length,
-    RustCallStatus *_Nonnull out_status
-    );
-uint32_t yniffi_f29f_YrsText_length(
-      void*_Nonnull ptr,void*_Nonnull tx,
-    RustCallStatus *_Nonnull out_status
-    );
-uint32_t yniffi_f29f_YrsText_observe(
-      void*_Nonnull ptr,uint64_t delegate,
-    RustCallStatus *_Nonnull out_status
-    );
-void yniffi_f29f_YrsText_unobserve(
-      void*_Nonnull ptr,uint32_t subscription_id,
-    RustCallStatus *_Nonnull out_status
-    );
-void ffi_yniffi_f29f_YrsMapIteratorDelegate_init_callback(
-      ForeignCallback  _Nonnull callback_stub,
-    RustCallStatus *_Nonnull out_status
-    );
-void ffi_yniffi_f29f_YrsMapKVIteratorDelegate_init_callback(
-      ForeignCallback  _Nonnull callback_stub,
-    RustCallStatus *_Nonnull out_status
-    );
-void ffi_yniffi_f29f_YrsMapObservationDelegate_init_callback(
-      ForeignCallback  _Nonnull callback_stub,
-    RustCallStatus *_Nonnull out_status
-    );
-void ffi_yniffi_f29f_YrsArrayEachDelegate_init_callback(
-      ForeignCallback  _Nonnull callback_stub,
-    RustCallStatus *_Nonnull out_status
-    );
-void ffi_yniffi_f29f_YrsArrayObservationDelegate_init_callback(
-      ForeignCallback  _Nonnull callback_stub,
-    RustCallStatus *_Nonnull out_status
-    );
-void ffi_yniffi_f29f_YrsTextObservationDelegate_init_callback(
-      ForeignCallback  _Nonnull callback_stub,
-    RustCallStatus *_Nonnull out_status
-    );
-RustBuffer ffi_yniffi_f29f_rustbuffer_alloc(
-      int32_t size,
-    RustCallStatus *_Nonnull out_status
-    );
-RustBuffer ffi_yniffi_f29f_rustbuffer_from_bytes(
-      ForeignBytes bytes,
-    RustCallStatus *_Nonnull out_status
-    );
-void ffi_yniffi_f29f_rustbuffer_free(
-      RustBuffer buf,
-    RustCallStatus *_Nonnull out_status
-    );
-RustBuffer ffi_yniffi_f29f_rustbuffer_reserve(
-      RustBuffer buf,int32_t additional,
-    RustCallStatus *_Nonnull out_status
-    );
+// Continuation callback for UniFFI Futures
+typedef void (*UniFfiRustFutureContinuation)(void * _Nonnull, int8_t);
+
+// Scaffolding functions
+void*_Nonnull uniffi_uniffi_yniffi_fn_clone_yrsarray(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
+);
+void uniffi_uniffi_yniffi_fn_free_yrsarray(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
+);
+void uniffi_uniffi_yniffi_fn_method_yrsarray_each(void*_Nonnull ptr, void*_Nonnull tx, uint64_t delegate, RustCallStatus *_Nonnull out_status
+);
+RustBuffer uniffi_uniffi_yniffi_fn_method_yrsarray_get(void*_Nonnull ptr, void*_Nonnull tx, uint32_t index, RustCallStatus *_Nonnull out_status
+);
+void uniffi_uniffi_yniffi_fn_method_yrsarray_insert(void*_Nonnull ptr, void*_Nonnull tx, uint32_t index, RustBuffer value, RustCallStatus *_Nonnull out_status
+);
+void uniffi_uniffi_yniffi_fn_method_yrsarray_insert_range(void*_Nonnull ptr, void*_Nonnull tx, uint32_t index, RustBuffer values, RustCallStatus *_Nonnull out_status
+);
+uint32_t uniffi_uniffi_yniffi_fn_method_yrsarray_length(void*_Nonnull ptr, void*_Nonnull tx, RustCallStatus *_Nonnull out_status
+);
+uint32_t uniffi_uniffi_yniffi_fn_method_yrsarray_observe(void*_Nonnull ptr, uint64_t delegate, RustCallStatus *_Nonnull out_status
+);
+void uniffi_uniffi_yniffi_fn_method_yrsarray_push_back(void*_Nonnull ptr, void*_Nonnull tx, RustBuffer value, RustCallStatus *_Nonnull out_status
+);
+void uniffi_uniffi_yniffi_fn_method_yrsarray_push_front(void*_Nonnull ptr, void*_Nonnull tx, RustBuffer value, RustCallStatus *_Nonnull out_status
+);
+void uniffi_uniffi_yniffi_fn_method_yrsarray_remove(void*_Nonnull ptr, void*_Nonnull tx, uint32_t index, RustCallStatus *_Nonnull out_status
+);
+void uniffi_uniffi_yniffi_fn_method_yrsarray_remove_range(void*_Nonnull ptr, void*_Nonnull tx, uint32_t index, uint32_t len, RustCallStatus *_Nonnull out_status
+);
+RustBuffer uniffi_uniffi_yniffi_fn_method_yrsarray_to_a(void*_Nonnull ptr, void*_Nonnull tx, RustCallStatus *_Nonnull out_status
+);
+void uniffi_uniffi_yniffi_fn_method_yrsarray_unobserve(void*_Nonnull ptr, uint32_t subscription_id, RustCallStatus *_Nonnull out_status
+);
+void*_Nonnull uniffi_uniffi_yniffi_fn_clone_yrsdoc(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
+);
+void uniffi_uniffi_yniffi_fn_free_yrsdoc(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
+);
+void*_Nonnull uniffi_uniffi_yniffi_fn_constructor_yrsdoc_new(RustCallStatus *_Nonnull out_status
+    
+);
+RustBuffer uniffi_uniffi_yniffi_fn_method_yrsdoc_encode_diff_v1(void*_Nonnull ptr, void*_Nonnull tx, RustBuffer state_vector, RustCallStatus *_Nonnull out_status
+);
+void*_Nonnull uniffi_uniffi_yniffi_fn_method_yrsdoc_get_array(void*_Nonnull ptr, RustBuffer name, RustCallStatus *_Nonnull out_status
+);
+void*_Nonnull uniffi_uniffi_yniffi_fn_method_yrsdoc_get_map(void*_Nonnull ptr, RustBuffer name, RustCallStatus *_Nonnull out_status
+);
+void*_Nonnull uniffi_uniffi_yniffi_fn_method_yrsdoc_get_text(void*_Nonnull ptr, RustBuffer name, RustCallStatus *_Nonnull out_status
+);
+void*_Nonnull uniffi_uniffi_yniffi_fn_method_yrsdoc_transact(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
+);
+void*_Nonnull uniffi_uniffi_yniffi_fn_clone_yrsmap(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
+);
+void uniffi_uniffi_yniffi_fn_free_yrsmap(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
+);
+void uniffi_uniffi_yniffi_fn_method_yrsmap_clear(void*_Nonnull ptr, void*_Nonnull tx, RustCallStatus *_Nonnull out_status
+);
+int8_t uniffi_uniffi_yniffi_fn_method_yrsmap_contains_key(void*_Nonnull ptr, void*_Nonnull tx, RustBuffer key, RustCallStatus *_Nonnull out_status
+);
+void uniffi_uniffi_yniffi_fn_method_yrsmap_each(void*_Nonnull ptr, void*_Nonnull tx, uint64_t delegate, RustCallStatus *_Nonnull out_status
+);
+RustBuffer uniffi_uniffi_yniffi_fn_method_yrsmap_get(void*_Nonnull ptr, void*_Nonnull tx, RustBuffer key, RustCallStatus *_Nonnull out_status
+);
+void uniffi_uniffi_yniffi_fn_method_yrsmap_insert(void*_Nonnull ptr, void*_Nonnull tx, RustBuffer key, RustBuffer value, RustCallStatus *_Nonnull out_status
+);
+void uniffi_uniffi_yniffi_fn_method_yrsmap_keys(void*_Nonnull ptr, void*_Nonnull tx, uint64_t delegate, RustCallStatus *_Nonnull out_status
+);
+uint32_t uniffi_uniffi_yniffi_fn_method_yrsmap_length(void*_Nonnull ptr, void*_Nonnull tx, RustCallStatus *_Nonnull out_status
+);
+uint32_t uniffi_uniffi_yniffi_fn_method_yrsmap_observe(void*_Nonnull ptr, uint64_t delegate, RustCallStatus *_Nonnull out_status
+);
+RustBuffer uniffi_uniffi_yniffi_fn_method_yrsmap_remove(void*_Nonnull ptr, void*_Nonnull tx, RustBuffer key, RustCallStatus *_Nonnull out_status
+);
+void uniffi_uniffi_yniffi_fn_method_yrsmap_unobserve(void*_Nonnull ptr, uint32_t subscription_id, RustCallStatus *_Nonnull out_status
+);
+void uniffi_uniffi_yniffi_fn_method_yrsmap_values(void*_Nonnull ptr, void*_Nonnull tx, uint64_t delegate, RustCallStatus *_Nonnull out_status
+);
+void*_Nonnull uniffi_uniffi_yniffi_fn_clone_yrstext(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
+);
+void uniffi_uniffi_yniffi_fn_free_yrstext(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
+);
+void uniffi_uniffi_yniffi_fn_method_yrstext_append(void*_Nonnull ptr, void*_Nonnull tx, RustBuffer text, RustCallStatus *_Nonnull out_status
+);
+void uniffi_uniffi_yniffi_fn_method_yrstext_format(void*_Nonnull ptr, void*_Nonnull tx, uint32_t index, uint32_t length, RustBuffer attrs, RustCallStatus *_Nonnull out_status
+);
+RustBuffer uniffi_uniffi_yniffi_fn_method_yrstext_get_string(void*_Nonnull ptr, void*_Nonnull tx, RustCallStatus *_Nonnull out_status
+);
+void uniffi_uniffi_yniffi_fn_method_yrstext_insert(void*_Nonnull ptr, void*_Nonnull tx, uint32_t index, RustBuffer chunk, RustCallStatus *_Nonnull out_status
+);
+void uniffi_uniffi_yniffi_fn_method_yrstext_insert_embed(void*_Nonnull ptr, void*_Nonnull tx, uint32_t index, RustBuffer content, RustCallStatus *_Nonnull out_status
+);
+void uniffi_uniffi_yniffi_fn_method_yrstext_insert_embed_with_attributes(void*_Nonnull ptr, void*_Nonnull tx, uint32_t index, RustBuffer content, RustBuffer attrs, RustCallStatus *_Nonnull out_status
+);
+void uniffi_uniffi_yniffi_fn_method_yrstext_insert_with_attributes(void*_Nonnull ptr, void*_Nonnull tx, uint32_t index, RustBuffer chunk, RustBuffer attrs, RustCallStatus *_Nonnull out_status
+);
+uint32_t uniffi_uniffi_yniffi_fn_method_yrstext_length(void*_Nonnull ptr, void*_Nonnull tx, RustCallStatus *_Nonnull out_status
+);
+uint32_t uniffi_uniffi_yniffi_fn_method_yrstext_observe(void*_Nonnull ptr, uint64_t delegate, RustCallStatus *_Nonnull out_status
+);
+void uniffi_uniffi_yniffi_fn_method_yrstext_remove_range(void*_Nonnull ptr, void*_Nonnull tx, uint32_t start, uint32_t length, RustCallStatus *_Nonnull out_status
+);
+void uniffi_uniffi_yniffi_fn_method_yrstext_unobserve(void*_Nonnull ptr, uint32_t subscription_id, RustCallStatus *_Nonnull out_status
+);
+void*_Nonnull uniffi_uniffi_yniffi_fn_clone_yrstransaction(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
+);
+void uniffi_uniffi_yniffi_fn_free_yrstransaction(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
+);
+void uniffi_uniffi_yniffi_fn_method_yrstransaction_free(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
+);
+void uniffi_uniffi_yniffi_fn_method_yrstransaction_transaction_apply_update(void*_Nonnull ptr, RustBuffer update, RustCallStatus *_Nonnull out_status
+);
+RustBuffer uniffi_uniffi_yniffi_fn_method_yrstransaction_transaction_encode_state_as_update(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
+);
+RustBuffer uniffi_uniffi_yniffi_fn_method_yrstransaction_transaction_encode_state_as_update_from_sv(void*_Nonnull ptr, RustBuffer state_vector, RustCallStatus *_Nonnull out_status
+);
+RustBuffer uniffi_uniffi_yniffi_fn_method_yrstransaction_transaction_encode_update(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
+);
+RustBuffer uniffi_uniffi_yniffi_fn_method_yrstransaction_transaction_get_array(void*_Nonnull ptr, RustBuffer name, RustCallStatus *_Nonnull out_status
+);
+RustBuffer uniffi_uniffi_yniffi_fn_method_yrstransaction_transaction_get_map(void*_Nonnull ptr, RustBuffer name, RustCallStatus *_Nonnull out_status
+);
+RustBuffer uniffi_uniffi_yniffi_fn_method_yrstransaction_transaction_get_text(void*_Nonnull ptr, RustBuffer name, RustCallStatus *_Nonnull out_status
+);
+RustBuffer uniffi_uniffi_yniffi_fn_method_yrstransaction_transaction_state_vector(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
+);
+void uniffi_uniffi_yniffi_fn_init_callback_yrsarrayeachdelegate(ForeignCallback _Nonnull handle
+);
+void uniffi_uniffi_yniffi_fn_init_callback_yrsarrayobservationdelegate(ForeignCallback _Nonnull handle
+);
+void uniffi_uniffi_yniffi_fn_init_callback_yrsmapiteratordelegate(ForeignCallback _Nonnull handle
+);
+void uniffi_uniffi_yniffi_fn_init_callback_yrsmapkviteratordelegate(ForeignCallback _Nonnull handle
+);
+void uniffi_uniffi_yniffi_fn_init_callback_yrsmapobservationdelegate(ForeignCallback _Nonnull handle
+);
+void uniffi_uniffi_yniffi_fn_init_callback_yrstextobservationdelegate(ForeignCallback _Nonnull handle
+);
+RustBuffer ffi_uniffi_yniffi_rustbuffer_alloc(int32_t size, RustCallStatus *_Nonnull out_status
+);
+RustBuffer ffi_uniffi_yniffi_rustbuffer_from_bytes(ForeignBytes bytes, RustCallStatus *_Nonnull out_status
+);
+void ffi_uniffi_yniffi_rustbuffer_free(RustBuffer buf, RustCallStatus *_Nonnull out_status
+);
+RustBuffer ffi_uniffi_yniffi_rustbuffer_reserve(RustBuffer buf, int32_t additional, RustCallStatus *_Nonnull out_status
+);
+void ffi_uniffi_yniffi_rust_future_poll_u8(void* _Nonnull handle, UniFfiRustFutureContinuation _Nonnull callback, void* _Nonnull callback_data
+);
+void ffi_uniffi_yniffi_rust_future_cancel_u8(void* _Nonnull handle
+);
+void ffi_uniffi_yniffi_rust_future_free_u8(void* _Nonnull handle
+);
+uint8_t ffi_uniffi_yniffi_rust_future_complete_u8(void* _Nonnull handle, RustCallStatus *_Nonnull out_status
+);
+void ffi_uniffi_yniffi_rust_future_poll_i8(void* _Nonnull handle, UniFfiRustFutureContinuation _Nonnull callback, void* _Nonnull callback_data
+);
+void ffi_uniffi_yniffi_rust_future_cancel_i8(void* _Nonnull handle
+);
+void ffi_uniffi_yniffi_rust_future_free_i8(void* _Nonnull handle
+);
+int8_t ffi_uniffi_yniffi_rust_future_complete_i8(void* _Nonnull handle, RustCallStatus *_Nonnull out_status
+);
+void ffi_uniffi_yniffi_rust_future_poll_u16(void* _Nonnull handle, UniFfiRustFutureContinuation _Nonnull callback, void* _Nonnull callback_data
+);
+void ffi_uniffi_yniffi_rust_future_cancel_u16(void* _Nonnull handle
+);
+void ffi_uniffi_yniffi_rust_future_free_u16(void* _Nonnull handle
+);
+uint16_t ffi_uniffi_yniffi_rust_future_complete_u16(void* _Nonnull handle, RustCallStatus *_Nonnull out_status
+);
+void ffi_uniffi_yniffi_rust_future_poll_i16(void* _Nonnull handle, UniFfiRustFutureContinuation _Nonnull callback, void* _Nonnull callback_data
+);
+void ffi_uniffi_yniffi_rust_future_cancel_i16(void* _Nonnull handle
+);
+void ffi_uniffi_yniffi_rust_future_free_i16(void* _Nonnull handle
+);
+int16_t ffi_uniffi_yniffi_rust_future_complete_i16(void* _Nonnull handle, RustCallStatus *_Nonnull out_status
+);
+void ffi_uniffi_yniffi_rust_future_poll_u32(void* _Nonnull handle, UniFfiRustFutureContinuation _Nonnull callback, void* _Nonnull callback_data
+);
+void ffi_uniffi_yniffi_rust_future_cancel_u32(void* _Nonnull handle
+);
+void ffi_uniffi_yniffi_rust_future_free_u32(void* _Nonnull handle
+);
+uint32_t ffi_uniffi_yniffi_rust_future_complete_u32(void* _Nonnull handle, RustCallStatus *_Nonnull out_status
+);
+void ffi_uniffi_yniffi_rust_future_poll_i32(void* _Nonnull handle, UniFfiRustFutureContinuation _Nonnull callback, void* _Nonnull callback_data
+);
+void ffi_uniffi_yniffi_rust_future_cancel_i32(void* _Nonnull handle
+);
+void ffi_uniffi_yniffi_rust_future_free_i32(void* _Nonnull handle
+);
+int32_t ffi_uniffi_yniffi_rust_future_complete_i32(void* _Nonnull handle, RustCallStatus *_Nonnull out_status
+);
+void ffi_uniffi_yniffi_rust_future_poll_u64(void* _Nonnull handle, UniFfiRustFutureContinuation _Nonnull callback, void* _Nonnull callback_data
+);
+void ffi_uniffi_yniffi_rust_future_cancel_u64(void* _Nonnull handle
+);
+void ffi_uniffi_yniffi_rust_future_free_u64(void* _Nonnull handle
+);
+uint64_t ffi_uniffi_yniffi_rust_future_complete_u64(void* _Nonnull handle, RustCallStatus *_Nonnull out_status
+);
+void ffi_uniffi_yniffi_rust_future_poll_i64(void* _Nonnull handle, UniFfiRustFutureContinuation _Nonnull callback, void* _Nonnull callback_data
+);
+void ffi_uniffi_yniffi_rust_future_cancel_i64(void* _Nonnull handle
+);
+void ffi_uniffi_yniffi_rust_future_free_i64(void* _Nonnull handle
+);
+int64_t ffi_uniffi_yniffi_rust_future_complete_i64(void* _Nonnull handle, RustCallStatus *_Nonnull out_status
+);
+void ffi_uniffi_yniffi_rust_future_poll_f32(void* _Nonnull handle, UniFfiRustFutureContinuation _Nonnull callback, void* _Nonnull callback_data
+);
+void ffi_uniffi_yniffi_rust_future_cancel_f32(void* _Nonnull handle
+);
+void ffi_uniffi_yniffi_rust_future_free_f32(void* _Nonnull handle
+);
+float ffi_uniffi_yniffi_rust_future_complete_f32(void* _Nonnull handle, RustCallStatus *_Nonnull out_status
+);
+void ffi_uniffi_yniffi_rust_future_poll_f64(void* _Nonnull handle, UniFfiRustFutureContinuation _Nonnull callback, void* _Nonnull callback_data
+);
+void ffi_uniffi_yniffi_rust_future_cancel_f64(void* _Nonnull handle
+);
+void ffi_uniffi_yniffi_rust_future_free_f64(void* _Nonnull handle
+);
+double ffi_uniffi_yniffi_rust_future_complete_f64(void* _Nonnull handle, RustCallStatus *_Nonnull out_status
+);
+void ffi_uniffi_yniffi_rust_future_poll_pointer(void* _Nonnull handle, UniFfiRustFutureContinuation _Nonnull callback, void* _Nonnull callback_data
+);
+void ffi_uniffi_yniffi_rust_future_cancel_pointer(void* _Nonnull handle
+);
+void ffi_uniffi_yniffi_rust_future_free_pointer(void* _Nonnull handle
+);
+void*_Nonnull ffi_uniffi_yniffi_rust_future_complete_pointer(void* _Nonnull handle, RustCallStatus *_Nonnull out_status
+);
+void ffi_uniffi_yniffi_rust_future_poll_rust_buffer(void* _Nonnull handle, UniFfiRustFutureContinuation _Nonnull callback, void* _Nonnull callback_data
+);
+void ffi_uniffi_yniffi_rust_future_cancel_rust_buffer(void* _Nonnull handle
+);
+void ffi_uniffi_yniffi_rust_future_free_rust_buffer(void* _Nonnull handle
+);
+RustBuffer ffi_uniffi_yniffi_rust_future_complete_rust_buffer(void* _Nonnull handle, RustCallStatus *_Nonnull out_status
+);
+void ffi_uniffi_yniffi_rust_future_poll_void(void* _Nonnull handle, UniFfiRustFutureContinuation _Nonnull callback, void* _Nonnull callback_data
+);
+void ffi_uniffi_yniffi_rust_future_cancel_void(void* _Nonnull handle
+);
+void ffi_uniffi_yniffi_rust_future_free_void(void* _Nonnull handle
+);
+void ffi_uniffi_yniffi_rust_future_complete_void(void* _Nonnull handle, RustCallStatus *_Nonnull out_status
+);
+uint16_t uniffi_uniffi_yniffi_checksum_method_yrsarray_each(void
+    
+);
+uint16_t uniffi_uniffi_yniffi_checksum_method_yrsarray_get(void
+    
+);
+uint16_t uniffi_uniffi_yniffi_checksum_method_yrsarray_insert(void
+    
+);
+uint16_t uniffi_uniffi_yniffi_checksum_method_yrsarray_insert_range(void
+    
+);
+uint16_t uniffi_uniffi_yniffi_checksum_method_yrsarray_length(void
+    
+);
+uint16_t uniffi_uniffi_yniffi_checksum_method_yrsarray_observe(void
+    
+);
+uint16_t uniffi_uniffi_yniffi_checksum_method_yrsarray_push_back(void
+    
+);
+uint16_t uniffi_uniffi_yniffi_checksum_method_yrsarray_push_front(void
+    
+);
+uint16_t uniffi_uniffi_yniffi_checksum_method_yrsarray_remove(void
+    
+);
+uint16_t uniffi_uniffi_yniffi_checksum_method_yrsarray_remove_range(void
+    
+);
+uint16_t uniffi_uniffi_yniffi_checksum_method_yrsarray_to_a(void
+    
+);
+uint16_t uniffi_uniffi_yniffi_checksum_method_yrsarray_unobserve(void
+    
+);
+uint16_t uniffi_uniffi_yniffi_checksum_method_yrsdoc_encode_diff_v1(void
+    
+);
+uint16_t uniffi_uniffi_yniffi_checksum_method_yrsdoc_get_array(void
+    
+);
+uint16_t uniffi_uniffi_yniffi_checksum_method_yrsdoc_get_map(void
+    
+);
+uint16_t uniffi_uniffi_yniffi_checksum_method_yrsdoc_get_text(void
+    
+);
+uint16_t uniffi_uniffi_yniffi_checksum_method_yrsdoc_transact(void
+    
+);
+uint16_t uniffi_uniffi_yniffi_checksum_method_yrsmap_clear(void
+    
+);
+uint16_t uniffi_uniffi_yniffi_checksum_method_yrsmap_contains_key(void
+    
+);
+uint16_t uniffi_uniffi_yniffi_checksum_method_yrsmap_each(void
+    
+);
+uint16_t uniffi_uniffi_yniffi_checksum_method_yrsmap_get(void
+    
+);
+uint16_t uniffi_uniffi_yniffi_checksum_method_yrsmap_insert(void
+    
+);
+uint16_t uniffi_uniffi_yniffi_checksum_method_yrsmap_keys(void
+    
+);
+uint16_t uniffi_uniffi_yniffi_checksum_method_yrsmap_length(void
+    
+);
+uint16_t uniffi_uniffi_yniffi_checksum_method_yrsmap_observe(void
+    
+);
+uint16_t uniffi_uniffi_yniffi_checksum_method_yrsmap_remove(void
+    
+);
+uint16_t uniffi_uniffi_yniffi_checksum_method_yrsmap_unobserve(void
+    
+);
+uint16_t uniffi_uniffi_yniffi_checksum_method_yrsmap_values(void
+    
+);
+uint16_t uniffi_uniffi_yniffi_checksum_method_yrstext_append(void
+    
+);
+uint16_t uniffi_uniffi_yniffi_checksum_method_yrstext_format(void
+    
+);
+uint16_t uniffi_uniffi_yniffi_checksum_method_yrstext_get_string(void
+    
+);
+uint16_t uniffi_uniffi_yniffi_checksum_method_yrstext_insert(void
+    
+);
+uint16_t uniffi_uniffi_yniffi_checksum_method_yrstext_insert_embed(void
+    
+);
+uint16_t uniffi_uniffi_yniffi_checksum_method_yrstext_insert_embed_with_attributes(void
+    
+);
+uint16_t uniffi_uniffi_yniffi_checksum_method_yrstext_insert_with_attributes(void
+    
+);
+uint16_t uniffi_uniffi_yniffi_checksum_method_yrstext_length(void
+    
+);
+uint16_t uniffi_uniffi_yniffi_checksum_method_yrstext_observe(void
+    
+);
+uint16_t uniffi_uniffi_yniffi_checksum_method_yrstext_remove_range(void
+    
+);
+uint16_t uniffi_uniffi_yniffi_checksum_method_yrstext_unobserve(void
+    
+);
+uint16_t uniffi_uniffi_yniffi_checksum_method_yrstransaction_free(void
+    
+);
+uint16_t uniffi_uniffi_yniffi_checksum_method_yrstransaction_transaction_apply_update(void
+    
+);
+uint16_t uniffi_uniffi_yniffi_checksum_method_yrstransaction_transaction_encode_state_as_update(void
+    
+);
+uint16_t uniffi_uniffi_yniffi_checksum_method_yrstransaction_transaction_encode_state_as_update_from_sv(void
+    
+);
+uint16_t uniffi_uniffi_yniffi_checksum_method_yrstransaction_transaction_encode_update(void
+    
+);
+uint16_t uniffi_uniffi_yniffi_checksum_method_yrstransaction_transaction_get_array(void
+    
+);
+uint16_t uniffi_uniffi_yniffi_checksum_method_yrstransaction_transaction_get_map(void
+    
+);
+uint16_t uniffi_uniffi_yniffi_checksum_method_yrstransaction_transaction_get_text(void
+    
+);
+uint16_t uniffi_uniffi_yniffi_checksum_method_yrstransaction_transaction_state_vector(void
+    
+);
+uint16_t uniffi_uniffi_yniffi_checksum_constructor_yrsdoc_new(void
+    
+);
+uint16_t uniffi_uniffi_yniffi_checksum_method_yrsarrayeachdelegate_call(void
+    
+);
+uint16_t uniffi_uniffi_yniffi_checksum_method_yrsarrayobservationdelegate_call(void
+    
+);
+uint16_t uniffi_uniffi_yniffi_checksum_method_yrsmapiteratordelegate_call(void
+    
+);
+uint16_t uniffi_uniffi_yniffi_checksum_method_yrsmapkviteratordelegate_call(void
+    
+);
+uint16_t uniffi_uniffi_yniffi_checksum_method_yrsmapobservationdelegate_call(void
+    
+);
+uint16_t uniffi_uniffi_yniffi_checksum_method_yrstextobservationdelegate_call(void
+    
+);
+uint32_t ffi_uniffi_yniffi_uniffi_contract_version(void
+    
+);
+
