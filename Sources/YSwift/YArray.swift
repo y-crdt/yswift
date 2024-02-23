@@ -7,7 +7,7 @@ import Yniffi
 /// Store, order, and retrieve any single `Codable` type within a `YArray`.
 ///
 /// Create a new `YArray` instance using ``YSwift/YDocument/getOrCreateArray(named:)`` from a ``YDocument``.
-public final class YArray<T: Codable>: Transactable {
+public final class YArray<T: Codable>: Transactable, YCollection {
     private let _array: YrsArray
     let document: YDocument
 
@@ -153,6 +153,11 @@ public final class YArray<T: Codable>: Transactable {
     /// - Parameter subscriptionId: The observer identifier to unregister.
     public func unobserve(_ subscriptionId: UInt32) {
         _array.unobserve(subscriptionId: subscriptionId)
+    }
+    
+    public func sharedHandle() -> YrsSharedRef {
+        //TODO: on uniffi side all shared collections implement YrsSharedRef,
+        //      so essentially this should be `_array as YrsSharedRef`
     }
 }
 

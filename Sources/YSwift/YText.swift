@@ -5,7 +5,7 @@ import Yniffi
 /// A type that provides a text-oriented shared data type.
 ///
 /// Create a new `YText` instance using ``YSwift/YDocument/getOrCreateText(named:)`` from a ``YDocument``.
-public final class YText: Transactable {
+public final class YText: Transactable, YCollection {
     private let _text: YrsText
     let document: YDocument
 
@@ -162,6 +162,11 @@ public final class YText: Transactable {
     /// - Parameter subscriptionId: The observer identifier to unregister.
     public func unobserve(_ subscriptionId: UInt32) {
         _text.unobserve(subscriptionId: subscriptionId)
+    }
+    
+    public func sharedHandle() -> YrsSharedRef {
+        //TODO: on uniffi side all shared collections implement YrsSharedRef,
+        //      so essentially this should be `_text as YrsSharedRef`
     }
 }
 
