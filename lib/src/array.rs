@@ -1,5 +1,5 @@
 use crate::transaction::YrsTransaction;
-use crate::{change::YrsChange, error::CodingError};
+use crate::{change::YrsChange, error::CodingError, YrsSharedRef};
 use std::cell::RefCell;
 use std::fmt::Debug;
 use yrs::{types::Value, Any, Array, ArrayRef, Observable};
@@ -8,6 +8,8 @@ pub(crate) struct YrsArray(RefCell<ArrayRef>);
 
 unsafe impl Send for YrsArray {}
 unsafe impl Sync for YrsArray {}
+
+impl YrsSharedRef for YrsArray {}
 
 impl From<ArrayRef> for YrsArray {
     fn from(value: ArrayRef) -> Self {

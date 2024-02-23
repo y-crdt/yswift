@@ -5,8 +5,10 @@ use crate::text::YrsText;
 use crate::transaction::YrsTransaction;
 use std::sync::Arc;
 use std::{borrow::Borrow, cell::RefCell};
-use yrs::{updates::decoder::Decode, ArrayRef, Doc, OffsetKind, Options, StateVector, Transact};
+use yrs::{updates::decoder::Decode, ArrayRef, Doc, OffsetKind, Options, StateVector, Transact, Origin};
 use yrs::{MapRef, ReadTxn};
+use crate::{UniffiCustomTypeConverter, YrsSharedRef};
+use crate::undo::YrsUndoManager;
 
 pub(crate) struct YrsDoc(RefCell<Doc>);
 
@@ -50,9 +52,40 @@ impl YrsDoc {
         Arc::from(YrsMap::from(map_ref))
     }
 
-    pub(crate) fn transact<'doc>(&self) -> Arc<YrsTransaction> {
+    pub(crate) fn transact<'doc>(&self, origin: Option<YrsOrigin>) -> Arc<YrsTransaction> {
         let tx = self.0.borrow();
         let tx = tx.transact_mut();
         Arc::from(YrsTransaction::from(tx))
+    }
+
+    pub(crate) fn undo_manager(&self, tracked_refs: Vec<Arc<dyn YrsSharedRef>>) -> Arc<YrsUndoManager> {
+        todo!()
+    }
+}
+
+#[derive(Clone)]
+pub struct YrsOrigin(Arc<[u8]>);
+
+impl From<Origin> for YrsOrigin {
+    fn from(value: Origin) -> Self {
+        YrsOrigin(Arc::from(value.as_ref()))
+    }
+}
+
+impl Into<Origin> for YrsOrigin {
+    fn into(self) -> Origin {
+        Origin::from(self.0.as_ref())
+    }
+}
+
+impl UniffiCustomTypeConverter for YrsOrigin {
+    type Builtin = Vec<u8>;
+
+    fn into_custom(val: Self::Builtin) -> uniffi::Result<Self> where Self: Sized {
+        Ok(YrsOrigin(val.into()))
+    }
+
+    fn from_custom(obj: Self) -> Self::Builtin {
+        obj.0.to_vec()
     }
 }

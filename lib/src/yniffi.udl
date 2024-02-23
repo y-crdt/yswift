@@ -15,7 +15,8 @@ interface YrsDoc {
   YrsText get_text(string name);
   YrsArray get_array(string name);
   YrsMap get_map(string name);
-  YrsTransaction transact();
+  YrsTransaction transact(YrsOrigin? origin);
+  YrsUndoManager undo_manager(sequence<YrsSharedRef> tracked_refs);
 };
 
 interface YrsTransaction {
@@ -31,7 +32,15 @@ interface YrsTransaction {
   YrsText? transaction_get_text(string name);
   YrsArray? transaction_get_array(string name);
   YrsMap? transaction_get_map(string name);
+  YrsOrigin? origin();
   void free();
+};
+
+[Custom]
+typedef sequence<u8> YrsOrigin;
+
+[Trait]
+interface YrsSharedRef {
 };
 
 interface YrsMap {
@@ -132,4 +141,35 @@ interface YrsDelta {
   Inserted(string value, string attrs);
   Deleted(u32 index);
   Retained(u32 index, string attrs);
+};
+
+/// A manager type able to track changes occurring in a context of a given document.
+/// These changes can be reverted using `undo` method call, or re-applied via `redo`.
+interface YrsUndoManager {
+    /// Adds a specific origin identifier to a list of tracked origins. If tracked
+    /// origin list is not empty, current undo manager will only track changes applied
+    /// over transactions created with a specific origin.
+    void add_origin(YrsOrigin origin);
+
+    /// Removes an existing origin identifier from a list of tracked origins. If tracked
+    /// origin list is not empty, current undo manager will only track changes applied
+    /// over transactions created with a specific origin.
+    void remove_origin(YrsOrigin origin);
+
+    /// Undoes the last operation, pushing it onto redo stack, returning false if undo
+    /// stack was empty an method had no effect.
+    /// Fails to execute if there's another transaction in progress.
+    boolean undo();
+
+    /// Redoes the last operation from undo stack, returning false if redo stack was
+    /// empty an method had no effect.
+    /// Fails to execute if there's another transaction in progress.
+    boolean redo();
+
+    /// Wraps a set of recent changes together into a single undo operation. These
+    /// changes will be be undone together on the next `undo` method call.
+    void wrap_changes();
+
+    /// Clears the undo/redo stacks of a current undo manager.
+    void clear();
 };

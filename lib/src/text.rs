@@ -5,11 +5,14 @@ use yrs::Any;
 use std::cell::RefCell;
 use std::fmt::Debug;
 use yrs::{GetString, Observable, Text, TextRef};
+use crate::YrsSharedRef;
 
 pub(crate) struct YrsText(RefCell<TextRef>);
 
 unsafe impl Send for YrsText {}
 unsafe impl Sync for YrsText {}
+
+impl YrsSharedRef for YrsText {}
 
 impl From<TextRef> for YrsText {
     fn from(value: TextRef) -> Self {

@@ -10,6 +10,7 @@ use yrs::{
     Update,
 };
 use yrs::{Store, WriteTxn};
+use crate::doc::YrsOrigin;
 
 pub(crate) struct YrsTransaction(pub(crate) RefCell<Option<TransactionMut<'static>>>);
 
@@ -38,6 +39,11 @@ impl<'doc> From<TransactionMut<'doc>> for YrsTransaction {
 impl YrsTransaction {
     pub(crate) fn transaction(&self) -> RefMut<'_, Option<TransactionMut<'static>>> {
         self.0.borrow_mut()
+    }
+
+    pub(crate) fn origin(&self) -> Option<YrsOrigin> {
+        let txn = self.0.borrow();
+        txn.as_ref()?.origin().cloned().map(YrsOrigin::from)
     }
 
     pub(crate) fn transaction_encode_update(&self) -> Vec<u8> {

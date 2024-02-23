@@ -15,3 +15,4 @@ all_symbols.txt
 swift/scaffold/Documentation.docc/.docc-build
 docs/
 .vscode/
+.idea/

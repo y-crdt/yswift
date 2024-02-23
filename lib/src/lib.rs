@@ -8,7 +8,11 @@ mod map;
 mod mapchange;
 mod text;
 mod transaction;
+mod undo;
 
+pub trait YrsSharedRef: Send + Sync { }
+
+use crate::doc::YrsOrigin;
 use crate::array::YrsArray;
 use crate::array::YrsArrayEachDelegate;
 use crate::array::YrsArrayObservationDelegate;
@@ -25,5 +29,6 @@ use crate::mapchange::YrsMapChange;
 use crate::text::YrsText;
 use crate::text::YrsTextObservationDelegate;
 use crate::transaction::YrsTransaction;
+use crate::undo::YrsUndoManager;
 
 uniffi::include_scaffolding!("yniffi");
