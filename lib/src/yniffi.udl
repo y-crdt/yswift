@@ -159,11 +159,13 @@ interface YrsUndoManager {
     /// Undoes the last operation, pushing it onto redo stack, returning false if undo
     /// stack was empty an method had no effect.
     /// Fails to execute if there's another transaction in progress.
+    [Throws=YrsUndoError]
     boolean undo();
 
     /// Redoes the last operation from undo stack, returning false if redo stack was
     /// empty an method had no effect.
     /// Fails to execute if there's another transaction in progress.
+    [Throws=YrsUndoError]
     boolean redo();
 
     /// Wraps a set of recent changes together into a single undo operation. These
@@ -171,5 +173,11 @@ interface YrsUndoManager {
     void wrap_changes();
 
     /// Clears the undo/redo stacks of a current undo manager.
+    [Throws=YrsUndoError]
     void clear();
+};
+
+[Error]
+enum YrsUndoError {
+  "PendingTransaction"
 };

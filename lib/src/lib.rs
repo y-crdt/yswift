@@ -10,7 +10,7 @@ mod text;
 mod transaction;
 mod undo;
 
-pub trait YrsSharedRef: Send + Sync { }
+pub(crate) trait YrsSharedRef: Send + Sync + AsRef<yrs::types::Branch> { }
 
 use crate::doc::YrsOrigin;
 use crate::array::YrsArray;
@@ -30,5 +30,6 @@ use crate::text::YrsText;
 use crate::text::YrsTextObservationDelegate;
 use crate::transaction::YrsTransaction;
 use crate::undo::YrsUndoManager;
+use crate::undo::YrsUndoError;
 
 uniffi::include_scaffolding!("yniffi");

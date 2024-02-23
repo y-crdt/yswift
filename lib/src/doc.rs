@@ -54,17 +54,28 @@ impl YrsDoc {
 
     pub(crate) fn transact<'doc>(&self, origin: Option<YrsOrigin>) -> Arc<YrsTransaction> {
         let tx = self.0.borrow();
-        let tx = tx.transact_mut();
+        let tx = if let Some(origin) = origin {
+            tx.transact_mut_with(origin)
+        } else {
+            tx.transact_mut()
+        };
         Arc::from(YrsTransaction::from(tx))
     }
 
     pub(crate) fn undo_manager(&self, tracked_refs: Vec<Arc<dyn YrsSharedRef>>) -> Arc<YrsUndoManager> {
-        todo!()
+        let doc = &*self.0.borrow();
+        let mut i = tracked_refs.into_iter();
+        let first = i.next().unwrap();
+        let mut undo_manager = yrs::UndoManager::new::<&dyn YrsSharedRef>(doc, &first.as_ref());
+        while let Some(n) = i.next() {
+            undo_manager.expand_scope(&n.as_ref());
+        }
+        Arc::new(YrsUndoManager::from(undo_manager))
     }
 }
 
 #[derive(Clone)]
-pub struct YrsOrigin(Arc<[u8]>);
+pub(crate) struct YrsOrigin(Arc<[u8]>);
 
 impl From<Origin> for YrsOrigin {
     fn from(value: Origin) -> Self {

@@ -3,7 +3,7 @@ use crate::mapchange::{YrsEntryChange, YrsMapChange};
 use crate::transaction::YrsTransaction;
 use std::cell::RefCell;
 use std::fmt::Debug;
-use yrs::types::Observable;
+use yrs::types::{Branch, Observable};
 use yrs::{types::Value, Any, Map, MapRef};
 use crate::YrsSharedRef;
 
@@ -15,6 +15,14 @@ unsafe impl Send for YrsMap {}
 unsafe impl Sync for YrsMap {}
 
 impl YrsSharedRef for YrsMap { }
+
+impl AsRef<Branch> for YrsMap {
+    fn as_ref(&self) -> &Branch {
+        //FIXME: after yrs v0.18 use logical references
+        let branch = &*self.0.borrow();
+        unsafe { std::mem::transmute(branch.as_ref()) }
+    }
+}
 
 // Provides the implementation for the From trait, supporting
 // converting from a MapRef type into a YrsMap type.
