@@ -31,5 +31,8 @@ use crate::text::YrsTextObservationDelegate;
 use crate::transaction::YrsTransaction;
 use crate::undo::YrsUndoManager;
 use crate::undo::YrsUndoError;
+use crate::undo::YrsUndoManagerObservationDelegate;
+use crate::undo::YrsUndoEvent;
+use crate::undo::YrsUndoEventKind;
 
 uniffi::include_scaffolding!("yniffi");

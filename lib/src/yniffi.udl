@@ -156,6 +156,9 @@ interface YrsUndoManager {
     /// over transactions created with a specific origin.
     void remove_origin(YrsOrigin origin);
 
+    /// Adds a new shared collection to a list of entities observed by current undo manager.
+    void add_scope(YrsSharedRef tracked_ref);
+
     /// Undoes the last operation, pushing it onto redo stack, returning false if undo
     /// stack was empty an method had no effect.
     /// Fails to execute if there's another transaction in progress.
@@ -175,9 +178,33 @@ interface YrsUndoManager {
     /// Clears the undo/redo stacks of a current undo manager.
     [Throws=YrsUndoError]
     void clear();
+
+    u32 observe_added(YrsUndoManagerObservationDelegate delegate);
+    void unobserve_added(u32 subscription_id);
+
+    u32 observe_updated(YrsUndoManagerObservationDelegate delegate);
+    void unobserve_updated(u32 subscription_id);
+
+    u32 observe_popped(YrsUndoManagerObservationDelegate delegate);
+    void unobserve_popped(u32 subscription_id);
 };
 
 [Error]
 enum YrsUndoError {
   "PendingTransaction"
+};
+
+callback interface YrsUndoManagerObservationDelegate {
+    u64 call(YrsUndoEvent e, u64 ptr);
+};
+
+interface YrsUndoEvent {
+    YrsOrigin? origin();
+    YrsUndoEventKind kind();
+    boolean has_changed(YrsSharedRef shared_ref);
+};
+
+enum YrsUndoEventKind {
+    "Undo",
+    "Redo",
 };

@@ -66,7 +66,7 @@ impl YrsDoc {
         let doc = &*self.0.borrow();
         let mut i = tracked_refs.into_iter();
         let first = i.next().unwrap();
-        let mut undo_manager = yrs::UndoManager::new::<&dyn YrsSharedRef>(doc, &first.as_ref());
+        let mut undo_manager = yrs::undo::UndoManager::new::<&dyn YrsSharedRef>(doc, &first.as_ref());
         while let Some(n) = i.next() {
             undo_manager.expand_scope(&n.as_ref());
         }

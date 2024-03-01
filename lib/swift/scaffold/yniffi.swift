@@ -323,6 +323,19 @@ fileprivate struct FfiConverterUInt32: FfiConverterPrimitive {
     }
 }
 
+fileprivate struct FfiConverterUInt64: FfiConverterPrimitive {
+    typealias FfiType = UInt64
+    typealias SwiftType = UInt64
+
+    public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> UInt64 {
+        return try lift(readInt(&buf))
+    }
+
+    public static func write(_ value: SwiftType, into buf: inout [UInt8]) {
+        writeInt(&buf, lower(value))
+    }
+}
+
 fileprivate struct FfiConverterBool : FfiConverter {
     typealias FfiType = Int8
     typealias SwiftType = Bool
@@ -618,7 +631,7 @@ public protocol YrsDocProtocol : AnyObject {
     
     func getText(name: String)  -> YrsText
     
-    func transact(origin: Origin?)  -> YrsTransaction
+    func transact(origin: YrsOrigin?)  -> YrsTransaction
     
     func undoManager(trackedRefs: [YrsSharedRef])  -> YrsUndoManager
     
@@ -696,13 +709,13 @@ public class YrsDoc:
 }
         )
     }
-    public func transact(origin: Origin?)  -> YrsTransaction {
+    public func transact(origin: YrsOrigin?)  -> YrsTransaction {
         return try!  FfiConverterTypeYrsTransaction.lift(
             try! 
     rustCall() {
     
     uniffi_uniffi_yniffi_fn_method_yrsdoc_transact(self.uniffiClonePointer(), 
-        FfiConverterOptionTypeOrigin.lower(origin),$0
+        FfiConverterOptionTypeYrsOrigin.lower(origin),$0
     )
 }
         )
@@ -1267,7 +1280,7 @@ public protocol YrsTransactionProtocol : AnyObject {
     
     func free() 
     
-    func origin()  -> Origin?
+    func origin()  -> YrsOrigin?
     
     func transactionApplyUpdate(update: [UInt8]) throws 
     
@@ -1318,8 +1331,8 @@ public class YrsTransaction:
     )
 }
     }
-    public func origin()  -> Origin? {
-        return try!  FfiConverterOptionTypeOrigin.lift(
+    public func origin()  -> YrsOrigin? {
+        return try!  FfiConverterOptionTypeYrsOrigin.lift(
             try! 
     rustCall() {
     
@@ -1455,6 +1468,116 @@ public func FfiConverterTypeYrsTransaction_lower(_ value: YrsTransaction) -> Uns
 
 
 
+public protocol YrsUndoEventProtocol : AnyObject {
+    
+    func hasChanged(sharedRef: YrsSharedRef)  -> Bool
+    
+    func kind()  -> YrsUndoEventKind
+    
+    func origin()  -> YrsOrigin?
+    
+}
+
+public class YrsUndoEvent:
+    YrsUndoEventProtocol {
+    fileprivate let pointer: UnsafeMutableRawPointer
+
+    // TODO: We'd like this to be `private` but for Swifty reasons,
+    // we can't implement `FfiConverter` without making this `required` and we can't
+    // make it `required` without making it `public`.
+    required init(unsafeFromRawPointer pointer: UnsafeMutableRawPointer) {
+        self.pointer = pointer
+    }
+
+    public func uniffiClonePointer() -> UnsafeMutableRawPointer {
+        return try! rustCall { uniffi_uniffi_yniffi_fn_clone_yrsundoevent(self.pointer, $0) }
+    }
+
+    deinit {
+        try! rustCall { uniffi_uniffi_yniffi_fn_free_yrsundoevent(pointer, $0) }
+    }
+
+    
+
+    
+    
+    public func hasChanged(sharedRef: YrsSharedRef)  -> Bool {
+        return try!  FfiConverterBool.lift(
+            try! 
+    rustCall() {
+    
+    uniffi_uniffi_yniffi_fn_method_yrsundoevent_has_changed(self.uniffiClonePointer(), 
+        FfiConverterTypeYrsSharedRef.lower(sharedRef),$0
+    )
+}
+        )
+    }
+    public func kind()  -> YrsUndoEventKind {
+        return try!  FfiConverterTypeYrsUndoEventKind.lift(
+            try! 
+    rustCall() {
+    
+    uniffi_uniffi_yniffi_fn_method_yrsundoevent_kind(self.uniffiClonePointer(), $0
+    )
+}
+        )
+    }
+    public func origin()  -> YrsOrigin? {
+        return try!  FfiConverterOptionTypeYrsOrigin.lift(
+            try! 
+    rustCall() {
+    
+    uniffi_uniffi_yniffi_fn_method_yrsundoevent_origin(self.uniffiClonePointer(), $0
+    )
+}
+        )
+    }
+
+}
+
+public struct FfiConverterTypeYrsUndoEvent: FfiConverter {
+
+    typealias FfiType = UnsafeMutableRawPointer
+    typealias SwiftType = YrsUndoEvent
+
+    public static func lift(_ pointer: UnsafeMutableRawPointer) throws -> YrsUndoEvent {
+        return YrsUndoEvent(unsafeFromRawPointer: pointer)
+    }
+
+    public static func lower(_ value: YrsUndoEvent) -> UnsafeMutableRawPointer {
+        return value.uniffiClonePointer()
+    }
+
+    public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> YrsUndoEvent {
+        let v: UInt64 = try readInt(&buf)
+        // The Rust code won't compile if a pointer won't fit in a UInt64.
+        // We have to go via `UInt` because that's the thing that's the size of a pointer.
+        let ptr = UnsafeMutableRawPointer(bitPattern: UInt(truncatingIfNeeded: v))
+        if (ptr == nil) {
+            throw UniffiInternalError.unexpectedNullPointer
+        }
+        return try lift(ptr!)
+    }
+
+    public static func write(_ value: YrsUndoEvent, into buf: inout [UInt8]) {
+        // This fiddling is because `Int` is the thing that's the same size as a pointer.
+        // The Rust code won't compile if a pointer won't fit in a `UInt64`.
+        writeInt(&buf, UInt64(bitPattern: Int64(Int(bitPattern: lower(value)))))
+    }
+}
+
+
+public func FfiConverterTypeYrsUndoEvent_lift(_ pointer: UnsafeMutableRawPointer) throws -> YrsUndoEvent {
+    return try FfiConverterTypeYrsUndoEvent.lift(pointer)
+}
+
+public func FfiConverterTypeYrsUndoEvent_lower(_ value: YrsUndoEvent) -> UnsafeMutableRawPointer {
+    return FfiConverterTypeYrsUndoEvent.lower(value)
+}
+
+
+
+
 /**
  * A manager type able to track changes occurring in a context of a given document.
  * These changes can be reverted using `undo` method call, or re-applied via `redo`.
@@ -1466,33 +1589,50 @@ public protocol YrsUndoManagerProtocol : AnyObject {
      * origin list is not empty, current undo manager will only track changes applied
      * over transactions created with a specific origin.
      */
-    func addOrigin(origin: Origin) 
+    func addOrigin(origin: YrsOrigin) 
+    
+    /**
+     * Adds a new shared collection to a list of entities observed by current undo manager.
+     */
+    func addScope(trackedRef: YrsSharedRef) 
     
     /**
      * Clears the undo/redo stacks of a current undo manager.
      */
-    func clear() 
+    func clear() throws 
+    
+    func observeAdded(delegate: YrsUndoManagerObservationDelegate)  -> UInt32
+    
+    func observePopped(delegate: YrsUndoManagerObservationDelegate)  -> UInt32
+    
+    func observeUpdated(delegate: YrsUndoManagerObservationDelegate)  -> UInt32
     
     /**
      * Redoes the last operation from undo stack, returning false if redo stack was
      * empty an method had no effect.
      * Fails to execute if there's another transaction in progress.
      */
-    func redo()  -> Bool
+    func redo() throws  -> Bool
     
     /**
      * Removes an existing origin identifier from a list of tracked origins. If tracked
      * origin list is not empty, current undo manager will only track changes applied
      * over transactions created with a specific origin.
      */
-    func removeOrigin(origin: Origin) 
+    func removeOrigin(origin: YrsOrigin) 
     
     /**
      * Undoes the last operation, pushing it onto redo stack, returning false if undo
      * stack was empty an method had no effect.
      * Fails to execute if there's another transaction in progress.
      */
-    func undo()  -> Bool
+    func undo() throws  -> Bool
+    
+    func unobserveAdded(subscriptionId: UInt32) 
+    
+    func unobservePopped(subscriptionId: UInt32) 
+    
+    func unobserveUpdated(subscriptionId: UInt32) 
     
     /**
      * Wraps a set of recent changes together into a single undo operation. These
@@ -1534,36 +1674,79 @@ public class YrsUndoManager:
      * origin list is not empty, current undo manager will only track changes applied
      * over transactions created with a specific origin.
      */
-    public func addOrigin(origin: Origin)  {
+    public func addOrigin(origin: YrsOrigin)  {
         try! 
     rustCall() {
     
     uniffi_uniffi_yniffi_fn_method_yrsundomanager_add_origin(self.uniffiClonePointer(), 
-        FfiConverterTypeOrigin.lower(origin),$0
+        FfiConverterTypeYrsOrigin.lower(origin),$0
+    )
+}
+    }
+    /**
+     * Adds a new shared collection to a list of entities observed by current undo manager.
+     */
+    public func addScope(trackedRef: YrsSharedRef)  {
+        try! 
+    rustCall() {
+    
+    uniffi_uniffi_yniffi_fn_method_yrsundomanager_add_scope(self.uniffiClonePointer(), 
+        FfiConverterTypeYrsSharedRef.lower(trackedRef),$0
     )
 }
     }
     /**
      * Clears the undo/redo stacks of a current undo manager.
      */
-    public func clear()  {
-        try! 
-    rustCall() {
-    
+    public func clear() throws  {
+        try 
+    rustCallWithError(FfiConverterTypeYrsUndoError.lift) {
     uniffi_uniffi_yniffi_fn_method_yrsundomanager_clear(self.uniffiClonePointer(), $0
     )
 }
+    }
+    public func observeAdded(delegate: YrsUndoManagerObservationDelegate)  -> UInt32 {
+        return try!  FfiConverterUInt32.lift(
+            try! 
+    rustCall() {
+    
+    uniffi_uniffi_yniffi_fn_method_yrsundomanager_observe_added(self.uniffiClonePointer(), 
+        FfiConverterCallbackInterfaceYrsUndoManagerObservationDelegate.lower(delegate),$0
+    )
+}
+        )
+    }
+    public func observePopped(delegate: YrsUndoManagerObservationDelegate)  -> UInt32 {
+        return try!  FfiConverterUInt32.lift(
+            try! 
+    rustCall() {
+    
+    uniffi_uniffi_yniffi_fn_method_yrsundomanager_observe_popped(self.uniffiClonePointer(), 
+        FfiConverterCallbackInterfaceYrsUndoManagerObservationDelegate.lower(delegate),$0
+    )
+}
+        )
+    }
+    public func observeUpdated(delegate: YrsUndoManagerObservationDelegate)  -> UInt32 {
+        return try!  FfiConverterUInt32.lift(
+            try! 
+    rustCall() {
+    
+    uniffi_uniffi_yniffi_fn_method_yrsundomanager_observe_updated(self.uniffiClonePointer(), 
+        FfiConverterCallbackInterfaceYrsUndoManagerObservationDelegate.lower(delegate),$0
+    )
+}
+        )
     }
     /**
      * Redoes the last operation from undo stack, returning false if redo stack was
      * empty an method had no effect.
      * Fails to execute if there's another transaction in progress.
      */
-    public func redo()  -> Bool {
-        return try!  FfiConverterBool.lift(
-            try! 
-    rustCall() {
-    
+    public func redo() throws  -> Bool {
+        return try  FfiConverterBool.lift(
+            try 
+    rustCallWithError(FfiConverterTypeYrsUndoError.lift) {
     uniffi_uniffi_yniffi_fn_method_yrsundomanager_redo(self.uniffiClonePointer(), $0
     )
 }
@@ -1574,12 +1757,12 @@ public class YrsUndoManager:
      * origin list is not empty, current undo manager will only track changes applied
      * over transactions created with a specific origin.
      */
-    public func removeOrigin(origin: Origin)  {
+    public func removeOrigin(origin: YrsOrigin)  {
         try! 
     rustCall() {
     
     uniffi_uniffi_yniffi_fn_method_yrsundomanager_remove_origin(self.uniffiClonePointer(), 
-        FfiConverterTypeOrigin.lower(origin),$0
+        FfiConverterTypeYrsOrigin.lower(origin),$0
     )
 }
     }
@@ -1588,15 +1771,41 @@ public class YrsUndoManager:
      * stack was empty an method had no effect.
      * Fails to execute if there's another transaction in progress.
      */
-    public func undo()  -> Bool {
-        return try!  FfiConverterBool.lift(
-            try! 
-    rustCall() {
-    
+    public func undo() throws  -> Bool {
+        return try  FfiConverterBool.lift(
+            try 
+    rustCallWithError(FfiConverterTypeYrsUndoError.lift) {
     uniffi_uniffi_yniffi_fn_method_yrsundomanager_undo(self.uniffiClonePointer(), $0
     )
 }
         )
+    }
+    public func unobserveAdded(subscriptionId: UInt32)  {
+        try! 
+    rustCall() {
+    
+    uniffi_uniffi_yniffi_fn_method_yrsundomanager_unobserve_added(self.uniffiClonePointer(), 
+        FfiConverterUInt32.lower(subscriptionId),$0
+    )
+}
+    }
+    public func unobservePopped(subscriptionId: UInt32)  {
+        try! 
+    rustCall() {
+    
+    uniffi_uniffi_yniffi_fn_method_yrsundomanager_unobserve_popped(self.uniffiClonePointer(), 
+        FfiConverterUInt32.lower(subscriptionId),$0
+    )
+}
+    }
+    public func unobserveUpdated(subscriptionId: UInt32)  {
+        try! 
+    rustCall() {
+    
+    uniffi_uniffi_yniffi_fn_method_yrsundomanager_unobserve_updated(self.uniffiClonePointer(), 
+        FfiConverterUInt32.lower(subscriptionId),$0
+    )
+}
     }
     /**
      * Wraps a set of recent changes together into a single undo operation. These
@@ -1999,6 +2208,110 @@ public func FfiConverterTypeYrsEntryChange_lower(_ value: YrsEntryChange) -> Rus
 
 
 extension YrsEntryChange: Equatable, Hashable {}
+
+
+
+
+public enum YrsUndoError {
+
+    
+    
+    case PendingTransaction(message: String)
+    
+
+    fileprivate static func uniffiErrorHandler(_ error: RustBuffer) throws -> Error {
+        return try FfiConverterTypeYrsUndoError.lift(error)
+    }
+}
+
+
+public struct FfiConverterTypeYrsUndoError: FfiConverterRustBuffer {
+    typealias SwiftType = YrsUndoError
+
+    public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> YrsUndoError {
+        let variant: Int32 = try readInt(&buf)
+        switch variant {
+
+        
+
+        
+        case 1: return .PendingTransaction(
+            message: try FfiConverterString.read(from: &buf)
+        )
+        
+
+        default: throw UniffiInternalError.unexpectedEnumCase
+        }
+    }
+
+    public static func write(_ value: YrsUndoError, into buf: inout [UInt8]) {
+        switch value {
+
+        
+
+        
+        case .PendingTransaction(_ /* message is ignored*/):
+            writeInt(&buf, Int32(1))
+
+        
+        }
+    }
+}
+
+
+extension YrsUndoError: Equatable, Hashable {}
+
+extension YrsUndoError: Error { }
+
+// Note that we don't yet support `indirect` for enums.
+// See https://github.com/mozilla/uniffi-rs/issues/396 for further discussion.
+public enum YrsUndoEventKind {
+    
+    case undo
+    case redo
+}
+
+public struct FfiConverterTypeYrsUndoEventKind: FfiConverterRustBuffer {
+    typealias SwiftType = YrsUndoEventKind
+
+    public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> YrsUndoEventKind {
+        let variant: Int32 = try readInt(&buf)
+        switch variant {
+        
+        case 1: return .undo
+        
+        case 2: return .redo
+        
+        default: throw UniffiInternalError.unexpectedEnumCase
+        }
+    }
+
+    public static func write(_ value: YrsUndoEventKind, into buf: inout [UInt8]) {
+        switch value {
+        
+        
+        case .undo:
+            writeInt(&buf, Int32(1))
+        
+        
+        case .redo:
+            writeInt(&buf, Int32(2))
+        
+        }
+    }
+}
+
+
+public func FfiConverterTypeYrsUndoEventKind_lift(_ buf: RustBuffer) throws -> YrsUndoEventKind {
+    return try FfiConverterTypeYrsUndoEventKind.lift(buf)
+}
+
+public func FfiConverterTypeYrsUndoEventKind_lower(_ value: YrsUndoEventKind) -> RustBuffer {
+    return FfiConverterTypeYrsUndoEventKind.lower(value)
+}
+
+
+extension YrsUndoEventKind: Equatable, Hashable {}
 
 
 
@@ -2618,6 +2931,102 @@ extension FfiConverterCallbackInterfaceYrsTextObservationDelegate : FfiConverter
     }
 }
 
+
+
+
+public protocol YrsUndoManagerObservationDelegate : AnyObject {
+    
+    func call(e: YrsUndoEvent, ptr: UInt64)  -> UInt64
+    
+}
+
+
+
+// Declaration and FfiConverters for YrsUndoManagerObservationDelegate Callback Interface
+
+fileprivate let uniffiCallbackHandlerYrsUndoManagerObservationDelegate : ForeignCallback =
+    { (handle: UniFFICallbackHandle, method: Int32, argsData: UnsafePointer<UInt8>, argsLen: Int32, out_buf: UnsafeMutablePointer<RustBuffer>) -> Int32 in
+    
+
+    func invokeCall(_ swiftCallbackInterface: YrsUndoManagerObservationDelegate, _ argsData: UnsafePointer<UInt8>, _ argsLen: Int32, _ out_buf: UnsafeMutablePointer<RustBuffer>) throws -> Int32 {
+        var reader = createReader(data: Data(bytes: argsData, count: Int(argsLen)))
+        func makeCall() throws -> Int32 {
+            let result =  swiftCallbackInterface.call(
+                    e:  try FfiConverterTypeYrsUndoEvent.read(from: &reader), 
+                    ptr:  try FfiConverterUInt64.read(from: &reader)
+                    )
+            var writer = [UInt8]()
+            FfiConverterUInt64.write(result, into: &writer)
+            out_buf.pointee = RustBuffer(bytes: writer)
+            return UNIFFI_CALLBACK_SUCCESS
+        }
+        return try makeCall()
+    }
+
+
+    switch method {
+        case IDX_CALLBACK_FREE:
+            FfiConverterCallbackInterfaceYrsUndoManagerObservationDelegate.handleMap.remove(handle: handle)
+            // Successful return
+            // See docs of ForeignCallback in `uniffi_core/src/ffi/foreigncallbacks.rs`
+            return UNIFFI_CALLBACK_SUCCESS
+        case 1:
+            guard let cb = FfiConverterCallbackInterfaceYrsUndoManagerObservationDelegate.handleMap.get(handle: handle) else {
+                out_buf.pointee = FfiConverterString.lower("No callback in handlemap; this is a Uniffi bug")
+                return UNIFFI_CALLBACK_UNEXPECTED_ERROR
+            }
+            do {
+                return try invokeCall(cb, argsData, argsLen, out_buf)
+            } catch let error {
+                out_buf.pointee = FfiConverterString.lower(String(describing: error))
+                return UNIFFI_CALLBACK_UNEXPECTED_ERROR
+            }
+        
+        // This should never happen, because an out of bounds method index won't
+        // ever be used. Once we can catch errors, we should return an InternalError.
+        // https://github.com/mozilla/uniffi-rs/issues/351
+        default:
+            // An unexpected error happened.
+            // See docs of ForeignCallback in `uniffi_core/src/ffi/foreigncallbacks.rs`
+            return UNIFFI_CALLBACK_UNEXPECTED_ERROR
+    }
+}
+
+private func uniffiCallbackInitYrsUndoManagerObservationDelegate() {
+    uniffi_uniffi_yniffi_fn_init_callback_yrsundomanagerobservationdelegate(uniffiCallbackHandlerYrsUndoManagerObservationDelegate)
+}
+
+// FfiConverter protocol for callback interfaces
+fileprivate struct FfiConverterCallbackInterfaceYrsUndoManagerObservationDelegate {
+    fileprivate static var handleMap = UniFFICallbackHandleMap<YrsUndoManagerObservationDelegate>()
+}
+
+extension FfiConverterCallbackInterfaceYrsUndoManagerObservationDelegate : FfiConverter {
+    typealias SwiftType = YrsUndoManagerObservationDelegate
+    // We can use Handle as the FfiType because it's a typealias to UInt64
+    typealias FfiType = UniFFICallbackHandle
+
+    public static func lift(_ handle: UniFFICallbackHandle) throws -> SwiftType {
+        guard let callback = handleMap.get(handle: handle) else {
+            throw UniffiInternalError.unexpectedStaleHandle
+        }
+        return callback
+    }
+
+    public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> SwiftType {
+        let handle: UniFFICallbackHandle = try readInt(&buf)
+        return try lift(handle)
+    }
+
+    public static func lower(_ v: SwiftType) -> UniFFICallbackHandle {
+        return handleMap.insert(obj: v)
+    }
+
+    public static func write(_ v: SwiftType, into buf: inout [UInt8]) {
+        writeInt(&buf, lower(v))
+    }
+}
+
 fileprivate struct FfiConverterOptionString: FfiConverterRustBuffer {
     typealias SwiftType = String?
 
@@ -2702,8 +3111,8 @@ fileprivate struct FfiConverterOptionTypeYrsText: FfiConverterRustBuffer {
     }
 }
 
-fileprivate struct FfiConverterOptionTypeOrigin: FfiConverterRustBuffer {
-    typealias SwiftType = Origin?
+fileprivate struct FfiConverterOptionTypeYrsOrigin: FfiConverterRustBuffer {
+    typealias SwiftType = YrsOrigin?
 
     public static func write(_ value: SwiftType, into buf: inout [UInt8]) {
         guard let value = value else {
@@ -2711,13 +3120,13 @@ fileprivate struct FfiConverterOptionTypeOrigin: FfiConverterRustBuffer {
             return
         }
         writeInt(&buf, Int8(1))
-        FfiConverterTypeOrigin.write(value, into: &buf)
+        FfiConverterTypeYrsOrigin.write(value, into: &buf)
     }
 
     public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> SwiftType {
         switch try readInt(&buf) as Int8 {
         case 0: return nil
-        case 1: return try FfiConverterTypeOrigin.read(from: &buf)
+        case 1: return try FfiConverterTypeYrsOrigin.read(from: &buf)
         default: throw UniffiInternalError.unexpectedOptionalTag
         }
     }
@@ -2860,32 +3269,32 @@ fileprivate struct FfiConverterSequenceTypeYrsDelta: FfiConverterRustBuffer {
  * Typealias from the type name used in the UDL file to the builtin type.  This
  * is needed because the UDL type name is used in function/method signatures.
  */
-public typealias Origin = [UInt8]
-public struct FfiConverterTypeOrigin: FfiConverter {
-    public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> Origin {
+public typealias YrsOrigin = [UInt8]
+public struct FfiConverterTypeYrsOrigin: FfiConverter {
+    public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> YrsOrigin {
         return try FfiConverterSequenceUInt8.read(from: &buf)
     }
 
-    public static func write(_ value: Origin, into buf: inout [UInt8]) {
+    public static func write(_ value: YrsOrigin, into buf: inout [UInt8]) {
         return FfiConverterSequenceUInt8.write(value, into: &buf)
     }
 
-    public static func lift(_ value: RustBuffer) throws -> Origin {
+    public static func lift(_ value: RustBuffer) throws -> YrsOrigin {
         return try FfiConverterSequenceUInt8.lift(value)
     }
 
-    public static func lower(_ value: Origin) -> RustBuffer {
+    public static func lower(_ value: YrsOrigin) -> RustBuffer {
         return FfiConverterSequenceUInt8.lower(value)
     }
 }
 
 
-public func FfiConverterTypeOrigin_lift(_ value: RustBuffer) throws -> Origin {
-    return try FfiConverterTypeOrigin.lift(value)
+public func FfiConverterTypeYrsOrigin_lift(_ value: RustBuffer) throws -> YrsOrigin {
+    return try FfiConverterTypeYrsOrigin.lift(value)
 }
 
-public func FfiConverterTypeOrigin_lower(_ value: Origin) -> RustBuffer {
-    return FfiConverterTypeOrigin.lower(value)
+public func FfiConverterTypeYrsOrigin_lower(_ value: YrsOrigin) -> RustBuffer {
+    return FfiConverterTypeYrsOrigin.lower(value)
 }
 
 
@@ -2952,7 +3361,7 @@ private var initializationResult: InitializationResult {
     if (uniffi_uniffi_yniffi_checksum_method_yrsdoc_get_text() != 33749) {
         return InitializationResult.apiChecksumMismatch
     }
-    if (uniffi_uniffi_yniffi_checksum_method_yrsdoc_transact() != 17634) {
+    if (uniffi_uniffi_yniffi_checksum_method_yrsdoc_transact() != 24297) {
         return InitializationResult.apiChecksumMismatch
     }
     if (uniffi_uniffi_yniffi_checksum_method_yrsdoc_undo_manager() != 2431) {
@@ -3027,7 +3436,7 @@ private var initializationResult: InitializationResult {
     if (uniffi_uniffi_yniffi_checksum_method_yrstransaction_free() != 42613) {
         return InitializationResult.apiChecksumMismatch
     }
-    if (uniffi_uniffi_yniffi_checksum_method_yrstransaction_origin() != 3150) {
+    if (uniffi_uniffi_yniffi_checksum_method_yrstransaction_origin() != 47344) {
         return InitializationResult.apiChecksumMismatch
     }
     if (uniffi_uniffi_yniffi_checksum_method_yrstransaction_transaction_apply_update() != 45997) {
@@ -3054,19 +3463,49 @@ private var initializationResult: InitializationResult {
     if (uniffi_uniffi_yniffi_checksum_method_yrstransaction_transaction_state_vector() != 39028) {
         return InitializationResult.apiChecksumMismatch
     }
-    if (uniffi_uniffi_yniffi_checksum_method_yrsundomanager_add_origin() != 24098) {
+    if (uniffi_uniffi_yniffi_checksum_method_yrsundoevent_has_changed() != 17375) {
         return InitializationResult.apiChecksumMismatch
     }
-    if (uniffi_uniffi_yniffi_checksum_method_yrsundomanager_clear() != 51404) {
+    if (uniffi_uniffi_yniffi_checksum_method_yrsundoevent_kind() != 16700) {
         return InitializationResult.apiChecksumMismatch
     }
-    if (uniffi_uniffi_yniffi_checksum_method_yrsundomanager_redo() != 11219) {
+    if (uniffi_uniffi_yniffi_checksum_method_yrsundoevent_origin() != 43650) {
         return InitializationResult.apiChecksumMismatch
     }
-    if (uniffi_uniffi_yniffi_checksum_method_yrsundomanager_remove_origin() != 25984) {
+    if (uniffi_uniffi_yniffi_checksum_method_yrsundomanager_add_origin() != 26206) {
         return InitializationResult.apiChecksumMismatch
     }
-    if (uniffi_uniffi_yniffi_checksum_method_yrsundomanager_undo() != 27596) {
+    if (uniffi_uniffi_yniffi_checksum_method_yrsundomanager_add_scope() != 6287) {
+        return InitializationResult.apiChecksumMismatch
+    }
+    if (uniffi_uniffi_yniffi_checksum_method_yrsundomanager_clear() != 62142) {
+        return InitializationResult.apiChecksumMismatch
+    }
+    if (uniffi_uniffi_yniffi_checksum_method_yrsundomanager_observe_added() != 57225) {
+        return InitializationResult.apiChecksumMismatch
+    }
+    if (uniffi_uniffi_yniffi_checksum_method_yrsundomanager_observe_popped() != 26392) {
+        return InitializationResult.apiChecksumMismatch
+    }
+    if (uniffi_uniffi_yniffi_checksum_method_yrsundomanager_observe_updated() != 56836) {
+        return InitializationResult.apiChecksumMismatch
+    }
+    if (uniffi_uniffi_yniffi_checksum_method_yrsundomanager_redo() != 5163) {
+        return InitializationResult.apiChecksumMismatch
+    }
+    if (uniffi_uniffi_yniffi_checksum_method_yrsundomanager_remove_origin() != 14248) {
+        return InitializationResult.apiChecksumMismatch
+    }
+    if (uniffi_uniffi_yniffi_checksum_method_yrsundomanager_undo() != 44889) {
+        return InitializationResult.apiChecksumMismatch
+    }
+    if (uniffi_uniffi_yniffi_checksum_method_yrsundomanager_unobserve_added() != 35819) {
+        return InitializationResult.apiChecksumMismatch
+    }
+    if (uniffi_uniffi_yniffi_checksum_method_yrsundomanager_unobserve_popped() != 14267) {
+        return InitializationResult.apiChecksumMismatch
+    }
+    if (uniffi_uniffi_yniffi_checksum_method_yrsundomanager_unobserve_updated() != 50308) {
         return InitializationResult.apiChecksumMismatch
     }
     if (uniffi_uniffi_yniffi_checksum_method_yrsundomanager_wrap_changes() != 6579) {
@@ -3093,6 +3532,9 @@ private var initializationResult: InitializationResult {
     if (uniffi_uniffi_yniffi_checksum_method_yrstextobservationdelegate_call() != 16633) {
         return InitializationResult.apiChecksumMismatch
     }
+    if (uniffi_uniffi_yniffi_checksum_method_yrsundomanagerobservationdelegate_call() != 35430) {
+        return InitializationResult.apiChecksumMismatch
+    }
 
     uniffiCallbackInitYrsArrayEachDelegate()
     uniffiCallbackInitYrsArrayObservationDelegate()
@@ -3100,6 +3542,7 @@ private var initializationResult: InitializationResult {
     uniffiCallbackInitYrsMapKVIteratorDelegate()
     uniffiCallbackInitYrsMapObservationDelegate()
     uniffiCallbackInitYrsTextObservationDelegate()
+    uniffiCallbackInitYrsUndoManagerObservationDelegate()
     return InitializationResult.ok
 }
 
