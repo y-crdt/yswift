@@ -5,7 +5,7 @@ import XCTest
 class YUndoManagerTests: XCTestCase {
     var document: YDocument!
     var text: YText!
-    var manager: YUndoManager!
+    var manager: YUndoManager<AnyObject>!
     
     override func setUp() {
         document = YDocument()

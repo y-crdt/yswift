@@ -156,8 +156,7 @@ public final class YArray<T: Codable>: Transactable, YCollection {
     }
     
     public func sharedHandle() -> YrsSharedRef {
-        //TODO: on uniffi side all shared collections implement YrsSharedRef,
-        //      so essentially this should be `_array as YrsSharedRef`
+        return YrsSharedRef(unsafeFromRawPointer: _array.uniffiClonePointer())
     }
 }
 

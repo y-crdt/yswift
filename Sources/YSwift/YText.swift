@@ -165,8 +165,7 @@ public final class YText: Transactable, YCollection {
     }
     
     public func sharedHandle() -> YrsSharedRef {
-        //TODO: on uniffi side all shared collections implement YrsSharedRef,
-        //      so essentially this should be `_text as YrsSharedRef`
+        return YrsSharedRef(unsafeFromRawPointer: _text.uniffiClonePointer())
     }
 }
 

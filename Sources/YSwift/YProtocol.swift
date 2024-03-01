@@ -21,7 +21,7 @@ public struct YSyncMessage: Codable {
     }
 }
 
-/// A contiguous buffer of bytes.
+/// A contiguous buffer of bytes. 
 public typealias Buffer = [UInt8]
 
 /// A class that implements the Y-CRDT synchronization protocol.

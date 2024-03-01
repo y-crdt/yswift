@@ -30,14 +30,14 @@ public final class YDocument {
     /// Creates a synchronous transaction and provides that transaction to a trailing closure, within which you make changes to shared data types.
     /// - Parameter changes: The closure in which you make changes to the document.
     /// - Returns: The value that you return from the closure.
-    public func transactSync<T, O>(origin: O?, _ changes: @escaping (YrsTransaction) -> T) -> T where O: OriginProtocol {
+    public func transactSync<T>(origin: Origin? = nil, _ changes: @escaping (YrsTransaction) -> T) -> T {
         // Avoiding deadlocks & thread explosion. We do not allow re-entrancy in Transaction methods.
         // It is a programmer's error to invoke synchronous transact from within transaction.
         // Better approach would be to leverage something like `DispatchSpecificKey` in Watchdog style implementation
         // Reference: https://github.com/groue/GRDB.swift/blob/master/GRDB/Core/SchedulingWatchdog.swift
         dispatchPrecondition(condition: .notOnQueue(transactionQueue))
         return transactionQueue.sync {
-            let transaction = document.transact(origin: origin?.asOrigin())
+            let transaction = document.transact(origin: origin?.origin)
             defer {
                 transaction.free()
             }
@@ -48,7 +48,7 @@ public final class YDocument {
     /// Creates an asynchronous transaction and provides that transaction to a trailing closure, within which you make changes to shared data types.
     /// - Parameter changes: The closure in which you make changes to the document.
     /// - Returns: The value that you return from the closure.
-    public func transact<T, O>(origin: O?, _ changes: @escaping (YrsTransaction) -> T) async -> T where O: OriginProtocol {
+    public func transact<T>(origin: Origin? = nil, _ changes: @escaping (YrsTransaction) -> T) async -> T {
         await withCheckedContinuation { continuation in
             transactAsync(origin, changes) { result in
                 continuation.resume(returning: result)
@@ -59,10 +59,10 @@ public final class YDocument {
     /// Creates an asynchronous transaction and provides that transaction to a trailing closure, within which you make changes to shared data types.
     /// - Parameter changes: The closure in which you make changes to the document.
     /// - Parameter completion: A completion handler that is called with the value returned from the closure in which you made changes.
-    public func transactAsync<T, O>(_ origin: O?, _ changes: @escaping (YrsTransaction) -> T, completion: @escaping (T) -> Void) where O: OriginProtocol {
+    public func transactAsync<T>(_ origin: Origin? = nil, _ changes: @escaping (YrsTransaction) -> T, completion: @escaping (T) -> Void) {
         transactionQueue.async { [weak self] in
             guard let self = self else { return }
-            let transaction = self.document.transact(origin: origin?.asOrigin())
+            let transaction = self.document.transact(origin: origin?.origin)
             defer {
                 transaction.free()
             }
@@ -94,7 +94,7 @@ public final class YDocument {
         YMap(map: document.getMap(name: named), document: self)
     }
     
-    public func undoManager(trackedRefs: [YCollection]) -> YUndoManager {
+    public func undoManager<T: AnyObject>(trackedRefs: [YCollection]) -> YUndoManager<T> {
         let mapped = trackedRefs.map({$0.sharedHandle()})
         return YUndoManager(manager: self.document.undoManager(trackedRefs: mapped))
     }

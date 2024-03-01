@@ -185,8 +185,7 @@ public final class YMap<T: Codable>: Transactable, YCollection {
     }
     
     public func sharedHandle() -> YrsSharedRef {
-        //TODO: on uniffi side all shared collections implement YrsSharedRef,
-        //      so essentially this should be `_map as YrsSharedRef`
+        return YrsSharedRef(unsafeFromRawPointer: _map.uniffiClonePointer())
     }
 }
 
