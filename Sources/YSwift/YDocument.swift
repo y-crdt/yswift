@@ -95,7 +95,7 @@ public final class YDocument {
     }
     
     public func undoManager<T: AnyObject>(trackedRefs: [YCollection]) -> YUndoManager<T> {
-        let mapped = trackedRefs.map({$0.sharedHandle()})
+        let mapped = trackedRefs.map({$0.pointer()})
         return YUndoManager(manager: self.document.undoManager(trackedRefs: mapped))
     }
 }

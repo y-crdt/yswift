@@ -155,8 +155,8 @@ public final class YArray<T: Codable>: Transactable, YCollection {
         _array.unobserve(subscriptionId: subscriptionId)
     }
     
-    public func sharedHandle() -> YrsSharedRef {
-        return YrsSharedRef(unsafeFromRawPointer: _array.uniffiClonePointer())
+    public func pointer() -> YrsCollectionPtr {
+        return _array.rawPtr()
     }
 }
 

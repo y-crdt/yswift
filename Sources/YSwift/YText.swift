@@ -164,8 +164,8 @@ public final class YText: Transactable, YCollection {
         _text.unobserve(subscriptionId: subscriptionId)
     }
     
-    public func sharedHandle() -> YrsSharedRef {
-        return YrsSharedRef(unsafeFromRawPointer: _text.uniffiClonePointer())
+    public func pointer() -> YrsCollectionPtr {
+        return _text.rawPtr()
     }
 }
 

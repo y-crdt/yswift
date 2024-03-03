@@ -6,14 +6,12 @@ use std::cell::RefCell;
 use std::fmt::Debug;
 use yrs::{GetString, Observable, Text, TextRef};
 use yrs::types::Branch;
-use crate::YrsSharedRef;
+use crate::doc::YrsCollectionPtr;
 
 pub(crate) struct YrsText(RefCell<TextRef>);
 
 unsafe impl Send for YrsText {}
 unsafe impl Sync for YrsText {}
-
-impl YrsSharedRef for YrsText {}
 
 impl AsRef<Branch> for YrsText {
     fn as_ref(&self) -> &Branch {
@@ -34,6 +32,10 @@ pub(crate) trait YrsTextObservationDelegate: Send + Sync + Debug {
 }
 
 impl YrsText {
+    pub(crate) fn raw_ptr(&self) -> YrsCollectionPtr {
+        let borrowed = self.0.borrow();
+        YrsCollectionPtr::from(borrowed.as_ref())
+    }
     pub(crate) fn format(
         &self,
         transaction: &YrsTransaction,

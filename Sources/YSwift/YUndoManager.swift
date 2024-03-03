@@ -18,7 +18,7 @@ public final class YUndoManager<T: AnyObject> {
     }
     
     public func track(_ collection: YCollection) {
-        _manager.addScope(trackedRef: collection.sharedHandle())
+        _manager.addScope(trackedRef: collection.pointer())
     }
     
     public func undo() throws -> Bool {
@@ -37,7 +37,7 @@ public final class YUndoManager<T: AnyObject> {
         try _manager.clear()
     }
     
-    public func observeAdded(_ body: @escaping (YrsUndoEvent, T?) -> T?) -> UInt32 {
+    public func observeAdded(_ body: @escaping (UndoEvent, T?) -> T?) -> UInt32 {
         let delegate = YUndoManagerObservationDelegate(callback: body)
         return _manager.observeAdded(delegate: delegate)
     }
@@ -46,7 +46,7 @@ public final class YUndoManager<T: AnyObject> {
         return _manager.unobserveAdded(subscriptionId: subscriptionId)
     }
     
-    public func observeUpdated(_ body: @escaping (YrsUndoEvent, T?) -> T?) -> UInt32 {
+    public func observeUpdated(_ body: @escaping (UndoEvent, T?) -> T?) -> UInt32 {
         let delegate = YUndoManagerObservationDelegate(callback: body)
         return _manager.observeUpdated(delegate: delegate)
     }
@@ -55,7 +55,7 @@ public final class YUndoManager<T: AnyObject> {
         return _manager.unobserveUpdated(subscriptionId: subscriptionId)
     }
     
-    public func observePopped(_ body: @escaping (YrsUndoEvent, T?) -> T?) -> UInt32 {
+    public func observePopped(_ body: @escaping (UndoEvent, T?) -> T?) -> UInt32 {
         let delegate = YUndoManagerObservationDelegate(callback: body)
         return _manager.observePopped(delegate: delegate)
     }
@@ -68,9 +68,9 @@ public final class YUndoManager<T: AnyObject> {
 class YUndoManagerObservationDelegate<T: AnyObject>: YrsUndoManagerObservationDelegate {
     private var callback: (YrsUndoEvent, UInt64) -> UInt64
 
-    init(callback: @escaping (YrsUndoEvent, T?) -> T?) {
+    init(callback: @escaping (UndoEvent, T?) -> T?) {
         self.callback = { (event: YrsUndoEvent, ptr: UInt64) -> UInt64 in
-            let obj = callback(event, YUndoManagerObservationDelegate.bridge(ptr: ptr))
+            let obj = callback(UndoEvent(event), YUndoManagerObservationDelegate.bridge(ptr: ptr))
             return YUndoManagerObservationDelegate.bridge(obj: obj)
         }
     }
@@ -95,5 +95,33 @@ class YUndoManagerObservationDelegate<T: AnyObject>: YrsUndoManagerObservationDe
         } else {
             return nil
         }
+    }
+}
+
+public struct UndoEvent {
+    let event: YrsUndoEvent
+    init(_ event: YrsUndoEvent) {
+        self.event = event
+    }
+    
+    var type: YrsUndoEventKind {
+        get {
+            return self.event.kind()
+        }
+    }
+    
+    var origin: Origin? {
+        get {
+            let origin = self.event.origin()
+            if let origin {
+                return Origin(origin)
+            } else {
+                return nil
+            }
+        }
+    }
+    
+    func hasChanged<T: YCollection>(_ sharedRef: T) -> Bool {
+        return self.event.hasChanged(sharedRef: sharedRef.pointer())
     }
 }

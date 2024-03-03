@@ -16,7 +16,7 @@ interface YrsDoc {
   YrsArray get_array(string name);
   YrsMap get_map(string name);
   YrsTransaction transact(YrsOrigin? origin);
-  YrsUndoManager undo_manager(sequence<YrsSharedRef> tracked_refs);
+  YrsUndoManager undo_manager(sequence<YrsCollectionPtr> tracked_refs);
 };
 
 interface YrsTransaction {
@@ -39,11 +39,11 @@ interface YrsTransaction {
 [Custom]
 typedef sequence<u8> YrsOrigin;
 
-[Trait]
-interface YrsSharedRef {
-};
+[Custom]
+typedef u64 YrsCollectionPtr;
 
 interface YrsMap {
+  YrsCollectionPtr raw_ptr();
   u32 length([ByRef] YrsTransaction tx);
   boolean contains_key([ByRef] YrsTransaction tx, string key);
   void insert([ByRef] YrsTransaction tx, string key, string value);
@@ -87,6 +87,7 @@ callback interface YrsMapObservationDelegate {
 };
 
 interface YrsArray {
+  YrsCollectionPtr raw_ptr();
   void each([ByRef] YrsTransaction tx, YrsArrayEachDelegate delegate);
 
   [Throws=CodingError]
@@ -119,6 +120,7 @@ interface YrsChange {
 };
 
 interface YrsText {
+  YrsCollectionPtr raw_ptr();
   void format([ByRef] YrsTransaction tx, u32 index, u32 length, string attrs);
   void append([ByRef] YrsTransaction tx, string text);
   void insert([ByRef] YrsTransaction tx, u32 index, string chunk);
@@ -157,7 +159,7 @@ interface YrsUndoManager {
     void remove_origin(YrsOrigin origin);
 
     /// Adds a new shared collection to a list of entities observed by current undo manager.
-    void add_scope(YrsSharedRef tracked_ref);
+    void add_scope(YrsCollectionPtr tracked_ref);
 
     /// Undoes the last operation, pushing it onto redo stack, returning false if undo
     /// stack was empty an method had no effect.
@@ -201,7 +203,7 @@ callback interface YrsUndoManagerObservationDelegate {
 interface YrsUndoEvent {
     YrsOrigin? origin();
     YrsUndoEventKind kind();
-    boolean has_changed(YrsSharedRef shared_ref);
+    boolean has_changed(YrsCollectionPtr shared_ref);
 };
 
 enum YrsUndoEventKind {

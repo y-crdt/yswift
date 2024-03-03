@@ -2,10 +2,17 @@ import Combine
 import XCTest
 @testable import YSwift
 
+class TestMetadata {
+    public let value: String
+    init(_ value: String) {
+        self.value = value
+    }
+}
+
 class YUndoManagerTests: XCTestCase {
     var document: YDocument!
     var text: YText!
-    var manager: YUndoManager<AnyObject>!
+    var manager: YUndoManager<TestMetadata>!
     
     override func setUp() {
         document = YDocument()
@@ -22,8 +29,11 @@ class YUndoManagerTests: XCTestCase {
     
     func test_undoTextBasic() throws {
         text.insert("1221", at: 0)
+        manager.wrap()
         text.insert("3", at: 2)
+        manager.wrap()
         text.insert("3", at: 3)
+        manager.wrap()
         
         XCTAssertEqual(text.getString(), "123321")
         
@@ -38,27 +48,22 @@ class YUndoManagerTests: XCTestCase {
     }
     
     func test_undoEvents() throws {
-        var received = -1
-        let on_added = manager.observeAdded({ (e, metadata) -> AnyObject? in
-            if let metadata {
-                var counter = metadata as! Int
-                counter += 1
-                return counter as AnyObject
-            } else {
-                return 0 as AnyObject
-            }
+        var received = TestMetadata("")
+        let on_added = manager.observeAdded({ (e, metadata) -> TestMetadata? in
+            let m = metadata ?? TestMetadata("")
+            return TestMetadata(m.value + "A")
         })
-        let on_popped = manager.observePopped({ (e, metadata) -> AnyObject? in
-            received = metadata as! Int
+        let on_popped = manager.observePopped({ (e, metadata) -> TestMetadata? in
+            received = metadata!
             return metadata
         })
         
         text.insert("abc", at: 0)
         
         XCTAssert (try manager.undo())
-        XCTAssertEqual(received, 0)
+        XCTAssertEqual(received.value, "A")
         
         XCTAssert (try manager.redo())
-        XCTAssertEqual(received, 1)
+        XCTAssertEqual(received.value, "A")
     }
 }

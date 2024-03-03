@@ -7,8 +7,9 @@ use std::sync::Arc;
 use std::{borrow::Borrow, cell::RefCell};
 use yrs::{updates::decoder::Decode, ArrayRef, Doc, OffsetKind, Options, StateVector, Transact, Origin};
 use yrs::{MapRef, ReadTxn};
-use crate::{UniffiCustomTypeConverter, YrsSharedRef};
+use yrs::types::Branch;
 use crate::undo::YrsUndoManager;
+use crate::UniffiCustomTypeConverter;
 
 pub(crate) struct YrsDoc(RefCell<Doc>);
 
@@ -62,13 +63,13 @@ impl YrsDoc {
         Arc::from(YrsTransaction::from(tx))
     }
 
-    pub(crate) fn undo_manager(&self, tracked_refs: Vec<Arc<dyn YrsSharedRef>>) -> Arc<YrsUndoManager> {
+    pub(crate) fn undo_manager(&self, tracked_refs: Vec<YrsCollectionPtr>) -> Arc<YrsUndoManager> {
         let doc = &*self.0.borrow();
         let mut i = tracked_refs.into_iter();
         let first = i.next().unwrap();
-        let mut undo_manager = yrs::undo::UndoManager::new::<&dyn YrsSharedRef>(doc, &first.as_ref());
+        let mut undo_manager = yrs::undo::UndoManager::new(doc, &first);
         while let Some(n) = i.next() {
-            undo_manager.expand_scope(&n.as_ref());
+            undo_manager.expand_scope(&n);
         }
         Arc::new(YrsUndoManager::from(undo_manager))
     }
@@ -98,5 +99,40 @@ impl UniffiCustomTypeConverter for YrsOrigin {
 
     fn from_custom(obj: Self) -> Self::Builtin {
         obj.0.to_vec()
+    }
+}
+
+#[derive(Copy, Clone)]
+#[repr(transparent)]
+pub(crate) struct YrsCollectionPtr(*const Branch);
+
+unsafe impl Send for YrsCollectionPtr { }
+unsafe impl Sync for YrsCollectionPtr { }
+
+impl AsRef<Branch> for YrsCollectionPtr {
+    #[inline]
+    fn as_ref(&self) -> &Branch {
+        unsafe { self.0.as_ref() }.unwrap()
+    }
+}
+
+impl<'a> From<&'a Branch> for YrsCollectionPtr {
+    #[inline]
+    fn from(value: &'a Branch) -> Self {
+        let ptr = value as *const Branch;
+        YrsCollectionPtr(ptr)
+    }
+}
+
+impl UniffiCustomTypeConverter for YrsCollectionPtr {
+    type Builtin = u64;
+
+    fn into_custom(val: Self::Builtin) -> uniffi::Result<Self> where Self: Sized {
+        let ptr = val as usize as *const Branch;
+        Ok(YrsCollectionPtr(ptr))
+    }
+
+    fn from_custom(obj: Self) -> Self::Builtin {
+        obj.0 as usize as u64
     }
 }

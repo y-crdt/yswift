@@ -1,16 +1,15 @@
 use crate::transaction::YrsTransaction;
-use crate::{change::YrsChange, error::CodingError, YrsSharedRef};
+use crate::{change::YrsChange, error::CodingError};
 use std::cell::RefCell;
 use std::fmt::Debug;
 use yrs::{types::Value, Any, Array, ArrayRef, Observable};
 use yrs::types::Branch;
+use crate::doc::YrsCollectionPtr;
 
 pub(crate) struct YrsArray(RefCell<ArrayRef>);
 
 unsafe impl Send for YrsArray {}
 unsafe impl Sync for YrsArray {}
-
-impl YrsSharedRef for YrsArray {}
 
 impl AsRef<Branch> for YrsArray {
     fn as_ref(&self) -> &Branch {
@@ -67,6 +66,10 @@ impl YrsArray {
     //         inner: RefCell::new(arr.iter(txn)),
     //     })
     // }
+    pub(crate) fn raw_ptr(&self) -> YrsCollectionPtr {
+        let borrowed = self.0.borrow();
+        YrsCollectionPtr::from(borrowed.as_ref())
+    }
 
     pub(crate) fn each(
         &self,

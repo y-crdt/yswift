@@ -5,7 +5,7 @@ use std::cell::RefCell;
 use std::fmt::Debug;
 use yrs::types::{Branch, Observable};
 use yrs::{types::Value, Any, Map, MapRef};
-use crate::YrsSharedRef;
+use crate::doc::YrsCollectionPtr;
 
 pub(crate) struct YrsMap(RefCell<MapRef>);
 
@@ -13,8 +13,6 @@ pub(crate) struct YrsMap(RefCell<MapRef>);
 unsafe impl Send for YrsMap {}
 // Marks that this type is safe to share references between threads.
 unsafe impl Sync for YrsMap {}
-
-impl YrsSharedRef for YrsMap { }
 
 impl AsRef<Branch> for YrsMap {
     fn as_ref(&self) -> &Branch {
@@ -66,6 +64,11 @@ IMPL order:
  */
 
 impl YrsMap {
+    pub(crate) fn raw_ptr(&self) -> YrsCollectionPtr {
+        let borrowed = self.0.borrow();
+        YrsCollectionPtr::from(borrowed.as_ref())
+    }
+
     /// Inserts the key and value you provide into the map.
     pub(crate) fn insert(&self, transaction: &YrsTransaction, key: String, value: String) {
         // decodes the `value` as JSON and converts it into a lib0::Any enumeration

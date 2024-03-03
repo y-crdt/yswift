@@ -416,6 +416,8 @@ public protocol YrsArrayProtocol : AnyObject {
     
     func pushFront(tx: YrsTransaction, value: String) 
     
+    func rawPtr()  -> YrsCollectionPtr
+    
     func remove(tx: YrsTransaction, index: UInt32) 
     
     func removeRange(tx: YrsTransaction, index: UInt32, len: UInt32) 
@@ -534,6 +536,16 @@ public class YrsArray:
     )
 }
     }
+    public func rawPtr()  -> YrsCollectionPtr {
+        return try!  FfiConverterTypeYrsCollectionPtr.lift(
+            try! 
+    rustCall() {
+    
+    uniffi_uniffi_yniffi_fn_method_yrsarray_raw_ptr(self.uniffiClonePointer(), $0
+    )
+}
+        )
+    }
     public func remove(tx: YrsTransaction, index: UInt32)  {
         try! 
     rustCall() {
@@ -633,7 +645,7 @@ public protocol YrsDocProtocol : AnyObject {
     
     func transact(origin: YrsOrigin?)  -> YrsTransaction
     
-    func undoManager(trackedRefs: [YrsSharedRef])  -> YrsUndoManager
+    func undoManager(trackedRefs: [YrsCollectionPtr])  -> YrsUndoManager
     
 }
 
@@ -720,13 +732,13 @@ public class YrsDoc:
 }
         )
     }
-    public func undoManager(trackedRefs: [YrsSharedRef])  -> YrsUndoManager {
+    public func undoManager(trackedRefs: [YrsCollectionPtr])  -> YrsUndoManager {
         return try!  FfiConverterTypeYrsUndoManager.lift(
             try! 
     rustCall() {
     
     uniffi_uniffi_yniffi_fn_method_yrsdoc_undo_manager(self.uniffiClonePointer(), 
-        FfiConverterSequenceTypeYrsSharedRef.lower(trackedRefs),$0
+        FfiConverterSequenceTypeYrsCollectionPtr.lower(trackedRefs),$0
     )
 }
         )
@@ -794,6 +806,8 @@ public protocol YrsMapProtocol : AnyObject {
     func length(tx: YrsTransaction)  -> UInt32
     
     func observe(delegate: YrsMapObservationDelegate)  -> UInt32
+    
+    func rawPtr()  -> YrsCollectionPtr
     
     func remove(tx: YrsTransaction, key: String) throws  -> String?
     
@@ -911,6 +925,16 @@ public class YrsMap:
 }
         )
     }
+    public func rawPtr()  -> YrsCollectionPtr {
+        return try!  FfiConverterTypeYrsCollectionPtr.lift(
+            try! 
+    rustCall() {
+    
+    uniffi_uniffi_yniffi_fn_method_yrsmap_raw_ptr(self.uniffiClonePointer(), $0
+    )
+}
+        )
+    }
     public func remove(tx: YrsTransaction, key: String) throws  -> String? {
         return try  FfiConverterOptionString.lift(
             try 
@@ -987,79 +1011,6 @@ public func FfiConverterTypeYrsMap_lower(_ value: YrsMap) -> UnsafeMutableRawPoi
 
 
 
-public protocol YrsSharedRefProtocol : AnyObject {
-    
-}
-
-public class YrsSharedRef:
-    YrsSharedRefProtocol {
-    fileprivate let pointer: UnsafeMutableRawPointer
-
-    // TODO: We'd like this to be `private` but for Swifty reasons,
-    // we can't implement `FfiConverter` without making this `required` and we can't
-    // make it `required` without making it `public`.
-    public required init(unsafeFromRawPointer pointer: UnsafeMutableRawPointer) {
-        self.pointer = pointer
-    }
-
-    public func uniffiClonePointer() -> UnsafeMutableRawPointer {
-        return try! rustCall { uniffi_uniffi_yniffi_fn_clone_yrssharedref(self.pointer, $0) }
-    }
-
-    deinit {
-        try! rustCall { uniffi_uniffi_yniffi_fn_free_yrssharedref(pointer, $0) }
-    }
-
-    
-
-    
-    
-
-}
-
-public struct FfiConverterTypeYrsSharedRef: FfiConverter {
-
-    typealias FfiType = UnsafeMutableRawPointer
-    typealias SwiftType = YrsSharedRef
-
-    public static func lift(_ pointer: UnsafeMutableRawPointer) throws -> YrsSharedRef {
-        return YrsSharedRef(unsafeFromRawPointer: pointer)
-    }
-
-    public static func lower(_ value: YrsSharedRef) -> UnsafeMutableRawPointer {
-        return value.uniffiClonePointer()
-    }
-
-    public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> YrsSharedRef {
-        let v: UInt64 = try readInt(&buf)
-        // The Rust code won't compile if a pointer won't fit in a UInt64.
-        // We have to go via `UInt` because that's the thing that's the size of a pointer.
-        let ptr = UnsafeMutableRawPointer(bitPattern: UInt(truncatingIfNeeded: v))
-        if (ptr == nil) {
-            throw UniffiInternalError.unexpectedNullPointer
-        }
-        return try lift(ptr!)
-    }
-
-    public static func write(_ value: YrsSharedRef, into buf: inout [UInt8]) {
-        // This fiddling is because `Int` is the thing that's the same size as a pointer.
-        // The Rust code won't compile if a pointer won't fit in a `UInt64`.
-        writeInt(&buf, UInt64(bitPattern: Int64(Int(bitPattern: lower(value)))))
-    }
-}
-
-
-public func FfiConverterTypeYrsSharedRef_lift(_ pointer: UnsafeMutableRawPointer) throws -> YrsSharedRef {
-    return try FfiConverterTypeYrsSharedRef.lift(pointer)
-}
-
-public func FfiConverterTypeYrsSharedRef_lower(_ value: YrsSharedRef) -> UnsafeMutableRawPointer {
-    return FfiConverterTypeYrsSharedRef.lower(value)
-}
-
-
-
-
 public protocol YrsTextProtocol : AnyObject {
     
     func append(tx: YrsTransaction, text: String) 
@@ -1079,6 +1030,8 @@ public protocol YrsTextProtocol : AnyObject {
     func length(tx: YrsTransaction)  -> UInt32
     
     func observe(delegate: YrsTextObservationDelegate)  -> UInt32
+    
+    func rawPtr()  -> YrsCollectionPtr
     
     func removeRange(tx: YrsTransaction, start: UInt32, length: UInt32) 
     
@@ -1206,6 +1159,16 @@ public class YrsText:
     
     uniffi_uniffi_yniffi_fn_method_yrstext_observe(self.uniffiClonePointer(), 
         FfiConverterCallbackInterfaceYrsTextObservationDelegate.lower(delegate),$0
+    )
+}
+        )
+    }
+    public func rawPtr()  -> YrsCollectionPtr {
+        return try!  FfiConverterTypeYrsCollectionPtr.lift(
+            try! 
+    rustCall() {
+    
+    uniffi_uniffi_yniffi_fn_method_yrstext_raw_ptr(self.uniffiClonePointer(), $0
     )
 }
         )
@@ -1470,7 +1433,7 @@ public func FfiConverterTypeYrsTransaction_lower(_ value: YrsTransaction) -> Uns
 
 public protocol YrsUndoEventProtocol : AnyObject {
     
-    func hasChanged(sharedRef: YrsSharedRef)  -> Bool
+    func hasChanged(sharedRef: YrsCollectionPtr)  -> Bool
     
     func kind()  -> YrsUndoEventKind
     
@@ -1501,13 +1464,13 @@ public class YrsUndoEvent:
 
     
     
-    public func hasChanged(sharedRef: YrsSharedRef)  -> Bool {
+    public func hasChanged(sharedRef: YrsCollectionPtr)  -> Bool {
         return try!  FfiConverterBool.lift(
             try! 
     rustCall() {
     
     uniffi_uniffi_yniffi_fn_method_yrsundoevent_has_changed(self.uniffiClonePointer(), 
-        FfiConverterTypeYrsSharedRef.lower(sharedRef),$0
+        FfiConverterTypeYrsCollectionPtr.lower(sharedRef),$0
     )
 }
         )
@@ -1594,7 +1557,7 @@ public protocol YrsUndoManagerProtocol : AnyObject {
     /**
      * Adds a new shared collection to a list of entities observed by current undo manager.
      */
-    func addScope(trackedRef: YrsSharedRef) 
+    func addScope(trackedRef: YrsCollectionPtr) 
     
     /**
      * Clears the undo/redo stacks of a current undo manager.
@@ -1686,12 +1649,12 @@ public class YrsUndoManager:
     /**
      * Adds a new shared collection to a list of entities observed by current undo manager.
      */
-    public func addScope(trackedRef: YrsSharedRef)  {
+    public func addScope(trackedRef: YrsCollectionPtr)  {
         try! 
     rustCall() {
     
     uniffi_uniffi_yniffi_fn_method_yrsundomanager_add_scope(self.uniffiClonePointer(), 
-        FfiConverterTypeYrsSharedRef.lower(trackedRef),$0
+        FfiConverterTypeYrsCollectionPtr.lower(trackedRef),$0
     )
 }
     }
@@ -3176,28 +3139,6 @@ fileprivate struct FfiConverterSequenceString: FfiConverterRustBuffer {
     }
 }
 
-fileprivate struct FfiConverterSequenceTypeYrsSharedRef: FfiConverterRustBuffer {
-    typealias SwiftType = [YrsSharedRef]
-
-    public static func write(_ value: [YrsSharedRef], into buf: inout [UInt8]) {
-        let len = Int32(value.count)
-        writeInt(&buf, len)
-        for item in value {
-            FfiConverterTypeYrsSharedRef.write(item, into: &buf)
-        }
-    }
-
-    public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> [YrsSharedRef] {
-        let len: Int32 = try readInt(&buf)
-        var seq = [YrsSharedRef]()
-        seq.reserveCapacity(Int(len))
-        for _ in 0 ..< len {
-            seq.append(try FfiConverterTypeYrsSharedRef.read(from: &buf))
-        }
-        return seq
-    }
-}
-
 fileprivate struct FfiConverterSequenceTypeYrsMapChange: FfiConverterRustBuffer {
     typealias SwiftType = [YrsMapChange]
 
@@ -3263,6 +3204,62 @@ fileprivate struct FfiConverterSequenceTypeYrsDelta: FfiConverterRustBuffer {
         return seq
     }
 }
+
+fileprivate struct FfiConverterSequenceTypeYrsCollectionPtr: FfiConverterRustBuffer {
+    typealias SwiftType = [YrsCollectionPtr]
+
+    public static func write(_ value: [YrsCollectionPtr], into buf: inout [UInt8]) {
+        let len = Int32(value.count)
+        writeInt(&buf, len)
+        for item in value {
+            FfiConverterTypeYrsCollectionPtr.write(item, into: &buf)
+        }
+    }
+
+    public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> [YrsCollectionPtr] {
+        let len: Int32 = try readInt(&buf)
+        var seq = [YrsCollectionPtr]()
+        seq.reserveCapacity(Int(len))
+        for _ in 0 ..< len {
+            seq.append(try FfiConverterTypeYrsCollectionPtr.read(from: &buf))
+        }
+        return seq
+    }
+}
+
+
+/**
+ * Typealias from the type name used in the UDL file to the builtin type.  This
+ * is needed because the UDL type name is used in function/method signatures.
+ */
+public typealias YrsCollectionPtr = UInt64
+public struct FfiConverterTypeYrsCollectionPtr: FfiConverter {
+    public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> YrsCollectionPtr {
+        return try FfiConverterUInt64.read(from: &buf)
+    }
+
+    public static func write(_ value: YrsCollectionPtr, into buf: inout [UInt8]) {
+        return FfiConverterUInt64.write(value, into: &buf)
+    }
+
+    public static func lift(_ value: UInt64) throws -> YrsCollectionPtr {
+        return try FfiConverterUInt64.lift(value)
+    }
+
+    public static func lower(_ value: YrsCollectionPtr) -> UInt64 {
+        return FfiConverterUInt64.lower(value)
+    }
+}
+
+
+public func FfiConverterTypeYrsCollectionPtr_lift(_ value: UInt64) throws -> YrsCollectionPtr {
+    return try FfiConverterTypeYrsCollectionPtr.lift(value)
+}
+
+public func FfiConverterTypeYrsCollectionPtr_lower(_ value: YrsCollectionPtr) -> UInt64 {
+    return FfiConverterTypeYrsCollectionPtr.lower(value)
+}
+
 
 
 /**
@@ -3337,6 +3334,9 @@ private var initializationResult: InitializationResult {
     if (uniffi_uniffi_yniffi_checksum_method_yrsarray_push_front() != 8045) {
         return InitializationResult.apiChecksumMismatch
     }
+    if (uniffi_uniffi_yniffi_checksum_method_yrsarray_raw_ptr() != 57629) {
+        return InitializationResult.apiChecksumMismatch
+    }
     if (uniffi_uniffi_yniffi_checksum_method_yrsarray_remove() != 49300) {
         return InitializationResult.apiChecksumMismatch
     }
@@ -3364,7 +3364,7 @@ private var initializationResult: InitializationResult {
     if (uniffi_uniffi_yniffi_checksum_method_yrsdoc_transact() != 24297) {
         return InitializationResult.apiChecksumMismatch
     }
-    if (uniffi_uniffi_yniffi_checksum_method_yrsdoc_undo_manager() != 2431) {
+    if (uniffi_uniffi_yniffi_checksum_method_yrsdoc_undo_manager() != 22583) {
         return InitializationResult.apiChecksumMismatch
     }
     if (uniffi_uniffi_yniffi_checksum_method_yrsmap_clear() != 58500) {
@@ -3389,6 +3389,9 @@ private var initializationResult: InitializationResult {
         return InitializationResult.apiChecksumMismatch
     }
     if (uniffi_uniffi_yniffi_checksum_method_yrsmap_observe() != 35962) {
+        return InitializationResult.apiChecksumMismatch
+    }
+    if (uniffi_uniffi_yniffi_checksum_method_yrsmap_raw_ptr() != 14101) {
         return InitializationResult.apiChecksumMismatch
     }
     if (uniffi_uniffi_yniffi_checksum_method_yrsmap_remove() != 48362) {
@@ -3427,6 +3430,9 @@ private var initializationResult: InitializationResult {
     if (uniffi_uniffi_yniffi_checksum_method_yrstext_observe() != 2220) {
         return InitializationResult.apiChecksumMismatch
     }
+    if (uniffi_uniffi_yniffi_checksum_method_yrstext_raw_ptr() != 42166) {
+        return InitializationResult.apiChecksumMismatch
+    }
     if (uniffi_uniffi_yniffi_checksum_method_yrstext_remove_range() != 46008) {
         return InitializationResult.apiChecksumMismatch
     }
@@ -3463,7 +3469,7 @@ private var initializationResult: InitializationResult {
     if (uniffi_uniffi_yniffi_checksum_method_yrstransaction_transaction_state_vector() != 39028) {
         return InitializationResult.apiChecksumMismatch
     }
-    if (uniffi_uniffi_yniffi_checksum_method_yrsundoevent_has_changed() != 17375) {
+    if (uniffi_uniffi_yniffi_checksum_method_yrsundoevent_has_changed() != 20294) {
         return InitializationResult.apiChecksumMismatch
     }
     if (uniffi_uniffi_yniffi_checksum_method_yrsundoevent_kind() != 16700) {
@@ -3475,7 +3481,7 @@ private var initializationResult: InitializationResult {
     if (uniffi_uniffi_yniffi_checksum_method_yrsundomanager_add_origin() != 26206) {
         return InitializationResult.apiChecksumMismatch
     }
-    if (uniffi_uniffi_yniffi_checksum_method_yrsundomanager_add_scope() != 6287) {
+    if (uniffi_uniffi_yniffi_checksum_method_yrsundomanager_add_scope() != 20994) {
         return InitializationResult.apiChecksumMismatch
     }
     if (uniffi_uniffi_yniffi_checksum_method_yrsundomanager_clear() != 62142) {

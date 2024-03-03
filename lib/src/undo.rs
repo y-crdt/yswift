@@ -1,8 +1,7 @@
 use std::fmt::Debug;
 use std::sync::{Arc, Mutex, MutexGuard};
 use yrs::undo::EventKind;
-use crate::doc::YrsOrigin;
-use crate::YrsSharedRef;
+use crate::doc::{YrsCollectionPtr, YrsOrigin};
 
 pub(crate) struct YrsUndoManager(Mutex<yrs::undo::UndoManager<u64>>);
 
@@ -35,9 +34,9 @@ impl YrsUndoManager {
         m.exclude_origin(origin);
     }
 
-    pub(crate) fn add_scope(&self, tracked_ref: Arc<dyn YrsSharedRef>) {
+    pub(crate) fn add_scope(&self, tracked_ref: YrsCollectionPtr) {
         let mut m = self.acquire_lock();
-        m.expand_scope(&tracked_ref.as_ref());
+        m.expand_scope(&tracked_ref);
     }
 
     pub(crate) fn undo(&self) -> Result<bool, YrsUndoError> {
@@ -134,8 +133,8 @@ impl YrsUndoEvent {
             EventKind::Redo => YrsUndoEventKind::Redo,
         }
     }
-    pub(crate) fn has_changed(&self, shared_ref: Arc<dyn YrsSharedRef>) -> bool {
-        self.inner.has_changed(&shared_ref.as_ref())
+    pub(crate) fn has_changed(&self, shared_ref: YrsCollectionPtr) -> bool {
+        self.inner.has_changed(&shared_ref)
     }
 }
 

@@ -184,8 +184,8 @@ public final class YMap<T: Codable>: Transactable, YCollection {
         return replicatedMap
     }
     
-    public func sharedHandle() -> YrsSharedRef {
-        return YrsSharedRef(unsafeFromRawPointer: _map.uniffiClonePointer())
+    public func pointer() -> YrsCollectionPtr {
+        return _map.rawPtr()
     }
 }
 

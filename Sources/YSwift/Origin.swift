@@ -2,11 +2,15 @@ import Yniffi
 
 /// A type that contains a reference to Yrs shared collection type.
 public protocol YCollection {
-    func sharedHandle() -> YrsSharedRef;
+    func pointer() -> YrsCollectionPtr;
 }
 
 public struct Origin: Equatable, Codable, Sendable {
     public let origin: YrsOrigin
+    
+    init(_ origin: YrsOrigin) {
+        self.origin = origin
+    }
     
     init(_ str: String) {
         origin = [UInt8](str.utf8)

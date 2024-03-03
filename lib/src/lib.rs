@@ -10,8 +10,7 @@ mod text;
 mod transaction;
 mod undo;
 
-pub(crate) trait YrsSharedRef: Send + Sync + AsRef<yrs::types::Branch> { }
-
+use crate::doc::YrsCollectionPtr;
 use crate::doc::YrsOrigin;
 use crate::array::YrsArray;
 use crate::array::YrsArrayEachDelegate;
