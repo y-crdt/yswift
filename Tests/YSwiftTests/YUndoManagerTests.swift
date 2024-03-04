@@ -92,14 +92,14 @@ class YUndoManagerTests: XCTestCase {
         let localOrigin = Origin("local")
         
         let remoteDocument = YDocument()
-        let remoteText = document.getOrCreateText(named: "test")
+        let remoteText = remoteDocument.getOrCreateText(named: "test")
         manager.addOrigin(localOrigin) // only track transaction from local origin
         
         // create some changes locally
         document.transactSync(origin: localOrigin) { txn in
             self.text.insert("hello", at: 0, in: txn)
-            self.manager.wrap() // add changes on a stack: they will be undone as one
         }
+        self.manager.wrap() // add changes on a stack: they will be undone as one
         
         exchangeUpdates(document, remoteDocument)
         
@@ -107,6 +107,7 @@ class YUndoManagerTests: XCTestCase {
         document.transactSync(origin: localOrigin) { txn in
             self.text.insert(" world", at: 5, in: txn)
         }
+        self.manager.wrap() // add next batch of changes on a stack
         remoteText.insert("<break>", at: 1)
         
         XCTAssertEqual(text.getString(), "hello world")
