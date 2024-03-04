@@ -97,7 +97,7 @@ class YUndoManagerTests: XCTestCase {
         
         // create some changes locally
         document.transactSync(origin: localOrigin) { txn in
-            self.text.insert("hello", at: 0)
+            self.text.insert("hello", at: 0, in: txn)
             self.manager.wrap() // add changes on a stack: they will be undone as one
         }
         
@@ -105,7 +105,7 @@ class YUndoManagerTests: XCTestCase {
         
         // concurrent change on the remote replica
         document.transactSync(origin: localOrigin) { txn in
-            self.text.insert(" world", at: 5)
+            self.text.insert(" world", at: 5, in: txn)
         }
         remoteText.insert("<break>", at: 1)
         
