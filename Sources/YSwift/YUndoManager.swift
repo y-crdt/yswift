@@ -3,6 +3,9 @@ import Foundation
 import Yniffi
 
 /// An undo manager to track and reverse changes on YSwift collections.
+///
+/// Set the one or more origins to track with ``addOrigin(_:)``.
+/// If no origins are set, the undo manager tracks changes from any origin.
 public final class YUndoManager<T: AnyObject> {
     private let _manager: YrsUndoManager
 
@@ -10,22 +13,20 @@ public final class YUndoManager<T: AnyObject> {
         _manager = manager
     }
 
-    /// Sets (adds?) the origin that the Undo manager tracks.
-    ///
-    /// All other origins will be unaffected by undo redo with this manager.
+    /// Adds an origin that the Undo manager tracks.
     /// - Parameter origin: The origin to track.
     public func addOrigin(_ origin: Origin) {
         _manager.addOrigin(origin: origin.origin)
     }
 
-    /// <#Description#>
-    /// - Parameter origin: <#origin description#>
+    /// Removes an origin that the Undo manager tracks.
+    /// - Parameter origin: The origin to remove from tracking.
     public func removeOrigin(_ origin: Origin) {
         _manager.removeOrigin(origin: origin.origin)
     }
 
-    /// <#Description#>
-    /// - Parameter collection: <#collection description#>
+    /// Adds another collection to track with the Undo manager
+    /// - Parameter collection: The collection to track.
     public func track(_ collection: YCollection) {
         _manager.addScope(trackedRef: collection.pointer())
     }
@@ -53,11 +54,11 @@ public final class YUndoManager<T: AnyObject> {
         _manager.wrapChanges()
     }
 
-    /// <#Description#>
+    /// Clears the stack of undo/redo actions.
     public func clear() throws {
         try _manager.clear()
     }
-
+    
     /// Creates a subscription that is called when the undo manager adds a change.
     /// - Parameter body: A closure that provides ``UndoEvent`` about the change.
     /// - Returns: A handle to the subscription.
@@ -68,14 +69,14 @@ public final class YUndoManager<T: AnyObject> {
         return _manager.observeAdded(delegate: delegate)
     }
 
-    /// Cancels a subscription to the undo manager
+    /// Cancels a subscription to the undo manager adding changes.
     /// - Parameter subscriptionId: The subscription Id to cancel.
     public func unobserveAdded(_ subscriptionId: UInt32) {
         return _manager.unobserveAdded(subscriptionId: subscriptionId)
     }
 
-    /// Creates a subscription that is called when the undo manager adds a change.
-    /// - Parameter body: A closure that provides an ``UndoEvent`` about the change.
+    /// Creates a subscription that is called when the undo manager updates a change.
+    /// - Parameter body: A closure that provides an ``UndoEvent`` about the changes that were updated..
     /// - Returns: A handle to the subscription.
     ///
     /// Call ``unobserveUpdated(_:)`` with the subscription Id this method returns to cancel the subscription.
@@ -84,15 +85,17 @@ public final class YUndoManager<T: AnyObject> {
         return _manager.observeUpdated(delegate: delegate)
     }
 
-    /// Cancels a subscription to the XXX
+    /// Cancels a subscription to the undo manager updating changes.
     /// - Parameter subscriptionId: The subscription to be cancalled.
     public func unobserveUpdated(_ subscriptionId: UInt32) {
         return _manager.unobserveUpdated(subscriptionId: subscriptionId)
     }
 
     /// Creates a subscription that is called when the undo manager replays a change.
-    /// - Parameter body: A closure that provides an ``UndoEvent`` about the change.
+    /// - Parameter body: A closure that provides an ``UndoEvent`` about the changes being replayed.
     /// - Returns: A handle to the subscription.
+    ///
+    /// Call ``unobserveUpdated(_:)`` with the subscription Id this method returns to cancel the subscription.
     public func observePopped(_ body: @escaping (UndoEvent, T?) -> T?) -> UInt32 {
         let delegate = YUndoManagerObservationDelegate(callback: body)
         return _manager.observePopped(delegate: delegate)
@@ -144,12 +147,14 @@ public struct UndoEvent {
     init(_ event: YrsUndoEvent) {
         self.event = event
     }
-
-    var type: YrsUndoEventKind {
+    
+    /// The type of undo event.
+    public var type: YrsUndoEventKind {
         return event.kind()
     }
-
-    var origin: Origin? {
+    
+    /// The origin of the set of changes.
+    public var origin: Origin? {
         let origin = event.origin()
         if let origin {
             return Origin(origin)
@@ -157,8 +162,11 @@ public struct UndoEvent {
             return nil
         }
     }
-
-    func hasChanged<T: YCollection>(_ sharedRef: T) -> Bool {
+    
+    /// <#Description#>
+    /// - Parameter sharedRef: <#sharedRef description#>
+    /// - Returns: <#description#>
+    public func hasChanged<T: YCollection>(_ sharedRef: T) -> Bool {
         return event.hasChanged(sharedRef: sharedRef.pointer())
     }
 }
