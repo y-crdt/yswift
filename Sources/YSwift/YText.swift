@@ -5,7 +5,7 @@ import Yniffi
 /// A type that provides a text-oriented shared data type.
 ///
 /// Create a new `YText` instance using ``YSwift/YDocument/getOrCreateText(named:)`` from a ``YDocument``.
-public final class YText: Transactable {
+public final class YText: Transactable, YCollection {
     private let _text: YrsText
     let document: YDocument
 
@@ -19,8 +19,12 @@ public final class YText: Transactable {
     ///   - text: The string to append.
     ///   - transaction: An optional transaction to use when appending the string.
     public func append(_ text: String, in transaction: YrsTransaction? = nil) {
-        withTransaction(transaction) { txn in
-            self._text.append(tx: txn, text: text)
+        if let transaction {
+            self._text.append(tx: transaction, text: text)
+        } else {
+            withTransaction(transaction) { txn in
+                self._text.append(tx: txn, text: text)
+            }
         }
     }
 
@@ -34,8 +38,12 @@ public final class YText: Transactable {
         at index: UInt32,
         in transaction: YrsTransaction? = nil
     ) {
-        withTransaction(transaction) { txn in
-            self._text.insert(tx: txn, index: index, chunk: text)
+        if let transaction {
+            self._text.insert(tx: transaction, index: index, chunk: text)
+        } else {
+            withTransaction(transaction) { txn in
+                self._text.insert(tx: txn, index: index, chunk: text)
+            }
         }
     }
 
@@ -51,8 +59,12 @@ public final class YText: Transactable {
         at index: UInt32,
         in transaction: YrsTransaction? = nil
     ) {
-        withTransaction(transaction) { txn in
-            self._text.insertWithAttributes(tx: txn, index: index, chunk: text, attrs: Coder.encoded(attributes))
+        if let transaction {
+            self._text.insertWithAttributes(tx: transaction, index: index, chunk: text, attrs: Coder.encoded(attributes))
+        } else {
+            withTransaction(transaction) { txn in
+                self._text.insertWithAttributes(tx: txn, index: index, chunk: text, attrs: Coder.encoded(attributes))
+            }
         }
     }
 
@@ -66,8 +78,12 @@ public final class YText: Transactable {
         at index: UInt32,
         in transaction: YrsTransaction? = nil
     ) {
-        withTransaction(transaction) { txn in
-            self._text.insertEmbed(tx: txn, index: index, content: Coder.encoded(embed))
+        if let transaction {
+            self._text.insertEmbed(tx: transaction, index: index, content: Coder.encoded(embed))
+        } else {
+            withTransaction(transaction) { txn in
+                self._text.insertEmbed(tx: txn, index: index, content: Coder.encoded(embed))
+            }
         }
     }
 
@@ -83,8 +99,12 @@ public final class YText: Transactable {
         at index: UInt32,
         in transaction: YrsTransaction? = nil
     ) {
-        withTransaction(transaction) { txn in
-            self._text.insertEmbedWithAttributes(tx: txn, index: index, content: Coder.encoded(embed), attrs: Coder.encoded(attributes))
+        if let transaction {
+            self._text.insertEmbedWithAttributes(tx: transaction, index: index, content: Coder.encoded(embed), attrs: Coder.encoded(attributes))
+        } else {
+            withTransaction(transaction) { txn in
+                self._text.insertEmbedWithAttributes(tx: txn, index: index, content: Coder.encoded(embed), attrs: Coder.encoded(attributes))
+            }
         }
     }
 
@@ -100,8 +120,12 @@ public final class YText: Transactable {
         attributes: [String: Any],
         in transaction: YrsTransaction? = nil
     ) {
-        withTransaction(transaction) { txn in
-            self._text.format(tx: txn, index: index, length: length, attrs: Coder.encoded(attributes))
+        if let transaction {
+            self._text.format(tx: transaction, index: index, length: length, attrs: Coder.encoded(attributes))
+        } else {
+            withTransaction(transaction) { txn in
+                self._text.format(tx: txn, index: index, length: length, attrs: Coder.encoded(attributes))
+            }
         }
     }
 
@@ -115,24 +139,36 @@ public final class YText: Transactable {
         length: UInt32,
         in transaction: YrsTransaction? = nil
     ) {
-        withTransaction(transaction) { txn in
-            self._text.removeRange(tx: txn, start: start, length: length)
+        if let transaction {
+            self._text.removeRange(tx: transaction, start: start, length: length)
+        } else {
+            withTransaction(transaction) { txn in
+                self._text.removeRange(tx: txn, start: start, length: length)
+            }
         }
     }
 
     /// Returns the string within the text.
     /// - Parameter transaction: An optional transaction to use when appending the string.
     public func getString(in transaction: YrsTransaction? = nil) -> String {
-        withTransaction(transaction) { txn in
-            self._text.getString(tx: txn)
+        if let transaction {
+            self._text.getString(tx: transaction)
+        } else {
+            withTransaction(transaction) { txn in
+                self._text.getString(tx: txn)
+            }
         }
     }
 
     /// Returns the length of the string.
     /// - Parameter transaction: An optional transaction to use when appending the string.
     public func length(in transaction: YrsTransaction? = nil) -> UInt32 {
-        withTransaction(transaction) { txn in
-            self._text.length(tx: txn)
+        if let transaction {
+            self._text.length(tx: transaction)
+        } else {
+            withTransaction(transaction) { txn in
+                self._text.length(tx: txn)
+            }
         }
     }
 
@@ -162,6 +198,10 @@ public final class YText: Transactable {
     /// - Parameter subscriptionId: The observer identifier to unregister.
     public func unobserve(_ subscriptionId: UInt32) {
         _text.unobserve(subscriptionId: subscriptionId)
+    }
+    
+    public func pointer() -> YrsCollectionPtr {
+        return _text.rawPtr()
     }
 }
 

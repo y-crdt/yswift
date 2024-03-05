@@ -24,7 +24,7 @@ extension Transactable {
         if let transaction = transaction {
             return changes(transaction)
         } else {
-            return document.transactSync(changes)
+            return document.transactSync(origin: .none, changes)
         }
     }
 }

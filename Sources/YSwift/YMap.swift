@@ -7,7 +7,7 @@ import Yniffi
 /// Store, order, and retrieve any single `Codable` type within a `YMap` keyed with a `String`.
 ///
 /// Create a new `YMap` instance using ``YSwift/YDocument/getOrCreateMap(named:)`` from a ``YDocument``.
-public final class YMap<T: Codable>: Transactable {
+public final class YMap<T: Codable>: Transactable, YCollection {
     private let _map: YrsMap
     let document: YDocument
 
@@ -182,6 +182,10 @@ public final class YMap<T: Codable>: Transactable {
             replicatedMap[key] = value
         }
         return replicatedMap
+    }
+    
+    public func pointer() -> YrsCollectionPtr {
+        return _map.rawPtr()
     }
 }
 

@@ -8,7 +8,10 @@ mod map;
 mod mapchange;
 mod text;
 mod transaction;
+mod undo;
 
+use crate::doc::YrsCollectionPtr;
+use crate::doc::YrsOrigin;
 use crate::array::YrsArray;
 use crate::array::YrsArrayEachDelegate;
 use crate::array::YrsArrayObservationDelegate;
@@ -25,5 +28,10 @@ use crate::mapchange::YrsMapChange;
 use crate::text::YrsText;
 use crate::text::YrsTextObservationDelegate;
 use crate::transaction::YrsTransaction;
+use crate::undo::YrsUndoManager;
+use crate::undo::YrsUndoError;
+use crate::undo::YrsUndoManagerObservationDelegate;
+use crate::undo::YrsUndoEvent;
+use crate::undo::YrsUndoEventKind;
 
 uniffi::include_scaffolding!("yniffi");

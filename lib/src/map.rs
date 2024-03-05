@@ -3,8 +3,9 @@ use crate::mapchange::{YrsEntryChange, YrsMapChange};
 use crate::transaction::YrsTransaction;
 use std::cell::RefCell;
 use std::fmt::Debug;
-use yrs::types::Observable;
+use yrs::types::{Branch, Observable};
 use yrs::{types::Value, Any, Map, MapRef};
+use crate::doc::YrsCollectionPtr;
 
 pub(crate) struct YrsMap(RefCell<MapRef>);
 
@@ -12,6 +13,14 @@ pub(crate) struct YrsMap(RefCell<MapRef>);
 unsafe impl Send for YrsMap {}
 // Marks that this type is safe to share references between threads.
 unsafe impl Sync for YrsMap {}
+
+impl AsRef<Branch> for YrsMap {
+    fn as_ref(&self) -> &Branch {
+        //FIXME: after yrs v0.18 use logical references
+        let branch = &*self.0.borrow();
+        unsafe { std::mem::transmute(branch.as_ref()) }
+    }
+}
 
 // Provides the implementation for the From trait, supporting
 // converting from a MapRef type into a YrsMap type.
@@ -55,6 +64,11 @@ IMPL order:
  */
 
 impl YrsMap {
+    pub(crate) fn raw_ptr(&self) -> YrsCollectionPtr {
+        let borrowed = self.0.borrow();
+        YrsCollectionPtr::from(borrowed.as_ref())
+    }
+
     /// Inserts the key and value you provide into the map.
     pub(crate) fn insert(&self, transaction: &YrsTransaction, key: String, value: String) {
         // decodes the `value` as JSON and converts it into a lib0::Any enumeration
@@ -288,7 +302,7 @@ mod tests {
         let doc = YrsDoc::new();
         let map = doc.get_map("example_map".to_string());
 
-        let txn = doc.transact();
+        let txn = doc.transact(None);
         assert_eq!(map.length(&txn), 0);
     }
 
@@ -300,7 +314,7 @@ mod tests {
         let key_to_insert = "AB123".to_string();
         let value_to_insert = "\"Hello\"".to_string();
 
-        let txn = doc.transact();
+        let txn = doc.transact(None);
 
         assert_eq!(map.contains_key(&txn, key_to_insert.clone()), false);
 
@@ -318,7 +332,7 @@ mod tests {
         let key_to_insert = "AB123".to_string();
         let value_to_insert = "\"Hello\"".to_string();
 
-        let txn = doc.transact();
+        let txn = doc.transact(None);
 
         assert_eq!(map.contains_key(&txn, key_to_insert.clone()), false);
 
@@ -337,7 +351,7 @@ mod tests {
         let key_to_insert = "AB123".to_string();
         let value_to_insert = "\"Hello\"".to_string();
 
-        let txn = doc.transact();
+        let txn = doc.transact(None);
 
         assert_eq!(map.contains_key(&txn, key_to_insert.clone()), false);
 
@@ -357,7 +371,7 @@ mod tests {
         let key_to_insert = "AB123".to_string();
         let value_to_insert = "\"Hello\"".to_string();
 
-        let txn = doc.transact();
+        let txn = doc.transact(None);
 
         map.insert(&txn, key_to_insert.clone(), value_to_insert.clone());
         assert_eq!(map.length(&txn), 1);

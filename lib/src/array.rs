@@ -3,11 +3,21 @@ use crate::{change::YrsChange, error::CodingError};
 use std::cell::RefCell;
 use std::fmt::Debug;
 use yrs::{types::Value, Any, Array, ArrayRef, Observable};
+use yrs::types::Branch;
+use crate::doc::YrsCollectionPtr;
 
 pub(crate) struct YrsArray(RefCell<ArrayRef>);
 
 unsafe impl Send for YrsArray {}
 unsafe impl Sync for YrsArray {}
+
+impl AsRef<Branch> for YrsArray {
+    fn as_ref(&self) -> &Branch {
+        //FIXME: after yrs v0.18 use logical references
+        let branch = &*self.0.borrow();
+        unsafe { std::mem::transmute(branch.as_ref()) }
+    }
+}
 
 impl From<ArrayRef> for YrsArray {
     fn from(value: ArrayRef) -> Self {
@@ -56,6 +66,10 @@ impl YrsArray {
     //         inner: RefCell::new(arr.iter(txn)),
     //     })
     // }
+    pub(crate) fn raw_ptr(&self) -> YrsCollectionPtr {
+        let borrowed = self.0.borrow();
+        YrsCollectionPtr::from(borrowed.as_ref())
+    }
 
     pub(crate) fn each(
         &self,

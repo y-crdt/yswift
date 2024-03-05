@@ -5,11 +5,21 @@ use yrs::Any;
 use std::cell::RefCell;
 use std::fmt::Debug;
 use yrs::{GetString, Observable, Text, TextRef};
+use yrs::types::Branch;
+use crate::doc::YrsCollectionPtr;
 
 pub(crate) struct YrsText(RefCell<TextRef>);
 
 unsafe impl Send for YrsText {}
 unsafe impl Sync for YrsText {}
+
+impl AsRef<Branch> for YrsText {
+    fn as_ref(&self) -> &Branch {
+        //FIXME: after yrs v0.18 use logical references
+        let branch = &*self.0.borrow();
+        unsafe { std::mem::transmute(branch.as_ref()) }
+    }
+}
 
 impl From<TextRef> for YrsText {
     fn from(value: TextRef) -> Self {
@@ -22,6 +32,10 @@ pub(crate) trait YrsTextObservationDelegate: Send + Sync + Debug {
 }
 
 impl YrsText {
+    pub(crate) fn raw_ptr(&self) -> YrsCollectionPtr {
+        let borrowed = self.0.borrow();
+        YrsCollectionPtr::from(borrowed.as_ref())
+    }
     pub(crate) fn format(
         &self,
         transaction: &YrsTransaction,

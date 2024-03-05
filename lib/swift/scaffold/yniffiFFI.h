@@ -71,6 +71,8 @@ void uniffi_uniffi_yniffi_fn_method_yrsarray_push_back(void*_Nonnull ptr, void*_
 );
 void uniffi_uniffi_yniffi_fn_method_yrsarray_push_front(void*_Nonnull ptr, void*_Nonnull tx, RustBuffer value, RustCallStatus *_Nonnull out_status
 );
+uint64_t uniffi_uniffi_yniffi_fn_method_yrsarray_raw_ptr(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
+);
 void uniffi_uniffi_yniffi_fn_method_yrsarray_remove(void*_Nonnull ptr, void*_Nonnull tx, uint32_t index, RustCallStatus *_Nonnull out_status
 );
 void uniffi_uniffi_yniffi_fn_method_yrsarray_remove_range(void*_Nonnull ptr, void*_Nonnull tx, uint32_t index, uint32_t len, RustCallStatus *_Nonnull out_status
@@ -94,7 +96,9 @@ void*_Nonnull uniffi_uniffi_yniffi_fn_method_yrsdoc_get_map(void*_Nonnull ptr, R
 );
 void*_Nonnull uniffi_uniffi_yniffi_fn_method_yrsdoc_get_text(void*_Nonnull ptr, RustBuffer name, RustCallStatus *_Nonnull out_status
 );
-void*_Nonnull uniffi_uniffi_yniffi_fn_method_yrsdoc_transact(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
+void*_Nonnull uniffi_uniffi_yniffi_fn_method_yrsdoc_transact(void*_Nonnull ptr, RustBuffer origin, RustCallStatus *_Nonnull out_status
+);
+void*_Nonnull uniffi_uniffi_yniffi_fn_method_yrsdoc_undo_manager(void*_Nonnull ptr, RustBuffer tracked_refs, RustCallStatus *_Nonnull out_status
 );
 void*_Nonnull uniffi_uniffi_yniffi_fn_clone_yrsmap(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
 );
@@ -115,6 +119,8 @@ void uniffi_uniffi_yniffi_fn_method_yrsmap_keys(void*_Nonnull ptr, void*_Nonnull
 uint32_t uniffi_uniffi_yniffi_fn_method_yrsmap_length(void*_Nonnull ptr, void*_Nonnull tx, RustCallStatus *_Nonnull out_status
 );
 uint32_t uniffi_uniffi_yniffi_fn_method_yrsmap_observe(void*_Nonnull ptr, uint64_t delegate, RustCallStatus *_Nonnull out_status
+);
+uint64_t uniffi_uniffi_yniffi_fn_method_yrsmap_raw_ptr(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
 );
 RustBuffer uniffi_uniffi_yniffi_fn_method_yrsmap_remove(void*_Nonnull ptr, void*_Nonnull tx, RustBuffer key, RustCallStatus *_Nonnull out_status
 );
@@ -144,6 +150,8 @@ uint32_t uniffi_uniffi_yniffi_fn_method_yrstext_length(void*_Nonnull ptr, void*_
 );
 uint32_t uniffi_uniffi_yniffi_fn_method_yrstext_observe(void*_Nonnull ptr, uint64_t delegate, RustCallStatus *_Nonnull out_status
 );
+uint64_t uniffi_uniffi_yniffi_fn_method_yrstext_raw_ptr(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
+);
 void uniffi_uniffi_yniffi_fn_method_yrstext_remove_range(void*_Nonnull ptr, void*_Nonnull tx, uint32_t start, uint32_t length, RustCallStatus *_Nonnull out_status
 );
 void uniffi_uniffi_yniffi_fn_method_yrstext_unobserve(void*_Nonnull ptr, uint32_t subscription_id, RustCallStatus *_Nonnull out_status
@@ -153,6 +161,8 @@ void*_Nonnull uniffi_uniffi_yniffi_fn_clone_yrstransaction(void*_Nonnull ptr, Ru
 void uniffi_uniffi_yniffi_fn_free_yrstransaction(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
 );
 void uniffi_uniffi_yniffi_fn_method_yrstransaction_free(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
+);
+RustBuffer uniffi_uniffi_yniffi_fn_method_yrstransaction_origin(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
 );
 void uniffi_uniffi_yniffi_fn_method_yrstransaction_transaction_apply_update(void*_Nonnull ptr, RustBuffer update, RustCallStatus *_Nonnull out_status
 );
@@ -170,6 +180,46 @@ RustBuffer uniffi_uniffi_yniffi_fn_method_yrstransaction_transaction_get_text(vo
 );
 RustBuffer uniffi_uniffi_yniffi_fn_method_yrstransaction_transaction_state_vector(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
 );
+void*_Nonnull uniffi_uniffi_yniffi_fn_clone_yrsundoevent(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
+);
+void uniffi_uniffi_yniffi_fn_free_yrsundoevent(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
+);
+int8_t uniffi_uniffi_yniffi_fn_method_yrsundoevent_has_changed(void*_Nonnull ptr, uint64_t shared_ref, RustCallStatus *_Nonnull out_status
+);
+RustBuffer uniffi_uniffi_yniffi_fn_method_yrsundoevent_kind(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
+);
+RustBuffer uniffi_uniffi_yniffi_fn_method_yrsundoevent_origin(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
+);
+void*_Nonnull uniffi_uniffi_yniffi_fn_clone_yrsundomanager(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
+);
+void uniffi_uniffi_yniffi_fn_free_yrsundomanager(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
+);
+void uniffi_uniffi_yniffi_fn_method_yrsundomanager_add_origin(void*_Nonnull ptr, RustBuffer origin, RustCallStatus *_Nonnull out_status
+);
+void uniffi_uniffi_yniffi_fn_method_yrsundomanager_add_scope(void*_Nonnull ptr, uint64_t tracked_ref, RustCallStatus *_Nonnull out_status
+);
+void uniffi_uniffi_yniffi_fn_method_yrsundomanager_clear(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
+);
+uint32_t uniffi_uniffi_yniffi_fn_method_yrsundomanager_observe_added(void*_Nonnull ptr, uint64_t delegate, RustCallStatus *_Nonnull out_status
+);
+uint32_t uniffi_uniffi_yniffi_fn_method_yrsundomanager_observe_popped(void*_Nonnull ptr, uint64_t delegate, RustCallStatus *_Nonnull out_status
+);
+uint32_t uniffi_uniffi_yniffi_fn_method_yrsundomanager_observe_updated(void*_Nonnull ptr, uint64_t delegate, RustCallStatus *_Nonnull out_status
+);
+int8_t uniffi_uniffi_yniffi_fn_method_yrsundomanager_redo(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
+);
+void uniffi_uniffi_yniffi_fn_method_yrsundomanager_remove_origin(void*_Nonnull ptr, RustBuffer origin, RustCallStatus *_Nonnull out_status
+);
+int8_t uniffi_uniffi_yniffi_fn_method_yrsundomanager_undo(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
+);
+void uniffi_uniffi_yniffi_fn_method_yrsundomanager_unobserve_added(void*_Nonnull ptr, uint32_t subscription_id, RustCallStatus *_Nonnull out_status
+);
+void uniffi_uniffi_yniffi_fn_method_yrsundomanager_unobserve_popped(void*_Nonnull ptr, uint32_t subscription_id, RustCallStatus *_Nonnull out_status
+);
+void uniffi_uniffi_yniffi_fn_method_yrsundomanager_unobserve_updated(void*_Nonnull ptr, uint32_t subscription_id, RustCallStatus *_Nonnull out_status
+);
+void uniffi_uniffi_yniffi_fn_method_yrsundomanager_wrap_changes(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
+);
 void uniffi_uniffi_yniffi_fn_init_callback_yrsarrayeachdelegate(ForeignCallback _Nonnull handle
 );
 void uniffi_uniffi_yniffi_fn_init_callback_yrsarrayobservationdelegate(ForeignCallback _Nonnull handle
@@ -181,6 +231,8 @@ void uniffi_uniffi_yniffi_fn_init_callback_yrsmapkviteratordelegate(ForeignCallb
 void uniffi_uniffi_yniffi_fn_init_callback_yrsmapobservationdelegate(ForeignCallback _Nonnull handle
 );
 void uniffi_uniffi_yniffi_fn_init_callback_yrstextobservationdelegate(ForeignCallback _Nonnull handle
+);
+void uniffi_uniffi_yniffi_fn_init_callback_yrsundomanagerobservationdelegate(ForeignCallback _Nonnull handle
 );
 RustBuffer ffi_uniffi_yniffi_rustbuffer_alloc(int32_t size, RustCallStatus *_Nonnull out_status
 );
@@ -318,6 +370,9 @@ uint16_t uniffi_uniffi_yniffi_checksum_method_yrsarray_push_back(void
 uint16_t uniffi_uniffi_yniffi_checksum_method_yrsarray_push_front(void
     
 );
+uint16_t uniffi_uniffi_yniffi_checksum_method_yrsarray_raw_ptr(void
+    
+);
 uint16_t uniffi_uniffi_yniffi_checksum_method_yrsarray_remove(void
     
 );
@@ -345,6 +400,9 @@ uint16_t uniffi_uniffi_yniffi_checksum_method_yrsdoc_get_text(void
 uint16_t uniffi_uniffi_yniffi_checksum_method_yrsdoc_transact(void
     
 );
+uint16_t uniffi_uniffi_yniffi_checksum_method_yrsdoc_undo_manager(void
+    
+);
 uint16_t uniffi_uniffi_yniffi_checksum_method_yrsmap_clear(void
     
 );
@@ -367,6 +425,9 @@ uint16_t uniffi_uniffi_yniffi_checksum_method_yrsmap_length(void
     
 );
 uint16_t uniffi_uniffi_yniffi_checksum_method_yrsmap_observe(void
+    
+);
+uint16_t uniffi_uniffi_yniffi_checksum_method_yrsmap_raw_ptr(void
     
 );
 uint16_t uniffi_uniffi_yniffi_checksum_method_yrsmap_remove(void
@@ -405,6 +466,9 @@ uint16_t uniffi_uniffi_yniffi_checksum_method_yrstext_length(void
 uint16_t uniffi_uniffi_yniffi_checksum_method_yrstext_observe(void
     
 );
+uint16_t uniffi_uniffi_yniffi_checksum_method_yrstext_raw_ptr(void
+    
+);
 uint16_t uniffi_uniffi_yniffi_checksum_method_yrstext_remove_range(void
     
 );
@@ -412,6 +476,9 @@ uint16_t uniffi_uniffi_yniffi_checksum_method_yrstext_unobserve(void
     
 );
 uint16_t uniffi_uniffi_yniffi_checksum_method_yrstransaction_free(void
+    
+);
+uint16_t uniffi_uniffi_yniffi_checksum_method_yrstransaction_origin(void
     
 );
 uint16_t uniffi_uniffi_yniffi_checksum_method_yrstransaction_transaction_apply_update(void
@@ -438,6 +505,54 @@ uint16_t uniffi_uniffi_yniffi_checksum_method_yrstransaction_transaction_get_tex
 uint16_t uniffi_uniffi_yniffi_checksum_method_yrstransaction_transaction_state_vector(void
     
 );
+uint16_t uniffi_uniffi_yniffi_checksum_method_yrsundoevent_has_changed(void
+    
+);
+uint16_t uniffi_uniffi_yniffi_checksum_method_yrsundoevent_kind(void
+    
+);
+uint16_t uniffi_uniffi_yniffi_checksum_method_yrsundoevent_origin(void
+    
+);
+uint16_t uniffi_uniffi_yniffi_checksum_method_yrsundomanager_add_origin(void
+    
+);
+uint16_t uniffi_uniffi_yniffi_checksum_method_yrsundomanager_add_scope(void
+    
+);
+uint16_t uniffi_uniffi_yniffi_checksum_method_yrsundomanager_clear(void
+    
+);
+uint16_t uniffi_uniffi_yniffi_checksum_method_yrsundomanager_observe_added(void
+    
+);
+uint16_t uniffi_uniffi_yniffi_checksum_method_yrsundomanager_observe_popped(void
+    
+);
+uint16_t uniffi_uniffi_yniffi_checksum_method_yrsundomanager_observe_updated(void
+    
+);
+uint16_t uniffi_uniffi_yniffi_checksum_method_yrsundomanager_redo(void
+    
+);
+uint16_t uniffi_uniffi_yniffi_checksum_method_yrsundomanager_remove_origin(void
+    
+);
+uint16_t uniffi_uniffi_yniffi_checksum_method_yrsundomanager_undo(void
+    
+);
+uint16_t uniffi_uniffi_yniffi_checksum_method_yrsundomanager_unobserve_added(void
+    
+);
+uint16_t uniffi_uniffi_yniffi_checksum_method_yrsundomanager_unobserve_popped(void
+    
+);
+uint16_t uniffi_uniffi_yniffi_checksum_method_yrsundomanager_unobserve_updated(void
+    
+);
+uint16_t uniffi_uniffi_yniffi_checksum_method_yrsundomanager_wrap_changes(void
+    
+);
 uint16_t uniffi_uniffi_yniffi_checksum_constructor_yrsdoc_new(void
     
 );
@@ -457,6 +572,9 @@ uint16_t uniffi_uniffi_yniffi_checksum_method_yrsmapobservationdelegate_call(voi
     
 );
 uint16_t uniffi_uniffi_yniffi_checksum_method_yrstextobservationdelegate_call(void
+    
+);
+uint16_t uniffi_uniffi_yniffi_checksum_method_yrsundomanagerobservationdelegate_call(void
     
 );
 uint32_t ffi_uniffi_yniffi_uniffi_contract_version(void

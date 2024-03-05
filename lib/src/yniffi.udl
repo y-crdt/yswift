@@ -15,7 +15,8 @@ interface YrsDoc {
   YrsText get_text(string name);
   YrsArray get_array(string name);
   YrsMap get_map(string name);
-  YrsTransaction transact();
+  YrsTransaction transact(YrsOrigin? origin);
+  YrsUndoManager undo_manager(sequence<YrsCollectionPtr> tracked_refs);
 };
 
 interface YrsTransaction {
@@ -31,10 +32,18 @@ interface YrsTransaction {
   YrsText? transaction_get_text(string name);
   YrsArray? transaction_get_array(string name);
   YrsMap? transaction_get_map(string name);
+  YrsOrigin? origin();
   void free();
 };
 
+[Custom]
+typedef sequence<u8> YrsOrigin;
+
+[Custom]
+typedef u64 YrsCollectionPtr;
+
 interface YrsMap {
+  YrsCollectionPtr raw_ptr();
   u32 length([ByRef] YrsTransaction tx);
   boolean contains_key([ByRef] YrsTransaction tx, string key);
   void insert([ByRef] YrsTransaction tx, string key, string value);
@@ -78,6 +87,7 @@ callback interface YrsMapObservationDelegate {
 };
 
 interface YrsArray {
+  YrsCollectionPtr raw_ptr();
   void each([ByRef] YrsTransaction tx, YrsArrayEachDelegate delegate);
 
   [Throws=CodingError]
@@ -110,6 +120,7 @@ interface YrsChange {
 };
 
 interface YrsText {
+  YrsCollectionPtr raw_ptr();
   void format([ByRef] YrsTransaction tx, u32 index, u32 length, string attrs);
   void append([ByRef] YrsTransaction tx, string text);
   void insert([ByRef] YrsTransaction tx, u32 index, string chunk);
@@ -132,4 +143,70 @@ interface YrsDelta {
   Inserted(string value, string attrs);
   Deleted(u32 index);
   Retained(u32 index, string attrs);
+};
+
+/// A manager type able to track changes occurring in a context of a given document.
+/// These changes can be reverted using `undo` method call, or re-applied via `redo`.
+interface YrsUndoManager {
+    /// Adds a specific origin identifier to a list of tracked origins. If tracked
+    /// origin list is not empty, current undo manager will only track changes applied
+    /// over transactions created with a specific origin.
+    void add_origin(YrsOrigin origin);
+
+    /// Removes an existing origin identifier from a list of tracked origins. If tracked
+    /// origin list is not empty, current undo manager will only track changes applied
+    /// over transactions created with a specific origin.
+    void remove_origin(YrsOrigin origin);
+
+    /// Adds a new shared collection to a list of entities observed by current undo manager.
+    void add_scope(YrsCollectionPtr tracked_ref);
+
+    /// Undoes the last operation, pushing it onto redo stack, returning false if undo
+    /// stack was empty an method had no effect.
+    /// Fails to execute if there's another transaction in progress.
+    [Throws=YrsUndoError]
+    boolean undo();
+
+    /// Redoes the last operation from undo stack, returning false if redo stack was
+    /// empty an method had no effect.
+    /// Fails to execute if there's another transaction in progress.
+    [Throws=YrsUndoError]
+    boolean redo();
+
+    /// Wraps a set of recent changes together into a single undo operation. These
+    /// changes will be be undone together on the next `undo` method call.
+    void wrap_changes();
+
+    /// Clears the undo/redo stacks of a current undo manager.
+    [Throws=YrsUndoError]
+    void clear();
+
+    u32 observe_added(YrsUndoManagerObservationDelegate delegate);
+    void unobserve_added(u32 subscription_id);
+
+    u32 observe_updated(YrsUndoManagerObservationDelegate delegate);
+    void unobserve_updated(u32 subscription_id);
+
+    u32 observe_popped(YrsUndoManagerObservationDelegate delegate);
+    void unobserve_popped(u32 subscription_id);
+};
+
+[Error]
+enum YrsUndoError {
+  "PendingTransaction"
+};
+
+callback interface YrsUndoManagerObservationDelegate {
+    u64 call(YrsUndoEvent e, u64 ptr);
+};
+
+interface YrsUndoEvent {
+    YrsOrigin? origin();
+    YrsUndoEventKind kind();
+    boolean has_changed(YrsCollectionPtr shared_ref);
+};
+
+enum YrsUndoEventKind {
+    "Undo",
+    "Redo",
 };
