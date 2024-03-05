@@ -93,9 +93,12 @@ public final class YDocument {
     public func getOrCreateMap<T: Codable>(named: String) -> YMap<T> {
         YMap(map: document.getMap(name: named), document: self)
     }
-    
+
+    /// Creates an Undo Manager for a document with the collections that is tracks.
+    /// - Parameter trackedRefs: The collections to track to undo and redo changes.
+    /// - Returns: A reference to the undo manager to control those actions.
     public func undoManager<T: AnyObject>(trackedRefs: [YCollection]) -> YUndoManager<T> {
-        let mapped = trackedRefs.map({$0.pointer()})
-        return YUndoManager(manager: self.document.undoManager(trackedRefs: mapped))
+        let mapped = trackedRefs.map { $0.pointer() }
+        return YUndoManager(manager: document.undoManager(trackedRefs: mapped))
     }
 }
