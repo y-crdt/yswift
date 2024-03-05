@@ -5,7 +5,7 @@ A type that wraps all Y-CRDT shared data types, and provides transactional inter
 ## Overview
 
 A `YDocument` tracks and coordinates updates to Y-CRDT shared data types, such as ``YSwift/YText``, ``YSwift/YArray``, and ``YSwift/YMap``.
-Make any changes to shared data types within a document within a transaction, such as ``YSwift/YDocument/transactSync(_:)``.
+Make any changes to shared data types within a document within a transaction, such as ``YSwift/YDocument/transactSync(origin:_:)``.
 
 Interact with other copies of the shared data types by synchronizing documents.
 
@@ -48,11 +48,14 @@ For a more detailed example of synchronizing a document, see <doc:SynchronizingD
 
 ### Creating Transactions
 
-- ``YSwift/YDocument/transactSync(_:)``
-- ``YSwift/YDocument/transact(_:)``
-- ``YSwift/YDocument/transactAsync(_:completion:)``
+- ``YSwift/YDocument/transactSync(origin:_:)``
+- ``YSwift/YDocument/transact(origin:_:)``
+- ``YSwift/YDocument/transactAsync(_:_:completion:)``
 
 ### Comparing Documents for Synchronization
 
 - ``YSwift/YDocument/diff(txn:from:)``
 
+### Undo and Redo
+
+- ``YSwift/YDocument/undoManager(trackedRefs:)``

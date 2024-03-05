@@ -29,7 +29,7 @@ let remoteText = remoteDocument.getOrCreateText(named: "example")
 ### Display the Initial State
 
 To read, or update, values from within a ``YDocument``, do so from within a transaction.
-The following sample uses ``YText/getString(in:)`` from within the closure passed through ``YDocument/transactSync(_:)`` to directly access the values:
+The following sample uses ``YText/getString(in:)`` from within the closure passed through ``YDocument/transactSync(origin:_:)`` to directly access the values:
 
 ```swift
 localDocument.transactSync { txn in

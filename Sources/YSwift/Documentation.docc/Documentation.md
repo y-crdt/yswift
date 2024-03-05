@@ -38,3 +38,10 @@ YSwift is a Swift language overlay of the Rust library [Yrs](https://docs.rs/yrs
 
 - ``YSwift/YProtocol``
 - ``YSwift/YSyncMessage``
+
+### Undo Manager
+
+- ``YSwift/YUndoManager``
+- ``YSwift/Origin``
+- ``YSwift/UndoEvent``
+- ``YSwift/YCollection``
