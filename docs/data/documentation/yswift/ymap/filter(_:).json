@@ -57,6 +57,7 @@
       },
       {
         "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:ST7ElementQa",
         "text" : "Element"
       },
       {
@@ -98,6 +99,7 @@
       },
       {
         "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:ST7ElementQa",
         "text" : "Element"
       },
       {
@@ -107,7 +109,10 @@
     ],
     "modules" : [
       {
-        "name" : "YSwift"
+        "name" : "YSwift",
+        "relatedModules" : [
+          "Swift"
+        ]
       }
     ],
     "role" : "symbol",
@@ -168,6 +173,7 @@
             },
             {
               "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:ST7ElementQa",
               "text" : "Element"
             },
             {
@@ -209,6 +215,7 @@
             },
             {
               "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:ST7ElementQa",
               "text" : "Element"
             },
             {
@@ -333,6 +340,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:ST7ElementQa",
       "text" : "Element"
     },
     {
@@ -374,6 +382,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:ST7ElementQa",
       "text" : "Element"
     },
     {

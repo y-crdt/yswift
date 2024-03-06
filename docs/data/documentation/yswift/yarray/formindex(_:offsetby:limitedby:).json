@@ -65,6 +65,7 @@
       },
       {
         "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:Sl5IndexQa",
         "text" : "Index"
       },
       {
@@ -106,6 +107,7 @@
       },
       {
         "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:Sl5IndexQa",
         "text" : "Index"
       },
       {
@@ -120,7 +122,10 @@
     ],
     "modules" : [
       {
-        "name" : "YSwift"
+        "name" : "YSwift",
+        "relatedModules" : [
+          "Swift"
+        ]
       }
     ],
     "role" : "symbol",
@@ -189,6 +194,7 @@
             },
             {
               "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:Sl5IndexQa",
               "text" : "Index"
             },
             {
@@ -246,6 +252,7 @@
             },
             {
               "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:Sl5IndexQa",
               "text" : "Index"
             },
             {
@@ -383,6 +390,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sl5IndexQa",
       "text" : "Index"
     },
     {
@@ -424,6 +432,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sl5IndexQa",
       "text" : "Index"
     },
     {

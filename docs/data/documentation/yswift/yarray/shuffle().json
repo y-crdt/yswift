@@ -82,7 +82,10 @@
     ],
     "modules" : [
       {
-        "name" : "YSwift"
+        "name" : "YSwift",
+        "relatedModules" : [
+          "Swift"
+        ]
       }
     ],
     "role" : "symbol",

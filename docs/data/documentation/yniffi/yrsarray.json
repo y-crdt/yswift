@@ -101,9 +101,11 @@
         "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsArray\/observe(delegate:)",
         "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsArray\/pushBack(tx:value:)",
         "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsArray\/pushFront(tx:value:)",
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsArray\/rawPtr()",
         "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsArray\/remove(tx:index:)",
         "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsArray\/removeRange(tx:index:len:)",
         "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsArray\/toA(tx:)",
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsArray\/uniffiClonePointer()",
         "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsArray\/unobserve(subscriptionId:)"
       ],
       "title" : "Instance Methods"
@@ -692,6 +694,40 @@
   "type" : "topic",
   "url" : "\/documentation\/yniffi\/yrsarray\/pushfront(tx:value:)"
 },
+"doc://com.github.y-crdt.YSwift/documentation/Yniffi/YrsArray/rawPtr()": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "rawPtr"
+    },
+    {
+      "kind" : "text",
+      "text" : "() -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:6Yniffi16YrsCollectionPtra",
+      "text" : "YrsCollectionPtr"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsArray\/rawPtr()",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "rawPtr()",
+  "type" : "topic",
+  "url" : "\/documentation\/yniffi\/yrsarray\/rawptr()"
+},
 "doc://com.github.y-crdt.YSwift/documentation/Yniffi/YrsArray/remove(tx:index:)": {
   "abstract" : [
 
@@ -889,6 +925,40 @@
   "title" : "toA(tx:)",
   "type" : "topic",
   "url" : "\/documentation\/yniffi\/yrsarray\/toa(tx:)"
+},
+"doc://com.github.y-crdt.YSwift/documentation/Yniffi/YrsArray/uniffiClonePointer()": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "uniffiClonePointer"
+    },
+    {
+      "kind" : "text",
+      "text" : "() -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sv",
+      "text" : "UnsafeMutableRawPointer"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsArray\/uniffiClonePointer()",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "uniffiClonePointer()",
+  "type" : "topic",
+  "url" : "\/documentation\/yniffi\/yrsarray\/unifficlonepointer()"
 },
 "doc://com.github.y-crdt.YSwift/documentation/Yniffi/YrsArray/unobserve(subscriptionId:)": {
   "abstract" : [

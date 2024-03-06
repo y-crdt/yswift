@@ -65,6 +65,10 @@
             {
               "kind" : "identifier",
               "text" : "YrsArrayProtocol"
+            },
+            {
+              "kind" : "text",
+              "text" : " : AnyObject"
             }
           ]
         }
@@ -101,6 +105,7 @@
         "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsArrayProtocol\/observe(delegate:)",
         "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsArrayProtocol\/pushBack(tx:value:)",
         "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsArrayProtocol\/pushFront(tx:value:)",
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsArrayProtocol\/rawPtr()",
         "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsArrayProtocol\/remove(tx:index:)",
         "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsArrayProtocol\/removeRange(tx:index:len:)",
         "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsArrayProtocol\/toA(tx:)",
@@ -730,6 +735,41 @@
   "title" : "pushFront(tx:value:)",
   "type" : "topic",
   "url" : "\/documentation\/yniffi\/yrsarrayprotocol\/pushfront(tx:value:)"
+},
+"doc://com.github.y-crdt.YSwift/documentation/Yniffi/YrsArrayProtocol/rawPtr()": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "rawPtr"
+    },
+    {
+      "kind" : "text",
+      "text" : "() -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:6Yniffi16YrsCollectionPtra",
+      "text" : "YrsCollectionPtr"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsArrayProtocol\/rawPtr()",
+  "kind" : "symbol",
+  "required" : true,
+  "role" : "symbol",
+  "title" : "rawPtr()",
+  "type" : "topic",
+  "url" : "\/documentation\/yniffi\/yrsarrayprotocol\/rawptr()"
 },
 "doc://com.github.y-crdt.YSwift/documentation/Yniffi/YrsArrayProtocol/remove(tx:index:)": {
   "abstract" : [

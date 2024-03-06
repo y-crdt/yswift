@@ -1,3 +1,14 @@
 [
+  {
+    "notes" : [
 
+    ],
+    "severity" : 2,
+    "source" : "SynchronizingDocuments.md",
+    "start" : {
+      "column" : 108,
+      "line" : 77
+    },
+    "summary" : "'transactSync(_:)' doesn't exist at '\/YSwift\/YDocument'"
+  }
 ]

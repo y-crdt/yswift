@@ -19,6 +19,7 @@
       }
     ],
     "role" : "collectionGroup",
+    "roleHeading" : "API Collection",
     "title" : "Collection Implementations"
   },
   "schemaVersion" : {
@@ -33,10 +34,8 @@
     {
       "generated" : true,
       "identifiers" : [
-        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YArray\/count-4zr8o",
         "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YArray\/first",
-        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YArray\/isEmpty-1wx8",
-        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YArray\/underestimatedCount-7ypu6"
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YArray\/underestimatedCount"
       ],
       "title" : "Instance Properties"
     },
@@ -69,15 +68,6 @@
         "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YArray\/trimmingPrefix(while:)"
       ],
       "title" : "Instance Methods"
-    },
-    {
-      "generated" : true,
-      "identifiers" : [
-        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YArray\/subscript(_:)-479j6",
-        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YArray\/subscript(_:)-51hzi",
-        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YArray\/subscript(_:)-8qoen"
-      ],
-      "title" : "Subscripts"
     }
   ]
 , 
@@ -212,40 +202,6 @@
   "type" : "topic",
   "url" : "\/documentation\/yswift\/yarray\/contains(_:)-9uuee"
 },
-"doc://com.github.y-crdt.YSwift/documentation/YSwift/YArray/count-4zr8o": {
-  "abstract" : [
-
-  ],
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "var"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "count"
-    },
-    {
-      "kind" : "text",
-      "text" : ": "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:Si",
-      "text" : "Int"
-    }
-  ],
-  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YArray\/count-4zr8o",
-  "kind" : "symbol",
-  "role" : "symbol",
-  "title" : "count",
-  "type" : "topic",
-  "url" : "\/documentation\/yswift\/yarray\/count-4zr8o"
-},
 "doc://com.github.y-crdt.YSwift/documentation/YSwift/YArray/drop(while:)": {
   "abstract" : [
 
@@ -285,6 +241,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:ST7ElementQa",
       "text" : "Element"
     },
     {
@@ -326,6 +283,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sl11SubSequenceQa",
       "text" : "SubSequence"
     }
   ],
@@ -376,6 +334,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sl11SubSequenceQa",
       "text" : "SubSequence"
     }
   ],
@@ -417,6 +376,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:ST7ElementQa",
       "text" : "Element"
     },
     {
@@ -502,6 +462,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:ST7ElementQa",
       "text" : "Element"
     },
     {
@@ -518,6 +479,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sl5IndexQa",
       "text" : "Index"
     },
     {
@@ -571,6 +533,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:ST7ElementQa",
       "text" : "Element"
     },
     {
@@ -612,6 +575,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sl5IndexQa",
       "text" : "Index"
     },
     {
@@ -722,6 +686,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sl5IndexQa",
       "text" : "Index"
     },
     {
@@ -775,6 +740,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sl5IndexQa",
       "text" : "Index"
     },
     {
@@ -845,6 +811,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sl5IndexQa",
       "text" : "Index"
     },
     {
@@ -886,6 +853,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sl5IndexQa",
       "text" : "Index"
     },
     {
@@ -952,6 +920,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sl5IndexQa",
       "text" : "Index"
     },
     {
@@ -1038,6 +1007,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:ST7ElementQa",
       "text" : "Element"
     },
     {
@@ -1054,6 +1024,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sl5IndexQa",
       "text" : "Index"
     },
     {
@@ -1067,40 +1038,6 @@
   "title" : "index(of:)",
   "type" : "topic",
   "url" : "\/documentation\/yswift\/yarray\/index(of:)"
-},
-"doc://com.github.y-crdt.YSwift/documentation/YSwift/YArray/isEmpty-1wx8": {
-  "abstract" : [
-
-  ],
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "var"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "isEmpty"
-    },
-    {
-      "kind" : "text",
-      "text" : ": "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:Sb",
-      "text" : "Bool"
-    }
-  ],
-  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YArray\/isEmpty-1wx8",
-  "kind" : "symbol",
-  "role" : "symbol",
-  "title" : "isEmpty",
-  "type" : "topic",
-  "url" : "\/documentation\/yswift\/yarray\/isempty-1wx8"
 },
 "doc://com.github.y-crdt.YSwift/documentation/YSwift/YArray/map(_:)-9wida": {
   "abstract" : [
@@ -1141,6 +1078,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:ST7ElementQa",
       "text" : "Element"
     },
     {
@@ -1227,6 +1165,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sl11SubSequenceQa",
       "text" : "SubSequence"
     }
   ],
@@ -1276,6 +1215,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sl5IndexQa",
       "text" : "Index"
     },
     {
@@ -1292,6 +1232,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sl11SubSequenceQa",
       "text" : "SubSequence"
     }
   ],
@@ -1341,6 +1282,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sl5IndexQa",
       "text" : "Index"
     },
     {
@@ -1357,6 +1299,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sl11SubSequenceQa",
       "text" : "SubSequence"
     }
   ],
@@ -1406,6 +1349,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:ST7ElementQa",
       "text" : "Element"
     },
     {
@@ -1447,6 +1391,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sl11SubSequenceQa",
       "text" : "SubSequence"
     }
   ],
@@ -1488,6 +1433,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:ST7ElementQa",
       "text" : "Element"
     },
     {
@@ -1565,6 +1511,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:ST7ElementQa",
       "text" : "Element"
     },
     {
@@ -1675,6 +1622,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sl5IndexQa",
       "text" : "Index"
     },
     {
@@ -1762,6 +1710,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:ST7ElementQa",
       "text" : "Element"
     },
     {
@@ -1803,6 +1752,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sl11SubSequenceQa",
       "text" : "SubSequence"
     },
     {
@@ -1938,6 +1888,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sl11SubSequenceQa",
       "text" : "SubSequence"
     },
     {
@@ -2023,6 +1974,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:ST7ElementQa",
       "text" : "Element"
     },
     {
@@ -2073,6 +2025,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sl11SubSequenceQa",
       "text" : "SubSequence"
     },
     {
@@ -2086,192 +2039,6 @@
   "title" : "split(separator:maxSplits:omittingEmptySubsequences:)",
   "type" : "topic",
   "url" : "\/documentation\/yswift\/yarray\/split(separator:maxsplits:omittingemptysubsequences:)-3obp0"
-},
-"doc://com.github.y-crdt.YSwift/documentation/YSwift/YArray/subscript(_:)-479j6": {
-  "abstract" : [
-
-  ],
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "subscript"
-    },
-    {
-      "kind" : "text",
-      "text" : "(("
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:s15UnboundedRange_O",
-      "text" : "UnboundedRange_"
-    },
-    {
-      "kind" : "text",
-      "text" : ") -> ()) -> "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "text" : "Self"
-    },
-    {
-      "kind" : "text",
-      "text" : "."
-    },
-    {
-      "kind" : "typeIdentifier",
-      "text" : "SubSequence"
-    }
-  ],
-  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YArray\/subscript(_:)-479j6",
-  "kind" : "symbol",
-  "role" : "symbol",
-  "title" : "subscript(_:)",
-  "type" : "topic",
-  "url" : "\/documentation\/yswift\/yarray\/subscript(_:)-479j6"
-},
-"doc://com.github.y-crdt.YSwift/documentation/YSwift/YArray/subscript(_:)-51hzi": {
-  "abstract" : [
-
-  ],
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "subscript"
-    },
-    {
-      "kind" : "text",
-      "text" : "<"
-    },
-    {
-      "kind" : "genericParameter",
-      "text" : "R"
-    },
-    {
-      "kind" : "text",
-      "text" : ">("
-    },
-    {
-      "kind" : "typeIdentifier",
-      "text" : "R"
-    },
-    {
-      "kind" : "text",
-      "text" : ") -> "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "text" : "Self"
-    },
-    {
-      "kind" : "text",
-      "text" : "."
-    },
-    {
-      "kind" : "typeIdentifier",
-      "text" : "SubSequence"
-    }
-  ],
-  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YArray\/subscript(_:)-51hzi",
-  "kind" : "symbol",
-  "role" : "symbol",
-  "title" : "subscript(_:)",
-  "type" : "topic",
-  "url" : "\/documentation\/yswift\/yarray\/subscript(_:)-51hzi"
-},
-"doc://com.github.y-crdt.YSwift/documentation/YSwift/YArray/subscript(_:)-8qoen": {
-  "abstract" : [
-
-  ],
-  "conformance" : {
-    "availabilityPrefix" : [
-      {
-        "text" : "Available when",
-        "type" : "text"
-      }
-    ],
-    "conformancePrefix" : [
-      {
-        "text" : "Conforms when",
-        "type" : "text"
-      }
-    ],
-    "constraints" : [
-      {
-        "code" : "SubSequence",
-        "type" : "codeVoice"
-      },
-      {
-        "text" : " is ",
-        "type" : "text"
-      },
-      {
-        "code" : "Slice<Self>",
-        "type" : "codeVoice"
-      },
-      {
-        "text" : ".",
-        "type" : "text"
-      }
-    ]
-  },
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "subscript"
-    },
-    {
-      "kind" : "text",
-      "text" : "("
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:Sn",
-      "text" : "Range"
-    },
-    {
-      "kind" : "text",
-      "text" : "<"
-    },
-    {
-      "kind" : "typeIdentifier",
-      "text" : "Self"
-    },
-    {
-      "kind" : "text",
-      "text" : "."
-    },
-    {
-      "kind" : "typeIdentifier",
-      "text" : "Index"
-    },
-    {
-      "kind" : "text",
-      "text" : ">) -> "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:s5SliceV",
-      "text" : "Slice"
-    },
-    {
-      "kind" : "text",
-      "text" : "<"
-    },
-    {
-      "kind" : "typeIdentifier",
-      "text" : "Self"
-    },
-    {
-      "kind" : "text",
-      "text" : ">"
-    }
-  ],
-  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YArray\/subscript(_:)-8qoen",
-  "kind" : "symbol",
-  "role" : "symbol",
-  "title" : "subscript(_:)",
-  "type" : "topic",
-  "url" : "\/documentation\/yswift\/yarray\/subscript(_:)-8qoen"
 },
 "doc://com.github.y-crdt.YSwift/documentation/YSwift/YArray/suffix(from:)": {
   "abstract" : [
@@ -2312,6 +2079,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sl5IndexQa",
       "text" : "Index"
     },
     {
@@ -2328,6 +2096,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sl11SubSequenceQa",
       "text" : "SubSequence"
     }
   ],
@@ -2417,6 +2186,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sl11SubSequenceQa",
       "text" : "SubSequence"
     }
   ],
@@ -2466,6 +2236,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:ST7ElementQa",
       "text" : "Element"
     },
     {
@@ -2507,6 +2278,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sl11SubSequenceQa",
       "text" : "SubSequence"
     }
   ],
@@ -2517,7 +2289,7 @@
   "type" : "topic",
   "url" : "\/documentation\/yswift\/yarray\/trimmingprefix(while:)"
 },
-"doc://com.github.y-crdt.YSwift/documentation/YSwift/YArray/underestimatedCount-7ypu6": {
+"doc://com.github.y-crdt.YSwift/documentation/YSwift/YArray/underestimatedCount": {
   "abstract" : [
 
   ],
@@ -2544,12 +2316,12 @@
       "text" : "Int"
     }
   ],
-  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YArray\/underestimatedCount-7ypu6",
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YArray\/underestimatedCount",
   "kind" : "symbol",
   "role" : "symbol",
   "title" : "underestimatedCount",
   "type" : "topic",
-  "url" : "\/documentation\/yswift\/yarray\/underestimatedcount-7ypu6"
+  "url" : "\/documentation\/yswift\/yarray\/underestimatedcount"
 }
 }
 }

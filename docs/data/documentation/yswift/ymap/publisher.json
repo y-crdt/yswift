@@ -85,7 +85,10 @@
     ],
     "modules" : [
       {
-        "name" : "YSwift"
+        "name" : "YSwift",
+        "relatedModules" : [
+          "Swift"
+        ]
       }
     ],
     "platforms" : [

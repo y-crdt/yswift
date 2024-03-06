@@ -38,7 +38,9 @@
         "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsDoc",
         "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsMap",
         "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsText",
-        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsTransaction"
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsTransaction",
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsUndoEvent",
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsUndoManager"
       ],
       "title" : "Classes"
     },
@@ -54,7 +56,10 @@
         "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsMapProtocol",
         "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsTextObservationDelegate",
         "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsTextProtocol",
-        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsTransactionProtocol"
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsTransactionProtocol",
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsUndoEventProtocol",
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsUndoManagerObservationDelegate",
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsUndoManagerProtocol"
       ],
       "title" : "Protocols"
     },
@@ -63,37 +68,71 @@
         "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/FfiConverterTypeCodingError",
         "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/FfiConverterTypeYrsArray",
         "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/FfiConverterTypeYrsChange",
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/FfiConverterTypeYrsCollectionPtr",
         "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/FfiConverterTypeYrsDelta",
         "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/FfiConverterTypeYrsDoc",
         "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/FfiConverterTypeYrsEntryChange",
         "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/FfiConverterTypeYrsMap",
         "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/FfiConverterTypeYrsMapChange",
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/FfiConverterTypeYrsOrigin",
         "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/FfiConverterTypeYrsText",
         "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/FfiConverterTypeYrsTransaction",
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/FfiConverterTypeYrsUndoError",
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/FfiConverterTypeYrsUndoEvent",
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/FfiConverterTypeYrsUndoEventKind",
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/FfiConverterTypeYrsUndoManager",
         "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsMapChange"
       ],
       "title" : "Structures"
     },
     {
       "identifiers" : [
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/FfiConverterTypeYrsArray_lift(_:)",
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/FfiConverterTypeYrsArray_lower(_:)",
         "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/FfiConverterTypeYrsChange_lift(_:)",
         "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/FfiConverterTypeYrsChange_lower(_:)",
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/FfiConverterTypeYrsCollectionPtr_lift(_:)",
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/FfiConverterTypeYrsCollectionPtr_lower(_:)",
         "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/FfiConverterTypeYrsDelta_lift(_:)",
         "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/FfiConverterTypeYrsDelta_lower(_:)",
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/FfiConverterTypeYrsDoc_lift(_:)",
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/FfiConverterTypeYrsDoc_lower(_:)",
         "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/FfiConverterTypeYrsEntryChange_lift(_:)",
         "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/FfiConverterTypeYrsEntryChange_lower(_:)",
         "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/FfiConverterTypeYrsMapChange_lift(_:)",
-        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/FfiConverterTypeYrsMapChange_lower(_:)"
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/FfiConverterTypeYrsMapChange_lower(_:)",
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/FfiConverterTypeYrsMap_lift(_:)",
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/FfiConverterTypeYrsMap_lower(_:)",
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/FfiConverterTypeYrsOrigin_lift(_:)",
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/FfiConverterTypeYrsOrigin_lower(_:)",
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/FfiConverterTypeYrsText_lift(_:)",
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/FfiConverterTypeYrsText_lower(_:)",
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/FfiConverterTypeYrsTransaction_lift(_:)",
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/FfiConverterTypeYrsTransaction_lower(_:)",
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/FfiConverterTypeYrsUndoEventKind_lift(_:)",
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/FfiConverterTypeYrsUndoEventKind_lower(_:)",
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/FfiConverterTypeYrsUndoEvent_lift(_:)",
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/FfiConverterTypeYrsUndoEvent_lower(_:)",
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/FfiConverterTypeYrsUndoManager_lift(_:)",
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/FfiConverterTypeYrsUndoManager_lower(_:)"
       ],
       "title" : "Functions"
     },
     {
       "identifiers" : [
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsCollectionPtr",
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsOrigin"
+      ],
+      "title" : "Type Aliases"
+    },
+    {
+      "identifiers" : [
         "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/CodingError",
-        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YniffiLifecycle",
         "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsChange",
         "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsDelta",
-        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsEntryChange"
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsEntryChange",
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsUndoError",
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsUndoEventKind"
       ],
       "title" : "Enumerations"
     }
@@ -215,6 +254,100 @@
   "title" : "FfiConverterTypeYrsArray",
   "type" : "topic",
   "url" : "\/documentation\/yniffi\/fficonvertertypeyrsarray"
+},
+"doc://com.github.y-crdt.YSwift/documentation/Yniffi/FfiConverterTypeYrsArray_lift(_:)": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "FfiConverterTypeYrsArray_lift"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sv",
+      "text" : "UnsafeMutableRawPointer"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:6Yniffi8YrsArrayC",
+      "text" : "YrsArray"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/FfiConverterTypeYrsArray_lift(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "FfiConverterTypeYrsArray_lift(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/yniffi\/fficonvertertypeyrsarray_lift(_:)"
+},
+"doc://com.github.y-crdt.YSwift/documentation/Yniffi/FfiConverterTypeYrsArray_lower(_:)": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "FfiConverterTypeYrsArray_lower"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:6Yniffi8YrsArrayC",
+      "text" : "YrsArray"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sv",
+      "text" : "UnsafeMutableRawPointer"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/FfiConverterTypeYrsArray_lower(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "FfiConverterTypeYrsArray_lower(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/yniffi\/fficonvertertypeyrsarray_lower(_:)"
 },
 "doc://com.github.y-crdt.YSwift/documentation/Yniffi/FfiConverterTypeYrsChange": {
   "abstract" : [
@@ -340,6 +473,131 @@
   "title" : "FfiConverterTypeYrsChange_lower(_:)",
   "type" : "topic",
   "url" : "\/documentation\/yniffi\/fficonvertertypeyrschange_lower(_:)"
+},
+"doc://com.github.y-crdt.YSwift/documentation/Yniffi/FfiConverterTypeYrsCollectionPtr": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "FfiConverterTypeYrsCollectionPtr"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/FfiConverterTypeYrsCollectionPtr",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "FfiConverterTypeYrsCollectionPtr"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "FfiConverterTypeYrsCollectionPtr",
+  "type" : "topic",
+  "url" : "\/documentation\/yniffi\/fficonvertertypeyrscollectionptr"
+},
+"doc://com.github.y-crdt.YSwift/documentation/Yniffi/FfiConverterTypeYrsCollectionPtr_lift(_:)": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "FfiConverterTypeYrsCollectionPtr_lift"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:s6UInt64V",
+      "text" : "UInt64"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:6Yniffi16YrsCollectionPtra",
+      "text" : "YrsCollectionPtr"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/FfiConverterTypeYrsCollectionPtr_lift(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "FfiConverterTypeYrsCollectionPtr_lift(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/yniffi\/fficonvertertypeyrscollectionptr_lift(_:)"
+},
+"doc://com.github.y-crdt.YSwift/documentation/Yniffi/FfiConverterTypeYrsCollectionPtr_lower(_:)": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "FfiConverterTypeYrsCollectionPtr_lower"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:6Yniffi16YrsCollectionPtra",
+      "text" : "YrsCollectionPtr"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:s6UInt64V",
+      "text" : "UInt64"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/FfiConverterTypeYrsCollectionPtr_lower(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "FfiConverterTypeYrsCollectionPtr_lower(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/yniffi\/fficonvertertypeyrscollectionptr_lower(_:)"
 },
 "doc://com.github.y-crdt.YSwift/documentation/Yniffi/FfiConverterTypeYrsDelta": {
   "abstract" : [
@@ -496,6 +754,100 @@
   "title" : "FfiConverterTypeYrsDoc",
   "type" : "topic",
   "url" : "\/documentation\/yniffi\/fficonvertertypeyrsdoc"
+},
+"doc://com.github.y-crdt.YSwift/documentation/Yniffi/FfiConverterTypeYrsDoc_lift(_:)": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "FfiConverterTypeYrsDoc_lift"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sv",
+      "text" : "UnsafeMutableRawPointer"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:6Yniffi6YrsDocC",
+      "text" : "YrsDoc"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/FfiConverterTypeYrsDoc_lift(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "FfiConverterTypeYrsDoc_lift(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/yniffi\/fficonvertertypeyrsdoc_lift(_:)"
+},
+"doc://com.github.y-crdt.YSwift/documentation/Yniffi/FfiConverterTypeYrsDoc_lower(_:)": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "FfiConverterTypeYrsDoc_lower"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:6Yniffi6YrsDocC",
+      "text" : "YrsDoc"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sv",
+      "text" : "UnsafeMutableRawPointer"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/FfiConverterTypeYrsDoc_lower(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "FfiConverterTypeYrsDoc_lower(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/yniffi\/fficonvertertypeyrsdoc_lower(_:)"
 },
 "doc://com.github.y-crdt.YSwift/documentation/Yniffi/FfiConverterTypeYrsEntryChange": {
   "abstract" : [
@@ -778,6 +1130,225 @@
   "type" : "topic",
   "url" : "\/documentation\/yniffi\/fficonvertertypeyrsmapchange_lower(_:)"
 },
+"doc://com.github.y-crdt.YSwift/documentation/Yniffi/FfiConverterTypeYrsMap_lift(_:)": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "FfiConverterTypeYrsMap_lift"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sv",
+      "text" : "UnsafeMutableRawPointer"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:6Yniffi6YrsMapC",
+      "text" : "YrsMap"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/FfiConverterTypeYrsMap_lift(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "FfiConverterTypeYrsMap_lift(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/yniffi\/fficonvertertypeyrsmap_lift(_:)"
+},
+"doc://com.github.y-crdt.YSwift/documentation/Yniffi/FfiConverterTypeYrsMap_lower(_:)": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "FfiConverterTypeYrsMap_lower"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:6Yniffi6YrsMapC",
+      "text" : "YrsMap"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sv",
+      "text" : "UnsafeMutableRawPointer"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/FfiConverterTypeYrsMap_lower(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "FfiConverterTypeYrsMap_lower(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/yniffi\/fficonvertertypeyrsmap_lower(_:)"
+},
+"doc://com.github.y-crdt.YSwift/documentation/Yniffi/FfiConverterTypeYrsOrigin": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "FfiConverterTypeYrsOrigin"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/FfiConverterTypeYrsOrigin",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "FfiConverterTypeYrsOrigin"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "FfiConverterTypeYrsOrigin",
+  "type" : "topic",
+  "url" : "\/documentation\/yniffi\/fficonvertertypeyrsorigin"
+},
+"doc://com.github.y-crdt.YSwift/documentation/Yniffi/FfiConverterTypeYrsOrigin_lift(_:)": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "FfiConverterTypeYrsOrigin_lift"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "c:@S@RustBuffer",
+      "text" : "RustBuffer"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:6Yniffi9YrsOrigina",
+      "text" : "YrsOrigin"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/FfiConverterTypeYrsOrigin_lift(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "FfiConverterTypeYrsOrigin_lift(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/yniffi\/fficonvertertypeyrsorigin_lift(_:)"
+},
+"doc://com.github.y-crdt.YSwift/documentation/Yniffi/FfiConverterTypeYrsOrigin_lower(_:)": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "FfiConverterTypeYrsOrigin_lower"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:6Yniffi9YrsOrigina",
+      "text" : "YrsOrigin"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "c:@S@RustBuffer",
+      "text" : "RustBuffer"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/FfiConverterTypeYrsOrigin_lower(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "FfiConverterTypeYrsOrigin_lower(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/yniffi\/fficonvertertypeyrsorigin_lower(_:)"
+},
 "doc://com.github.y-crdt.YSwift/documentation/Yniffi/FfiConverterTypeYrsText": {
   "abstract" : [
 
@@ -808,6 +1379,100 @@
   "title" : "FfiConverterTypeYrsText",
   "type" : "topic",
   "url" : "\/documentation\/yniffi\/fficonvertertypeyrstext"
+},
+"doc://com.github.y-crdt.YSwift/documentation/Yniffi/FfiConverterTypeYrsText_lift(_:)": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "FfiConverterTypeYrsText_lift"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sv",
+      "text" : "UnsafeMutableRawPointer"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:6Yniffi7YrsTextC",
+      "text" : "YrsText"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/FfiConverterTypeYrsText_lift(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "FfiConverterTypeYrsText_lift(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/yniffi\/fficonvertertypeyrstext_lift(_:)"
+},
+"doc://com.github.y-crdt.YSwift/documentation/Yniffi/FfiConverterTypeYrsText_lower(_:)": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "FfiConverterTypeYrsText_lower"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:6Yniffi7YrsTextC",
+      "text" : "YrsText"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sv",
+      "text" : "UnsafeMutableRawPointer"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/FfiConverterTypeYrsText_lower(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "FfiConverterTypeYrsText_lower(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/yniffi\/fficonvertertypeyrstext_lower(_:)"
 },
 "doc://com.github.y-crdt.YSwift/documentation/Yniffi/FfiConverterTypeYrsTransaction": {
   "abstract" : [
@@ -840,17 +1505,14 @@
   "type" : "topic",
   "url" : "\/documentation\/yniffi\/fficonvertertypeyrstransaction"
 },
-"doc://com.github.y-crdt.YSwift/documentation/Yniffi/YniffiLifecycle": {
+"doc://com.github.y-crdt.YSwift/documentation/Yniffi/FfiConverterTypeYrsTransaction_lift(_:)": {
   "abstract" : [
-    {
-      "text" : "Top level initializers and tear down methods.",
-      "type" : "text"
-    }
+
   ],
   "fragments" : [
     {
       "kind" : "keyword",
-      "text" : "enum"
+      "text" : "func"
     },
     {
       "kind" : "text",
@@ -858,21 +1520,490 @@
     },
     {
       "kind" : "identifier",
-      "text" : "YniffiLifecycle"
+      "text" : "FfiConverterTypeYrsTransaction_lift"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sv",
+      "text" : "UnsafeMutableRawPointer"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:6Yniffi14YrsTransactionC",
+      "text" : "YrsTransaction"
     }
   ],
-  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YniffiLifecycle",
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/FfiConverterTypeYrsTransaction_lift(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "FfiConverterTypeYrsTransaction_lift(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/yniffi\/fficonvertertypeyrstransaction_lift(_:)"
+},
+"doc://com.github.y-crdt.YSwift/documentation/Yniffi/FfiConverterTypeYrsTransaction_lower(_:)": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "FfiConverterTypeYrsTransaction_lower"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:6Yniffi14YrsTransactionC",
+      "text" : "YrsTransaction"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sv",
+      "text" : "UnsafeMutableRawPointer"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/FfiConverterTypeYrsTransaction_lower(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "FfiConverterTypeYrsTransaction_lower(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/yniffi\/fficonvertertypeyrstransaction_lower(_:)"
+},
+"doc://com.github.y-crdt.YSwift/documentation/Yniffi/FfiConverterTypeYrsUndoError": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "FfiConverterTypeYrsUndoError"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/FfiConverterTypeYrsUndoError",
   "kind" : "symbol",
   "navigatorTitle" : [
     {
       "kind" : "identifier",
-      "text" : "YniffiLifecycle"
+      "text" : "FfiConverterTypeYrsUndoError"
     }
   ],
   "role" : "symbol",
-  "title" : "YniffiLifecycle",
+  "title" : "FfiConverterTypeYrsUndoError",
   "type" : "topic",
-  "url" : "\/documentation\/yniffi\/yniffilifecycle"
+  "url" : "\/documentation\/yniffi\/fficonvertertypeyrsundoerror"
+},
+"doc://com.github.y-crdt.YSwift/documentation/Yniffi/FfiConverterTypeYrsUndoEvent": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "FfiConverterTypeYrsUndoEvent"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/FfiConverterTypeYrsUndoEvent",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "FfiConverterTypeYrsUndoEvent"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "FfiConverterTypeYrsUndoEvent",
+  "type" : "topic",
+  "url" : "\/documentation\/yniffi\/fficonvertertypeyrsundoevent"
+},
+"doc://com.github.y-crdt.YSwift/documentation/Yniffi/FfiConverterTypeYrsUndoEventKind": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "FfiConverterTypeYrsUndoEventKind"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/FfiConverterTypeYrsUndoEventKind",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "FfiConverterTypeYrsUndoEventKind"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "FfiConverterTypeYrsUndoEventKind",
+  "type" : "topic",
+  "url" : "\/documentation\/yniffi\/fficonvertertypeyrsundoeventkind"
+},
+"doc://com.github.y-crdt.YSwift/documentation/Yniffi/FfiConverterTypeYrsUndoEventKind_lift(_:)": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "FfiConverterTypeYrsUndoEventKind_lift"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "c:@S@RustBuffer",
+      "text" : "RustBuffer"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:6Yniffi16YrsUndoEventKindO",
+      "text" : "YrsUndoEventKind"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/FfiConverterTypeYrsUndoEventKind_lift(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "FfiConverterTypeYrsUndoEventKind_lift(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/yniffi\/fficonvertertypeyrsundoeventkind_lift(_:)"
+},
+"doc://com.github.y-crdt.YSwift/documentation/Yniffi/FfiConverterTypeYrsUndoEventKind_lower(_:)": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "FfiConverterTypeYrsUndoEventKind_lower"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:6Yniffi16YrsUndoEventKindO",
+      "text" : "YrsUndoEventKind"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "c:@S@RustBuffer",
+      "text" : "RustBuffer"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/FfiConverterTypeYrsUndoEventKind_lower(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "FfiConverterTypeYrsUndoEventKind_lower(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/yniffi\/fficonvertertypeyrsundoeventkind_lower(_:)"
+},
+"doc://com.github.y-crdt.YSwift/documentation/Yniffi/FfiConverterTypeYrsUndoEvent_lift(_:)": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "FfiConverterTypeYrsUndoEvent_lift"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sv",
+      "text" : "UnsafeMutableRawPointer"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:6Yniffi12YrsUndoEventC",
+      "text" : "YrsUndoEvent"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/FfiConverterTypeYrsUndoEvent_lift(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "FfiConverterTypeYrsUndoEvent_lift(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/yniffi\/fficonvertertypeyrsundoevent_lift(_:)"
+},
+"doc://com.github.y-crdt.YSwift/documentation/Yniffi/FfiConverterTypeYrsUndoEvent_lower(_:)": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "FfiConverterTypeYrsUndoEvent_lower"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:6Yniffi12YrsUndoEventC",
+      "text" : "YrsUndoEvent"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sv",
+      "text" : "UnsafeMutableRawPointer"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/FfiConverterTypeYrsUndoEvent_lower(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "FfiConverterTypeYrsUndoEvent_lower(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/yniffi\/fficonvertertypeyrsundoevent_lower(_:)"
+},
+"doc://com.github.y-crdt.YSwift/documentation/Yniffi/FfiConverterTypeYrsUndoManager": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "FfiConverterTypeYrsUndoManager"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/FfiConverterTypeYrsUndoManager",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "FfiConverterTypeYrsUndoManager"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "FfiConverterTypeYrsUndoManager",
+  "type" : "topic",
+  "url" : "\/documentation\/yniffi\/fficonvertertypeyrsundomanager"
+},
+"doc://com.github.y-crdt.YSwift/documentation/Yniffi/FfiConverterTypeYrsUndoManager_lift(_:)": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "FfiConverterTypeYrsUndoManager_lift"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sv",
+      "text" : "UnsafeMutableRawPointer"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:6Yniffi14YrsUndoManagerC",
+      "text" : "YrsUndoManager"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/FfiConverterTypeYrsUndoManager_lift(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "FfiConverterTypeYrsUndoManager_lift(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/yniffi\/fficonvertertypeyrsundomanager_lift(_:)"
+},
+"doc://com.github.y-crdt.YSwift/documentation/Yniffi/FfiConverterTypeYrsUndoManager_lower(_:)": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "FfiConverterTypeYrsUndoManager_lower"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:6Yniffi14YrsUndoManagerC",
+      "text" : "YrsUndoManager"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sv",
+      "text" : "UnsafeMutableRawPointer"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/FfiConverterTypeYrsUndoManager_lower(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "FfiConverterTypeYrsUndoManager_lower(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/yniffi\/fficonvertertypeyrsundomanager_lower(_:)"
 },
 "doc://com.github.y-crdt.YSwift/documentation/Yniffi/YrsArray": {
   "abstract" : [
@@ -1028,6 +2159,48 @@
   "title" : "YrsChange",
   "type" : "topic",
   "url" : "\/documentation\/yniffi\/yrschange"
+},
+"doc://com.github.y-crdt.YSwift/documentation/Yniffi/YrsCollectionPtr": {
+  "abstract" : [
+    {
+      "text" : "Typealias from the type name used in the UDL file to the builtin type.  This",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "is needed because the UDL type name is used in function\/method signatures.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "typealias"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "YrsCollectionPtr"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsCollectionPtr",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "YrsCollectionPtr"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "YrsCollectionPtr",
+  "type" : "topic",
+  "url" : "\/documentation\/yniffi\/yrscollectionptr"
 },
 "doc://com.github.y-crdt.YSwift/documentation/Yniffi/YrsDelta": {
   "abstract" : [
@@ -1339,6 +2512,48 @@
   "type" : "topic",
   "url" : "\/documentation\/yniffi\/yrsmapprotocol"
 },
+"doc://com.github.y-crdt.YSwift/documentation/Yniffi/YrsOrigin": {
+  "abstract" : [
+    {
+      "text" : "Typealias from the type name used in the UDL file to the builtin type.  This",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "is needed because the UDL type name is used in function\/method signatures.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "typealias"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "YrsOrigin"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsOrigin",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "YrsOrigin"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "YrsOrigin",
+  "type" : "topic",
+  "url" : "\/documentation\/yniffi\/yrsorigin"
+},
 "doc://com.github.y-crdt.YSwift/documentation/Yniffi/YrsText": {
   "abstract" : [
 
@@ -1493,6 +2708,277 @@
   "title" : "YrsTransactionProtocol",
   "type" : "topic",
   "url" : "\/documentation\/yniffi\/yrstransactionprotocol"
+},
+"doc://com.github.y-crdt.YSwift/documentation/Yniffi/YrsUndoError": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "enum"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "YrsUndoError"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsUndoError",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "YrsUndoError"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "YrsUndoError",
+  "type" : "topic",
+  "url" : "\/documentation\/yniffi\/yrsundoerror"
+},
+"doc://com.github.y-crdt.YSwift/documentation/Yniffi/YrsUndoEvent": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "class"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "YrsUndoEvent"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsUndoEvent",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "YrsUndoEvent"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "YrsUndoEvent",
+  "type" : "topic",
+  "url" : "\/documentation\/yniffi\/yrsundoevent"
+},
+"doc://com.github.y-crdt.YSwift/documentation/Yniffi/YrsUndoEventKind": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "enum"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "YrsUndoEventKind"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsUndoEventKind",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "YrsUndoEventKind"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "YrsUndoEventKind",
+  "type" : "topic",
+  "url" : "\/documentation\/yniffi\/yrsundoeventkind"
+},
+"doc://com.github.y-crdt.YSwift/documentation/Yniffi/YrsUndoEventProtocol": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "protocol"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "YrsUndoEventProtocol"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsUndoEventProtocol",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "YrsUndoEventProtocol"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "YrsUndoEventProtocol",
+  "type" : "topic",
+  "url" : "\/documentation\/yniffi\/yrsundoeventprotocol"
+},
+"doc://com.github.y-crdt.YSwift/documentation/Yniffi/YrsUndoManager": {
+  "abstract" : [
+    {
+      "text" : "A manager type able to track changes occurring in a context of a given document.",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "These changes can be reverted using ",
+      "type" : "text"
+    },
+    {
+      "code" : "undo",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " method call, or re-applied via ",
+      "type" : "text"
+    },
+    {
+      "code" : "redo",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "class"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "YrsUndoManager"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsUndoManager",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "YrsUndoManager"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "YrsUndoManager",
+  "type" : "topic",
+  "url" : "\/documentation\/yniffi\/yrsundomanager"
+},
+"doc://com.github.y-crdt.YSwift/documentation/Yniffi/YrsUndoManagerObservationDelegate": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "protocol"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "YrsUndoManagerObservationDelegate"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsUndoManagerObservationDelegate",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "YrsUndoManagerObservationDelegate"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "YrsUndoManagerObservationDelegate",
+  "type" : "topic",
+  "url" : "\/documentation\/yniffi\/yrsundomanagerobservationdelegate"
+},
+"doc://com.github.y-crdt.YSwift/documentation/Yniffi/YrsUndoManagerProtocol": {
+  "abstract" : [
+    {
+      "text" : "A manager type able to track changes occurring in a context of a given document.",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "These changes can be reverted using ",
+      "type" : "text"
+    },
+    {
+      "code" : "undo",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " method call, or re-applied via ",
+      "type" : "text"
+    },
+    {
+      "code" : "redo",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "protocol"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "YrsUndoManagerProtocol"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsUndoManagerProtocol",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "YrsUndoManagerProtocol"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "YrsUndoManagerProtocol",
+  "type" : "topic",
+  "url" : "\/documentation\/yniffi\/yrsundomanagerprotocol"
 }
 }
 }

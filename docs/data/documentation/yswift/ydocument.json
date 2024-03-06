@@ -158,7 +158,7 @@
               "type" : "text"
             },
             {
-              "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YDocument\/transactSync(_:)",
+              "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YDocument\/transactSync(origin:_:)",
               "isActive" : true,
               "type" : "reference"
             },
@@ -328,9 +328,9 @@
     },
     {
       "identifiers" : [
-        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YDocument\/transactSync(_:)",
-        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YDocument\/transact(_:)",
-        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YDocument\/transactAsync(_:completion:)"
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YDocument\/transactSync(origin:_:)",
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YDocument\/transact(origin:_:)",
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YDocument\/transactAsync(_:_:completion:)"
       ],
       "title" : "Creating Transactions"
     },
@@ -339,6 +339,12 @@
         "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YDocument\/diff(txn:from:)"
       ],
       "title" : "Comparing Documents for Synchronization"
+    },
+    {
+      "identifiers" : [
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YDocument\/undoManager(trackedRefs:)"
+      ],
+      "title" : "Undo and Redo"
     }
   ],
   "variants" : [
@@ -802,7 +808,7 @@
   "type" : "topic",
   "url" : "\/documentation\/yswift\/ydocument\/init()"
 },
-"doc://com.github.y-crdt.YSwift/documentation/YSwift/YDocument/transact(_:)": {
+"doc://com.github.y-crdt.YSwift/documentation/YSwift/YDocument/transact(origin:_:)": {
   "abstract" : [
     {
       "text" : "Creates an asynchronous transaction and provides that transaction to a trailing closure, within which you make changes to shared data types.",
@@ -832,7 +838,24 @@
     },
     {
       "kind" : "text",
-      "text" : ">(("
+      "text" : ">("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "origin"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:6YSwift6OriginV",
+      "text" : "Origin"
+    },
+    {
+      "kind" : "text",
+      "text" : "?, ("
     },
     {
       "kind" : "typeIdentifier",
@@ -845,7 +868,7 @@
     },
     {
       "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:6YSwift9YDocumentC8transactyxx6Yniffi14YrsTransactionCcYalF1TL_xmfp",
+      "preciseIdentifier" : "s:6YSwift9YDocumentC8transact6origin_xAA6OriginVSg_x6Yniffi14YrsTransactionCctYalF1TL_xmfp",
       "text" : "T"
     },
     {
@@ -862,18 +885,18 @@
     },
     {
       "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:6YSwift9YDocumentC8transactyxx6Yniffi14YrsTransactionCcYalF1TL_xmfp",
+      "preciseIdentifier" : "s:6YSwift9YDocumentC8transact6origin_xAA6OriginVSg_x6Yniffi14YrsTransactionCctYalF1TL_xmfp",
       "text" : "T"
     }
   ],
-  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YDocument\/transact(_:)",
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YDocument\/transact(origin:_:)",
   "kind" : "symbol",
   "role" : "symbol",
-  "title" : "transact(_:)",
+  "title" : "transact(origin:_:)",
   "type" : "topic",
-  "url" : "\/documentation\/yswift\/ydocument\/transact(_:)"
+  "url" : "\/documentation\/yswift\/ydocument\/transact(origin:_:)"
 },
-"doc://com.github.y-crdt.YSwift/documentation/YSwift/YDocument/transactAsync(_:completion:)": {
+"doc://com.github.y-crdt.YSwift/documentation/YSwift/YDocument/transactAsync(_:_:completion:)": {
   "abstract" : [
     {
       "text" : "Creates an asynchronous transaction and provides that transaction to a trailing closure, within which you make changes to shared data types.",
@@ -903,7 +926,16 @@
     },
     {
       "kind" : "text",
-      "text" : ">(("
+      "text" : ">("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:6YSwift6OriginV",
+      "text" : "Origin"
+    },
+    {
+      "kind" : "text",
+      "text" : "?, ("
     },
     {
       "kind" : "typeIdentifier",
@@ -916,7 +948,7 @@
     },
     {
       "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:6YSwift9YDocumentC13transactAsync_10completionyx6Yniffi14YrsTransactionCc_yxctlF1TL_xmfp",
+      "preciseIdentifier" : "s:6YSwift9YDocumentC13transactAsync__10completionyAA6OriginVSg_x6Yniffi14YrsTransactionCcyxctlF1TL_xmfp",
       "text" : "T"
     },
     {
@@ -933,7 +965,7 @@
     },
     {
       "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:6YSwift9YDocumentC13transactAsync_10completionyx6Yniffi14YrsTransactionCc_yxctlF1TL_xmfp",
+      "preciseIdentifier" : "s:6YSwift9YDocumentC13transactAsync__10completionyAA6OriginVSg_x6Yniffi14YrsTransactionCcyxctlF1TL_xmfp",
       "text" : "T"
     },
     {
@@ -950,14 +982,14 @@
       "text" : ")"
     }
   ],
-  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YDocument\/transactAsync(_:completion:)",
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YDocument\/transactAsync(_:_:completion:)",
   "kind" : "symbol",
   "role" : "symbol",
-  "title" : "transactAsync(_:completion:)",
+  "title" : "transactAsync(_:_:completion:)",
   "type" : "topic",
-  "url" : "\/documentation\/yswift\/ydocument\/transactasync(_:completion:)"
+  "url" : "\/documentation\/yswift\/ydocument\/transactasync(_:_:completion:)"
 },
-"doc://com.github.y-crdt.YSwift/documentation/YSwift/YDocument/transactSync(_:)": {
+"doc://com.github.y-crdt.YSwift/documentation/YSwift/YDocument/transactSync(origin:_:)": {
   "abstract" : [
     {
       "text" : "Creates a synchronous transaction and provides that transaction to a trailing closure, within which you make changes to shared data types.",
@@ -987,7 +1019,24 @@
     },
     {
       "kind" : "text",
-      "text" : ">(("
+      "text" : ">("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "origin"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:6YSwift6OriginV",
+      "text" : "Origin"
+    },
+    {
+      "kind" : "text",
+      "text" : "?, ("
     },
     {
       "kind" : "typeIdentifier",
@@ -1000,7 +1049,7 @@
     },
     {
       "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:6YSwift9YDocumentC12transactSyncyxx6Yniffi14YrsTransactionCclF1TL_xmfp",
+      "preciseIdentifier" : "s:6YSwift9YDocumentC12transactSync6origin_xAA6OriginVSg_x6Yniffi14YrsTransactionCctlF1TL_xmfp",
       "text" : "T"
     },
     {
@@ -1009,16 +1058,91 @@
     },
     {
       "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:6YSwift9YDocumentC12transactSyncyxx6Yniffi14YrsTransactionCclF1TL_xmfp",
+      "preciseIdentifier" : "s:6YSwift9YDocumentC12transactSync6origin_xAA6OriginVSg_x6Yniffi14YrsTransactionCctlF1TL_xmfp",
       "text" : "T"
     }
   ],
-  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YDocument\/transactSync(_:)",
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YDocument\/transactSync(origin:_:)",
   "kind" : "symbol",
   "role" : "symbol",
-  "title" : "transactSync(_:)",
+  "title" : "transactSync(origin:_:)",
   "type" : "topic",
-  "url" : "\/documentation\/yswift\/ydocument\/transactsync(_:)"
+  "url" : "\/documentation\/yswift\/ydocument\/transactsync(origin:_:)"
+},
+"doc://com.github.y-crdt.YSwift/documentation/YSwift/YDocument/undoManager(trackedRefs:)": {
+  "abstract" : [
+    {
+      "text" : "Creates an Undo Manager for a document with the collections that is tracks.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "undoManager"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "genericParameter",
+      "text" : "T"
+    },
+    {
+      "kind" : "text",
+      "text" : ">("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "trackedRefs"
+    },
+    {
+      "kind" : "text",
+      "text" : ": ["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:6YSwift11YCollectionP",
+      "text" : "YCollection"
+    },
+    {
+      "kind" : "text",
+      "text" : "]) -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:6YSwift12YUndoManagerC",
+      "text" : "YUndoManager"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:6YSwift9YDocumentC11undoManager11trackedRefsAA05YUndoD0CyxGSayAA11YCollection_pG_tRlzClF1TL_xmfp",
+      "text" : "T"
+    },
+    {
+      "kind" : "text",
+      "text" : ">"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YDocument\/undoManager(trackedRefs:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "undoManager(trackedRefs:)",
+  "type" : "topic",
+  "url" : "\/documentation\/yswift\/ydocument\/undomanager(trackedrefs:)"
 },
 "doc://com.github.y-crdt.YSwift/documentation/YSwift/YMap": {
   "abstract" : [

@@ -65,6 +65,10 @@
             {
               "kind" : "identifier",
               "text" : "YrsTextProtocol"
+            },
+            {
+              "kind" : "text",
+              "text" : " : AnyObject"
             }
           ]
         }
@@ -102,6 +106,7 @@
         "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsTextProtocol\/insertWithAttributes(tx:index:chunk:attrs:)",
         "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsTextProtocol\/length(tx:)",
         "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsTextProtocol\/observe(delegate:)",
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsTextProtocol\/rawPtr()",
         "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsTextProtocol\/removeRange(tx:start:length:)",
         "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsTextProtocol\/unobserve(subscriptionId:)"
       ],
@@ -870,6 +875,41 @@
   "title" : "observe(delegate:)",
   "type" : "topic",
   "url" : "\/documentation\/yniffi\/yrstextprotocol\/observe(delegate:)"
+},
+"doc://com.github.y-crdt.YSwift/documentation/Yniffi/YrsTextProtocol/rawPtr()": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "rawPtr"
+    },
+    {
+      "kind" : "text",
+      "text" : "() -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:6Yniffi16YrsCollectionPtra",
+      "text" : "YrsCollectionPtr"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsTextProtocol\/rawPtr()",
+  "kind" : "symbol",
+  "required" : true,
+  "role" : "symbol",
+  "title" : "rawPtr()",
+  "type" : "topic",
+  "url" : "\/documentation\/yniffi\/yrstextprotocol\/rawptr()"
 },
 "doc://com.github.y-crdt.YSwift/documentation/Yniffi/YrsTextProtocol/removeRange(tx:start:length:)": {
   "abstract" : [

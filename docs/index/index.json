@@ -42,18 +42,18 @@
                 "type" : "groupMarker"
               },
               {
-                "path" : "\/documentation\/yswift\/ydocument\/transactsync(_:)",
-                "title" : "func transactSync<T>((YrsTransaction) -> T) -> T",
+                "path" : "\/documentation\/yswift\/ydocument\/transactsync(origin:_:)",
+                "title" : "func transactSync<T>(origin: Origin?, (YrsTransaction) -> T) -> T",
                 "type" : "method"
               },
               {
-                "path" : "\/documentation\/yswift\/ydocument\/transact(_:)",
-                "title" : "func transact<T>((YrsTransaction) -> T) async -> T",
+                "path" : "\/documentation\/yswift\/ydocument\/transact(origin:_:)",
+                "title" : "func transact<T>(origin: Origin?, (YrsTransaction) -> T) async -> T",
                 "type" : "method"
               },
               {
-                "path" : "\/documentation\/yswift\/ydocument\/transactasync(_:completion:)",
-                "title" : "func transactAsync<T>((YrsTransaction) -> T, completion: (T) -> Void)",
+                "path" : "\/documentation\/yswift\/ydocument\/transactasync(_:_:completion:)",
+                "title" : "func transactAsync<T>(Origin?, (YrsTransaction) -> T, completion: (T) -> Void)",
                 "type" : "method"
               },
               {
@@ -63,6 +63,15 @@
               {
                 "path" : "\/documentation\/yswift\/ydocument\/diff(txn:from:)",
                 "title" : "func diff(txn: YrsTransaction, from: [UInt8]) -> [UInt8]",
+                "type" : "method"
+              },
+              {
+                "title" : "Undo and Redo",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/yswift\/ydocument\/undomanager(trackedrefs:)",
+                "title" : "func undoManager<T>(trackedRefs: [YCollection]) -> YUndoManager<T>",
                 "type" : "method"
               }
             ],
@@ -248,14 +257,23 @@
                 "type" : "groupMarker"
               },
               {
-                "path" : "\/documentation\/yswift\/yarray\/count-8owso",
+                "path" : "\/documentation\/yswift\/yarray\/count",
                 "title" : "var count: Int",
                 "type" : "property"
               },
               {
-                "path" : "\/documentation\/yswift\/yarray\/isempty-44nw7",
+                "path" : "\/documentation\/yswift\/yarray\/isempty",
                 "title" : "var isEmpty: Bool",
                 "type" : "property"
+              },
+              {
+                "title" : "Instance Methods",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/yswift\/yarray\/pointer()",
+                "title" : "func pointer() -> YrsCollectionPtr",
+                "type" : "method"
               },
               {
                 "title" : "Default Implementations",
@@ -343,22 +361,12 @@
                     "type" : "groupMarker"
                   },
                   {
-                    "path" : "\/documentation\/yswift\/yarray\/count-4zr8o",
-                    "title" : "var count: Int",
-                    "type" : "property"
-                  },
-                  {
                     "path" : "\/documentation\/yswift\/yarray\/first",
                     "title" : "var first: Self.Element?",
                     "type" : "property"
                   },
                   {
-                    "path" : "\/documentation\/yswift\/yarray\/isempty-1wx8",
-                    "title" : "var isEmpty: Bool",
-                    "type" : "property"
-                  },
-                  {
-                    "path" : "\/documentation\/yswift\/yarray\/underestimatedcount-7ypu6",
+                    "path" : "\/documentation\/yswift\/yarray\/underestimatedcount",
                     "title" : "var underestimatedCount: Int",
                     "type" : "property"
                   },
@@ -485,25 +493,6 @@
                     "path" : "\/documentation\/yswift\/yarray\/trimmingprefix(while:)",
                     "title" : "func trimmingPrefix(while: (Self.Element) throws -> Bool) rethrows -> Self.SubSequence",
                     "type" : "method"
-                  },
-                  {
-                    "title" : "Subscripts",
-                    "type" : "groupMarker"
-                  },
-                  {
-                    "path" : "\/documentation\/yswift\/yarray\/subscript(_:)-479j6",
-                    "title" : "subscript((UnboundedRange_) -> ()) -> Self.SubSequence",
-                    "type" : "subscript"
-                  },
-                  {
-                    "path" : "\/documentation\/yswift\/yarray\/subscript(_:)-51hzi",
-                    "title" : "subscript<R>(R) -> Self.SubSequence",
-                    "type" : "subscript"
-                  },
-                  {
-                    "path" : "\/documentation\/yswift\/yarray\/subscript(_:)-8qoen",
-                    "title" : "subscript(Range<Self.Index>) -> Slice<Self>",
-                    "type" : "subscript"
                   }
                 ],
                 "path" : "\/documentation\/yswift\/yarray\/collection-implementations",
@@ -576,33 +565,8 @@
                     "type" : "groupMarker"
                   },
                   {
-                    "path" : "\/documentation\/yswift\/yarray\/subscript(_:)-2t11v",
-                    "title" : "subscript((UnboundedRange_) -> ()) -> Self.SubSequence",
-                    "type" : "subscript"
-                  },
-                  {
-                    "path" : "\/documentation\/yswift\/yarray\/subscript(_:)-2yory",
+                    "path" : "\/documentation\/yswift\/yarray\/subscript(_:)",
                     "title" : "subscript(Int) -> T",
-                    "type" : "subscript"
-                  },
-                  {
-                    "path" : "\/documentation\/yswift\/yarray\/subscript(_:)-6dgx9",
-                    "title" : "subscript<R>(R) -> Self.SubSequence",
-                    "type" : "subscript"
-                  },
-                  {
-                    "path" : "\/documentation\/yswift\/yarray\/subscript(_:)-6pgc4",
-                    "title" : "subscript(Range<Self.Index>) -> Slice<Self>",
-                    "type" : "subscript"
-                  },
-                  {
-                    "path" : "\/documentation\/yswift\/yarray\/subscript(_:)-72yfg",
-                    "title" : "subscript(Range<Self.Index>) -> Self.SubSequence",
-                    "type" : "subscript"
-                  },
-                  {
-                    "path" : "\/documentation\/yswift\/yarray\/subscript(_:)-9sy5k",
-                    "title" : "subscript(Range<Self.Index>) -> Slice<Self>",
                     "type" : "subscript"
                   }
                 ],
@@ -659,11 +623,6 @@
                   {
                     "path" : "\/documentation\/yswift\/yarray\/publisher",
                     "title" : "var publisher: Publishers.Sequence<Self, Never>",
-                    "type" : "property"
-                  },
-                  {
-                    "path" : "\/documentation\/yswift\/yarray\/underestimatedcount-222dx",
-                    "title" : "var underestimatedCount: Int",
                     "type" : "property"
                   },
                   {
@@ -1108,6 +1067,15 @@
                 "type" : "property"
               },
               {
+                "title" : "Instance Methods",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/yswift\/ymap\/pointer()",
+                "title" : "func pointer() -> YrsCollectionPtr",
+                "type" : "method"
+              },
+              {
                 "title" : "Default Implementations",
                 "type" : "groupMarker"
               },
@@ -1500,6 +1468,15 @@
                 "type" : "enum"
               },
               {
+                "title" : "Instance Methods",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/yswift\/ytext\/pointer()",
+                "title" : "func pointer() -> YrsCollectionPtr",
+                "type" : "method"
+              },
+              {
                 "title" : "Default Implementations",
                 "type" : "groupMarker"
               },
@@ -1658,12 +1635,12 @@
                   },
                   {
                     "path" : "\/documentation\/yswift\/ysyncmessage\/kind-swift.enum\/encode(to:)",
-                    "title" : "func encode(to: Encoder) throws",
+                    "title" : "func encode(to: any Encoder) throws",
                     "type" : "method"
                   },
                   {
                     "path" : "\/documentation\/yswift\/ysyncmessage\/kind-swift.enum\/init(from:)",
-                    "title" : "init(from: Decoder) throws",
+                    "title" : "init(from: any Decoder) throws",
                     "type" : "init"
                   },
                   {
@@ -1694,7 +1671,7 @@
                       },
                       {
                         "path" : "\/documentation\/yswift\/ysyncmessage\/kind-swift.enum\/init(from:)",
-                        "title" : "init(from: Decoder) throws",
+                        "title" : "init(from: any Decoder) throws",
                         "type" : "init"
                       },
                       {
@@ -1712,7 +1689,7 @@
                       },
                       {
                         "path" : "\/documentation\/yswift\/ysyncmessage\/kind-swift.enum\/encode(to:)",
-                        "title" : "func encode(to: Encoder) throws",
+                        "title" : "func encode(to: any Encoder) throws",
                         "type" : "method"
                       },
                       {
@@ -1736,7 +1713,7 @@
               },
               {
                 "path" : "\/documentation\/yswift\/ysyncmessage\/init(from:)",
-                "title" : "init(from: Decoder) throws",
+                "title" : "init(from: any Decoder) throws",
                 "type" : "init"
               },
               {
@@ -1757,6 +1734,177 @@
             "path" : "\/documentation\/yswift\/ysyncmessage",
             "title" : "YSyncMessage",
             "type" : "struct"
+          },
+          {
+            "title" : "Undo Manager",
+            "type" : "groupMarker"
+          },
+          {
+            "children" : [
+              {
+                "title" : "Instance Methods",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/yswift\/yundomanager\/addorigin(_:)",
+                "title" : "func addOrigin(Origin)",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yswift\/yundomanager\/clear()",
+                "title" : "func clear() throws",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yswift\/yundomanager\/observeadded(_:)",
+                "title" : "func observeAdded((UndoEvent, T?) -> T?) -> UInt32",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yswift\/yundomanager\/observepopped(_:)",
+                "title" : "func observePopped((UndoEvent, T?) -> T?) -> UInt32",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yswift\/yundomanager\/observeupdated(_:)",
+                "title" : "func observeUpdated((UndoEvent, T?) -> T?) -> UInt32",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yswift\/yundomanager\/redo()",
+                "title" : "func redo() throws -> Bool",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yswift\/yundomanager\/removeorigin(_:)",
+                "title" : "func removeOrigin(Origin)",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yswift\/yundomanager\/track(_:)",
+                "title" : "func track(YCollection)",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yswift\/yundomanager\/undo()",
+                "title" : "func undo() throws -> Bool",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yswift\/yundomanager\/unobserveadded(_:)",
+                "title" : "func unobserveAdded(UInt32)",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yswift\/yundomanager\/unobservepopped(_:)",
+                "title" : "func unobservePopped(UInt32)",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yswift\/yundomanager\/unobserveupdated(_:)",
+                "title" : "func unobserveUpdated(UInt32)",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yswift\/yundomanager\/wrap()",
+                "title" : "func wrap()",
+                "type" : "method"
+              }
+            ],
+            "path" : "\/documentation\/yswift\/yundomanager",
+            "title" : "YUndoManager",
+            "type" : "class"
+          },
+          {
+            "children" : [
+              {
+                "title" : "Initializers",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/yswift\/origin\/init(from:)",
+                "title" : "init(from: any Decoder) throws",
+                "type" : "init"
+              },
+              {
+                "title" : "Instance Properties",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/yswift\/origin\/origin",
+                "title" : "let origin: YrsOrigin",
+                "type" : "property"
+              },
+              {
+                "title" : "Default Implementations",
+                "type" : "groupMarker"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Operators",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/yswift\/origin\/!=(_:_:)",
+                    "title" : "static func != (Self, Self) -> Bool",
+                    "type" : "op"
+                  }
+                ],
+                "path" : "\/documentation\/yswift\/origin\/equatable-implementations",
+                "title" : "Equatable Implementations",
+                "type" : "symbol"
+              }
+            ],
+            "path" : "\/documentation\/yswift\/origin",
+            "title" : "Origin",
+            "type" : "struct"
+          },
+          {
+            "children" : [
+              {
+                "title" : "Instance Properties",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/yswift\/undoevent\/origin",
+                "title" : "var origin: Origin?",
+                "type" : "property"
+              },
+              {
+                "path" : "\/documentation\/yswift\/undoevent\/type",
+                "title" : "var type: YrsUndoEventKind",
+                "type" : "property"
+              },
+              {
+                "title" : "Instance Methods",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/yswift\/undoevent\/haschanged(_:)",
+                "title" : "func hasChanged<T>(T) -> Bool",
+                "type" : "method"
+              }
+            ],
+            "path" : "\/documentation\/yswift\/undoevent",
+            "title" : "UndoEvent",
+            "type" : "struct"
+          },
+          {
+            "children" : [
+              {
+                "title" : "Instance Methods",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/yswift\/ycollection\/pointer()",
+                "title" : "func pointer() -> YrsCollectionPtr",
+                "type" : "method"
+              }
+            ],
+            "path" : "\/documentation\/yswift\/ycollection",
+            "title" : "YCollection",
+            "type" : "protocol"
           }
         ],
         "path" : "\/documentation\/yswift",
@@ -1816,6 +1964,11 @@
                 "type" : "method"
               },
               {
+                "path" : "\/documentation\/yniffi\/yrsarray\/rawptr()",
+                "title" : "func rawPtr() -> YrsCollectionPtr",
+                "type" : "method"
+              },
+              {
                 "path" : "\/documentation\/yniffi\/yrsarray\/remove(tx:index:)",
                 "title" : "func remove(tx: YrsTransaction, index: UInt32)",
                 "type" : "method"
@@ -1828,6 +1981,11 @@
               {
                 "path" : "\/documentation\/yniffi\/yrsarray\/toa(tx:)",
                 "title" : "func toA(tx: YrsTransaction) -> [String]",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsarray\/unifficlonepointer()",
+                "title" : "func uniffiClonePointer() -> UnsafeMutableRawPointer",
                 "type" : "method"
               },
               {
@@ -1876,8 +2034,18 @@
                 "type" : "method"
               },
               {
-                "path" : "\/documentation\/yniffi\/yrsdoc\/transact()",
-                "title" : "func transact() -> YrsTransaction",
+                "path" : "\/documentation\/yniffi\/yrsdoc\/transact(origin:)",
+                "title" : "func transact(origin: YrsOrigin?) -> YrsTransaction",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsdoc\/undomanager(trackedrefs:)",
+                "title" : "func undoManager(trackedRefs: [YrsCollectionPtr]) -> YrsUndoManager",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsdoc\/unifficlonepointer()",
+                "title" : "func uniffiClonePointer() -> UnsafeMutableRawPointer",
                 "type" : "method"
               }
             ],
@@ -1932,8 +2100,18 @@
                 "type" : "method"
               },
               {
+                "path" : "\/documentation\/yniffi\/yrsmap\/rawptr()",
+                "title" : "func rawPtr() -> YrsCollectionPtr",
+                "type" : "method"
+              },
+              {
                 "path" : "\/documentation\/yniffi\/yrsmap\/remove(tx:key:)",
                 "title" : "func remove(tx: YrsTransaction, key: String) throws -> String?",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsmap\/unifficlonepointer()",
+                "title" : "func uniffiClonePointer() -> UnsafeMutableRawPointer",
                 "type" : "method"
               },
               {
@@ -2003,8 +2181,18 @@
                 "type" : "method"
               },
               {
+                "path" : "\/documentation\/yniffi\/yrstext\/rawptr()",
+                "title" : "func rawPtr() -> YrsCollectionPtr",
+                "type" : "method"
+              },
+              {
                 "path" : "\/documentation\/yniffi\/yrstext\/removerange(tx:start:length:)",
                 "title" : "func removeRange(tx: YrsTransaction, start: UInt32, length: UInt32)",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrstext\/unifficlonepointer()",
+                "title" : "func uniffiClonePointer() -> UnsafeMutableRawPointer",
                 "type" : "method"
               },
               {
@@ -2026,6 +2214,11 @@
               {
                 "path" : "\/documentation\/yniffi\/yrstransaction\/free()",
                 "title" : "func free()",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrstransaction\/origin()",
+                "title" : "func origin() -> YrsOrigin?",
                 "type" : "method"
               },
               {
@@ -2067,10 +2260,127 @@
                 "path" : "\/documentation\/yniffi\/yrstransaction\/transactionstatevector()",
                 "title" : "func transactionStateVector() -> [UInt8]",
                 "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrstransaction\/unifficlonepointer()",
+                "title" : "func uniffiClonePointer() -> UnsafeMutableRawPointer",
+                "type" : "method"
               }
             ],
             "path" : "\/documentation\/yniffi\/yrstransaction",
             "title" : "YrsTransaction",
+            "type" : "class"
+          },
+          {
+            "children" : [
+              {
+                "title" : "Instance Methods",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsundoevent\/haschanged(sharedref:)",
+                "title" : "func hasChanged(sharedRef: YrsCollectionPtr) -> Bool",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsundoevent\/kind()",
+                "title" : "func kind() -> YrsUndoEventKind",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsundoevent\/origin()",
+                "title" : "func origin() -> YrsOrigin?",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsundoevent\/unifficlonepointer()",
+                "title" : "func uniffiClonePointer() -> UnsafeMutableRawPointer",
+                "type" : "method"
+              }
+            ],
+            "path" : "\/documentation\/yniffi\/yrsundoevent",
+            "title" : "YrsUndoEvent",
+            "type" : "class"
+          },
+          {
+            "children" : [
+              {
+                "title" : "Instance Methods",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsundomanager\/addorigin(origin:)",
+                "title" : "func addOrigin(origin: YrsOrigin)",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsundomanager\/addscope(trackedref:)",
+                "title" : "func addScope(trackedRef: YrsCollectionPtr)",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsundomanager\/clear()",
+                "title" : "func clear() throws",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsundomanager\/observeadded(delegate:)",
+                "title" : "func observeAdded(delegate: YrsUndoManagerObservationDelegate) -> UInt32",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsundomanager\/observepopped(delegate:)",
+                "title" : "func observePopped(delegate: YrsUndoManagerObservationDelegate) -> UInt32",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsundomanager\/observeupdated(delegate:)",
+                "title" : "func observeUpdated(delegate: YrsUndoManagerObservationDelegate) -> UInt32",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsundomanager\/redo()",
+                "title" : "func redo() throws -> Bool",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsundomanager\/removeorigin(origin:)",
+                "title" : "func removeOrigin(origin: YrsOrigin)",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsundomanager\/undo()",
+                "title" : "func undo() throws -> Bool",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsundomanager\/unifficlonepointer()",
+                "title" : "func uniffiClonePointer() -> UnsafeMutableRawPointer",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsundomanager\/unobserveadded(subscriptionid:)",
+                "title" : "func unobserveAdded(subscriptionId: UInt32)",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsundomanager\/unobservepopped(subscriptionid:)",
+                "title" : "func unobservePopped(subscriptionId: UInt32)",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsundomanager\/unobserveupdated(subscriptionid:)",
+                "title" : "func unobserveUpdated(subscriptionId: UInt32)",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsundomanager\/wrapchanges()",
+                "title" : "func wrapChanges()",
+                "type" : "method"
+              }
+            ],
+            "path" : "\/documentation\/yniffi\/yrsundomanager",
+            "title" : "YrsUndoManager",
             "type" : "class"
           },
           {
@@ -2156,6 +2466,11 @@
                 "type" : "method"
               },
               {
+                "path" : "\/documentation\/yniffi\/yrsarrayprotocol\/rawptr()",
+                "title" : "func rawPtr() -> YrsCollectionPtr",
+                "type" : "method"
+              },
+              {
                 "path" : "\/documentation\/yniffi\/yrsarrayprotocol\/remove(tx:index:)",
                 "title" : "func remove(tx: YrsTransaction, index: UInt32)",
                 "type" : "method"
@@ -2207,8 +2522,13 @@
                 "type" : "method"
               },
               {
-                "path" : "\/documentation\/yniffi\/yrsdocprotocol\/transact()",
-                "title" : "func transact() -> YrsTransaction",
+                "path" : "\/documentation\/yniffi\/yrsdocprotocol\/transact(origin:)",
+                "title" : "func transact(origin: YrsOrigin?) -> YrsTransaction",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsdocprotocol\/undomanager(trackedrefs:)",
+                "title" : "func undoManager(trackedRefs: [YrsCollectionPtr]) -> YrsUndoManager",
                 "type" : "method"
               }
             ],
@@ -2311,6 +2631,11 @@
                 "type" : "method"
               },
               {
+                "path" : "\/documentation\/yniffi\/yrsmapprotocol\/rawptr()",
+                "title" : "func rawPtr() -> YrsCollectionPtr",
+                "type" : "method"
+              },
+              {
                 "path" : "\/documentation\/yniffi\/yrsmapprotocol\/remove(tx:key:)",
                 "title" : "func remove(tx: YrsTransaction, key: String) throws -> String?",
                 "type" : "method"
@@ -2398,6 +2723,11 @@
                 "type" : "method"
               },
               {
+                "path" : "\/documentation\/yniffi\/yrstextprotocol\/rawptr()",
+                "title" : "func rawPtr() -> YrsCollectionPtr",
+                "type" : "method"
+              },
+              {
                 "path" : "\/documentation\/yniffi\/yrstextprotocol\/removerange(tx:start:length:)",
                 "title" : "func removeRange(tx: YrsTransaction, start: UInt32, length: UInt32)",
                 "type" : "method"
@@ -2421,6 +2751,11 @@
               {
                 "path" : "\/documentation\/yniffi\/yrstransactionprotocol\/free()",
                 "title" : "func free()",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrstransactionprotocol\/origin()",
+                "title" : "func origin() -> YrsOrigin?",
                 "type" : "method"
               },
               {
@@ -2466,6 +2801,124 @@
             ],
             "path" : "\/documentation\/yniffi\/yrstransactionprotocol",
             "title" : "YrsTransactionProtocol",
+            "type" : "protocol"
+          },
+          {
+            "children" : [
+              {
+                "title" : "Instance Methods",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsundoeventprotocol\/haschanged(sharedref:)",
+                "title" : "func hasChanged(sharedRef: YrsCollectionPtr) -> Bool",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsundoeventprotocol\/kind()",
+                "title" : "func kind() -> YrsUndoEventKind",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsundoeventprotocol\/origin()",
+                "title" : "func origin() -> YrsOrigin?",
+                "type" : "method"
+              }
+            ],
+            "path" : "\/documentation\/yniffi\/yrsundoeventprotocol",
+            "title" : "YrsUndoEventProtocol",
+            "type" : "protocol"
+          },
+          {
+            "children" : [
+              {
+                "title" : "Instance Methods",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsundomanagerobservationdelegate\/call(e:ptr:)",
+                "title" : "func call(e: YrsUndoEvent, ptr: UInt64) -> UInt64",
+                "type" : "method"
+              }
+            ],
+            "path" : "\/documentation\/yniffi\/yrsundomanagerobservationdelegate",
+            "title" : "YrsUndoManagerObservationDelegate",
+            "type" : "protocol"
+          },
+          {
+            "children" : [
+              {
+                "title" : "Instance Methods",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsundomanagerprotocol\/addorigin(origin:)",
+                "title" : "func addOrigin(origin: YrsOrigin)",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsundomanagerprotocol\/addscope(trackedref:)",
+                "title" : "func addScope(trackedRef: YrsCollectionPtr)",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsundomanagerprotocol\/clear()",
+                "title" : "func clear() throws",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsundomanagerprotocol\/observeadded(delegate:)",
+                "title" : "func observeAdded(delegate: YrsUndoManagerObservationDelegate) -> UInt32",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsundomanagerprotocol\/observepopped(delegate:)",
+                "title" : "func observePopped(delegate: YrsUndoManagerObservationDelegate) -> UInt32",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsundomanagerprotocol\/observeupdated(delegate:)",
+                "title" : "func observeUpdated(delegate: YrsUndoManagerObservationDelegate) -> UInt32",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsundomanagerprotocol\/redo()",
+                "title" : "func redo() throws -> Bool",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsundomanagerprotocol\/removeorigin(origin:)",
+                "title" : "func removeOrigin(origin: YrsOrigin)",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsundomanagerprotocol\/undo()",
+                "title" : "func undo() throws -> Bool",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsundomanagerprotocol\/unobserveadded(subscriptionid:)",
+                "title" : "func unobserveAdded(subscriptionId: UInt32)",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsundomanagerprotocol\/unobservepopped(subscriptionid:)",
+                "title" : "func unobservePopped(subscriptionId: UInt32)",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsundomanagerprotocol\/unobserveupdated(subscriptionid:)",
+                "title" : "func unobserveUpdated(subscriptionId: UInt32)",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsundomanagerprotocol\/wrapchanges()",
+                "title" : "func wrapChanges()",
+                "type" : "method"
+              }
+            ],
+            "path" : "\/documentation\/yniffi\/yrsundomanagerprotocol",
+            "title" : "YrsUndoManagerProtocol",
             "type" : "protocol"
           },
           {
@@ -2543,6 +2996,37 @@
             ],
             "path" : "\/documentation\/yniffi\/fficonvertertypeyrschange",
             "title" : "FfiConverterTypeYrsChange",
+            "type" : "struct"
+          },
+          {
+            "children" : [
+              {
+                "title" : "Type Methods",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/fficonvertertypeyrscollectionptr\/lift(_:)",
+                "title" : "static func lift(UInt64) throws -> YrsCollectionPtr",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/fficonvertertypeyrscollectionptr\/lower(_:)",
+                "title" : "static func lower(YrsCollectionPtr) -> UInt64",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/fficonvertertypeyrscollectionptr\/read(from:)",
+                "title" : "static func read(from: inout (data: Data, offset: Data.Index)) throws -> YrsCollectionPtr",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/fficonvertertypeyrscollectionptr\/write(_:into:)",
+                "title" : "static func write(YrsCollectionPtr, into: inout [UInt8])",
+                "type" : "method"
+              }
+            ],
+            "path" : "\/documentation\/yniffi\/fficonvertertypeyrscollectionptr",
+            "title" : "FfiConverterTypeYrsCollectionPtr",
             "type" : "struct"
           },
           {
@@ -2677,6 +3161,37 @@
                 "type" : "groupMarker"
               },
               {
+                "path" : "\/documentation\/yniffi\/fficonvertertypeyrsorigin\/lift(_:)",
+                "title" : "static func lift(RustBuffer) throws -> YrsOrigin",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/fficonvertertypeyrsorigin\/lower(_:)",
+                "title" : "static func lower(YrsOrigin) -> RustBuffer",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/fficonvertertypeyrsorigin\/read(from:)",
+                "title" : "static func read(from: inout (data: Data, offset: Data.Index)) throws -> YrsOrigin",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/fficonvertertypeyrsorigin\/write(_:into:)",
+                "title" : "static func write(YrsOrigin, into: inout [UInt8])",
+                "type" : "method"
+              }
+            ],
+            "path" : "\/documentation\/yniffi\/fficonvertertypeyrsorigin",
+            "title" : "FfiConverterTypeYrsOrigin",
+            "type" : "struct"
+          },
+          {
+            "children" : [
+              {
+                "title" : "Type Methods",
+                "type" : "groupMarker"
+              },
+              {
                 "path" : "\/documentation\/yniffi\/fficonvertertypeyrstext\/lift(_:)",
                 "title" : "static func lift(UnsafeMutableRawPointer) throws -> YrsText",
                 "type" : "method"
@@ -2730,6 +3245,110 @@
             ],
             "path" : "\/documentation\/yniffi\/fficonvertertypeyrstransaction",
             "title" : "FfiConverterTypeYrsTransaction",
+            "type" : "struct"
+          },
+          {
+            "children" : [
+              {
+                "title" : "Type Methods",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/fficonvertertypeyrsundoerror\/read(from:)",
+                "title" : "static func read(from: inout (data: Data, offset: Data.Index)) throws -> YrsUndoError",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/fficonvertertypeyrsundoerror\/write(_:into:)",
+                "title" : "static func write(YrsUndoError, into: inout [UInt8])",
+                "type" : "method"
+              }
+            ],
+            "path" : "\/documentation\/yniffi\/fficonvertertypeyrsundoerror",
+            "title" : "FfiConverterTypeYrsUndoError",
+            "type" : "struct"
+          },
+          {
+            "children" : [
+              {
+                "title" : "Type Methods",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/fficonvertertypeyrsundoevent\/lift(_:)",
+                "title" : "static func lift(UnsafeMutableRawPointer) throws -> YrsUndoEvent",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/fficonvertertypeyrsundoevent\/lower(_:)",
+                "title" : "static func lower(YrsUndoEvent) -> UnsafeMutableRawPointer",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/fficonvertertypeyrsundoevent\/read(from:)",
+                "title" : "static func read(from: inout (data: Data, offset: Data.Index)) throws -> YrsUndoEvent",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/fficonvertertypeyrsundoevent\/write(_:into:)",
+                "title" : "static func write(YrsUndoEvent, into: inout [UInt8])",
+                "type" : "method"
+              }
+            ],
+            "path" : "\/documentation\/yniffi\/fficonvertertypeyrsundoevent",
+            "title" : "FfiConverterTypeYrsUndoEvent",
+            "type" : "struct"
+          },
+          {
+            "children" : [
+              {
+                "title" : "Type Methods",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/fficonvertertypeyrsundoeventkind\/read(from:)",
+                "title" : "static func read(from: inout (data: Data, offset: Data.Index)) throws -> YrsUndoEventKind",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/fficonvertertypeyrsundoeventkind\/write(_:into:)",
+                "title" : "static func write(YrsUndoEventKind, into: inout [UInt8])",
+                "type" : "method"
+              }
+            ],
+            "path" : "\/documentation\/yniffi\/fficonvertertypeyrsundoeventkind",
+            "title" : "FfiConverterTypeYrsUndoEventKind",
+            "type" : "struct"
+          },
+          {
+            "children" : [
+              {
+                "title" : "Type Methods",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/fficonvertertypeyrsundomanager\/lift(_:)",
+                "title" : "static func lift(UnsafeMutableRawPointer) throws -> YrsUndoManager",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/fficonvertertypeyrsundomanager\/lower(_:)",
+                "title" : "static func lower(YrsUndoManager) -> UnsafeMutableRawPointer",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/fficonvertertypeyrsundomanager\/read(from:)",
+                "title" : "static func read(from: inout (data: Data, offset: Data.Index)) throws -> YrsUndoManager",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/fficonvertertypeyrsundomanager\/write(_:into:)",
+                "title" : "static func write(YrsUndoManager, into: inout [UInt8])",
+                "type" : "method"
+              }
+            ],
+            "path" : "\/documentation\/yniffi\/fficonvertertypeyrsundomanager",
+            "title" : "FfiConverterTypeYrsUndoManager",
             "type" : "struct"
           },
           {
@@ -2808,6 +3427,16 @@
             "type" : "groupMarker"
           },
           {
+            "path" : "\/documentation\/yniffi\/fficonvertertypeyrsarray_lift(_:)",
+            "title" : "func FfiConverterTypeYrsArray_lift(UnsafeMutableRawPointer) throws -> YrsArray",
+            "type" : "func"
+          },
+          {
+            "path" : "\/documentation\/yniffi\/fficonvertertypeyrsarray_lower(_:)",
+            "title" : "func FfiConverterTypeYrsArray_lower(YrsArray) -> UnsafeMutableRawPointer",
+            "type" : "func"
+          },
+          {
             "path" : "\/documentation\/yniffi\/fficonvertertypeyrschange_lift(_:)",
             "title" : "func FfiConverterTypeYrsChange_lift(RustBuffer) throws -> YrsChange",
             "type" : "func"
@@ -2818,6 +3447,16 @@
             "type" : "func"
           },
           {
+            "path" : "\/documentation\/yniffi\/fficonvertertypeyrscollectionptr_lift(_:)",
+            "title" : "func FfiConverterTypeYrsCollectionPtr_lift(UInt64) throws -> YrsCollectionPtr",
+            "type" : "func"
+          },
+          {
+            "path" : "\/documentation\/yniffi\/fficonvertertypeyrscollectionptr_lower(_:)",
+            "title" : "func FfiConverterTypeYrsCollectionPtr_lower(YrsCollectionPtr) -> UInt64",
+            "type" : "func"
+          },
+          {
             "path" : "\/documentation\/yniffi\/fficonvertertypeyrsdelta_lift(_:)",
             "title" : "func FfiConverterTypeYrsDelta_lift(RustBuffer) throws -> YrsDelta",
             "type" : "func"
@@ -2825,6 +3464,16 @@
           {
             "path" : "\/documentation\/yniffi\/fficonvertertypeyrsdelta_lower(_:)",
             "title" : "func FfiConverterTypeYrsDelta_lower(YrsDelta) -> RustBuffer",
+            "type" : "func"
+          },
+          {
+            "path" : "\/documentation\/yniffi\/fficonvertertypeyrsdoc_lift(_:)",
+            "title" : "func FfiConverterTypeYrsDoc_lift(UnsafeMutableRawPointer) throws -> YrsDoc",
+            "type" : "func"
+          },
+          {
+            "path" : "\/documentation\/yniffi\/fficonvertertypeyrsdoc_lower(_:)",
+            "title" : "func FfiConverterTypeYrsDoc_lower(YrsDoc) -> UnsafeMutableRawPointer",
             "type" : "func"
           },
           {
@@ -2846,6 +3495,90 @@
             "path" : "\/documentation\/yniffi\/fficonvertertypeyrsmapchange_lower(_:)",
             "title" : "func FfiConverterTypeYrsMapChange_lower(YrsMapChange) -> RustBuffer",
             "type" : "func"
+          },
+          {
+            "path" : "\/documentation\/yniffi\/fficonvertertypeyrsmap_lift(_:)",
+            "title" : "func FfiConverterTypeYrsMap_lift(UnsafeMutableRawPointer) throws -> YrsMap",
+            "type" : "func"
+          },
+          {
+            "path" : "\/documentation\/yniffi\/fficonvertertypeyrsmap_lower(_:)",
+            "title" : "func FfiConverterTypeYrsMap_lower(YrsMap) -> UnsafeMutableRawPointer",
+            "type" : "func"
+          },
+          {
+            "path" : "\/documentation\/yniffi\/fficonvertertypeyrsorigin_lift(_:)",
+            "title" : "func FfiConverterTypeYrsOrigin_lift(RustBuffer) throws -> YrsOrigin",
+            "type" : "func"
+          },
+          {
+            "path" : "\/documentation\/yniffi\/fficonvertertypeyrsorigin_lower(_:)",
+            "title" : "func FfiConverterTypeYrsOrigin_lower(YrsOrigin) -> RustBuffer",
+            "type" : "func"
+          },
+          {
+            "path" : "\/documentation\/yniffi\/fficonvertertypeyrstext_lift(_:)",
+            "title" : "func FfiConverterTypeYrsText_lift(UnsafeMutableRawPointer) throws -> YrsText",
+            "type" : "func"
+          },
+          {
+            "path" : "\/documentation\/yniffi\/fficonvertertypeyrstext_lower(_:)",
+            "title" : "func FfiConverterTypeYrsText_lower(YrsText) -> UnsafeMutableRawPointer",
+            "type" : "func"
+          },
+          {
+            "path" : "\/documentation\/yniffi\/fficonvertertypeyrstransaction_lift(_:)",
+            "title" : "func FfiConverterTypeYrsTransaction_lift(UnsafeMutableRawPointer) throws -> YrsTransaction",
+            "type" : "func"
+          },
+          {
+            "path" : "\/documentation\/yniffi\/fficonvertertypeyrstransaction_lower(_:)",
+            "title" : "func FfiConverterTypeYrsTransaction_lower(YrsTransaction) -> UnsafeMutableRawPointer",
+            "type" : "func"
+          },
+          {
+            "path" : "\/documentation\/yniffi\/fficonvertertypeyrsundoeventkind_lift(_:)",
+            "title" : "func FfiConverterTypeYrsUndoEventKind_lift(RustBuffer) throws -> YrsUndoEventKind",
+            "type" : "func"
+          },
+          {
+            "path" : "\/documentation\/yniffi\/fficonvertertypeyrsundoeventkind_lower(_:)",
+            "title" : "func FfiConverterTypeYrsUndoEventKind_lower(YrsUndoEventKind) -> RustBuffer",
+            "type" : "func"
+          },
+          {
+            "path" : "\/documentation\/yniffi\/fficonvertertypeyrsundoevent_lift(_:)",
+            "title" : "func FfiConverterTypeYrsUndoEvent_lift(UnsafeMutableRawPointer) throws -> YrsUndoEvent",
+            "type" : "func"
+          },
+          {
+            "path" : "\/documentation\/yniffi\/fficonvertertypeyrsundoevent_lower(_:)",
+            "title" : "func FfiConverterTypeYrsUndoEvent_lower(YrsUndoEvent) -> UnsafeMutableRawPointer",
+            "type" : "func"
+          },
+          {
+            "path" : "\/documentation\/yniffi\/fficonvertertypeyrsundomanager_lift(_:)",
+            "title" : "func FfiConverterTypeYrsUndoManager_lift(UnsafeMutableRawPointer) throws -> YrsUndoManager",
+            "type" : "func"
+          },
+          {
+            "path" : "\/documentation\/yniffi\/fficonvertertypeyrsundomanager_lower(_:)",
+            "title" : "func FfiConverterTypeYrsUndoManager_lower(YrsUndoManager) -> UnsafeMutableRawPointer",
+            "type" : "func"
+          },
+          {
+            "title" : "Type Aliases",
+            "type" : "groupMarker"
+          },
+          {
+            "path" : "\/documentation\/yniffi\/yrscollectionptr",
+            "title" : "YrsCollectionPtr",
+            "type" : "typealias"
+          },
+          {
+            "path" : "\/documentation\/yniffi\/yrsorigin",
+            "title" : "YrsOrigin",
+            "type" : "typealias"
           },
           {
             "title" : "Enumerations",
@@ -2906,11 +3639,6 @@
             ],
             "path" : "\/documentation\/yniffi\/codingerror",
             "title" : "CodingError",
-            "type" : "enum"
-          },
-          {
-            "path" : "\/documentation\/yniffi\/yniffilifecycle",
-            "title" : "YniffiLifecycle",
             "type" : "enum"
           },
           {
@@ -3049,6 +3777,99 @@
             ],
             "path" : "\/documentation\/yniffi\/yrsentrychange",
             "title" : "YrsEntryChange",
+            "type" : "enum"
+          },
+          {
+            "children" : [
+              {
+                "title" : "Enumeration Cases",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsundoerror\/pendingtransaction(message:)",
+                "title" : "case PendingTransaction(message: String)",
+                "type" : "case"
+              },
+              {
+                "title" : "Default Implementations",
+                "type" : "groupMarker"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Operators",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/yniffi\/yrsundoerror\/!=(_:_:)",
+                    "title" : "static func != (Self, Self) -> Bool",
+                    "type" : "op"
+                  }
+                ],
+                "path" : "\/documentation\/yniffi\/yrsundoerror\/equatable-implementations",
+                "title" : "Equatable Implementations",
+                "type" : "symbol"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Instance Properties",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/yniffi\/yrsundoerror\/localizeddescription",
+                    "title" : "var localizedDescription: String",
+                    "type" : "property"
+                  }
+                ],
+                "path" : "\/documentation\/yniffi\/yrsundoerror\/error-implementations",
+                "title" : "Error Implementations",
+                "type" : "symbol"
+              }
+            ],
+            "path" : "\/documentation\/yniffi\/yrsundoerror",
+            "title" : "YrsUndoError",
+            "type" : "enum"
+          },
+          {
+            "children" : [
+              {
+                "title" : "Enumeration Cases",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsundoeventkind\/redo",
+                "title" : "case redo",
+                "type" : "case"
+              },
+              {
+                "path" : "\/documentation\/yniffi\/yrsundoeventkind\/undo",
+                "title" : "case undo",
+                "type" : "case"
+              },
+              {
+                "title" : "Default Implementations",
+                "type" : "groupMarker"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Operators",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/yniffi\/yrsundoeventkind\/!=(_:_:)",
+                    "title" : "static func != (Self, Self) -> Bool",
+                    "type" : "op"
+                  }
+                ],
+                "path" : "\/documentation\/yniffi\/yrsundoeventkind\/equatable-implementations",
+                "title" : "Equatable Implementations",
+                "type" : "symbol"
+              }
+            ],
+            "path" : "\/documentation\/yniffi\/yrsundoeventkind",
+            "title" : "YrsUndoEventKind",
             "type" : "enum"
           }
         ],

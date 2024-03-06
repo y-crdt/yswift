@@ -218,7 +218,8 @@
   "relationshipsSections" : [
     {
       "identifiers" : [
-        "doc:\/\/com.github.y-crdt.YSwift\/ST"
+        "doc:\/\/com.github.y-crdt.YSwift\/ST",
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YCollection"
       ],
       "kind" : "relationships",
       "title" : "Conforms To",
@@ -292,6 +293,12 @@
       "title" : "Instance Properties"
     },
     {
+      "identifiers" : [
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YMap\/pointer()"
+      ],
+      "title" : "Instance Methods"
+    },
+    {
       "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YMap\/Sequence-Implementations"
@@ -331,6 +338,40 @@
   "title" : "YSwift",
   "type" : "topic",
   "url" : "\/documentation\/yswift"
+},
+"doc://com.github.y-crdt.YSwift/documentation/YSwift/YCollection": {
+  "abstract" : [
+    {
+      "text" : "A type that contains a reference to Yrs shared collection type.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "protocol"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "YCollection"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YCollection",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "YCollection"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "YCollection",
+  "type" : "topic",
+  "url" : "\/documentation\/yswift\/ycollection"
 },
 "doc://com.github.y-crdt.YSwift/documentation/YSwift/YDocument": {
   "abstract" : [
@@ -1097,6 +1138,40 @@
   "title" : "observe(_:)",
   "type" : "topic",
   "url" : "\/documentation\/yswift\/ymap\/observe(_:)"
+},
+"doc://com.github.y-crdt.YSwift/documentation/YSwift/YMap/pointer()": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "pointer"
+    },
+    {
+      "kind" : "text",
+      "text" : "() -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:6Yniffi16YrsCollectionPtra",
+      "text" : "YrsCollectionPtr"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YMap\/pointer()",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "pointer()",
+  "type" : "topic",
+  "url" : "\/documentation\/yswift\/ymap\/pointer()"
 },
 "doc://com.github.y-crdt.YSwift/documentation/YSwift/YMap/removeAll(transaction:)": {
   "abstract" : [

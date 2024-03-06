@@ -214,7 +214,8 @@
         "doc:\/\/com.github.y-crdt.YSwift\/Sl",
         "doc:\/\/com.github.y-crdt.YSwift\/SM",
         "doc:\/\/com.github.y-crdt.YSwift\/Sk",
-        "doc:\/\/com.github.y-crdt.YSwift\/ST"
+        "doc:\/\/com.github.y-crdt.YSwift\/ST",
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YCollection"
       ],
       "kind" : "relationships",
       "title" : "Conforms To",
@@ -281,10 +282,16 @@
     },
     {
       "identifiers" : [
-        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YArray\/count-8owso",
-        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YArray\/isEmpty-44nw7"
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YArray\/count",
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YArray\/isEmpty"
       ],
       "title" : "Instance Properties"
+    },
+    {
+      "identifiers" : [
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YArray\/pointer()"
+      ],
+      "title" : "Instance Methods"
     },
     {
       "generated" : true,
@@ -569,7 +576,7 @@
   "type" : "topic",
   "url" : "\/documentation\/yswift\/yarray\/append(_:transaction:)"
 },
-"doc://com.github.y-crdt.YSwift/documentation/YSwift/YArray/count-8owso": {
+"doc://com.github.y-crdt.YSwift/documentation/YSwift/YArray/count": {
   "abstract" : [
     {
       "text" : "The length of the list.",
@@ -599,12 +606,12 @@
       "text" : "Int"
     }
   ],
-  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YArray\/count-8owso",
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YArray\/count",
   "kind" : "symbol",
   "role" : "symbol",
   "title" : "count",
   "type" : "topic",
-  "url" : "\/documentation\/yswift\/yarray\/count-8owso"
+  "url" : "\/documentation\/yswift\/yarray\/count"
 },
 "doc://com.github.y-crdt.YSwift/documentation/YSwift/YArray/each(transaction:_:)": {
   "abstract" : [
@@ -914,7 +921,7 @@
   "type" : "topic",
   "url" : "\/documentation\/yswift\/yarray\/insertarray(at:values:transaction:)"
 },
-"doc://com.github.y-crdt.YSwift/documentation/YSwift/YArray/isEmpty-44nw7": {
+"doc://com.github.y-crdt.YSwift/documentation/YSwift/YArray/isEmpty": {
   "abstract" : [
     {
       "text" : "A Boolean value that indicates whether the list is empty.",
@@ -944,12 +951,12 @@
       "text" : "Bool"
     }
   ],
-  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YArray\/isEmpty-44nw7",
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YArray\/isEmpty",
   "kind" : "symbol",
   "role" : "symbol",
   "title" : "isEmpty",
   "type" : "topic",
-  "url" : "\/documentation\/yswift\/yarray\/isempty-44nw7"
+  "url" : "\/documentation\/yswift\/yarray\/isempty"
 },
 "doc://com.github.y-crdt.YSwift/documentation/YSwift/YArray/length(transaction:)": {
   "abstract" : [
@@ -1136,6 +1143,40 @@
   "title" : "observe(_:)",
   "type" : "topic",
   "url" : "\/documentation\/yswift\/yarray\/observe(_:)"
+},
+"doc://com.github.y-crdt.YSwift/documentation/YSwift/YArray/pointer()": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "pointer"
+    },
+    {
+      "kind" : "text",
+      "text" : "() -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:6Yniffi16YrsCollectionPtra",
+      "text" : "YrsCollectionPtr"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YArray\/pointer()",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "pointer()",
+  "type" : "topic",
+  "url" : "\/documentation\/yswift\/yarray\/pointer()"
 },
 "doc://com.github.y-crdt.YSwift/documentation/YSwift/YArray/prepend(_:transaction:)": {
   "abstract" : [
@@ -1476,6 +1517,40 @@
   "title" : "YArrayChange",
   "type" : "topic",
   "url" : "\/documentation\/yswift\/yarraychange"
+},
+"doc://com.github.y-crdt.YSwift/documentation/YSwift/YCollection": {
+  "abstract" : [
+    {
+      "text" : "A type that contains a reference to Yrs shared collection type.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "protocol"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "YCollection"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YCollection",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "YCollection"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "YCollection",
+  "type" : "topic",
+  "url" : "\/documentation\/yswift\/ycollection"
 },
 "doc://com.github.y-crdt.YSwift/documentation/YSwift/YDocument": {
   "abstract" : [

@@ -37,15 +37,15 @@ $(xcrun --find swift) build --target YSwift \
     -Xswiftc -emit-symbol-graph \
     -Xswiftc -emit-symbol-graph-dir -Xswiftc .symbol-graphs
 
-$(xcrun --find docc) convert lib/swift/scaffold/Documentation.docc \
-    --fallback-display-name Yniffi \
-    --fallback-bundle-identifier com.github.y-crdt.Yniffi \
-    --fallback-bundle-version 0.16.1 \
-    --additional-symbol-graph-dir .ffisymbol-graphs \
-    --emit-digest \
-    --transform-for-static-hosting \
-    --output-path ./docs \
-    --hosting-base-path 'yswift'
+#$(xcrun --find docc) convert lib/swift/scaffold/Documentation.docc \
+#    --fallback-display-name Yniffi \
+#    --fallback-bundle-identifier com.github.y-crdt.Yniffi \
+#    --fallback-bundle-version 0.2.0  \
+#    --additional-symbol-graph-dir .ffisymbol-graphs \
+#    --emit-digest \
+#    --transform-for-static-hosting \
+#    --output-path ./docs \
+#    --hosting-base-path 'yswift'
     # --experimental-documentation-coverage \
     # --level brief
     # --disable-indexing \
@@ -53,7 +53,7 @@ $(xcrun --find docc) convert lib/swift/scaffold/Documentation.docc \
 $(xcrun --find docc) convert Sources/YSwift/Documentation.docc \
     --fallback-display-name YSwift \
     --fallback-bundle-identifier com.github.y-crdt.YSwift \
-    --fallback-bundle-version 0.1.0 \
+    --fallback-bundle-version 0.2.0 \
     --additional-symbol-graph-dir .symbol-graphs \
     --emit-digest \
     --transform-for-static-hosting \

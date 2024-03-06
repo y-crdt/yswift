@@ -65,6 +65,10 @@
             {
               "kind" : "identifier",
               "text" : "YrsDocProtocol"
+            },
+            {
+              "kind" : "text",
+              "text" : " : AnyObject"
             }
           ]
         }
@@ -97,7 +101,8 @@
         "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsDocProtocol\/getArray(name:)",
         "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsDocProtocol\/getMap(name:)",
         "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsDocProtocol\/getText(name:)",
-        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsDocProtocol\/transact()"
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsDocProtocol\/transact(origin:)",
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsDocProtocol\/undoManager(trackedRefs:)"
       ],
       "title" : "Instance Methods"
     }
@@ -426,7 +431,7 @@
   "type" : "topic",
   "url" : "\/documentation\/yniffi\/yrsdocprotocol\/gettext(name:)"
 },
-"doc://com.github.y-crdt.YSwift/documentation/Yniffi/YrsDocProtocol/transact()": {
+"doc://com.github.y-crdt.YSwift/documentation/Yniffi/YrsDocProtocol/transact(origin:)": {
   "abstract" : [
 
   ],
@@ -445,7 +450,24 @@
     },
     {
       "kind" : "text",
-      "text" : "() -> "
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "origin"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:6Yniffi9YrsOrigina",
+      "text" : "YrsOrigin"
+    },
+    {
+      "kind" : "text",
+      "text" : "?) -> "
     },
     {
       "kind" : "typeIdentifier",
@@ -453,13 +475,65 @@
       "text" : "YrsTransaction"
     }
   ],
-  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsDocProtocol\/transact()",
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsDocProtocol\/transact(origin:)",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
-  "title" : "transact()",
+  "title" : "transact(origin:)",
   "type" : "topic",
-  "url" : "\/documentation\/yniffi\/yrsdocprotocol\/transact()"
+  "url" : "\/documentation\/yniffi\/yrsdocprotocol\/transact(origin:)"
+},
+"doc://com.github.y-crdt.YSwift/documentation/Yniffi/YrsDocProtocol/undoManager(trackedRefs:)": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "undoManager"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "trackedRefs"
+    },
+    {
+      "kind" : "text",
+      "text" : ": ["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:6Yniffi16YrsCollectionPtra",
+      "text" : "YrsCollectionPtr"
+    },
+    {
+      "kind" : "text",
+      "text" : "]) -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:6Yniffi14YrsUndoManagerC",
+      "text" : "YrsUndoManager"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsDocProtocol\/undoManager(trackedRefs:)",
+  "kind" : "symbol",
+  "required" : true,
+  "role" : "symbol",
+  "title" : "undoManager(trackedRefs:)",
+  "type" : "topic",
+  "url" : "\/documentation\/yniffi\/yrsdocprotocol\/undomanager(trackedrefs:)"
 }
 }
 }

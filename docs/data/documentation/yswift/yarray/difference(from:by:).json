@@ -89,6 +89,7 @@
       },
       {
         "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:ST7ElementQa",
         "text" : "Element"
       },
       {
@@ -105,6 +106,7 @@
       },
       {
         "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:ST7ElementQa",
         "text" : "Element"
       },
       {
@@ -139,6 +141,7 @@
       },
       {
         "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:ST7ElementQa",
         "text" : "Element"
       },
       {
@@ -148,7 +151,10 @@
     ],
     "modules" : [
       {
-        "name" : "YSwift"
+        "name" : "YSwift",
+        "relatedModules" : [
+          "Swift"
+        ]
       }
     ],
     "platforms" : [
@@ -271,6 +277,7 @@
             },
             {
               "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:ST7ElementQa",
               "text" : "Element"
             },
             {
@@ -287,6 +294,7 @@
             },
             {
               "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:ST7ElementQa",
               "text" : "Element"
             },
             {
@@ -321,6 +329,7 @@
             },
             {
               "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:ST7ElementQa",
               "text" : "Element"
             },
             {
@@ -362,6 +371,7 @@
             },
             {
               "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:ST7ElementQa",
               "text" : "Element"
             },
             {
@@ -378,6 +388,7 @@
             },
             {
               "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:ST7ElementQa",
               "text" : "Element"
             }
           ]
@@ -530,6 +541,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:ST7ElementQa",
       "text" : "Element"
     },
     {
@@ -546,6 +558,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:ST7ElementQa",
       "text" : "Element"
     },
     {
@@ -580,6 +593,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:ST7ElementQa",
       "text" : "Element"
     },
     {

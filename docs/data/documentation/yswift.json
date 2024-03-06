@@ -130,6 +130,15 @@
         "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YSyncMessage"
       ],
       "title" : "Synchronization"
+    },
+    {
+      "identifiers" : [
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YUndoManager",
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/Origin",
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/UndoEvent",
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YCollection"
+      ],
+      "title" : "Undo Manager"
     }
   ],
   "variants" : [
@@ -208,6 +217,40 @@
   "type" : "topic",
   "url" : "\/documentation\/yswift\/implementationnotes"
 },
+"doc://com.github.y-crdt.YSwift/documentation/YSwift/Origin": {
+  "abstract" : [
+    {
+      "text" : "A struct that identifies the origin of a change.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Origin"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/Origin",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Origin"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "Origin",
+  "type" : "topic",
+  "url" : "\/documentation\/yswift\/origin"
+},
 "doc://com.github.y-crdt.YSwift/documentation/YSwift/SynchronizingDocuments": {
   "abstract" : [
     {
@@ -221,6 +264,40 @@
   "title" : "Synchronizing Documents",
   "type" : "topic",
   "url" : "\/documentation\/yswift\/synchronizingdocuments"
+},
+"doc://com.github.y-crdt.YSwift/documentation/YSwift/UndoEvent": {
+  "abstract" : [
+    {
+      "text" : "Metadata about an undo event",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "UndoEvent"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/UndoEvent",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "UndoEvent"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "UndoEvent",
+  "type" : "topic",
+  "url" : "\/documentation\/yswift\/undoevent"
 },
 "doc://com.github.y-crdt.YSwift/documentation/YSwift/YArray": {
   "abstract" : [
@@ -289,6 +366,40 @@
   "title" : "YArrayChange",
   "type" : "topic",
   "url" : "\/documentation\/yswift\/yarraychange"
+},
+"doc://com.github.y-crdt.YSwift/documentation/YSwift/YCollection": {
+  "abstract" : [
+    {
+      "text" : "A type that contains a reference to Yrs shared collection type.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "protocol"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "YCollection"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YCollection",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "YCollection"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "YCollection",
+  "type" : "topic",
+  "url" : "\/documentation\/yswift\/ycollection"
 },
 "doc://com.github.y-crdt.YSwift/documentation/YSwift/YDocument": {
   "abstract" : [
@@ -524,6 +635,40 @@
   "title" : "YTextChange",
   "type" : "topic",
   "url" : "\/documentation\/yswift\/ytextchange"
+},
+"doc://com.github.y-crdt.YSwift/documentation/YSwift/YUndoManager": {
+  "abstract" : [
+    {
+      "text" : "An undo manager to track and reverse changes on YSwift collections.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "class"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "YUndoManager"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YUndoManager",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "YUndoManager"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "YUndoManager",
+  "type" : "topic",
+  "url" : "\/documentation\/yswift\/yundomanager"
 },
 "https://docs.rs/yrs/latest/yrs/": {
   "identifier" : "https:\/\/docs.rs\/yrs\/latest\/yrs\/",

@@ -83,7 +83,10 @@
     ],
     "modules" : [
       {
-        "name" : "Yniffi"
+        "name" : "Yniffi",
+        "relatedModules" : [
+          "Swift"
+        ]
       }
     ],
     "role" : "symbol",

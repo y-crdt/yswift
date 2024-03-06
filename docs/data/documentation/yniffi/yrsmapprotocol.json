@@ -65,6 +65,10 @@
             {
               "kind" : "identifier",
               "text" : "YrsMapProtocol"
+            },
+            {
+              "kind" : "text",
+              "text" : " : AnyObject"
             }
           ]
         }
@@ -101,6 +105,7 @@
         "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsMapProtocol\/keys(tx:delegate:)",
         "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsMapProtocol\/length(tx:)",
         "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsMapProtocol\/observe(delegate:)",
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsMapProtocol\/rawPtr()",
         "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsMapProtocol\/remove(tx:key:)",
         "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsMapProtocol\/unobserve(subscriptionId:)",
         "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsMapProtocol\/values(tx:delegate:)"
@@ -700,6 +705,41 @@
   "title" : "observe(delegate:)",
   "type" : "topic",
   "url" : "\/documentation\/yniffi\/yrsmapprotocol\/observe(delegate:)"
+},
+"doc://com.github.y-crdt.YSwift/documentation/Yniffi/YrsMapProtocol/rawPtr()": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "rawPtr"
+    },
+    {
+      "kind" : "text",
+      "text" : "() -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:6Yniffi16YrsCollectionPtra",
+      "text" : "YrsCollectionPtr"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsMapProtocol\/rawPtr()",
+  "kind" : "symbol",
+  "required" : true,
+  "role" : "symbol",
+  "title" : "rawPtr()",
+  "type" : "topic",
+  "url" : "\/documentation\/yniffi\/yrsmapprotocol\/rawptr()"
 },
 "doc://com.github.y-crdt.YSwift/documentation/Yniffi/YrsMapProtocol/remove(tx:key:)": {
   "abstract" : [
