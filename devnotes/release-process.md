@@ -85,6 +85,11 @@ git push origin --tags
 
 ![GitHub release page after creation.](./github_release_ready.png)
 
+### update the documentation
+
+- run the script `./scripts/docbuild.bash`
+- commit and push the updates on the `main` branch
+
 ## Oops, I made a mistake - what do I do?
 
 If something in the process goes awry, don't worry - that happens.
@@ -92,3 +97,6 @@ _Do not_ attempt to delete or move any tsgs that you've made.
 Instead, just move on to the next semantic version and call it a day.
 For example, when I was testing this process, I learned about the unsafe flags constraint at the last minute.
 To resolve this, I repeated the process with the next tag `0.1.1` even though it didn't have any meaningful changes in the code.
+
+
+

@@ -1,0 +1,160 @@
+{
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi",
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsUndoEventKind"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsUndoEventKind\/undo"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:6Yniffi16YrsUndoEventKindO4undoyA2CmF",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "case"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "undo"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "Yniffi"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Case",
+    "symbolKind" : "case",
+    "title" : "YrsUndoEventKind.undo"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "case"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "undo"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/yniffi\/yrsundoeventkind\/undo"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://com.github.y-crdt.YSwift/documentation/Yniffi": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "Yniffi",
+  "type" : "topic",
+  "url" : "\/documentation\/yniffi"
+},
+"doc://com.github.y-crdt.YSwift/documentation/Yniffi/YrsUndoEventKind": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "enum"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "YrsUndoEventKind"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsUndoEventKind",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "YrsUndoEventKind"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "YrsUndoEventKind",
+  "type" : "topic",
+  "url" : "\/documentation\/yniffi\/yrsundoeventkind"
+},
+"doc://com.github.y-crdt.YSwift/documentation/Yniffi/YrsUndoEventKind/undo": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "case"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "undo"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsUndoEventKind\/undo",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "YrsUndoEventKind.undo",
+  "type" : "topic",
+  "url" : "\/documentation\/yniffi\/yrsundoeventkind\/undo"
+}
+}
+}

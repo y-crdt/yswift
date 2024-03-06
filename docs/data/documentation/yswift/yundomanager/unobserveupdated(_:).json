@@ -1,0 +1,249 @@
+{
+  "abstract" : [
+    {
+      "text" : "Cancels a subscription to the undo manager updating changes.",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift",
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YUndoManager"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YUndoManager\/unobserveUpdated(_:)"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:6YSwift12YUndoManagerC16unobserveUpdatedyys6UInt32VF",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "func"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "unobserveUpdated"
+      },
+      {
+        "kind" : "text",
+        "text" : "("
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:s6UInt32V",
+        "text" : "UInt32"
+      },
+      {
+        "kind" : "text",
+        "text" : ")"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "YSwift"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Instance Method",
+    "symbolKind" : "method",
+    "title" : "unobserveUpdated(_:)"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "func"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "unobserveUpdated"
+            },
+            {
+              "kind" : "text",
+              "text" : "("
+            },
+            {
+              "kind" : "externalParam",
+              "text" : "_"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "internalParam",
+              "text" : "subscriptionId"
+            },
+            {
+              "kind" : "text",
+              "text" : ": "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:s6UInt32V",
+              "text" : "UInt32"
+            },
+            {
+              "kind" : "text",
+              "text" : ")"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    },
+    {
+      "kind" : "parameters",
+      "parameters" : [
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "The subscription to be cancalled.",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "subscriptionId"
+        }
+      ]
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/yswift\/yundomanager\/unobserveupdated(_:)"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://com.github.y-crdt.YSwift/documentation/YSwift": {
+  "abstract" : [
+    {
+      "text" : "Swift language bindings to Y-CRDT shared data types to sync and collaborate.",
+      "type" : "text"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "YSwift",
+  "type" : "topic",
+  "url" : "\/documentation\/yswift"
+},
+"doc://com.github.y-crdt.YSwift/documentation/YSwift/YUndoManager": {
+  "abstract" : [
+    {
+      "text" : "An undo manager to track and reverse changes on YSwift collections.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "class"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "YUndoManager"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YUndoManager",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "YUndoManager"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "YUndoManager",
+  "type" : "topic",
+  "url" : "\/documentation\/yswift\/yundomanager"
+},
+"doc://com.github.y-crdt.YSwift/documentation/YSwift/YUndoManager/unobserveUpdated(_:)": {
+  "abstract" : [
+    {
+      "text" : "Cancels a subscription to the undo manager updating changes.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "unobserveUpdated"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:s6UInt32V",
+      "text" : "UInt32"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YUndoManager\/unobserveUpdated(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "unobserveUpdated(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/yswift\/yundomanager\/unobserveupdated(_:)"
+}
+}
+}

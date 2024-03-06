@@ -1,0 +1,221 @@
+{
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsUndoManagerObservationDelegate"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:6Yniffi33YrsUndoManagerObservationDelegateP",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "protocol"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "YrsUndoManagerObservationDelegate"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "Yniffi"
+      }
+    ],
+    "navigatorTitle" : [
+      {
+        "kind" : "identifier",
+        "text" : "YrsUndoManagerObservationDelegate"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Protocol",
+    "symbolKind" : "protocol",
+    "title" : "YrsUndoManagerObservationDelegate"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "protocol"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "YrsUndoManagerObservationDelegate"
+            },
+            {
+              "kind" : "text",
+              "text" : " : AnyObject"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "topicSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsUndoManagerObservationDelegate\/call(e:ptr:)"
+      ],
+      "title" : "Instance Methods"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/yniffi\/yrsundomanagerobservationdelegate"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://com.github.y-crdt.YSwift/documentation/Yniffi": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "Yniffi",
+  "type" : "topic",
+  "url" : "\/documentation\/yniffi"
+},
+"doc://com.github.y-crdt.YSwift/documentation/Yniffi/YrsUndoManagerObservationDelegate": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "protocol"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "YrsUndoManagerObservationDelegate"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsUndoManagerObservationDelegate",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "YrsUndoManagerObservationDelegate"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "YrsUndoManagerObservationDelegate",
+  "type" : "topic",
+  "url" : "\/documentation\/yniffi\/yrsundomanagerobservationdelegate"
+},
+"doc://com.github.y-crdt.YSwift/documentation/Yniffi/YrsUndoManagerObservationDelegate/call(e:ptr:)": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "call"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "e"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:6Yniffi12YrsUndoEventC",
+      "text" : "YrsUndoEvent"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "ptr"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:s6UInt64V",
+      "text" : "UInt64"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:s6UInt64V",
+      "text" : "UInt64"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsUndoManagerObservationDelegate\/call(e:ptr:)",
+  "kind" : "symbol",
+  "required" : true,
+  "role" : "symbol",
+  "title" : "call(e:ptr:)",
+  "type" : "topic",
+  "url" : "\/documentation\/yniffi\/yrsundomanagerobservationdelegate\/call(e:ptr:)"
+}
+}
+}

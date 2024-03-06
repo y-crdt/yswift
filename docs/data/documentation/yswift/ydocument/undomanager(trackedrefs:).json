@@ -1,0 +1,441 @@
+{
+  "abstract" : [
+    {
+      "text" : "Creates an Undo Manager for a document with the collections that is tracks.",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift",
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YDocument"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YDocument\/undoManager(trackedRefs:)"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:6YSwift9YDocumentC11undoManager11trackedRefsAA05YUndoD0CyxGSayAA11YCollection_pG_tRlzClF",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "func"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "undoManager"
+      },
+      {
+        "kind" : "text",
+        "text" : "<"
+      },
+      {
+        "kind" : "genericParameter",
+        "text" : "T"
+      },
+      {
+        "kind" : "text",
+        "text" : ">("
+      },
+      {
+        "kind" : "externalParam",
+        "text" : "trackedRefs"
+      },
+      {
+        "kind" : "text",
+        "text" : ": ["
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:6YSwift11YCollectionP",
+        "text" : "YCollection"
+      },
+      {
+        "kind" : "text",
+        "text" : "]) -> "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:6YSwift12YUndoManagerC",
+        "text" : "YUndoManager"
+      },
+      {
+        "kind" : "text",
+        "text" : "<"
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:6YSwift9YDocumentC11undoManager11trackedRefsAA05YUndoD0CyxGSayAA11YCollection_pG_tRlzClF1TL_xmfp",
+        "text" : "T"
+      },
+      {
+        "kind" : "text",
+        "text" : ">"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "YSwift"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Instance Method",
+    "symbolKind" : "method",
+    "title" : "undoManager(trackedRefs:)"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "func"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "undoManager"
+            },
+            {
+              "kind" : "text",
+              "text" : "<"
+            },
+            {
+              "kind" : "genericParameter",
+              "text" : "T"
+            },
+            {
+              "kind" : "text",
+              "text" : ">("
+            },
+            {
+              "kind" : "externalParam",
+              "text" : "trackedRefs"
+            },
+            {
+              "kind" : "text",
+              "text" : ": ["
+            },
+            {
+              "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YCollection",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:6YSwift11YCollectionP",
+              "text" : "YCollection"
+            },
+            {
+              "kind" : "text",
+              "text" : "]) -> "
+            },
+            {
+              "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YUndoManager",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:6YSwift12YUndoManagerC",
+              "text" : "YUndoManager"
+            },
+            {
+              "kind" : "text",
+              "text" : "<"
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:6YSwift9YDocumentC11undoManager11trackedRefsAA05YUndoD0CyxGSayAA11YCollection_pG_tRlzClF1TL_xmfp",
+              "text" : "T"
+            },
+            {
+              "kind" : "text",
+              "text" : "> "
+            },
+            {
+              "kind" : "keyword",
+              "text" : "where"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "text" : "T"
+            },
+            {
+              "kind" : "text",
+              "text" : " : AnyObject"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    },
+    {
+      "kind" : "parameters",
+      "parameters" : [
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "The collections to track to undo and redo changes.",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "trackedRefs"
+        }
+      ]
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "return-value",
+          "level" : 2,
+          "text" : "Return Value",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "A reference to the undo manager to control those actions.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        }
+      ],
+      "kind" : "content"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/yswift\/ydocument\/undomanager(trackedrefs:)"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://com.github.y-crdt.YSwift/documentation/YSwift": {
+  "abstract" : [
+    {
+      "text" : "Swift language bindings to Y-CRDT shared data types to sync and collaborate.",
+      "type" : "text"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "YSwift",
+  "type" : "topic",
+  "url" : "\/documentation\/yswift"
+},
+"doc://com.github.y-crdt.YSwift/documentation/YSwift/YCollection": {
+  "abstract" : [
+    {
+      "text" : "A type that contains a reference to Yrs shared collection type.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "protocol"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "YCollection"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YCollection",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "YCollection"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "YCollection",
+  "type" : "topic",
+  "url" : "\/documentation\/yswift\/ycollection"
+},
+"doc://com.github.y-crdt.YSwift/documentation/YSwift/YDocument": {
+  "abstract" : [
+    {
+      "text" : "YDocument holds YSwift shared data types and coordinates collaboration and changes.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "class"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "YDocument"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YDocument",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "YDocument"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "YDocument",
+  "type" : "topic",
+  "url" : "\/documentation\/yswift\/ydocument"
+},
+"doc://com.github.y-crdt.YSwift/documentation/YSwift/YDocument/undoManager(trackedRefs:)": {
+  "abstract" : [
+    {
+      "text" : "Creates an Undo Manager for a document with the collections that is tracks.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "undoManager"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "genericParameter",
+      "text" : "T"
+    },
+    {
+      "kind" : "text",
+      "text" : ">("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "trackedRefs"
+    },
+    {
+      "kind" : "text",
+      "text" : ": ["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:6YSwift11YCollectionP",
+      "text" : "YCollection"
+    },
+    {
+      "kind" : "text",
+      "text" : "]) -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:6YSwift12YUndoManagerC",
+      "text" : "YUndoManager"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:6YSwift9YDocumentC11undoManager11trackedRefsAA05YUndoD0CyxGSayAA11YCollection_pG_tRlzClF1TL_xmfp",
+      "text" : "T"
+    },
+    {
+      "kind" : "text",
+      "text" : ">"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YDocument\/undoManager(trackedRefs:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "undoManager(trackedRefs:)",
+  "type" : "topic",
+  "url" : "\/documentation\/yswift\/ydocument\/undomanager(trackedrefs:)"
+},
+"doc://com.github.y-crdt.YSwift/documentation/YSwift/YUndoManager": {
+  "abstract" : [
+    {
+      "text" : "An undo manager to track and reverse changes on YSwift collections.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "class"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "YUndoManager"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YUndoManager",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "YUndoManager"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "YUndoManager",
+  "type" : "topic",
+  "url" : "\/documentation\/yswift\/yundomanager"
+}
+}
+}

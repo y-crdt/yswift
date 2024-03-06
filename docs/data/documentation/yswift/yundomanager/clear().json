@@ -1,0 +1,199 @@
+{
+  "abstract" : [
+    {
+      "text" : "Clears the stack of undo\/redo actions.",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift",
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YUndoManager"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YUndoManager\/clear()"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:6YSwift12YUndoManagerC5clearyyKF",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "func"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "clear"
+      },
+      {
+        "kind" : "text",
+        "text" : "() "
+      },
+      {
+        "kind" : "keyword",
+        "text" : "throws"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "YSwift"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Instance Method",
+    "symbolKind" : "method",
+    "title" : "clear()"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "func"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "clear"
+            },
+            {
+              "kind" : "text",
+              "text" : "() "
+            },
+            {
+              "kind" : "keyword",
+              "text" : "throws"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/yswift\/yundomanager\/clear()"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://com.github.y-crdt.YSwift/documentation/YSwift": {
+  "abstract" : [
+    {
+      "text" : "Swift language bindings to Y-CRDT shared data types to sync and collaborate.",
+      "type" : "text"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "YSwift",
+  "type" : "topic",
+  "url" : "\/documentation\/yswift"
+},
+"doc://com.github.y-crdt.YSwift/documentation/YSwift/YUndoManager": {
+  "abstract" : [
+    {
+      "text" : "An undo manager to track and reverse changes on YSwift collections.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "class"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "YUndoManager"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YUndoManager",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "YUndoManager"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "YUndoManager",
+  "type" : "topic",
+  "url" : "\/documentation\/yswift\/yundomanager"
+},
+"doc://com.github.y-crdt.YSwift/documentation/YSwift/YUndoManager/clear()": {
+  "abstract" : [
+    {
+      "text" : "Clears the stack of undo\/redo actions.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "clear"
+    },
+    {
+      "kind" : "text",
+      "text" : "() "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YUndoManager\/clear()",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "clear()",
+  "type" : "topic",
+  "url" : "\/documentation\/yswift\/yundomanager\/clear()"
+}
+}
+}

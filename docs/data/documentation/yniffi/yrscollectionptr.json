@@ -1,0 +1,174 @@
+{
+  "abstract" : [
+    {
+      "text" : "Typealias from the type name used in the UDL file to the builtin type.  This",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "is needed because the UDL type name is used in function\/method signatures.",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsCollectionPtr"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:6Yniffi16YrsCollectionPtra",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "typealias"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "YrsCollectionPtr"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "Yniffi"
+      }
+    ],
+    "navigatorTitle" : [
+      {
+        "kind" : "identifier",
+        "text" : "YrsCollectionPtr"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Type Alias",
+    "symbolKind" : "typealias",
+    "title" : "YrsCollectionPtr"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "typealias"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "YrsCollectionPtr"
+            },
+            {
+              "kind" : "text",
+              "text" : " = "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:s6UInt64V",
+              "text" : "UInt64"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/yniffi\/yrscollectionptr"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://com.github.y-crdt.YSwift/documentation/Yniffi": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "Yniffi",
+  "type" : "topic",
+  "url" : "\/documentation\/yniffi"
+},
+"doc://com.github.y-crdt.YSwift/documentation/Yniffi/YrsCollectionPtr": {
+  "abstract" : [
+    {
+      "text" : "Typealias from the type name used in the UDL file to the builtin type.  This",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "is needed because the UDL type name is used in function\/method signatures.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "typealias"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "YrsCollectionPtr"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsCollectionPtr",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "YrsCollectionPtr"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "YrsCollectionPtr",
+  "type" : "topic",
+  "url" : "\/documentation\/yniffi\/yrscollectionptr"
+}
+}
+}

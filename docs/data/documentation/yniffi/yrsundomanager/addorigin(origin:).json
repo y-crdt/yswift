@@ -1,0 +1,334 @@
+{
+  "abstract" : [
+    {
+      "text" : "Adds a specific origin identifier to a list of tracked origins. If tracked",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "origin list is not empty, current undo manager will only track changes applied",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "over transactions created with a specific origin.",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi",
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsUndoManager"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsUndoManager\/addOrigin(origin:)"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:6Yniffi14YrsUndoManagerC9addOrigin6originySays5UInt8VG_tF",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "func"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "addOrigin"
+      },
+      {
+        "kind" : "text",
+        "text" : "("
+      },
+      {
+        "kind" : "externalParam",
+        "text" : "origin"
+      },
+      {
+        "kind" : "text",
+        "text" : ": "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:6Yniffi9YrsOrigina",
+        "text" : "YrsOrigin"
+      },
+      {
+        "kind" : "text",
+        "text" : ")"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "Yniffi"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Instance Method",
+    "symbolKind" : "method",
+    "title" : "addOrigin(origin:)"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "func"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "addOrigin"
+            },
+            {
+              "kind" : "text",
+              "text" : "("
+            },
+            {
+              "kind" : "externalParam",
+              "text" : "origin"
+            },
+            {
+              "kind" : "text",
+              "text" : ": "
+            },
+            {
+              "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsOrigin",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:6Yniffi9YrsOrigina",
+              "text" : "YrsOrigin"
+            },
+            {
+              "kind" : "text",
+              "text" : ")"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/yniffi\/yrsundomanager\/addorigin(origin:)"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://com.github.y-crdt.YSwift/documentation/Yniffi": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "Yniffi",
+  "type" : "topic",
+  "url" : "\/documentation\/yniffi"
+},
+"doc://com.github.y-crdt.YSwift/documentation/Yniffi/YrsOrigin": {
+  "abstract" : [
+    {
+      "text" : "Typealias from the type name used in the UDL file to the builtin type.  This",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "is needed because the UDL type name is used in function\/method signatures.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "typealias"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "YrsOrigin"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsOrigin",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "YrsOrigin"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "YrsOrigin",
+  "type" : "topic",
+  "url" : "\/documentation\/yniffi\/yrsorigin"
+},
+"doc://com.github.y-crdt.YSwift/documentation/Yniffi/YrsUndoManager": {
+  "abstract" : [
+    {
+      "text" : "A manager type able to track changes occurring in a context of a given document.",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "These changes can be reverted using ",
+      "type" : "text"
+    },
+    {
+      "code" : "undo",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " method call, or re-applied via ",
+      "type" : "text"
+    },
+    {
+      "code" : "redo",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "class"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "YrsUndoManager"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsUndoManager",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "YrsUndoManager"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "YrsUndoManager",
+  "type" : "topic",
+  "url" : "\/documentation\/yniffi\/yrsundomanager"
+},
+"doc://com.github.y-crdt.YSwift/documentation/Yniffi/YrsUndoManager/addOrigin(origin:)": {
+  "abstract" : [
+    {
+      "text" : "Adds a specific origin identifier to a list of tracked origins. If tracked",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "origin list is not empty, current undo manager will only track changes applied",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "over transactions created with a specific origin.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "addOrigin"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "origin"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:6Yniffi9YrsOrigina",
+      "text" : "YrsOrigin"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsUndoManager\/addOrigin(origin:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "addOrigin(origin:)",
+  "type" : "topic",
+  "url" : "\/documentation\/yniffi\/yrsundomanager\/addorigin(origin:)"
+}
+}
+}

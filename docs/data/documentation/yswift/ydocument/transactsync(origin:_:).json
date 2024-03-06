@@ -1,0 +1,652 @@
+{
+  "abstract" : [
+    {
+      "text" : "Creates a synchronous transaction and provides that transaction to a trailing closure, within which you make changes to shared data types.",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift",
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YDocument"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YDocument\/transactSync(origin:_:)"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:6YSwift9YDocumentC12transactSync6origin_xAA6OriginVSg_x6Yniffi14YrsTransactionCctlF",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "func"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "transactSync"
+      },
+      {
+        "kind" : "text",
+        "text" : "<"
+      },
+      {
+        "kind" : "genericParameter",
+        "text" : "T"
+      },
+      {
+        "kind" : "text",
+        "text" : ">("
+      },
+      {
+        "kind" : "externalParam",
+        "text" : "origin"
+      },
+      {
+        "kind" : "text",
+        "text" : ": "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:6YSwift6OriginV",
+        "text" : "Origin"
+      },
+      {
+        "kind" : "text",
+        "text" : "?, ("
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:6Yniffi14YrsTransactionC",
+        "text" : "YrsTransaction"
+      },
+      {
+        "kind" : "text",
+        "text" : ") -> "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:6YSwift9YDocumentC12transactSync6origin_xAA6OriginVSg_x6Yniffi14YrsTransactionCctlF1TL_xmfp",
+        "text" : "T"
+      },
+      {
+        "kind" : "text",
+        "text" : ") -> "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:6YSwift9YDocumentC12transactSync6origin_xAA6OriginVSg_x6Yniffi14YrsTransactionCctlF1TL_xmfp",
+        "text" : "T"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "YSwift"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Instance Method",
+    "symbolKind" : "method",
+    "title" : "transactSync(origin:_:)"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "func"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "transactSync"
+            },
+            {
+              "kind" : "text",
+              "text" : "<"
+            },
+            {
+              "kind" : "genericParameter",
+              "text" : "T"
+            },
+            {
+              "kind" : "text",
+              "text" : ">("
+            },
+            {
+              "kind" : "externalParam",
+              "text" : "origin"
+            },
+            {
+              "kind" : "text",
+              "text" : ": "
+            },
+            {
+              "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/Origin",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:6YSwift6OriginV",
+              "text" : "Origin"
+            },
+            {
+              "kind" : "text",
+              "text" : "? = nil, "
+            },
+            {
+              "kind" : "externalParam",
+              "text" : "_"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "internalParam",
+              "text" : "changes"
+            },
+            {
+              "kind" : "text",
+              "text" : ": "
+            },
+            {
+              "kind" : "attribute",
+              "text" : "@escaping"
+            },
+            {
+              "kind" : "text",
+              "text" : " ("
+            },
+            {
+              "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsTransaction",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:6Yniffi14YrsTransactionC",
+              "text" : "YrsTransaction"
+            },
+            {
+              "kind" : "text",
+              "text" : ") -> "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:6YSwift9YDocumentC12transactSync6origin_xAA6OriginVSg_x6Yniffi14YrsTransactionCctlF1TL_xmfp",
+              "text" : "T"
+            },
+            {
+              "kind" : "text",
+              "text" : ") -> "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:6YSwift9YDocumentC12transactSync6origin_xAA6OriginVSg_x6Yniffi14YrsTransactionCctlF1TL_xmfp",
+              "text" : "T"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    },
+    {
+      "kind" : "parameters",
+      "parameters" : [
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "The closure in which you make changes to the document.",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "changes"
+        }
+      ]
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "return-value",
+          "level" : 2,
+          "text" : "Return Value",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "The value that you return from the closure.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        }
+      ],
+      "kind" : "content"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "seeAlsoSections" : [
+    {
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YDocument\/transact(origin:_:)",
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YDocument\/transactAsync(_:_:completion:)"
+      ],
+      "title" : "Creating Transactions"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/yswift\/ydocument\/transactsync(origin:_:)"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://com.github.y-crdt.YSwift/documentation/YSwift": {
+  "abstract" : [
+    {
+      "text" : "Swift language bindings to Y-CRDT shared data types to sync and collaborate.",
+      "type" : "text"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "YSwift",
+  "type" : "topic",
+  "url" : "\/documentation\/yswift"
+},
+"doc://com.github.y-crdt.YSwift/documentation/YSwift/Origin": {
+  "abstract" : [
+    {
+      "text" : "A struct that identifies the origin of a change.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Origin"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/Origin",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Origin"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "Origin",
+  "type" : "topic",
+  "url" : "\/documentation\/yswift\/origin"
+},
+"doc://com.github.y-crdt.YSwift/documentation/YSwift/YDocument": {
+  "abstract" : [
+    {
+      "text" : "YDocument holds YSwift shared data types and coordinates collaboration and changes.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "class"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "YDocument"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YDocument",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "YDocument"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "YDocument",
+  "type" : "topic",
+  "url" : "\/documentation\/yswift\/ydocument"
+},
+"doc://com.github.y-crdt.YSwift/documentation/YSwift/YDocument/transact(origin:_:)": {
+  "abstract" : [
+    {
+      "text" : "Creates an asynchronous transaction and provides that transaction to a trailing closure, within which you make changes to shared data types.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "transact"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "genericParameter",
+      "text" : "T"
+    },
+    {
+      "kind" : "text",
+      "text" : ">("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "origin"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:6YSwift6OriginV",
+      "text" : "Origin"
+    },
+    {
+      "kind" : "text",
+      "text" : "?, ("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:6Yniffi14YrsTransactionC",
+      "text" : "YrsTransaction"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:6YSwift9YDocumentC8transact6origin_xAA6OriginVSg_x6Yniffi14YrsTransactionCctYalF1TL_xmfp",
+      "text" : "T"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "async"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:6YSwift9YDocumentC8transact6origin_xAA6OriginVSg_x6Yniffi14YrsTransactionCctYalF1TL_xmfp",
+      "text" : "T"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YDocument\/transact(origin:_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "transact(origin:_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/yswift\/ydocument\/transact(origin:_:)"
+},
+"doc://com.github.y-crdt.YSwift/documentation/YSwift/YDocument/transactAsync(_:_:completion:)": {
+  "abstract" : [
+    {
+      "text" : "Creates an asynchronous transaction and provides that transaction to a trailing closure, within which you make changes to shared data types.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "transactAsync"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "genericParameter",
+      "text" : "T"
+    },
+    {
+      "kind" : "text",
+      "text" : ">("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:6YSwift6OriginV",
+      "text" : "Origin"
+    },
+    {
+      "kind" : "text",
+      "text" : "?, ("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:6Yniffi14YrsTransactionC",
+      "text" : "YrsTransaction"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:6YSwift9YDocumentC13transactAsync__10completionyAA6OriginVSg_x6Yniffi14YrsTransactionCcyxctlF1TL_xmfp",
+      "text" : "T"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "completion"
+    },
+    {
+      "kind" : "text",
+      "text" : ": ("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:6YSwift9YDocumentC13transactAsync__10completionyAA6OriginVSg_x6Yniffi14YrsTransactionCcyxctlF1TL_xmfp",
+      "text" : "T"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:s4Voida",
+      "text" : "Void"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YDocument\/transactAsync(_:_:completion:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "transactAsync(_:_:completion:)",
+  "type" : "topic",
+  "url" : "\/documentation\/yswift\/ydocument\/transactasync(_:_:completion:)"
+},
+"doc://com.github.y-crdt.YSwift/documentation/YSwift/YDocument/transactSync(origin:_:)": {
+  "abstract" : [
+    {
+      "text" : "Creates a synchronous transaction and provides that transaction to a trailing closure, within which you make changes to shared data types.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "transactSync"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "genericParameter",
+      "text" : "T"
+    },
+    {
+      "kind" : "text",
+      "text" : ">("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "origin"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:6YSwift6OriginV",
+      "text" : "Origin"
+    },
+    {
+      "kind" : "text",
+      "text" : "?, ("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:6Yniffi14YrsTransactionC",
+      "text" : "YrsTransaction"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:6YSwift9YDocumentC12transactSync6origin_xAA6OriginVSg_x6Yniffi14YrsTransactionCctlF1TL_xmfp",
+      "text" : "T"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:6YSwift9YDocumentC12transactSync6origin_xAA6OriginVSg_x6Yniffi14YrsTransactionCctlF1TL_xmfp",
+      "text" : "T"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YDocument\/transactSync(origin:_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "transactSync(origin:_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/yswift\/ydocument\/transactsync(origin:_:)"
+},
+"doc://com.github.y-crdt.YSwift/documentation/Yniffi/YrsTransaction": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "class"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "YrsTransaction"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/Yniffi\/YrsTransaction",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "YrsTransaction"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "YrsTransaction",
+  "type" : "topic",
+  "url" : "\/documentation\/yniffi\/yrstransaction"
+}
+}
+}

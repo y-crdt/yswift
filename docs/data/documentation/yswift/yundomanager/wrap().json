@@ -1,0 +1,269 @@
+{
+  "abstract" : [
+    {
+      "text" : "Mark a point in time that you want to be able to reverse back to.",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift",
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YUndoManager"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YUndoManager\/wrap()"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:6YSwift12YUndoManagerC4wrapyyF",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "func"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "wrap"
+      },
+      {
+        "kind" : "text",
+        "text" : "()"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "YSwift"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Instance Method",
+    "symbolKind" : "method",
+    "title" : "wrap()"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "func"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "wrap"
+            },
+            {
+              "kind" : "text",
+              "text" : "()"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "discussion",
+          "level" : 2,
+          "text" : "Discussion",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "The Undo Manager tracks the points you set in a stack.",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "Undo the to the most recent point set using ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YUndoManager\/undo()",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : ".",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        }
+      ],
+      "kind" : "content"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/yswift\/yundomanager\/wrap()"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://com.github.y-crdt.YSwift/documentation/YSwift": {
+  "abstract" : [
+    {
+      "text" : "Swift language bindings to Y-CRDT shared data types to sync and collaborate.",
+      "type" : "text"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "YSwift",
+  "type" : "topic",
+  "url" : "\/documentation\/yswift"
+},
+"doc://com.github.y-crdt.YSwift/documentation/YSwift/YUndoManager": {
+  "abstract" : [
+    {
+      "text" : "An undo manager to track and reverse changes on YSwift collections.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "class"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "YUndoManager"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YUndoManager",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "YUndoManager"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "YUndoManager",
+  "type" : "topic",
+  "url" : "\/documentation\/yswift\/yundomanager"
+},
+"doc://com.github.y-crdt.YSwift/documentation/YSwift/YUndoManager/undo()": {
+  "abstract" : [
+    {
+      "text" : "Undo a change on a collection you’re tracking back to the last point you set",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "undo"
+    },
+    {
+      "kind" : "text",
+      "text" : "() "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sb",
+      "text" : "Bool"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YUndoManager\/undo()",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "undo()",
+  "type" : "topic",
+  "url" : "\/documentation\/yswift\/yundomanager\/undo()"
+},
+"doc://com.github.y-crdt.YSwift/documentation/YSwift/YUndoManager/wrap()": {
+  "abstract" : [
+    {
+      "text" : "Mark a point in time that you want to be able to reverse back to.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "wrap"
+    },
+    {
+      "kind" : "text",
+      "text" : "()"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YUndoManager\/wrap()",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "wrap()",
+  "type" : "topic",
+  "url" : "\/documentation\/yswift\/yundomanager\/wrap()"
+}
+}
+}

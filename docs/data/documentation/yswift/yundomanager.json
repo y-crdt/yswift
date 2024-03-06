@@ -1,0 +1,954 @@
+{
+  "abstract" : [
+    {
+      "text" : "An undo manager to track and reverse changes on YSwift collections.",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YUndoManager"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:6YSwift12YUndoManagerC",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "class"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "YUndoManager"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "YSwift"
+      }
+    ],
+    "navigatorTitle" : [
+      {
+        "kind" : "identifier",
+        "text" : "YUndoManager"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Class",
+    "symbolKind" : "class",
+    "title" : "YUndoManager"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "final"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "keyword",
+              "text" : "class"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "YUndoManager"
+            },
+            {
+              "kind" : "text",
+              "text" : "<"
+            },
+            {
+              "kind" : "genericParameter",
+              "text" : "T"
+            },
+            {
+              "kind" : "text",
+              "text" : "> "
+            },
+            {
+              "kind" : "keyword",
+              "text" : "where"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "text" : "T"
+            },
+            {
+              "kind" : "text",
+              "text" : " : AnyObject"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "overview",
+          "level" : 2,
+          "text" : "Overview",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Set the one or more origins to track with ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YUndoManager\/addOrigin(_:)",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : ".",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "If no origins are set, the undo manager tracks changes from any origin.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        }
+      ],
+      "kind" : "content"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "seeAlsoSections" : [
+    {
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/Origin",
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/UndoEvent",
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YCollection"
+      ],
+      "title" : "Undo Manager"
+    }
+  ],
+  "topicSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YUndoManager\/addOrigin(_:)",
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YUndoManager\/clear()",
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YUndoManager\/observeAdded(_:)",
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YUndoManager\/observePopped(_:)",
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YUndoManager\/observeUpdated(_:)",
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YUndoManager\/redo()",
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YUndoManager\/removeOrigin(_:)",
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YUndoManager\/track(_:)",
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YUndoManager\/undo()",
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YUndoManager\/unobserveAdded(_:)",
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YUndoManager\/unobservePopped(_:)",
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YUndoManager\/unobserveUpdated(_:)",
+        "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YUndoManager\/wrap()"
+      ],
+      "title" : "Instance Methods"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/yswift\/yundomanager"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://com.github.y-crdt.YSwift/documentation/YSwift": {
+  "abstract" : [
+    {
+      "text" : "Swift language bindings to Y-CRDT shared data types to sync and collaborate.",
+      "type" : "text"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "YSwift",
+  "type" : "topic",
+  "url" : "\/documentation\/yswift"
+},
+"doc://com.github.y-crdt.YSwift/documentation/YSwift/Origin": {
+  "abstract" : [
+    {
+      "text" : "A struct that identifies the origin of a change.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Origin"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/Origin",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Origin"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "Origin",
+  "type" : "topic",
+  "url" : "\/documentation\/yswift\/origin"
+},
+"doc://com.github.y-crdt.YSwift/documentation/YSwift/UndoEvent": {
+  "abstract" : [
+    {
+      "text" : "Metadata about an undo event",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "UndoEvent"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/UndoEvent",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "UndoEvent"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "UndoEvent",
+  "type" : "topic",
+  "url" : "\/documentation\/yswift\/undoevent"
+},
+"doc://com.github.y-crdt.YSwift/documentation/YSwift/YCollection": {
+  "abstract" : [
+    {
+      "text" : "A type that contains a reference to Yrs shared collection type.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "protocol"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "YCollection"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YCollection",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "YCollection"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "YCollection",
+  "type" : "topic",
+  "url" : "\/documentation\/yswift\/ycollection"
+},
+"doc://com.github.y-crdt.YSwift/documentation/YSwift/YUndoManager": {
+  "abstract" : [
+    {
+      "text" : "An undo manager to track and reverse changes on YSwift collections.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "class"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "YUndoManager"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YUndoManager",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "YUndoManager"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "YUndoManager",
+  "type" : "topic",
+  "url" : "\/documentation\/yswift\/yundomanager"
+},
+"doc://com.github.y-crdt.YSwift/documentation/YSwift/YUndoManager/addOrigin(_:)": {
+  "abstract" : [
+    {
+      "text" : "Adds an origin that the Undo manager tracks.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "addOrigin"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:6YSwift6OriginV",
+      "text" : "Origin"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YUndoManager\/addOrigin(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "addOrigin(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/yswift\/yundomanager\/addorigin(_:)"
+},
+"doc://com.github.y-crdt.YSwift/documentation/YSwift/YUndoManager/clear()": {
+  "abstract" : [
+    {
+      "text" : "Clears the stack of undo\/redo actions.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "clear"
+    },
+    {
+      "kind" : "text",
+      "text" : "() "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YUndoManager\/clear()",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "clear()",
+  "type" : "topic",
+  "url" : "\/documentation\/yswift\/yundomanager\/clear()"
+},
+"doc://com.github.y-crdt.YSwift/documentation/YSwift/YUndoManager/observeAdded(_:)": {
+  "abstract" : [
+    {
+      "text" : "Creates a subscription that is called when the undo manager adds a change.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "observeAdded"
+    },
+    {
+      "kind" : "text",
+      "text" : "(("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:6YSwift9UndoEventV",
+      "text" : "UndoEvent"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:6YSwift12YUndoManagerC1Txmfp",
+      "text" : "T"
+    },
+    {
+      "kind" : "text",
+      "text" : "?) -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:6YSwift12YUndoManagerC1Txmfp",
+      "text" : "T"
+    },
+    {
+      "kind" : "text",
+      "text" : "?) -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:s6UInt32V",
+      "text" : "UInt32"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YUndoManager\/observeAdded(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "observeAdded(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/yswift\/yundomanager\/observeadded(_:)"
+},
+"doc://com.github.y-crdt.YSwift/documentation/YSwift/YUndoManager/observePopped(_:)": {
+  "abstract" : [
+    {
+      "text" : "Creates a subscription that is called when the undo manager replays a change.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "observePopped"
+    },
+    {
+      "kind" : "text",
+      "text" : "(("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:6YSwift9UndoEventV",
+      "text" : "UndoEvent"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:6YSwift12YUndoManagerC1Txmfp",
+      "text" : "T"
+    },
+    {
+      "kind" : "text",
+      "text" : "?) -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:6YSwift12YUndoManagerC1Txmfp",
+      "text" : "T"
+    },
+    {
+      "kind" : "text",
+      "text" : "?) -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:s6UInt32V",
+      "text" : "UInt32"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YUndoManager\/observePopped(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "observePopped(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/yswift\/yundomanager\/observepopped(_:)"
+},
+"doc://com.github.y-crdt.YSwift/documentation/YSwift/YUndoManager/observeUpdated(_:)": {
+  "abstract" : [
+    {
+      "text" : "Creates a subscription that is called when the undo manager updates a change.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "observeUpdated"
+    },
+    {
+      "kind" : "text",
+      "text" : "(("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:6YSwift9UndoEventV",
+      "text" : "UndoEvent"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:6YSwift12YUndoManagerC1Txmfp",
+      "text" : "T"
+    },
+    {
+      "kind" : "text",
+      "text" : "?) -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:6YSwift12YUndoManagerC1Txmfp",
+      "text" : "T"
+    },
+    {
+      "kind" : "text",
+      "text" : "?) -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:s6UInt32V",
+      "text" : "UInt32"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YUndoManager\/observeUpdated(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "observeUpdated(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/yswift\/yundomanager\/observeupdated(_:)"
+},
+"doc://com.github.y-crdt.YSwift/documentation/YSwift/YUndoManager/redo()": {
+  "abstract" : [
+    {
+      "text" : "Replays a change forward from the Undo managers stack.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "redo"
+    },
+    {
+      "kind" : "text",
+      "text" : "() "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sb",
+      "text" : "Bool"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YUndoManager\/redo()",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "redo()",
+  "type" : "topic",
+  "url" : "\/documentation\/yswift\/yundomanager\/redo()"
+},
+"doc://com.github.y-crdt.YSwift/documentation/YSwift/YUndoManager/removeOrigin(_:)": {
+  "abstract" : [
+    {
+      "text" : "Removes an origin that the Undo manager tracks.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "removeOrigin"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:6YSwift6OriginV",
+      "text" : "Origin"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YUndoManager\/removeOrigin(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "removeOrigin(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/yswift\/yundomanager\/removeorigin(_:)"
+},
+"doc://com.github.y-crdt.YSwift/documentation/YSwift/YUndoManager/track(_:)": {
+  "abstract" : [
+    {
+      "text" : "Adds another collection to track with the Undo manager",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "track"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:6YSwift11YCollectionP",
+      "text" : "YCollection"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YUndoManager\/track(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "track(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/yswift\/yundomanager\/track(_:)"
+},
+"doc://com.github.y-crdt.YSwift/documentation/YSwift/YUndoManager/undo()": {
+  "abstract" : [
+    {
+      "text" : "Undo a change on a collection you’re tracking back to the last point you set",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "undo"
+    },
+    {
+      "kind" : "text",
+      "text" : "() "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sb",
+      "text" : "Bool"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YUndoManager\/undo()",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "undo()",
+  "type" : "topic",
+  "url" : "\/documentation\/yswift\/yundomanager\/undo()"
+},
+"doc://com.github.y-crdt.YSwift/documentation/YSwift/YUndoManager/unobserveAdded(_:)": {
+  "abstract" : [
+    {
+      "text" : "Cancels a subscription to the undo manager adding changes.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "unobserveAdded"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:s6UInt32V",
+      "text" : "UInt32"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YUndoManager\/unobserveAdded(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "unobserveAdded(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/yswift\/yundomanager\/unobserveadded(_:)"
+},
+"doc://com.github.y-crdt.YSwift/documentation/YSwift/YUndoManager/unobservePopped(_:)": {
+  "abstract" : [
+    {
+      "text" : "Cancels a subscription that is called when the undo manager replays a change.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "unobservePopped"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:s6UInt32V",
+      "text" : "UInt32"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YUndoManager\/unobservePopped(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "unobservePopped(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/yswift\/yundomanager\/unobservepopped(_:)"
+},
+"doc://com.github.y-crdt.YSwift/documentation/YSwift/YUndoManager/unobserveUpdated(_:)": {
+  "abstract" : [
+    {
+      "text" : "Cancels a subscription to the undo manager updating changes.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "unobserveUpdated"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:s6UInt32V",
+      "text" : "UInt32"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YUndoManager\/unobserveUpdated(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "unobserveUpdated(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/yswift\/yundomanager\/unobserveupdated(_:)"
+},
+"doc://com.github.y-crdt.YSwift/documentation/YSwift/YUndoManager/wrap()": {
+  "abstract" : [
+    {
+      "text" : "Mark a point in time that you want to be able to reverse back to.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "wrap"
+    },
+    {
+      "kind" : "text",
+      "text" : "()"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.y-crdt.YSwift\/documentation\/YSwift\/YUndoManager\/wrap()",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "wrap()",
+  "type" : "topic",
+  "url" : "\/documentation\/yswift\/yundomanager\/wrap()"
+}
+}
+}
