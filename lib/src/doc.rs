@@ -7,7 +7,7 @@ use std::sync::Arc;
 use std::{borrow::Borrow, cell::RefCell};
 use yrs::{updates::decoder::Decode, ArrayRef, Doc, OffsetKind, Options, StateVector, Transact, Origin};
 use yrs::{MapRef, ReadTxn};
-use yrs::types::Branch;
+use yrs::branch::Branch;
 use crate::undo::YrsUndoManager;
 use crate::UniffiCustomTypeConverter;
 

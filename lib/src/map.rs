@@ -1,9 +1,12 @@
 use crate::error::CodingError;
 use crate::mapchange::{YrsEntryChange, YrsMapChange};
+use crate::subscription::YSubscription;
 use crate::transaction::YrsTransaction;
 use std::cell::RefCell;
 use std::fmt::Debug;
-use yrs::types::{Branch, Observable};
+use std::sync::Arc;
+use yrs::branch::Branch;
+use yrs::Observable;
 use yrs::{types::Value, Any, Map, MapRef};
 use crate::doc::YrsCollectionPtr;
 
@@ -268,8 +271,8 @@ impl YrsMap {
         });
     }
 
-    pub(crate) fn observe(&self, delegate: Box<dyn YrsMapObservationDelegate>) -> u32 {
-        let subscription_id = self
+    pub(crate) fn observe(&self, delegate: Box<dyn YrsMapObservationDelegate>) -> Arc<YSubscription> {
+        let subscription = self
             .0
             .borrow_mut()
             .observe(move |transaction, map_event| {
@@ -282,14 +285,9 @@ impl YrsMap {
                     })
                     .collect();
                 delegate.call(result)
-            })
-            .into();
+            });
 
-        subscription_id
-    }
-
-    pub(crate) fn unobserve(&self, subscription_id: u32) {
-        self.0.borrow_mut().unobserve(subscription_id);
+            Arc::new(YSubscription::new(subscription))
     }
 }
 

@@ -1,9 +1,11 @@
+use crate::subscription::YSubscription;
 use crate::transaction::YrsTransaction;
 use crate::{change::YrsChange, error::CodingError};
 use std::cell::RefCell;
 use std::fmt::Debug;
+use std::sync::Arc;
 use yrs::{types::Value, Any, Array, ArrayRef, Observable};
-use yrs::types::Branch;
+use yrs::branch::Branch;
 use crate::doc::YrsCollectionPtr;
 
 pub(crate) struct YrsArray(RefCell<ArrayRef>);
@@ -184,8 +186,8 @@ impl YrsArray {
         arr.remove_range(tx, index, len)
     }
 
-    pub(crate) fn observe(&self, delegate: Box<dyn YrsArrayObservationDelegate>) -> u32 {
-        let subscription_id = self
+    pub(crate) fn observe(&self, delegate: Box<dyn YrsArrayObservationDelegate>) -> Arc<YSubscription> {
+        let subscription = self
             .0
             .borrow_mut()
             .observe(move |transaction, text_event| {
@@ -193,14 +195,9 @@ impl YrsArray {
                 let result: Vec<YrsChange> =
                     delta.iter().map(|change| YrsChange::from(change)).collect();
                 delegate.call(result)
-            })
-            .into();
+            });
 
-        subscription_id
-    }
-
-    pub(crate) fn unobserve(&self, subscription_id: u32) {
-        self.0.borrow_mut().unobserve(subscription_id);
+            Arc::new(YSubscription::new(subscription))
     }
 
     pub(crate) fn to_a(&self, transaction: &YrsTransaction) -> Vec<String> {

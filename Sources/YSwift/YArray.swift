@@ -134,9 +134,9 @@ public final class YArray<T: Codable>: Transactable, YCollection {
     /// Returns a publisher of array changes.
     public func observe() -> AnyPublisher<[YArrayChange<T>], Never> {
         let subject = PassthroughSubject<[YArrayChange<T>], Never>()
-        let subscriptionId = observe { subject.send($0) }
-        return subject.handleEvents(receiveCancel: { [weak self] in
-            self?._array.unobserve(subscriptionId: subscriptionId)
+        let subscription = observe { subject.send($0) }
+        return subject.handleEvents(receiveCancel: {
+            subscription.cancel()
         })
         .eraseToAnyPublisher()
     }
@@ -144,15 +144,9 @@ public final class YArray<T: Codable>: Transactable, YCollection {
     /// Registers a closure that is called with an array of changes to the list.
     /// - Parameter body: A closure that is called with an array of list changes.
     /// - Returns: An observer identifier.
-    public func observe(_ body: @escaping ([YArrayChange<T>]) -> Void) -> UInt32 {
+    public func observe(_ body: @escaping ([YArrayChange<T>]) -> Void) -> YSubscription {
         let delegate = YArrayObservationDelegate(callback: body, decoded: Coder.decodedArray)
-        return _array.observe(delegate: delegate)
-    }
-
-    /// Unregister an observing closure, identified by the identifier you provide.
-    /// - Parameter subscriptionId: The observer identifier to unregister.
-    public func unobserve(_ subscriptionId: UInt32) {
-        _array.unobserve(subscriptionId: subscriptionId)
+        return YSubscription(subscription: _array.observe(delegate: delegate))
     }
     
     public func pointer() -> YrsCollectionPtr {
