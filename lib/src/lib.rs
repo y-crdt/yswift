@@ -9,6 +9,7 @@ mod mapchange;
 mod text;
 mod transaction;
 mod undo;
+mod subscription;
 
 use crate::doc::YrsCollectionPtr;
 use crate::doc::YrsOrigin;
@@ -33,5 +34,6 @@ use crate::undo::YrsUndoError;
 use crate::undo::YrsUndoManagerObservationDelegate;
 use crate::undo::YrsUndoEvent;
 use crate::undo::YrsUndoEventKind;
+use crate::subscription::YSubscription;
 
 uniffi::include_scaffolding!("yniffi");

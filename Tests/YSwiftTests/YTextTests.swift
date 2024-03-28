@@ -33,7 +33,7 @@ class YTextTests: XCTestCase {
         let expectedAttributes = ["weight": "bold"]
         var actualAttributes: [String: String] = [:]
 
-        let subscriptionId = text.observe { deltas in
+        let subscription = text.observe { deltas in
             deltas.forEach {
                 switch $0 {
                 case let .retained(_, attrs):
@@ -50,7 +50,7 @@ class YTextTests: XCTestCase {
         text.append("abc")
         text.format(at: 0, length: 3, attributes: expectedAttributes)
 
-        text.unobserve(subscriptionId)
+        subscription.cancel()
 
         XCTAssertEqual(expectedAttributes, actualAttributes)
     }
@@ -59,7 +59,7 @@ class YTextTests: XCTestCase {
         let expectedAttributes = ["weight": "bold"]
         var actualAttributes: [String: String] = [:]
 
-        let subscriptionId = text.observe { deltas in
+        let subscription = text.observe { deltas in
             deltas.forEach {
                 switch $0 {
                 case let .inserted(_, attrs):
@@ -75,7 +75,7 @@ class YTextTests: XCTestCase {
 
         text.insertWithAttributes("abc", attributes: expectedAttributes, at: 0)
 
-        text.unobserve(subscriptionId)
+        subscription.cancel()
 
         XCTAssertEqual(String(text), "abc")
         XCTAssertEqual(expectedAttributes, actualAttributes)
@@ -85,7 +85,7 @@ class YTextTests: XCTestCase {
         let embed = TestType(name: "Aidar", age: 24)
         var insertedEmbed: TestType?
 
-        let subscriptionId = text.observe { deltas in
+        let subscription = text.observe { deltas in
             deltas.forEach {
                 switch $0 {
                 case let .inserted(value, _):
@@ -97,7 +97,7 @@ class YTextTests: XCTestCase {
 
         text.insertEmbed(embed, at: 0)
 
-        text.unobserve(subscriptionId)
+        subscription.cancel()
 
         XCTAssertEqual(embed, insertedEmbed)
         XCTAssertEqual(text.length(), 1)
@@ -110,7 +110,7 @@ class YTextTests: XCTestCase {
         let expectedAttributes = ["weight": "bold"]
         var actualAttributes: [String: String] = [:]
 
-        let subscriptionId = text.observe { deltas in
+        let subscription = text.observe { deltas in
             deltas.forEach {
                 switch $0 {
                 case let .inserted(value, attrs):
@@ -127,7 +127,7 @@ class YTextTests: XCTestCase {
 
         text.insertEmbedWithAttributes(embed, attributes: expectedAttributes, at: 0)
 
-        text.unobserve(subscriptionId)
+        subscription.cancel()
 
         XCTAssertEqual(embed, insertedEmbed)
         XCTAssertEqual(expectedAttributes, actualAttributes)
@@ -148,7 +148,7 @@ class YTextTests: XCTestCase {
     func test_closure_observation() {
         var insertedValue = String()
 
-        let subscriptionId = text.observe { deltas in
+        let subscription = text.observe { deltas in
             deltas.forEach {
                 switch $0 {
                 case let .inserted(value, _):
@@ -160,7 +160,7 @@ class YTextTests: XCTestCase {
 
         text.append("test")
 
-        text.unobserve(subscriptionId)
+        subscription.cancel()
 
         XCTAssertEqual(insertedValue, "test")
     }
@@ -176,7 +176,7 @@ class YTextTests: XCTestCase {
         var object = NSObject()
         weak var weakObject = object
 
-        let _ = text.observe { [object] deltas in
+        let subscription = text.observe { [object] deltas in
             // Capture the object in the closure (note that we need to use
             // a capture list like [object] above in order for the object
             // to be captured by reference instead of by pointer value)
@@ -189,6 +189,8 @@ class YTextTests: XCTestCase {
         // Because we didn't explicitly unobserved/unsubscribed.
         object = NSObject()
         XCTAssertNotNil(weakObject)
+        
+        subscription.cancel()
     }
 
     func test_closure_observation_IsNotLeakingAfterUnobserving() {
@@ -197,7 +199,7 @@ class YTextTests: XCTestCase {
         var object = NSObject()
         weak var weakObject = object
 
-        let subscriptionId = text.observe { [object] deltas in
+        let subscription = text.observe { [object] deltas in
             // Capture the object in the closure (note that we need to use
             // a capture list like [object] above in order for the object
             // to be captured by reference instead of by pointer value)
@@ -206,7 +208,7 @@ class YTextTests: XCTestCase {
         }
 
         // Explicit unobserving, to prevent leaking
-        text.unobserve(subscriptionId)
+        subscription.cancel()
 
         // When we re-assign our local strong reference to a new object the
         // weak reference should become nil, since the closure should

@@ -70,10 +70,12 @@ class YUndoManagerTests: XCTestCase {
     
     func test_undoEvents() throws {
         var received = TestMetadata("")
+        
         let on_added = manager.observeAdded({ (e, metadata) -> TestMetadata? in
             let m = metadata ?? TestMetadata("")
             return TestMetadata(m.value + "A")
         })
+        
         let on_popped = manager.observePopped({ (e, metadata) -> TestMetadata? in
             received = metadata!
             return metadata
@@ -86,6 +88,9 @@ class YUndoManagerTests: XCTestCase {
         
         XCTAssert (try manager.redo())
         XCTAssertEqual(received.value, "A")
+        
+        on_added.cancel()
+        on_popped.cancel()
     }
     
     func test_undoDifferentOrigins() throws {

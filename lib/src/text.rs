@@ -1,11 +1,13 @@
 use crate::attrs::YrsAttrs;
 use crate::delta::YrsDelta;
+use crate::subscription::YSubscription;
 use crate::transaction::YrsTransaction;
 use yrs::Any;
 use std::cell::RefCell;
 use std::fmt::Debug;
+use std::sync::Arc;
 use yrs::{GetString, Observable, Text, TextRef};
-use yrs::types::Branch;
+use yrs::branch::Branch;
 use crate::doc::YrsCollectionPtr;
 
 pub(crate) struct YrsText(RefCell<TextRef>);
@@ -131,8 +133,8 @@ impl YrsText {
         self.0.borrow().len(tx)
     }
 
-    pub(crate) fn observe(&self, delegate: Box<dyn YrsTextObservationDelegate>) -> u32 {
-        let subscription_id = self
+    pub(crate) fn observe(&self, delegate: Box<dyn YrsTextObservationDelegate>) -> Arc<YSubscription> {
+        let subscription = self
             .0
             .borrow_mut()
             .observe(move |transaction, text_event| {
@@ -140,13 +142,8 @@ impl YrsText {
                 let result: Vec<YrsDelta> =
                     delta.iter().map(|change| YrsDelta::from(change)).collect();
                 delegate.call(result)
-            })
-            .into();
+            });
 
-        subscription_id
-    }
-
-    pub(crate) fn unobserve(&self, subscription_id: u32) {
-        self.0.borrow_mut().unobserve(subscription_id);
+            Arc::new(YSubscription::new(subscription))
     }
 }

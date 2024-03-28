@@ -120,7 +120,7 @@ final class YMapTests: XCTestCase {
 
         var actualChanges: [YMapChange<TestType>] = []
 
-        let subscriptionId = map.observe { changes in
+        let subscription = map.observe { changes in
             changes.forEach { change in
                 actualChanges.append(change)
             }
@@ -132,7 +132,7 @@ final class YMapTests: XCTestCase {
         map[first.name] = nil
         map[second.name] = updatedSecond
 
-        map.unobserve(subscriptionId)
+        subscription.cancel()
 
         // Use set here, to compare two arrays by the composition not by order
         XCTAssertEqual(
@@ -157,7 +157,7 @@ final class YMapTests: XCTestCase {
         var object = NSObject()
         weak var weakObject = object
 
-        let _ = map.observe { [object] changes in
+        let subscription = map.observe { [object] changes in
             // Capture the object in the closure (note that we need to use
             // a capture list like [object] above in order for the object
             // to be captured by reference instead of by pointer value)
@@ -170,6 +170,8 @@ final class YMapTests: XCTestCase {
         // Because we didn't explicitly unobserved/unsubscribed.
         object = NSObject()
         XCTAssertNotNil(weakObject)
+        
+        subscription.cancel()
     }
 
     func test_observation_closure_IsNotLeakingAfterUnobserving() {
@@ -178,7 +180,7 @@ final class YMapTests: XCTestCase {
         var object = NSObject()
         weak var weakObject = object
 
-        let subscriptionId = map.observe { [object] changes in
+        let subscription = map.observe { [object] changes in
             // Capture the object in the closure (note that we need to use
             // a capture list like [object] above in order for the object
             // to be captured by reference instead of by pointer value)
@@ -187,7 +189,7 @@ final class YMapTests: XCTestCase {
         }
 
         // Explicit unobserving, to prevent leaking
-        map.unobserve(subscriptionId)
+        subscription.cancel()
 
         // When we re-assign our local strong reference to a new object the
         // weak reference should become nil, since the closure should

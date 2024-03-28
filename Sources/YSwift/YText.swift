@@ -175,9 +175,9 @@ public final class YText: Transactable, YCollection {
     /// Returns a publisher of changes for the text.
     public func observe() -> AnyPublisher<[YTextChange], Never> {
         let subject = PassthroughSubject<[YTextChange], Never>()
-        let subscriptionId = observe { subject.send($0) }
-        return subject.handleEvents(receiveCancel: { [weak self] in
-            self?._text.unobserve(subscriptionId: subscriptionId)
+        let subscription = observe { subject.send($0) }
+        return subject.handleEvents(receiveCancel: {
+            subscription.cancel()
         })
         .eraseToAnyPublisher()
     }
@@ -185,19 +185,15 @@ public final class YText: Transactable, YCollection {
     /// Registers a closure that is called with an array of changes to the text.
     /// - Parameter callback: The closure to process reported changes from the text.
     /// - Returns: An observer identifier that you can use to stop observing the text.
-    public func observe(_ callback: @escaping ([YTextChange]) -> Void) -> UInt32 {
-        _text.observe(
-            delegate: YTextObservationDelegate(
-                callback: callback,
-                decoded: Coder.decoded(_:)
+    public func observe(_ callback: @escaping ([YTextChange]) -> Void) -> YSubscription {
+        YSubscription(
+            subscription: _text.observe(
+                delegate: YTextObservationDelegate(
+                    callback: callback,
+                    decoded: Coder.decoded(_:)
+                )
             )
         )
-    }
-
-    /// Unregister an observing closure, identified by the identifier you provide.
-    /// - Parameter subscriptionId: The observer identifier to unregister.
-    public func unobserve(_ subscriptionId: UInt32) {
-        _text.unobserve(subscriptionId: subscriptionId)
     }
     
     public func pointer() -> YrsCollectionPtr {

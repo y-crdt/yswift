@@ -64,15 +64,9 @@ public final class YUndoManager<T: AnyObject> {
     /// - Returns: A handle to the subscription.
     ///
     /// Cancel the subscription by calling ``unobserveAdded(_:)`` with the subscription Id this method returns.
-    public func observeAdded(_ body: @escaping (UndoEvent, T?) -> T?) -> UInt32 {
+    public func observeAdded(_ body: @escaping (UndoEvent, T?) -> T?) -> YSubscription {
         let delegate = YUndoManagerObservationDelegate(callback: body)
-        return _manager.observeAdded(delegate: delegate)
-    }
-
-    /// Cancels a subscription to the undo manager adding changes.
-    /// - Parameter subscriptionId: The subscription Id to cancel.
-    public func unobserveAdded(_ subscriptionId: UInt32) {
-        return _manager.unobserveAdded(subscriptionId: subscriptionId)
+        return YSubscription(subscription: _manager.observeAdded(delegate: delegate))
     }
 
     /// Creates a subscription that is called when the undo manager updates a change.
@@ -80,15 +74,9 @@ public final class YUndoManager<T: AnyObject> {
     /// - Returns: A handle to the subscription.
     ///
     /// Call ``unobserveUpdated(_:)`` with the subscription Id this method returns to cancel the subscription.
-    public func observeUpdated(_ body: @escaping (UndoEvent, T?) -> T?) -> UInt32 {
+    public func observeUpdated(_ body: @escaping (UndoEvent, T?) -> T?) -> YSubscription {
         let delegate = YUndoManagerObservationDelegate(callback: body)
-        return _manager.observeUpdated(delegate: delegate)
-    }
-
-    /// Cancels a subscription to the undo manager updating changes.
-    /// - Parameter subscriptionId: The subscription to be cancalled.
-    public func unobserveUpdated(_ subscriptionId: UInt32) {
-        return _manager.unobserveUpdated(subscriptionId: subscriptionId)
+        return YSubscription(subscription: _manager.observeUpdated(delegate: delegate))
     }
 
     /// Creates a subscription that is called when the undo manager replays a change.
@@ -96,15 +84,9 @@ public final class YUndoManager<T: AnyObject> {
     /// - Returns: A handle to the subscription.
     ///
     /// Call ``unobserveUpdated(_:)`` with the subscription Id this method returns to cancel the subscription.
-    public func observePopped(_ body: @escaping (UndoEvent, T?) -> T?) -> UInt32 {
+    public func observePopped(_ body: @escaping (UndoEvent, T?) -> T?) -> YSubscription {
         let delegate = YUndoManagerObservationDelegate(callback: body)
-        return _manager.observePopped(delegate: delegate)
-    }
-
-    /// Cancels a subscription that is called when the undo manager replays a change.
-    /// - Parameter subscriptionId: The subscription to be cancelled.
-    public func unobservePopped(_ subscriptionId: UInt32) {
-        return _manager.unobservePopped(subscriptionId: subscriptionId)
+        return YSubscription(subscription: _manager.observePopped(delegate: delegate))
     }
 }
 

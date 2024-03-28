@@ -42,6 +42,9 @@ typedef sequence<u8> YrsOrigin;
 [Custom]
 typedef u64 YrsCollectionPtr;
 
+interface YSubscription {
+};
+
 interface YrsMap {
   YrsCollectionPtr raw_ptr();
   u32 length([ByRef] YrsTransaction tx);
@@ -58,8 +61,7 @@ interface YrsMap {
   void values([ByRef] YrsTransaction tx, YrsMapIteratorDelegate delegate);
   void each([ByRef] YrsTransaction tx, YrsMapKVIteratorDelegate delegate);
 
-  u32 observe(YrsMapObservationDelegate delegate);
-  void unobserve(u32 subscription_id);
+  YSubscription observe(YrsMapObservationDelegate delegate);
 };
 
 [Enum]
@@ -100,8 +102,7 @@ interface YrsArray {
   void remove([ByRef] YrsTransaction tx, u32 index);
   void remove_range([ByRef] YrsTransaction tx, u32 index, u32 len);
   sequence<string> to_a([ByRef] YrsTransaction tx);
-  u32 observe(YrsArrayObservationDelegate delegate);
-  void unobserve(u32 subscription_id);
+  YSubscription observe(YrsArrayObservationDelegate delegate);
 };
 
 callback interface YrsArrayEachDelegate {
@@ -130,8 +131,7 @@ interface YrsText {
   string get_string([ByRef] YrsTransaction tx);
   void remove_range([ByRef] YrsTransaction tx, u32 start, u32 length);
   u32 length([ByRef] YrsTransaction tx);
-  u32 observe(YrsTextObservationDelegate delegate);
-  void unobserve(u32 subscription_id);
+  YSubscription observe(YrsTextObservationDelegate delegate);
 };
 
 callback interface YrsTextObservationDelegate {
@@ -181,14 +181,11 @@ interface YrsUndoManager {
     [Throws=YrsUndoError]
     void clear();
 
-    u32 observe_added(YrsUndoManagerObservationDelegate delegate);
-    void unobserve_added(u32 subscription_id);
+    YSubscription observe_added(YrsUndoManagerObservationDelegate delegate);
 
-    u32 observe_updated(YrsUndoManagerObservationDelegate delegate);
-    void unobserve_updated(u32 subscription_id);
+    YSubscription observe_updated(YrsUndoManagerObservationDelegate delegate);
 
-    u32 observe_popped(YrsUndoManagerObservationDelegate delegate);
-    void unobserve_popped(u32 subscription_id);
+    YSubscription observe_popped(YrsUndoManagerObservationDelegate delegate);
 };
 
 [Error]

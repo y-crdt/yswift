@@ -2,6 +2,7 @@ use std::fmt::Debug;
 use std::sync::{Arc, Mutex, MutexGuard};
 use yrs::undo::EventKind;
 use crate::doc::{YrsCollectionPtr, YrsOrigin};
+use crate::subscription::YSubscription;
 
 pub(crate) struct YrsUndoManager(Mutex<yrs::undo::UndoManager<u64>>);
 
@@ -59,43 +60,28 @@ impl YrsUndoManager {
         m.reset();
     }
 
-    pub(crate) fn observe_added(&self, delegate: Box<dyn YrsUndoManagerObservationDelegate>) -> u32 {
+    pub(crate) fn observe_added(&self, delegate: Box<dyn YrsUndoManagerObservationDelegate>) -> Arc<YSubscription> {
         let m = self.acquire_lock();
         let subscription = m.observe_item_added(move |_, e| {
-            e.item.meta = delegate.call(YrsUndoEvent::new(e), e.item.meta);
+            *e.meta_mut() = delegate.call(YrsUndoEvent::new(e), *e.meta_mut());
         });
-        subscription.into()
+        Arc::new(YSubscription::new(subscription))
     }
 
-    pub(crate) fn unobserve_added(&self, subscription_id: u32) {
-        let m = self.acquire_lock();
-        m.unobserve_item_added(subscription_id);
-    }
-
-    pub(crate) fn observe_updated(&self, delegate: Box<dyn YrsUndoManagerObservationDelegate>) -> u32 {
+    pub(crate) fn observe_updated(&self, delegate: Box<dyn YrsUndoManagerObservationDelegate>) -> Arc<YSubscription> {
         let m = self.acquire_lock();
         let subscription = m.observe_item_updated(move |_, e| {
-            e.item.meta = delegate.call(YrsUndoEvent::new(e), e.item.meta);
+            *e.meta_mut() = delegate.call(YrsUndoEvent::new(e), *e.meta_mut());
         });
-        subscription.into()
+        Arc::new(YSubscription::new(subscription))
     }
 
-    pub(crate) fn unobserve_updated(&self, subscription_id: u32) {
-        let m = self.acquire_lock();
-        m.unobserve_item_updated(subscription_id);
-    }
-
-    pub(crate) fn observe_popped(&self, delegate: Box<dyn YrsUndoManagerObservationDelegate>) -> u32 {
+    pub(crate) fn observe_popped(&self, delegate: Box<dyn YrsUndoManagerObservationDelegate>) -> Arc<YSubscription> {
         let m = self.acquire_lock();
         let subscription = m.observe_item_popped(move |_, e| {
-            e.item.meta = delegate.call(YrsUndoEvent::new(e), e.item.meta);
+            *e.meta_mut() = delegate.call(YrsUndoEvent::new(e), *e.meta_mut());
         });
-        subscription.into()
-    }
-
-    pub(crate) fn unobserve_popped(&self, subscription_id: u32) {
-        let m = self.acquire_lock();
-        m.unobserve_item_popped(subscription_id);
+        Arc::new(YSubscription::new(subscription))
     }
 }
 
@@ -110,7 +96,7 @@ pub(crate) trait YrsUndoManagerObservationDelegate: Send + Sync + Debug {
 }
 
 pub(crate) struct YrsUndoEvent {
-    inner: &'static mut yrs::undo::Event<'static, u64>,
+    inner: &'static mut yrs::undo::Event<u64>,
 }
 
 unsafe impl Send for YrsUndoEvent {}

@@ -155,9 +155,9 @@ public final class YMap<T: Codable>: Transactable, YCollection {
     /// Returns a publisher of map changes.
     public func observe() -> AnyPublisher<[YMapChange<T>], Never> {
         let subject = PassthroughSubject<[YMapChange<T>], Never>()
-        let subscriptionId = observe { subject.send($0) }
-        return subject.handleEvents(receiveCancel: { [weak self] in
-            self?._map.unobserve(subscriptionId: subscriptionId)
+        let subscription = observe { subject.send($0) }
+        return subject.handleEvents(receiveCancel: {
+            subscription.cancel()
         })
         .eraseToAnyPublisher()
     }
@@ -165,15 +165,9 @@ public final class YMap<T: Codable>: Transactable, YCollection {
     /// Registers a closure that is called with an array of changes to the map.
     /// - Parameter body: A closure that is called with an array of map changes.
     /// - Returns: An observer identifier.
-    public func observe(_ body: @escaping ([YMapChange<T>]) -> Void) -> UInt32 {
+    public func observe(_ body: @escaping ([YMapChange<T>]) -> Void) -> YSubscription {
         let delegate = YMapObservationDelegate(decoded: Coder.decoded, callback: body)
-        return _map.observe(delegate: delegate)
-    }
-
-    /// Unregister an observing closure, identified by the identifier you provide.
-    /// - Parameter subscriptionId: The observer identifier to unregister.
-    public func unobserve(_ subscriptionId: UInt32) {
-        _map.unobserve(subscriptionId: subscriptionId)
+        return YSubscription(subscription: _map.observe(delegate: delegate))
     }
 
     public func toMap(transaction: YrsTransaction? = nil) -> [String: T] {
