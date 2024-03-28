@@ -11,7 +11,7 @@ public final class YSubscription {
         self.subscription = subscription
     }
 
-    func cancel() {
+    public func cancel() {
         subscription = nil
     }
 
