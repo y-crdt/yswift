@@ -34,7 +34,7 @@ let FFIbinaryTarget: PackageDescription.Target
 //
 // The script `./scripts/build-xcframework.sh` _does_ expect that you have Rust
 // installed locally in order to function.
-//if ProcessInfo.processInfo.environment["YSWIFT_LOCAL"] != nil {
+if ProcessInfo.processInfo.environment["YSWIFT_LOCAL"] != nil {
     // We are using a local file reference to an XCFramework, which is functional
     // on the tags for this package because the XCFramework.zip file is committed with
     // those specific release points. This does, however, cause a few awkward issues,
@@ -47,13 +47,13 @@ let FFIbinaryTarget: PackageDescription.Target
             name: "yniffiFFI",
             path: "./lib/yniffiFFI.xcframework"
     )
-//} else {
-//    FFIbinaryTarget = .binaryTarget(
-//            name: "yniffiFFI",
-//            url: "https://github.com/y-crdt/yswift/releases/download/0.2.0/yniffiFFI.xcframework.zip",
-//            checksum: "d2633bdb1e9f257cd56a852f360f0d0f4bc1615a4c34a05e76a2da2c430a0f98"
-//    )
-//}
+} else {
+    FFIbinaryTarget = .binaryTarget(
+            name: "yniffiFFI",
+            url: "https://github.com/y-crdt/yswift/releases/download/0.2.0/yniffiFFI.xcframework.zip",
+            checksum: "d2633bdb1e9f257cd56a852f360f0d0f4bc1615a4c34a05e76a2da2c430a0f98"
+    )
+}
 
 let package = Package(
     name: "YSwift",
