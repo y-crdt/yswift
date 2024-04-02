@@ -396,6 +396,67 @@ private struct FfiConverterString: FfiConverter {
     }
 }
 
+public protocol YSubscriptionProtocol: AnyObject {}
+
+public class YSubscription:
+    YSubscriptionProtocol
+{
+    fileprivate let pointer: UnsafeMutableRawPointer
+
+    // TODO: We'd like this to be `private` but for Swifty reasons,
+    // we can't implement `FfiConverter` without making this `required` and we can't
+    // make it `required` without making it `public`.
+    required init(unsafeFromRawPointer pointer: UnsafeMutableRawPointer) {
+        self.pointer = pointer
+    }
+
+    public func uniffiClonePointer() -> UnsafeMutableRawPointer {
+        return try! rustCall { uniffi_uniffi_yniffi_fn_clone_ysubscription(self.pointer, $0) }
+    }
+
+    deinit {
+        try! rustCall { uniffi_uniffi_yniffi_fn_free_ysubscription(pointer, $0) }
+    }
+}
+
+public struct FfiConverterTypeYSubscription: FfiConverter {
+    typealias FfiType = UnsafeMutableRawPointer
+    typealias SwiftType = YSubscription
+
+    public static func lift(_ pointer: UnsafeMutableRawPointer) throws -> YSubscription {
+        return YSubscription(unsafeFromRawPointer: pointer)
+    }
+
+    public static func lower(_ value: YSubscription) -> UnsafeMutableRawPointer {
+        return value.uniffiClonePointer()
+    }
+
+    public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> YSubscription {
+        let v: UInt64 = try readInt(&buf)
+        // The Rust code won't compile if a pointer won't fit in a UInt64.
+        // We have to go via `UInt` because that's the thing that's the size of a pointer.
+        let ptr = UnsafeMutableRawPointer(bitPattern: UInt(truncatingIfNeeded: v))
+        if ptr == nil {
+            throw UniffiInternalError.unexpectedNullPointer
+        }
+        return try lift(ptr!)
+    }
+
+    public static func write(_ value: YSubscription, into buf: inout [UInt8]) {
+        // This fiddling is because `Int` is the thing that's the same size as a pointer.
+        // The Rust code won't compile if a pointer won't fit in a `UInt64`.
+        writeInt(&buf, UInt64(bitPattern: Int64(Int(bitPattern: lower(value)))))
+    }
+}
+
+public func FfiConverterTypeYSubscription_lift(_ pointer: UnsafeMutableRawPointer) throws -> YSubscription {
+    return try FfiConverterTypeYSubscription.lift(pointer)
+}
+
+public func FfiConverterTypeYSubscription_lower(_ value: YSubscription) -> UnsafeMutableRawPointer {
+    return FfiConverterTypeYSubscription.lower(value)
+}
+
 public protocol YrsArrayProtocol: AnyObject {
     func each(tx: YrsTransaction, delegate: YrsArrayEachDelegate)
 
@@ -407,7 +468,7 @@ public protocol YrsArrayProtocol: AnyObject {
 
     func length(tx: YrsTransaction) -> UInt32
 
-    func observe(delegate: YrsArrayObservationDelegate) -> UInt32
+    func observe(delegate: YrsArrayObservationDelegate) -> YSubscription
 
     func pushBack(tx: YrsTransaction, value: String)
 
@@ -420,8 +481,6 @@ public protocol YrsArrayProtocol: AnyObject {
     func removeRange(tx: YrsTransaction, index: UInt32, len: UInt32)
 
     func toA(tx: YrsTransaction) -> [String]
-
-    func unobserve(subscriptionId: UInt32)
 }
 
 public class YrsArray:
@@ -493,8 +552,8 @@ public class YrsArray:
         )
     }
 
-    public func observe(delegate: YrsArrayObservationDelegate) -> UInt32 {
-        return try! FfiConverterUInt32.lift(
+    public func observe(delegate: YrsArrayObservationDelegate) -> YSubscription {
+        return try! FfiConverterTypeYSubscription.lift(
             try!
                 rustCall {
                     uniffi_uniffi_yniffi_fn_method_yrsarray_observe(self.uniffiClonePointer(),
@@ -557,14 +616,6 @@ public class YrsArray:
                                                                  FfiConverterTypeYrsTransaction.lower(tx), $0)
                 }
         )
-    }
-
-    public func unobserve(subscriptionId: UInt32) {
-        try!
-            rustCall {
-                uniffi_uniffi_yniffi_fn_method_yrsarray_unobserve(self.uniffiClonePointer(),
-                                                                  FfiConverterUInt32.lower(subscriptionId), $0)
-            }
     }
 }
 
@@ -760,13 +811,11 @@ public protocol YrsMapProtocol: AnyObject {
 
     func length(tx: YrsTransaction) -> UInt32
 
-    func observe(delegate: YrsMapObservationDelegate) -> UInt32
+    func observe(delegate: YrsMapObservationDelegate) -> YSubscription
 
     func rawPtr() -> YrsCollectionPtr
 
     func remove(tx: YrsTransaction, key: String) throws -> String?
-
-    func unobserve(subscriptionId: UInt32)
 
     func values(tx: YrsTransaction, delegate: YrsMapIteratorDelegate)
 }
@@ -858,8 +907,8 @@ public class YrsMap:
         )
     }
 
-    public func observe(delegate: YrsMapObservationDelegate) -> UInt32 {
-        return try! FfiConverterUInt32.lift(
+    public func observe(delegate: YrsMapObservationDelegate) -> YSubscription {
+        return try! FfiConverterTypeYSubscription.lift(
             try!
                 rustCall {
                     uniffi_uniffi_yniffi_fn_method_yrsmap_observe(self.uniffiClonePointer(),
@@ -885,14 +934,6 @@ public class YrsMap:
                                                              FfiConverterString.lower(key), $0)
             }
         )
-    }
-
-    public func unobserve(subscriptionId: UInt32) {
-        try!
-            rustCall {
-                uniffi_uniffi_yniffi_fn_method_yrsmap_unobserve(self.uniffiClonePointer(),
-                                                                FfiConverterUInt32.lower(subscriptionId), $0)
-            }
     }
 
     public func values(tx: YrsTransaction, delegate: YrsMapIteratorDelegate) {
@@ -960,13 +1001,11 @@ public protocol YrsTextProtocol: AnyObject {
 
     func length(tx: YrsTransaction) -> UInt32
 
-    func observe(delegate: YrsTextObservationDelegate) -> UInt32
+    func observe(delegate: YrsTextObservationDelegate) -> YSubscription
 
     func rawPtr() -> YrsCollectionPtr
 
     func removeRange(tx: YrsTransaction, start: UInt32, length: UInt32)
-
-    func unobserve(subscriptionId: UInt32)
 }
 
 public class YrsText:
@@ -1071,8 +1110,8 @@ public class YrsText:
         )
     }
 
-    public func observe(delegate: YrsTextObservationDelegate) -> UInt32 {
-        return try! FfiConverterUInt32.lift(
+    public func observe(delegate: YrsTextObservationDelegate) -> YSubscription {
+        return try! FfiConverterTypeYSubscription.lift(
             try!
                 rustCall {
                     uniffi_uniffi_yniffi_fn_method_yrstext_observe(self.uniffiClonePointer(),
@@ -1097,14 +1136,6 @@ public class YrsText:
                                                                     FfiConverterTypeYrsTransaction.lower(tx),
                                                                     FfiConverterUInt32.lower(start),
                                                                     FfiConverterUInt32.lower(length), $0)
-            }
-    }
-
-    public func unobserve(subscriptionId: UInt32) {
-        try!
-            rustCall {
-                uniffi_uniffi_yniffi_fn_method_yrstext_unobserve(self.uniffiClonePointer(),
-                                                                 FfiConverterUInt32.lower(subscriptionId), $0)
             }
     }
 }
@@ -1435,11 +1466,11 @@ public protocol YrsUndoManagerProtocol: AnyObject {
      */
     func clear() throws
 
-    func observeAdded(delegate: YrsUndoManagerObservationDelegate) -> UInt32
+    func observeAdded(delegate: YrsUndoManagerObservationDelegate) -> YSubscription
 
-    func observePopped(delegate: YrsUndoManagerObservationDelegate) -> UInt32
+    func observePopped(delegate: YrsUndoManagerObservationDelegate) -> YSubscription
 
-    func observeUpdated(delegate: YrsUndoManagerObservationDelegate) -> UInt32
+    func observeUpdated(delegate: YrsUndoManagerObservationDelegate) -> YSubscription
 
     /**
      * Redoes the last operation from undo stack, returning false if redo stack was
@@ -1461,12 +1492,6 @@ public protocol YrsUndoManagerProtocol: AnyObject {
      * Fails to execute if there's another transaction in progress.
      */
     func undo() throws -> Bool
-
-    func unobserveAdded(subscriptionId: UInt32)
-
-    func unobservePopped(subscriptionId: UInt32)
-
-    func unobserveUpdated(subscriptionId: UInt32)
 
     /**
      * Wraps a set of recent changes together into a single undo operation. These
@@ -1533,8 +1558,8 @@ public class YrsUndoManager:
             }
     }
 
-    public func observeAdded(delegate: YrsUndoManagerObservationDelegate) -> UInt32 {
-        return try! FfiConverterUInt32.lift(
+    public func observeAdded(delegate: YrsUndoManagerObservationDelegate) -> YSubscription {
+        return try! FfiConverterTypeYSubscription.lift(
             try!
                 rustCall {
                     uniffi_uniffi_yniffi_fn_method_yrsundomanager_observe_added(self.uniffiClonePointer(),
@@ -1543,8 +1568,8 @@ public class YrsUndoManager:
         )
     }
 
-    public func observePopped(delegate: YrsUndoManagerObservationDelegate) -> UInt32 {
-        return try! FfiConverterUInt32.lift(
+    public func observePopped(delegate: YrsUndoManagerObservationDelegate) -> YSubscription {
+        return try! FfiConverterTypeYSubscription.lift(
             try!
                 rustCall {
                     uniffi_uniffi_yniffi_fn_method_yrsundomanager_observe_popped(self.uniffiClonePointer(),
@@ -1553,8 +1578,8 @@ public class YrsUndoManager:
         )
     }
 
-    public func observeUpdated(delegate: YrsUndoManagerObservationDelegate) -> UInt32 {
-        return try! FfiConverterUInt32.lift(
+    public func observeUpdated(delegate: YrsUndoManagerObservationDelegate) -> YSubscription {
+        return try! FfiConverterTypeYSubscription.lift(
             try!
                 rustCall {
                     uniffi_uniffi_yniffi_fn_method_yrsundomanager_observe_updated(self.uniffiClonePointer(),
@@ -1600,30 +1625,6 @@ public class YrsUndoManager:
                 uniffi_uniffi_yniffi_fn_method_yrsundomanager_undo(self.uniffiClonePointer(), $0)
             }
         )
-    }
-
-    public func unobserveAdded(subscriptionId: UInt32) {
-        try!
-            rustCall {
-                uniffi_uniffi_yniffi_fn_method_yrsundomanager_unobserve_added(self.uniffiClonePointer(),
-                                                                              FfiConverterUInt32.lower(subscriptionId), $0)
-            }
-    }
-
-    public func unobservePopped(subscriptionId: UInt32) {
-        try!
-            rustCall {
-                uniffi_uniffi_yniffi_fn_method_yrsundomanager_unobserve_popped(self.uniffiClonePointer(),
-                                                                               FfiConverterUInt32.lower(subscriptionId), $0)
-            }
-    }
-
-    public func unobserveUpdated(subscriptionId: UInt32) {
-        try!
-            rustCall {
-                uniffi_uniffi_yniffi_fn_method_yrsundomanager_unobserve_updated(self.uniffiClonePointer(),
-                                                                                FfiConverterUInt32.lower(subscriptionId), $0)
-            }
     }
 
     /**
@@ -3021,7 +3022,7 @@ private var initializationResult: InitializationResult {
     if uniffi_uniffi_yniffi_checksum_method_yrsarray_length() != 39378 {
         return InitializationResult.apiChecksumMismatch
     }
-    if uniffi_uniffi_yniffi_checksum_method_yrsarray_observe() != 28459 {
+    if uniffi_uniffi_yniffi_checksum_method_yrsarray_observe() != 7991 {
         return InitializationResult.apiChecksumMismatch
     }
     if uniffi_uniffi_yniffi_checksum_method_yrsarray_push_back() != 15550 {
@@ -3040,9 +3041,6 @@ private var initializationResult: InitializationResult {
         return InitializationResult.apiChecksumMismatch
     }
     if uniffi_uniffi_yniffi_checksum_method_yrsarray_to_a() != 10731 {
-        return InitializationResult.apiChecksumMismatch
-    }
-    if uniffi_uniffi_yniffi_checksum_method_yrsarray_unobserve() != 9340 {
         return InitializationResult.apiChecksumMismatch
     }
     if uniffi_uniffi_yniffi_checksum_method_yrsdoc_encode_diff_v1() != 16238 {
@@ -3084,16 +3082,13 @@ private var initializationResult: InitializationResult {
     if uniffi_uniffi_yniffi_checksum_method_yrsmap_length() != 64910 {
         return InitializationResult.apiChecksumMismatch
     }
-    if uniffi_uniffi_yniffi_checksum_method_yrsmap_observe() != 35962 {
+    if uniffi_uniffi_yniffi_checksum_method_yrsmap_observe() != 12647 {
         return InitializationResult.apiChecksumMismatch
     }
     if uniffi_uniffi_yniffi_checksum_method_yrsmap_raw_ptr() != 14101 {
         return InitializationResult.apiChecksumMismatch
     }
     if uniffi_uniffi_yniffi_checksum_method_yrsmap_remove() != 48362 {
-        return InitializationResult.apiChecksumMismatch
-    }
-    if uniffi_uniffi_yniffi_checksum_method_yrsmap_unobserve() != 25046 {
         return InitializationResult.apiChecksumMismatch
     }
     if uniffi_uniffi_yniffi_checksum_method_yrsmap_values() != 31747 {
@@ -3123,16 +3118,13 @@ private var initializationResult: InitializationResult {
     if uniffi_uniffi_yniffi_checksum_method_yrstext_length() != 40452 {
         return InitializationResult.apiChecksumMismatch
     }
-    if uniffi_uniffi_yniffi_checksum_method_yrstext_observe() != 2220 {
+    if uniffi_uniffi_yniffi_checksum_method_yrstext_observe() != 45326 {
         return InitializationResult.apiChecksumMismatch
     }
     if uniffi_uniffi_yniffi_checksum_method_yrstext_raw_ptr() != 42166 {
         return InitializationResult.apiChecksumMismatch
     }
     if uniffi_uniffi_yniffi_checksum_method_yrstext_remove_range() != 46008 {
-        return InitializationResult.apiChecksumMismatch
-    }
-    if uniffi_uniffi_yniffi_checksum_method_yrstext_unobserve() != 5672 {
         return InitializationResult.apiChecksumMismatch
     }
     if uniffi_uniffi_yniffi_checksum_method_yrstransaction_free() != 42613 {
@@ -3183,13 +3175,13 @@ private var initializationResult: InitializationResult {
     if uniffi_uniffi_yniffi_checksum_method_yrsundomanager_clear() != 62142 {
         return InitializationResult.apiChecksumMismatch
     }
-    if uniffi_uniffi_yniffi_checksum_method_yrsundomanager_observe_added() != 57225 {
+    if uniffi_uniffi_yniffi_checksum_method_yrsundomanager_observe_added() != 56228 {
         return InitializationResult.apiChecksumMismatch
     }
-    if uniffi_uniffi_yniffi_checksum_method_yrsundomanager_observe_popped() != 26392 {
+    if uniffi_uniffi_yniffi_checksum_method_yrsundomanager_observe_popped() != 53414 {
         return InitializationResult.apiChecksumMismatch
     }
-    if uniffi_uniffi_yniffi_checksum_method_yrsundomanager_observe_updated() != 56836 {
+    if uniffi_uniffi_yniffi_checksum_method_yrsundomanager_observe_updated() != 19534 {
         return InitializationResult.apiChecksumMismatch
     }
     if uniffi_uniffi_yniffi_checksum_method_yrsundomanager_redo() != 5163 {
@@ -3199,15 +3191,6 @@ private var initializationResult: InitializationResult {
         return InitializationResult.apiChecksumMismatch
     }
     if uniffi_uniffi_yniffi_checksum_method_yrsundomanager_undo() != 44889 {
-        return InitializationResult.apiChecksumMismatch
-    }
-    if uniffi_uniffi_yniffi_checksum_method_yrsundomanager_unobserve_added() != 35819 {
-        return InitializationResult.apiChecksumMismatch
-    }
-    if uniffi_uniffi_yniffi_checksum_method_yrsundomanager_unobserve_popped() != 14267 {
-        return InitializationResult.apiChecksumMismatch
-    }
-    if uniffi_uniffi_yniffi_checksum_method_yrsundomanager_unobserve_updated() != 50308 {
         return InitializationResult.apiChecksumMismatch
     }
     if uniffi_uniffi_yniffi_checksum_method_yrsundomanager_wrap_changes() != 6579 {
