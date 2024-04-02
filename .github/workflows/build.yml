@@ -40,7 +40,7 @@ jobs:
     - name: Tuist Generate
       run: |
         cd examples
-        tuist generate -n
+        tuist generate -x -n
 
     - name: Tuist Test
       run: |
