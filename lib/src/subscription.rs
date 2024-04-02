@@ -7,16 +7,8 @@ pub(crate) struct YSubscription {
 
 impl YSubscription {
   pub(crate)fn new(value: Subscription) -> YSubscription {
-      // println!("YSubscription is being initialized");
-
       YSubscription {
         value
       }
   }
 }
-
-// impl Drop for YSubscription {
-//   fn drop(&mut self) {
-//       println!("YSubscription is being deinitialized");
-//   }
-// }
