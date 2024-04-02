@@ -31,6 +31,11 @@ jobs:
 
     - name: Install Mise and Tuist
       uses: jdx/mise-action@v2
+      with:
+        install: true
+        cache: true
+        tool_versions: |
+          tuist = "3.39.3"
 
     - name: Tuist Fetch
       run: |
