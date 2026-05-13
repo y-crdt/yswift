@@ -17,12 +17,41 @@ public final class YDocument {
     ///
     /// Use `transactionStateVector()` on a transaction to get a state buffer to compare with this method.
     ///
+    /// Passing an empty state vector (`[]`) — the default — means
+    /// "compute the diff from no prior state", i.e. the full current
+    /// document. The empty-state-vector case is handled internally by
+    /// synthesising a fresh-document state vector (see implementation
+    /// note), because the underlying `Yniffi.YrsDoc.encodeDiffV1`
+    /// decoder rejects a literal empty `[UInt8]` and panics with
+    /// `Yniffi.CodingError.DecodingError`.
+    ///
     /// - Parameters:
     ///   - txn: A transaction within which to compare the state of the document.
-    ///   - state: A data buffer from another YSwift document.
+    ///   - state: A data buffer from another YSwift document. Defaults to `[]`, meaning "full state".
     /// - Returns: A buffer that contains the diff you can use to synchronize another YSwift document.
     public func diff(txn: YrsTransaction, from state: [UInt8] = []) -> [UInt8] {
-        try! document.encodeDiffV1(tx: txn, stateVector: state)
+        // The underlying Yniffi binding's `encodeDiffV1` decoder
+        // rejects a literal empty `[UInt8]` state vector with
+        // `Yniffi.CodingError.DecodingError`. Semantically the caller
+        // is asking for "diff from nothing" — i.e. the full document
+        // state. We synthesise that by getting the state vector of a
+        // freshly-created `YrsDoc`, which encodes the canonical
+        // zero-clients shape that the decoder accepts.
+        //
+        // Mirrors the workaround pattern downstream consumers were
+        // already using: `pair persistence ops with a fresh receiver
+        // doc's state vector`. Moving the workaround upstream so the
+        // default-argument call site Just Works.
+        let effectiveState: [UInt8]
+        if state.isEmpty {
+            let freshDoc = YrsDoc()
+            let freshTxn = freshDoc.transact(origin: nil)
+            defer { freshTxn.free() }
+            effectiveState = freshTxn.transactionStateVector()
+        } else {
+            effectiveState = state
+        }
+        return try! document.encodeDiffV1(tx: txn, stateVector: effectiveState)
     }
 
     // MARK: - Transaction methods
