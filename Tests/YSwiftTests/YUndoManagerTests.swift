@@ -133,4 +133,27 @@ class YUndoManagerTests: XCTestCase {
         XCTAssertFalse(try manager.undo()) // remote changes are not reverted
         XCTAssertEqual(text.getString(), "<break>")
     }
+
+    /// yrs 0.27 has no failing undo, only one that waits for the store; an undo
+    /// issued inside a transaction on the same document must still come back
+    /// as an error, not a hang. The expectation is the timeout guard: if the
+    /// call blocks, the test fails at the wait instead of hanging the suite.
+    func test_undoInsideATransactionThrowsRatherThanHangs() {
+        let document = YDocument()
+        let text = document.getOrCreateText(named: "t")
+        let manager: YUndoManager<NSObject> = document.undoManager(trackedRefs: [text])
+        document.transactSync { txn in text.insert("a", at: 0, in: txn) }
+
+        let returned = expectation(description: "undo returned")
+        var thrown: Error?
+        DispatchQueue.global().async {
+            document.transactSync { txn in
+                text.insert("b", at: 1, in: txn)
+                do { _ = try manager.undo() } catch { thrown = error }
+            }
+            returned.fulfill()
+        }
+        wait(for: [returned], timeout: 5)
+        XCTAssertNotNil(thrown, "undo inside a transaction must throw PendingTransaction")
+    }
 }

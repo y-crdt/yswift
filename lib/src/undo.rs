@@ -1,28 +1,37 @@
 use std::fmt::Debug;
 use std::sync::{Arc, Mutex, MutexGuard};
 use yrs::undo::EventKind;
+use yrs::Transact;
 use crate::doc::{YrsCollectionPtr, YrsOrigin};
 use crate::subscription::YSubscription;
 
-pub(crate) struct YrsUndoManager(Mutex<yrs::undo::UndoManager<u64>>);
+pub(crate) struct YrsUndoManager {
+    inner: Mutex<yrs::undo::UndoManager<u64>>,
+    // yrs >= 0.27 undo managers span documents, so every `expand_scope`
+    // names the document the shared type belongs to.
+    doc: yrs::Doc,
+}
 
 unsafe impl Send for YrsUndoManager {}
 unsafe impl Sync for YrsUndoManager {}
 
-impl From<yrs::undo::UndoManager<u64>> for YrsUndoManager {
-    fn from(value: yrs::undo::UndoManager<u64>) -> Self {
-        YrsUndoManager(Mutex::new(value))
+impl YrsUndoManager {
+    pub(crate) fn new(doc: yrs::Doc, manager: yrs::undo::UndoManager<u64>) -> Self {
+        YrsUndoManager {
+            inner: Mutex::new(manager),
+            doc,
+        }
     }
 }
 
 impl YrsUndoManager {
 
     #[inline]
-    fn acquire_lock(&self) -> MutexGuard<yrs::undo::UndoManager<u64>> {
+    fn acquire_lock(&self) -> MutexGuard<'_, yrs::undo::UndoManager<u64>> {
         // unwrap should be safe, as the only occasion to cause error would be a panic
         // while holding a lock and all operations holding a lock here only do so for
         // a time needed to perform a non-panicing operation
-        self.0.lock().unwrap()
+        self.inner.lock().unwrap()
     }
 
     pub(crate) fn add_origin(&self, origin: YrsOrigin) {
@@ -37,22 +46,40 @@ impl YrsUndoManager {
 
     pub(crate) fn add_scope(&self, tracked_ref: YrsCollectionPtr) {
         let mut m = self.acquire_lock();
-        m.expand_scope(&tracked_ref);
+        m.expand_scope(&self.doc, &tracked_ref);
+    }
+
+    /// yrs 0.27's undo manager waits for exclusive access to the store rather
+    /// than failing, so an undo issued while a transaction is open on the same
+    /// document would deadlock. Probing for a transaction first restores the
+    /// pre-0.27 contract: a pending transaction is an error, not a hang.
+    fn ensure_no_pending_transaction(&self) -> Result<(), YrsUndoError> {
+        match self.doc.try_transact_mut() {
+            Ok(txn) => {
+                drop(txn);
+                Ok(())
+            }
+            Err(_) => Err(YrsUndoError::PendingTransaction),
+        }
     }
 
     pub(crate) fn undo(&self) -> Result<bool, YrsUndoError> {
+        self.ensure_no_pending_transaction()?;
         let mut m = self.acquire_lock();
-        m.undo().map_err(|_| YrsUndoError::PendingTransaction)
+        Ok(m.undo_blocking())
     }
 
     pub(crate) fn redo(&self) -> Result<bool, YrsUndoError> {
+        self.ensure_no_pending_transaction()?;
         let mut m = self.acquire_lock();
-        m.redo().map_err(|_| YrsUndoError::PendingTransaction)
+        Ok(m.redo_blocking())
     }
 
     pub(crate) fn clear(&self) -> Result<(), YrsUndoError> {
+        self.ensure_no_pending_transaction()?;
         let mut m = self.acquire_lock();
-        m.clear().map_err(|_| YrsUndoError::PendingTransaction)
+        m.clear_all();
+        Ok(())
     }
 
     pub(crate) fn wrap_changes(&self) {
@@ -61,7 +88,7 @@ impl YrsUndoManager {
     }
 
     pub(crate) fn observe_added(&self, delegate: Box<dyn YrsUndoManagerObservationDelegate>) -> Arc<YSubscription> {
-        let m = self.acquire_lock();
+        let mut m = self.acquire_lock();
         let subscription = m.observe_item_added(move |_, e| {
             *e.meta_mut() = delegate.call(YrsUndoEvent::new(e), *e.meta_mut());
         });
@@ -69,7 +96,7 @@ impl YrsUndoManager {
     }
 
     pub(crate) fn observe_updated(&self, delegate: Box<dyn YrsUndoManagerObservationDelegate>) -> Arc<YSubscription> {
-        let m = self.acquire_lock();
+        let mut m = self.acquire_lock();
         let subscription = m.observe_item_updated(move |_, e| {
             *e.meta_mut() = delegate.call(YrsUndoEvent::new(e), *e.meta_mut());
         });
@@ -77,7 +104,7 @@ impl YrsUndoManager {
     }
 
     pub(crate) fn observe_popped(&self, delegate: Box<dyn YrsUndoManagerObservationDelegate>) -> Arc<YSubscription> {
-        let m = self.acquire_lock();
+        let mut m = self.acquire_lock();
         let subscription = m.observe_item_popped(move |_, e| {
             *e.meta_mut() = delegate.call(YrsUndoEvent::new(e), *e.meta_mut());
         });
@@ -88,7 +115,7 @@ impl YrsUndoManager {
 #[derive(Debug, thiserror::Error)]
 pub(crate) enum YrsUndoError {
     #[error("Operations failed - there's already an active transaction on a current document")]
-    PendingTransaction
+    PendingTransaction,
 }
 
 pub(crate) trait YrsUndoManagerObservationDelegate: Send + Sync + Debug {

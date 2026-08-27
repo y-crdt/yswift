@@ -1,5 +1,5 @@
 use crate::attrs::YrsAttrs;
-use yrs::types::{Delta, Value};
+use yrs::{types::Delta, Out as Value};
 
 pub enum YrsDelta {
     Inserted { value: String, attrs: String },

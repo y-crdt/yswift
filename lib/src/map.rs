@@ -1,13 +1,13 @@
 use crate::error::CodingError;
 use crate::mapchange::{YrsEntryChange, YrsMapChange};
-use crate::subscription::YSubscription;
+use crate::subscription::{delegate_of, delegate_slot, YSubscription};
 use crate::transaction::YrsTransaction;
 use std::cell::RefCell;
 use std::fmt::Debug;
 use std::sync::Arc;
 use yrs::branch::Branch;
 use yrs::Observable;
-use yrs::{types::Value, Any, Map, MapRef};
+use yrs::{Any, Map, MapRef, Out as Value};
 use crate::doc::YrsCollectionPtr;
 
 pub(crate) struct YrsMap(RefCell<MapRef>);
@@ -20,8 +20,9 @@ unsafe impl Sync for YrsMap {}
 impl AsRef<Branch> for YrsMap {
     fn as_ref(&self) -> &Branch {
         //FIXME: after yrs v0.18 use logical references
-        let branch = &*self.0.borrow();
-        unsafe { std::mem::transmute(branch.as_ref()) }
+        let guard = self.0.borrow();
+        let branch: &Branch = <MapRef as AsRef<Branch>>::as_ref(&*guard);
+        unsafe { std::mem::transmute::<&Branch, &'static Branch>(branch) }
     }
 }
 
@@ -272,22 +273,22 @@ impl YrsMap {
     }
 
     pub(crate) fn observe(&self, delegate: Box<dyn YrsMapObservationDelegate>) -> Arc<YSubscription> {
-        let subscription = self
-            .0
-            .borrow_mut()
-            .observe(move |transaction, map_event| {
-                let delta = map_event.keys(transaction);
-                let result: Vec<YrsMapChange> = delta
-                    .iter()
-                    .map(|val| YrsMapChange {
-                        key: val.0.to_string(),
-                        change: YrsEntryChange::from(val.1),
-                    })
-                    .collect();
+        let slot = delegate_slot(delegate);
+        let callback_slot = slot.clone();
+        let subscription = self.0.borrow().observe(move |transaction, map_event| {
+            let delta = map_event.keys(transaction);
+            let result: Vec<YrsMapChange> = delta
+                .iter()
+                .map(|val| YrsMapChange {
+                    key: val.0.to_string(),
+                    change: YrsEntryChange::from(val.1),
+                })
+                .collect();
+            if let Some(delegate) = delegate_of(&callback_slot) {
                 delegate.call(result)
-            });
-
-            Arc::new(YSubscription::new(subscription))
+            }
+        });
+        Arc::new(YSubscription::with_delegate(subscription, slot))
     }
 }
 

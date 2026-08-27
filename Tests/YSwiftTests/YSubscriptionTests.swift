@@ -53,4 +53,18 @@ class YSubscriptionTests: XCTestCase {
             subscription?.cancel()
         }
     }
+
+    /// A subscription may be the last thing standing: the document and the
+    /// collection it observed can both be released first (a view model's
+    /// stored properties go in an order nobody chose). Cancelling it then must
+    /// not reach into a freed store — it did once, as a SIGSEGV in
+    /// `Branch::unobserve` on every deinit of a consuming app's document wrapper.
+    func test_cancelling_after_the_document_is_gone_is_safe() {
+        var document: YDocument? = YDocument()
+        var text: YText? = document!.getOrCreateText(named: "prompt")
+        let subscription = text!.observe { _ in }
+        document = nil
+        text = nil
+        subscription.cancel()
+    }
 }

@@ -16,7 +16,7 @@ path = "uniffi-bindgen.rs"
 required-features = ["uniffi/cli"]
 
 [dependencies]
-yrs = "0.18.2"
+yrs = { version = "0.27.4", features = ["sync"] }
 thiserror = "1.0.38"
 uniffi = "0.27.1"
 

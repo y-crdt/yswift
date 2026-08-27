@@ -35,12 +35,18 @@ public final class YUndoManager<T: AnyObject> {
     ///
     /// Set a point to undo back to with ``wrap()``.
     /// Additional calls will undo to points further back on the stack, if set.
+    ///
+    /// Throws if a transaction is open on the same document — the binding
+    /// probes for one first, because yrs 0.27's undo manager would otherwise
+    /// wait for the store and deadlock.
     /// - Returns: A Boolean value that indicates wether the change was undone.
     public func undo() throws -> Bool {
         return try _manager.undo()
     }
 
     /// Replays a change forward from the Undo managers stack.
+    ///
+    /// Same transaction rule as ``undo()``.
     /// - Returns: A Boolean value that indicates wether the change was replayed.
     public func redo() throws -> Bool {
         return try _manager.redo()

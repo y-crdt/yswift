@@ -12,6 +12,11 @@ use yrs::{
 use yrs::{Store, WriteTxn};
 use crate::doc::YrsOrigin;
 
+pub(crate) struct YrsClientState {
+    pub(crate) client_id: u64,
+    pub(crate) clock: u32,
+}
+
 pub(crate) struct YrsTransaction(pub(crate) RefCell<Option<TransactionMut<'static>>>);
 
 unsafe impl Send for YrsTransaction {}
@@ -76,10 +81,28 @@ impl YrsTransaction {
             .encode_v1()
     }
 
+    pub(crate) fn transaction_client_states(&self) -> Vec<YrsClientState> {
+        self.transaction()
+            .as_ref()
+            .unwrap()
+            .state_vector()
+            .iter()
+            .map(|(client, clock)| YrsClientState {
+                client_id: client.get(),
+                clock: *clock,
+            })
+            .collect()
+    }
+
     pub(crate) fn transaction_apply_update(&self, update: Vec<u8>) -> Result<(), CodingError> {
-        Update::decode_v1(update.as_slice())
-            .map_err(|_e| CodingError::DecodingError)
-            .map(|u| self.transaction().as_mut().unwrap().apply_update(u))
+        let update = Update::decode_v1(update.as_slice()).map_err(|_e| CodingError::DecodingError)?;
+        // yrs >= 0.27 reports integration failures instead of panicking; they
+        // are not decoding failures, and a caller may want to tell them apart.
+        self.transaction()
+            .as_mut()
+            .unwrap()
+            .apply_update(update)
+            .map_err(|_e| CodingError::ApplyError)
     }
 
     pub(crate) fn transaction_get_text(&self, name: String) -> Option<Arc<YrsText>> {

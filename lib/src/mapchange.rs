@@ -1,4 +1,4 @@
-use yrs::types::{EntryChange, Value};
+use yrs::{types::EntryChange, Out as Value};
 
 pub struct YrsMapChange {
     pub key: String,

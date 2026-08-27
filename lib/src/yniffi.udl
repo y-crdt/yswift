@@ -4,6 +4,7 @@ namespace yniffi {};
 enum CodingError {
   "EncodingError",
   "DecodingError",
+  "ApplyError",
 };
 
 interface YrsDoc {
@@ -19,7 +20,18 @@ interface YrsDoc {
   YrsUndoManager undo_manager(sequence<YrsCollectionPtr> tracked_refs);
 };
 
+/// One entry of a document's state vector: the highest clock seen for a client.
+dictionary YrsClientState {
+    u64 client_id;
+    u32 clock;
+};
+
 interface YrsTransaction {
+  /// The state vector as (client id, clock) pairs. `transaction_state_vector`
+  /// hands back the same information encoded; this is the decoded view, so a
+  /// caller can check which client a document credits without a decoder of its
+  /// own. Client ids are 53-bit since yrs 0.26 (y-crdt #612, 2026-05-04; yjs v14 compatible).
+  sequence<YrsClientState> transaction_client_states();
   [Throws=CodingError]
   void transaction_apply_update(sequence<u8> update);
 
@@ -178,6 +190,7 @@ interface YrsUndoManager {
     void wrap_changes();
 
     /// Clears the undo/redo stacks of a current undo manager.
+    /// Fails to execute if there's another transaction in progress.
     [Throws=YrsUndoError]
     void clear();
 
